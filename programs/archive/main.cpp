@@ -4,13 +4,13 @@
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/either/match.hpp>
-#include <fcppt/filesystem/ifstream.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
@@ -29,6 +29,7 @@
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
 #include <cstdlib>
 #include <exception>
@@ -56,7 +57,9 @@ operator<<(
 		<<
 		FCPPT_TEXT('(')
 		<<
-		_pair.first
+		fcppt::from_std_string(
+			_pair.first
+		)
 		<<
 		FCPPT_TEXT(',')
 		<<
@@ -138,7 +141,7 @@ try
 					)
 				};
 
-				fcppt::filesystem::ifstream stream{
+				boost::filesystem::ifstream stream{
 					path,
 					std::ios_base::binary
 				};
