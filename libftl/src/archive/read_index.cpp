@@ -1,6 +1,6 @@
-#include <libftl/exception.hpp>
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/index.hpp>
+#include <libftl/archive/index_result.hpp>
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
 #include <libftl/archive/read_index.hpp>
@@ -18,9 +18,9 @@
 #include <fcppt/cast/to_signed.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/map.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/either/sequence.hpp>
-#include <fcppt/either/to_exception.hpp>
 #include <fcppt/endianness/format.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
@@ -275,13 +275,13 @@ make_index(
 
 }
 
-libftl::archive::index
+libftl::archive::index_result
 libftl::archive::read_index(
 	std::istream &_stream
 )
 {
 	return
-		fcppt::either::to_exception(
+		fcppt::either::map_failure(
 			fcppt::either::bind(
 				alda::raw::make_generic<
 					alda::raw::stream::istream,
@@ -308,7 +308,7 @@ libftl::archive::read_index(
 				alda::raw::stream::error &&_error
 			){
 				return
-					libftl::exception{
+					fcppt::string{
 						FCPPT_TEXT("Error reading index of .dat file: ")
 						+
 						std::move(
