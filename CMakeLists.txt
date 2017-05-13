@@ -21,3 +21,7 @@ fcppt_utils_link_target(
 add_subdirectory(
 	libftl
 )
+
+add_subdirectory(
+	programs
+)
