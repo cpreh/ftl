@@ -28,6 +28,7 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
+	${fcppt_system_TARGET}
 	${Boost_FILESYSTEM_LIBRARIES}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
 )

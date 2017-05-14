@@ -18,6 +18,7 @@ set(
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
+	libftl/include/libftl/archive/extract.hpp
 	libftl/include/libftl/archive/index.hpp
 	libftl/include/libftl/archive/index_result.hpp
 	libftl/include/libftl/archive/index_result_fwd.hpp
@@ -25,6 +26,7 @@ set(
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
 	libftl/src/archive/entry_output.cpp
+	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
 )
 
