@@ -128,19 +128,9 @@ transform_entry(
 						_offset
 						+
 						alda::raw::needed_size<
-							int_binding
+							record_binding
 						>(
-							_offset
-						)
-						+
-						alda::raw::needed_size<
-							int_binding
-						>(
-							fcppt::record::get<
-								size_label
-							>(
-								_result
-							)
+							_result
 						)
 					)
 				},
