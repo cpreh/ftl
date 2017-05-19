@@ -13,8 +13,10 @@
 #include <alda/raw/needed_size.hpp>
 #include <alda/raw/stream/error.hpp>
 #include <alda/raw/stream/istream.hpp>
+#include <fcppt/literal.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
+#include <fcppt/algorithm/map_optional.hpp>
 #include <fcppt/cast/to_signed.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/map.hpp>
@@ -22,6 +24,7 @@
 #include <fcppt/either/object.hpp>
 #include <fcppt/either/sequence.hpp>
 #include <fcppt/endianness/format.hpp>
+#include <fcppt/optional/make_if.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/make_label.hpp>
@@ -209,7 +212,7 @@ make_index(
 					index_pair
 				>
 			>(
-				fcppt::algorithm::map<
+				fcppt::algorithm::map_optional<
 					std::vector<
 						fcppt::either::object<
 							alda::raw::stream::error,
@@ -225,9 +228,24 @@ make_index(
 					)
 					{
 						return
-							read_entry(
-								_stream,
+							fcppt::optional::make_if(
 								_offset
+								!=
+								fcppt::literal<
+									int_type
+								>(
+									0
+								),
+								[
+									&_stream,
+									_offset
+								]{
+									return
+										read_entry(
+											_stream,
+											_offset
+										);
+								}
 							);
 					}
 				)
