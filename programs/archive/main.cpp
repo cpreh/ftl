@@ -27,6 +27,7 @@
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
+#include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/long_name.hpp>
@@ -35,15 +36,20 @@
 #include <fcppt/options/option.hpp>
 #include <fcppt/options/optional_help_text.hpp>
 #include <fcppt/options/optional_short_name.hpp>
-#include <fcppt/options/parse.hpp>
+#include <fcppt/options/parse_help.hpp>
 #include <fcppt/options/short_name.hpp>
+#include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
+#include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/make_label.hpp>
+#include <fcppt/record/permute.hpp>
+#include <fcppt/record/variadic.hpp>
 #include <fcppt/system/error_code_to_string.hpp>
+#include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -146,7 +152,6 @@ write_output(
 								};
 						},
 						[
-							&_stream,
 							&_output_path,
 							&_entry
 						](
@@ -279,10 +284,7 @@ create_outputs(
 									}
 								);
 						},
-						[
-							&_stream,
-							&_entry
-						](
+						[](
 							fcppt::unit
 						){
 							return
@@ -299,6 +301,154 @@ create_outputs(
 		);
 }
 
+FCPPT_RECORD_MAKE_LABEL(
+	path_label
+);
+
+FCPPT_RECORD_MAKE_LABEL(
+	output_path_label
+);
+
+typedef
+fcppt::record::variadic<
+	fcppt::record::element<
+		path_label,
+		fcppt::string
+	>,
+	fcppt::record::element<
+		output_path_label,
+		fcppt::optional::object<
+			fcppt::string
+		>
+	>
+>
+argument_record;
+
+int
+main_program(
+	argument_record const &_arguments
+)
+{
+	boost::filesystem::path const path{
+		fcppt::record::get<
+			path_label
+		>(
+			_arguments
+		)
+	};
+
+	boost::filesystem::ifstream stream{
+		path,
+		std::ios_base::binary
+	};
+
+	if(
+		!stream.is_open()
+	)
+	{
+		fcppt::io::cerr()
+			<<
+			FCPPT_TEXT("Cannot open ")
+			<<
+			fcppt::filesystem::path_to_string(
+				path
+			)
+			<<
+			FCPPT_TEXT('\n');
+
+		return
+			EXIT_FAILURE;
+	}
+
+	return
+		fcppt::either::match(
+			libftl::archive::read_index(
+				stream
+			),
+			[](
+				fcppt::string const &_error
+			)
+			{
+				fcppt::io::cerr()
+					<<
+					_error
+					<<
+					FCPPT_TEXT('\n');
+
+				return
+					EXIT_FAILURE;
+			},
+			[
+				&stream,
+				&_arguments
+			](
+				libftl::archive::index const &_index
+			)
+			{
+				return
+					fcppt::optional::maybe(
+						fcppt::record::get<
+							output_path_label
+						>(
+							_arguments
+						),
+						[
+							&_index
+						]{
+							fcppt::io::cout()
+								<<
+								fcppt::container::output(
+									_index
+								)
+								<<
+								FCPPT_TEXT('\n');
+
+							return
+								EXIT_SUCCESS;
+						},
+						[
+							&stream,
+							&_index
+						](
+							fcppt::string const &_output_path
+						)
+						{
+							return
+								fcppt::either::match(
+									create_outputs(
+										stream,
+										boost::filesystem::path{
+											_output_path
+										},
+										_index
+									),
+									[](
+										fcppt::string const &_error
+									)
+									{
+										fcppt::io::cerr()
+											<<
+											_error
+											<<
+											FCPPT_TEXT('\n');
+
+										return
+											EXIT_FAILURE;
+									},
+									[](
+										fcppt::unit
+									)
+									{
+										return
+											EXIT_SUCCESS;
+									}
+								);
+						}
+					);
+			}
+		);
+}
+
 }
 
 int
@@ -308,14 +458,6 @@ FCPPT_MAIN(
 )
 try
 {
-	FCPPT_RECORD_MAKE_LABEL(
-		path_label
-	);
-
-	FCPPT_RECORD_MAKE_LABEL(
-		output_path_label
-	);
-
 	auto const parser{
 		fcppt::options::apply(
 			fcppt::options::argument<
@@ -364,77 +506,28 @@ try
 	parser_type;
 
 	return
-		fcppt::either::match(
-			fcppt::options::parse(
+		fcppt::variant::match(
+			fcppt::options::parse_help(
+				fcppt::options::default_help_switch(),
 				parser,
 				fcppt::args_from_second(
 					argc,
 					argv
 				)
 			),
-			[
-				&parser
-			](
-				fcppt::options::error const &_error
-			)
-			{
-				fcppt::io::cerr()
-					<<
-					_error
-					<<
-					FCPPT_TEXT("\nUsage: ")
-					<<
-					parser.usage()
-					<<
-					FCPPT_TEXT('\n');
-
-				return
-					EXIT_FAILURE;
-			},
 			[](
-				fcppt::options::result_of<
-					parser_type
-				> const &_arguments
+				fcppt::options::result<
+					fcppt::options::result_of<
+						parser_type
+					>
+				> const &_result
 			)
 			{
-				boost::filesystem::path const path{
-					fcppt::record::get<
-						path_label
-					>(
-						_arguments
-					)
-				};
-
-				boost::filesystem::ifstream stream{
-					path,
-					std::ios_base::binary
-				};
-
-				if(
-					!stream.is_open()
-				)
-				{
-					fcppt::io::cerr()
-						<<
-						FCPPT_TEXT("Cannot open ")
-						<<
-						fcppt::filesystem::path_to_string(
-							path
-						)
-						<<
-						FCPPT_TEXT('\n');
-
-					return
-						EXIT_FAILURE;
-				}
-
 				return
 					fcppt::either::match(
-						libftl::archive::read_index(
-							stream
-						),
+						_result,
 						[](
-							fcppt::string const &_error
+							fcppt::options::error const &_error
 						)
 						{
 							fcppt::io::cerr()
@@ -446,75 +539,35 @@ try
 							return
 								EXIT_FAILURE;
 						},
-						[
-							&stream,
-							&_arguments
-						](
-							libftl::archive::index const &_index
+						[](
+							fcppt::options::result_of<
+								parser_type
+							> const &_arguments
 						)
 						{
 							return
-								fcppt::optional::maybe(
-									fcppt::record::get<
-										output_path_label
+								main_program(
+									fcppt::record::permute<
+										argument_record
 									>(
 										_arguments
-									),
-									[
-										&_index
-									]{
-										fcppt::io::cout()
-											<<
-											fcppt::container::output(
-												_index
-											)
-											<<
-											FCPPT_TEXT('\n');
-
-										return
-											EXIT_SUCCESS;
-									},
-									[
-										&stream,
-										&_index
-									](
-										fcppt::string const &_output_path
 									)
-									{
-										return
-											fcppt::either::match(
-												create_outputs(
-													stream,
-													boost::filesystem::path{
-														_output_path
-													},
-													_index
-												),
-												[](
-													fcppt::string const &_error
-												)
-												{
-													fcppt::io::cerr()
-														<<
-														_error
-														<<
-														FCPPT_TEXT('\n');
-
-													return
-														EXIT_FAILURE;
-												},
-												[](
-													fcppt::unit
-												)
-												{
-													return
-														EXIT_SUCCESS;
-												}
-											);
-									}
 								);
 						}
 					);
+			},
+			[](
+				fcppt::options::help_text const &_help_text
+			)
+			{
+				fcppt::io::cout()
+					<<
+					_help_text
+					<<
+					FCPPT_TEXT('\n');
+
+				return
+					EXIT_SUCCESS;
 			}
 		);
 }
