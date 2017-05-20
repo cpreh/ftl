@@ -12,12 +12,12 @@
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/unit.hpp>
 #include <fcppt/algorithm/fold_break.hpp>
 #include <fcppt/cast/to_signed.hpp>
 #include <fcppt/container/output.hpp>
+#include <fcppt/either/error.hpp>
 #include <fcppt/either/match.hpp>
-#include <fcppt/either/object.hpp>
+#include <fcppt/either/no_error.hpp>
 #include <fcppt/filesystem/create_directories_recursive.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
@@ -100,9 +100,8 @@ namespace
 {
 
 typedef
-fcppt::either::object<
-	fcppt::string,
-	fcppt::unit
+fcppt::either::error<
+	fcppt::string
 >
 either_error;
 
@@ -203,7 +202,7 @@ write_output(
 								output_stream
 								?
 									either_error{
-										fcppt::unit{}
+										fcppt::either::no_error{}
 									}
 								:
 									either_error{
@@ -253,7 +252,7 @@ create_outputs(
 		fcppt::algorithm::fold_break(
 			_index,
 			either_error{
-				fcppt::unit{}
+				fcppt::either::no_error{}
 			},
 			[
 				&_stream,
@@ -285,13 +284,13 @@ create_outputs(
 								);
 						},
 						[](
-							fcppt::unit
+							fcppt::either::no_error
 						){
 							return
 								std::make_pair(
 									fcppt::loop::continue_,
 									either_error{
-										fcppt::unit{}
+										fcppt::either::no_error{}
 									}
 								);
 						}
@@ -436,7 +435,7 @@ main_program(
 											EXIT_FAILURE;
 									},
 									[](
-										fcppt::unit
+										fcppt::either::no_error
 									)
 									{
 										return
