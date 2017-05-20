@@ -7,15 +7,14 @@
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
-#include <fcppt/loop.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/algorithm/fold_break.hpp>
 #include <fcppt/cast/to_signed.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/either/error.hpp>
+#include <fcppt/either/fold_error.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/filesystem/create_directories_recursive.hpp>
@@ -61,7 +60,6 @@
 #include <iostream>
 #include <istream>
 #include <ostream>
-#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -247,55 +245,22 @@ create_outputs(
 	libftl::archive::index const &_index
 )
 {
-	// TODO: Create some algorithm like foldM_ for this!
 	return
-		fcppt::algorithm::fold_break(
+		fcppt::either::fold_error(
 			_index,
-			either_error{
-				fcppt::either::no_error{}
-			},
 			[
 				&_stream,
 				&_output_path
 			](
-				libftl::archive::index::value_type const &_entry,
-				either_error
+				libftl::archive::index::value_type const &_entry
 			)
 			{
 				return
-					fcppt::either::match(
-						write_output(
-							_stream,
-							_output_path,
-							_entry
-						),
-						[](
-							fcppt::string &&_error
-						)
-						{
-							return
-								std::make_pair(
-									fcppt::loop::break_,
-									either_error{
-										std::move(
-											_error
-										)
-									}
-								);
-						},
-						[](
-							fcppt::either::no_error
-						){
-							return
-								std::make_pair(
-									fcppt::loop::continue_,
-									either_error{
-										fcppt::either::no_error{}
-									}
-								);
-						}
+					write_output(
+						_stream,
+						_output_path,
+						_entry
 					);
-
 			}
 		);
 }
