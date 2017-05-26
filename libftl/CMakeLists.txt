@@ -59,12 +59,17 @@ function(
 			c++11
 			--namespace-map
 			=libftl::xml::generated
+			--hxx-prologue
+			"#include <fcppt/config/external_begin.hpp>"
+			--hxx-epilogue
+			"#include <fcppt/config/external_end.hpp>"
 			--generate-forward
 			${XSD_FILE}
 		DEPENDS
 		${XSD_FILE}
 		WORKING_DIRECTORY
 		${OUTPUT_DIR}
+		VERBATIM
 	)
 
 	set(
