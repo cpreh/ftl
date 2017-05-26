@@ -23,13 +23,18 @@ find_package(
 	REQUIRED
 )
 
+set(
+	XSD_INCLUDE_DIR
+	${CMAKE_CURRENT_BINARY_DIR}/xsd/include
+)
+
 function(
 	generate_xml_parser
 	PARSER_NAME
 )
 	set(
 		OUTPUT_DIR
-		${CMAKE_CURRENT_BINARY_DIR}/xsd/include/libftl/xsd
+		${XSD_INCLUDE_DIR}/libftl/xml/generated
 	)
 
 	set(
@@ -92,6 +97,11 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
+	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
+	libftl/impl/include/libftl/impl/xml/read_without_root.hpp
+	libftl/impl/include/libftl/impl/xml/root_name.hpp
+	libftl/impl/include/libftl/impl/xml/root_name_fwd.hpp
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
@@ -102,9 +112,13 @@ set(
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/xml/result.hpp
+	libftl/include/libftl/xml/result_fwd.hpp
+	libftl/include/libftl/xml/sector.hpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/xml/sector.cpp
 )
 
 set(
@@ -165,8 +179,11 @@ function(
 		PUBLIC
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
-		PRIVATE
+		${XSD_INCLUDE_DIRS}
 		${XercesC_INCLUDE_DIRS}
+		PRIVATE
+		${XSD_INCLUDE_DIR}
+		${CMAKE_CURRENT_SOURCE_DIR}/impl/include
 	)
 
 	fcppt_utils_interface_static_link(
