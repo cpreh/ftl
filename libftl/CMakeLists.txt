@@ -13,6 +13,83 @@ find_package(
 	REQUIRED
 )
 
+find_package(
+	XercesC
+	REQUIRED
+)
+
+find_package(
+	xsd
+	REQUIRED
+)
+
+function(
+	generate_xml_parser
+	PARSER_NAME
+)
+	set(
+		OUTPUT_DIR
+		${CMAKE_CURRENT_BINARY_DIR}/xsd/include/libftl/xsd
+	)
+
+	set(
+		PARSER_FILES
+		${OUTPUT_DIR}/${PARSER_NAME}.hxx
+		${OUTPUT_DIR}/${PARSER_NAME}-fwd.hxx
+		${OUTPUT_DIR}/${PARSER_NAME}.cxx
+	)
+
+	set(
+		XSD_FILE
+		${FCPPT_UTILS_PROJECT_SOURCE_DIR}/xsd/${PARSER_NAME}.xsd
+	)
+
+	add_custom_command(
+		OUTPUT
+		${PARSER_FILES}
+		COMMAND
+			${XSD_PROGRAM}
+			cxx-tree
+			--std
+			c++11
+			--namespace-map
+			=libftl::xml::generated
+			--generate-forward
+			${XSD_FILE}
+		DEPENDS
+		${XSD_FILE}
+		WORKING_DIRECTORY
+		${OUTPUT_DIR}
+	)
+
+	set(
+		LIBFTL_PARSER_FILES
+		${LIBFTL_PARSER_FILES}
+		${PARSER_FILES}
+		PARENT_SCOPE
+	)
+endfunction()
+
+set(
+	PARSER_NAMES
+	sector
+)
+
+foreach(
+	PARSER
+	${PARSER_NAMES}
+)
+	generate_xml_parser(
+		${PARSER}
+	)
+endforeach()
+
+add_custom_target(
+	xsdfiles
+	DEPENDS
+	${LIBFTL_PARSER_FILES}
+)
+
 set(
 	LIBFTL_FILES
 	libftl/include/libftl/archive/entry.hpp
@@ -74,6 +151,7 @@ function(
 	add_library(
 		${LIBFTL_LIB_NAME}
 		${VARIANT}
+		${LIBFTL_PARSER_FILES}
 		${LIBFTL_FILES_ABS}
 	)
 
@@ -87,6 +165,8 @@ function(
 		PUBLIC
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
+		PRIVATE
+		${XercesC_INCLUDE_DIRS}
 	)
 
 	fcppt_utils_interface_static_link(
@@ -101,8 +181,14 @@ function(
 		PUBLIC
 		fcppt_core_interface
 		PRIVATE
+		${XercesC_LIBRARIES}
 		${alda_TARGET}
 		${fcppt_core_TARGET}
+	)
+
+	add_dependencies(
+		${LIBFTL_LIB_NAME}
+		xsdfiles
 	)
 
 	fcppt_utils_export_install_target(

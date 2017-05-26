@@ -3,6 +3,12 @@ cmake_minimum_required(
 	3.3
 )
 
+list(
+	APPEND
+	CMAKE_MODULE_PATH
+	${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules
+)
+
 find_package(
 	fcppt
 	REQUIRED
