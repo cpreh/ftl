@@ -1,6 +1,5 @@
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/index.hpp>
-#include <libftl/archive/index_result.hpp>
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
 #include <libftl/archive/read_index.hpp>
@@ -14,6 +13,7 @@
 #include <alda/raw/stream/error.hpp>
 #include <alda/raw/stream/istream.hpp>
 #include <fcppt/literal.hpp>
+#include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/algorithm/map_optional.hpp>
@@ -283,7 +283,10 @@ make_index(
 
 }
 
-libftl::archive::index_result
+fcppt::either::object<
+	fcppt::string,
+	libftl::archive::index
+>
 libftl::archive::read_index(
 	std::istream &_stream
 )

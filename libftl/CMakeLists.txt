@@ -114,8 +114,6 @@ set(
 	libftl/include/libftl/archive/file.hpp
 	libftl/include/libftl/archive/file_fwd.hpp
 	libftl/include/libftl/archive/index.hpp
-	libftl/include/libftl/archive/index_result.hpp
-	libftl/include/libftl/archive/index_result_fwd.hpp
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
