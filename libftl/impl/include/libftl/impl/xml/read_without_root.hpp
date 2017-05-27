@@ -1,8 +1,8 @@
 #ifndef LIBFTL_IMPL_XML_READ_WITHOUT_ROOT_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_READ_WITHOUT_ROOT_HPP_INCLUDED
 
-#include <libftl/archive/entry_fwd.hpp>
 #include <libftl/archive/entry_output.hpp>
+#include <libftl/archive/file.hpp>
 #include <libftl/archive/extract.hpp>
 #include <libftl/impl/xml/make_closing_tag.hpp>
 #include <libftl/impl/xml/make_opening_tag.hpp>
@@ -22,7 +22,6 @@
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/exceptions.hxx>
-#include <iosfwd>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -43,8 +42,7 @@ libftl::xml::result<
 	Result
 >
 read_without_root(
-	std::istream &_stream,
-	libftl::archive::entry const &_entry,
+	libftl::archive::file const &_file,
 	fcppt::function<
 		std::unique_ptr<
 			Result
@@ -59,18 +57,17 @@ read_without_root(
 		fcppt::either::bind(
 			fcppt::either::from_optional(
 				libftl::archive::extract(
-					_stream,
-					_entry
+					_file
 				),
 				[
-					&_entry
+					&_file
 				]{
 					return
 						fcppt::string{
 							FCPPT_TEXT("Failed to read ")
 							+
 							fcppt::insert_to_fcppt_string(
-								_entry
+								_file.entry
 							)
 							+
 							FCPPT_TEXT(": Invalid read.")
@@ -80,7 +77,7 @@ read_without_root(
 			[
 				&_function,
 				&_root_name,
-				&_entry
+				&_file
 			](
 				fcppt::io::buffer const &_buffer
 			)
@@ -130,7 +127,7 @@ read_without_root(
 							FCPPT_TEXT("Failed to read ")
 							+
 							fcppt::insert_to_fcppt_string(
-								_entry
+								_file.entry
 							)
 							+
 							FCPPT_TEXT(": ")

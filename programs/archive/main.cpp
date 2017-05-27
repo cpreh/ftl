@@ -1,5 +1,6 @@
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/extract.hpp>
+#include <libftl/archive/file.hpp>
 #include <libftl/archive/index.hpp>
 #include <libftl/archive/read_index.hpp>
 #include <fcppt/args_char.hpp>
@@ -132,8 +133,12 @@ write_output(
 				return
 					fcppt::optional::maybe(
 						libftl::archive::extract(
-							_stream,
-							_entry.second
+							libftl::archive::file{
+								fcppt::make_ref(
+									_stream
+								),
+								_entry.second
+							}
 						),
 						[
 							&_entry

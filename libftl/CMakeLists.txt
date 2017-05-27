@@ -111,6 +111,8 @@ set(
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
 	libftl/include/libftl/archive/extract.hpp
+	libftl/include/libftl/archive/file.hpp
+	libftl/include/libftl/archive/file_fwd.hpp
 	libftl/include/libftl/archive/index.hpp
 	libftl/include/libftl/archive/index_result.hpp
 	libftl/include/libftl/archive/index_result_fwd.hpp
