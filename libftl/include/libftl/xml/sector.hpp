@@ -4,7 +4,7 @@
 #include <libftl/detail/symbol.hpp>
 #include <libftl/archive/file_fwd.hpp>
 #include <libftl/xml/result.hpp>
-#include <libftl/xml/generated/sector.hxx>
+#include <libftl/xml/generated/sector.hpp>
 
 
 namespace libftl

@@ -12,6 +12,7 @@
 #include <fcppt/function_impl.hpp>
 #include <fcppt/identity.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/insert_to_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_from_std.hpp>
@@ -22,6 +23,7 @@
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/exceptions.hxx>
+#include <xsd/cxx/tree/exceptions.hxx>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -114,6 +116,29 @@ read_without_root(
 									_function(
 										stream
 									)
+								)
+							)
+						};
+				}
+				catch(
+					xsd::cxx::tree::exception<
+						char
+					> const &_error
+				)
+				{
+					return
+						result_type{
+							FCPPT_TEXT("Failed to read ")
+							+
+							fcppt::insert_to_fcppt_string(
+								_file.entry
+							)
+							+
+							FCPPT_TEXT(": ")
+							+
+							fcppt::from_std_string(
+								fcppt::insert_to_std_string(
+									_error
 								)
 							)
 						};

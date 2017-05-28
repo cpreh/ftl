@@ -3,7 +3,7 @@
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/sector.hpp>
-#include <libftl/xml/generated/sector.hxx>
+#include <libftl/xml/generated/sector.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <memory>
@@ -42,7 +42,7 @@ libftl::xml::sector(
 				}
 			},
 			libftl::impl::xml::root_name{
-				"sector_root"
+				"sectorRoot"
 			}
 		);
 }

@@ -24,7 +24,7 @@ find_package(
 )
 
 set(
-	XSD_INCLUDE_DIR
+	GENERATED_XSD_INCLUDE_DIR
 	${CMAKE_CURRENT_BINARY_DIR}/xsd/include
 )
 
@@ -34,13 +34,13 @@ function(
 )
 	set(
 		OUTPUT_DIR
-		${XSD_INCLUDE_DIR}/libftl/xml/generated
+		${GENERATED_XSD_INCLUDE_DIR}/libftl/xml/generated
 	)
 
 	set(
 		PARSER_FILES
-		${OUTPUT_DIR}/${PARSER_NAME}.hxx
-		${OUTPUT_DIR}/${PARSER_NAME}-fwd.hxx
+		${OUTPUT_DIR}/${PARSER_NAME}.hpp
+		${OUTPUT_DIR}/${PARSER_NAME}_fwd.hpp
 		${OUTPUT_DIR}/${PARSER_NAME}.cxx
 	)
 
@@ -63,6 +63,10 @@ function(
 			"#include <fcppt/config/external_begin.hpp>"
 			--hxx-epilogue
 			"#include <fcppt/config/external_end.hpp>"
+			--hxx-suffix
+			".hpp"
+			--fwd-suffix
+			"_fwd.hpp"
 			--generate-forward
 			${XSD_FILE}
 		DEPENDS
@@ -167,6 +171,10 @@ function(
 		LIBFTL_FILES_ABS
 	)
 
+#	fcppt_utils_add_headers(
+#		${LIBFTL_PARSER_FILES}
+#	)
+
 	add_library(
 		${LIBFTL_LIB_NAME}
 		${VARIANT}
@@ -186,8 +194,8 @@ function(
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${XSD_INCLUDE_DIRS}
 		${XercesC_INCLUDE_DIRS}
+		${GENERATED_XSD_INCLUDE_DIR}
 		PRIVATE
-		${XSD_INCLUDE_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}/impl/include
 	)
 
