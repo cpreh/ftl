@@ -2,7 +2,9 @@
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
+#include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/sector.hpp>
+#include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/xml/generated/sector.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
@@ -13,8 +15,12 @@
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr.hpp>
+#include <fcppt/algorithm/find_opt.hpp>
+#include <fcppt/assert/unreachable.hpp>
+#include <fcppt/cast/int_to_enum.hpp>
 #include <fcppt/cast/size.hpp>
 #include <fcppt/cast/to_signed.hpp>
+#include <fcppt/container/enum_array.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
@@ -25,6 +31,11 @@
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
+#include <fcppt/io/extract.hpp>
+#include <fcppt/io/istream.hpp>
+#include <fcppt/io/ostream.hpp>
+#include <fcppt/optional/maybe_void.hpp>
+#include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
@@ -44,6 +55,7 @@
 #include <fcppt/record/variadic.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
+#include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -54,6 +66,8 @@
 #include <ios>
 #include <iosfwd>
 #include <iostream>
+#include <iterator>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -154,11 +168,109 @@ make_file(
 }
 
 FCPPT_RECORD_MAKE_LABEL(
+	type_label
+);
+
+FCPPT_RECORD_MAKE_LABEL(
 	path_label
 );
 
+// TODO: Better pretty type for fcppt.options
+enum class xml_type
+{
+	blueprints,
+	sector_data,
+	fcppt_maximum = sector_data
+};
+
+typedef
+fcppt::container::enum_array<
+	xml_type,
+	fcppt::string
+>
+xml_type_array;
+
+xml_type_array const xml_types{{{
+	FCPPT_TEXT("blueprints"),
+	FCPPT_TEXT("sector_data")
+}}};
+
+/*
+fcppt::io::ostream &
+operator<<(
+	fcppt::io::ostream &_stream,
+	xml_type const _name
+)
+{
+	return
+		_stream
+		<<
+		xml_types[
+			_name
+		];
+}*/
+
+fcppt::io::istream &
+operator>>(
+	fcppt::io::istream &_stream,
+	xml_type &_name
+)
+{
+	fcppt::optional::maybe_void(
+		fcppt::io::extract<
+			fcppt::string
+		>(
+			_stream
+		),
+		[
+			&_stream,
+			&_name
+		](
+			fcppt::string const &_value
+		)
+		{
+			fcppt::optional::maybe(
+				fcppt::algorithm::find_opt(
+					xml_types,
+					_value
+				),
+				[
+					&_stream
+				]{
+					_stream.setstate(
+						std::ios_base::failbit
+					);
+				},
+				[
+					&_name
+				](
+					xml_type_array::const_iterator const _it
+				)
+				{
+					_name =
+						fcppt::cast::int_to_enum<
+							xml_type
+						>(
+							std::distance(
+								xml_types.begin(),
+								_it
+							)
+						);
+				}
+			);
+		}
+	);
+
+	return
+		_stream;
+}
+
 typedef
 fcppt::record::variadic<
+	fcppt::record::element<
+		type_label,
+		xml_type
+	>,
 	fcppt::record::element<
 		path_label,
 		fcppt::string
@@ -202,6 +314,17 @@ main_program(
 			false;
 	}
 
+	typedef
+	fcppt::variant::variadic<
+		fcppt::unique_ptr<
+			libftl::xml::generated::blueprints_root
+		>,
+		fcppt::unique_ptr<
+			libftl::xml::generated::sector_root
+		>
+	>
+	result_type;
+
 	return
 		fcppt::either::match(
 			fcppt::either::bind(
@@ -209,15 +332,58 @@ main_program(
 					path,
 					stream
 				),
-				[](
+				[
+					&_arguments
+				](
 					libftl::archive::file const &_file
 				)
+				->
+				fcppt::either::object<
+					fcppt::string,
+					result_type
+				>
 				{
-					// TODO: Add other parser types
-					return
-						libftl::xml::sector(
-							_file
-						);
+					auto const wrap_result(
+						[](
+							auto &&_result
+						)
+						{
+							return
+								result_type{
+									std::move(
+										_result
+									)
+								};
+						}
+					);
+
+					switch(
+						fcppt::record::get<
+							type_label
+						>(
+							_arguments
+						)
+					)
+					{
+					case xml_type::blueprints:
+						return
+							fcppt::either::map(
+								libftl::xml::blueprints(
+									_file
+								),
+								wrap_result
+							);
+					case xml_type::sector_data:
+						return
+							fcppt::either::map(
+								libftl::xml::sector(
+									_file
+								),
+								wrap_result
+							);
+					}
+
+					FCPPT_ASSERT_UNREACHABLE;
 				}
 			),
 			[](
@@ -234,9 +400,7 @@ main_program(
 					false;
 			},
 			[](
-				fcppt::unique_ptr<
-					libftl::xml::generated::sector_root
-				> const &_root
+				result_type const &_result
 			)
 			{
 				return
@@ -259,19 +423,34 @@ FCPPT_MAIN(
 try
 {
 	auto const parser{
-		fcppt::options::argument<
-			path_label,
-			fcppt::string
-		>{
-			fcppt::options::long_name{
-				FCPPT_TEXT("Path")
+		fcppt::options::apply(
+			fcppt::options::argument<
+				type_label,
+				xml_type
+			>{
+				fcppt::options::long_name{
+					FCPPT_TEXT("Type")
+				},
+				fcppt::options::optional_help_text{
+					fcppt::options::help_text{
+						FCPPT_TEXT("Type of the XML file to parse")
+					}
+				}
 			},
-			fcppt::options::optional_help_text{
-				fcppt::options::help_text{
-					FCPPT_TEXT("Path to the .xml file")
+			fcppt::options::argument<
+				path_label,
+				fcppt::string
+			>{
+				fcppt::options::long_name{
+					FCPPT_TEXT("Path")
+				},
+				fcppt::options::optional_help_text{
+					fcppt::options::help_text{
+						FCPPT_TEXT("Path to the .xml file")
+					}
 				}
 			}
-		}
+		)
 	};
 
 	typedef

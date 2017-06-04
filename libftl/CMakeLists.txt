@@ -86,6 +86,7 @@ endfunction()
 
 set(
 	PARSER_NAMES
+	blueprints
 	sector
 )
 
@@ -121,12 +122,14 @@ set(
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sector.hpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/sector.cpp
 )
 
