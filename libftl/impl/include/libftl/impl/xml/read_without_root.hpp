@@ -25,7 +25,7 @@
 #include <xsd/cxx/exceptions.hxx>
 #include <xsd/cxx/tree/exceptions.hxx>
 #include <memory>
-#include <sstream>
+#include <regex>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
@@ -49,7 +49,7 @@ read_without_root(
 		std::unique_ptr<
 			Result
 		>(
-			std::istream &
+			std::string const &
 		)
 	> const &_function,
 	libftl::impl::xml::root_name const &_root_name
@@ -84,10 +84,12 @@ read_without_root(
 				fcppt::io::buffer const &_buffer
 			)
 			{
-				std::istringstream stream{
+				std::string const input{
 					libftl::impl::xml::make_opening_tag(
 						_root_name
 					)
+					+
+					'\n'
 					+
 					fcppt::algorithm::map<
 						std::string
@@ -98,6 +100,20 @@ read_without_root(
 					+
 					libftl::impl::xml::make_closing_tag(
 						_root_name
+					)
+					+
+					'\n'
+				};
+
+				std::regex const regex{
+					"<!--[^]*?-->"
+				};
+
+				std::string const replaced{
+					std::regex_replace(
+						input,
+						regex,
+						""
 					)
 				};
 
@@ -114,7 +130,7 @@ read_without_root(
 							FCPPT_ASSERT_OPTIONAL_ERROR(
 								fcppt::unique_ptr_from_std(
 									_function(
-										stream
+										replaced
 									)
 								)
 							)

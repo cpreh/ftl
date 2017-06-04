@@ -7,6 +7,9 @@
 #include <fcppt/function_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <memory>
+#include <regex>
+#include <string>
+#include <sstream>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -24,20 +27,37 @@ libftl::xml::sector(
 				std::unique_ptr<
 					libftl::xml::generated::sector_root
 				>(
-					std::istream &
+					std::string const &
 				)
 			>{
 				[](
-					std::istream &_inner_stream
+					std::string const &_string
 				)
 				->
 				std::unique_ptr<
 					libftl::xml::generated::sector_root
 				>
 				{
+					std::regex const fixup{
+						"sectorDescrption"
+					};
+
+					std::string const fixed{
+						std::regex_replace(
+							_string,
+							fixup,
+							"sectorDescription"
+						)
+					};
+
+					std::istringstream stream{
+						fixed
+					};
+
 					return
 						libftl::xml::generated::sectorRoot(
-							_inner_stream
+							stream,
+							xml_schema::flags::dont_validate
 						);
 				}
 			},

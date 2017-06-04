@@ -239,7 +239,6 @@ main_program(
 				> const &_root
 			)
 			{
-				// TODO: Add output
 				return
 					true;
 			}
