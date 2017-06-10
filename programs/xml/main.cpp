@@ -27,8 +27,9 @@
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/filesystem/file_size.hpp>
-#include <fcppt/filesystem/size_to_size_t.hpp>
+#include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
+#include <fcppt/filesystem/size_to_size_t.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/io/extract.hpp>
@@ -58,11 +59,11 @@
 #include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/cstdint.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
+#include <fstream>
 #include <ios>
 #include <iosfwd>
 #include <iostream>
@@ -291,29 +292,6 @@ main_program(
 		)
 	};
 
-	// TODO: Add a function for this?
-	boost::filesystem::ifstream stream{
-		path
-	};
-
-	if(
-		!stream.is_open()
-	)
-	{
-		fcppt::io::cerr()
-			<<
-			FCPPT_TEXT("Cannot open ")
-			<<
-			fcppt::filesystem::path_to_string(
-				path
-			)
-			<<
-			FCPPT_TEXT('\n');
-
-		return
-			false;
-	}
-
 	typedef
 	fcppt::variant::variadic<
 		fcppt::unique_ptr<
@@ -328,9 +306,37 @@ main_program(
 	return
 		fcppt::either::match(
 			fcppt::either::bind(
-				make_file(
-					path,
-					stream
+				fcppt::either::bind(
+					fcppt::either::from_optional(
+						fcppt::filesystem::open<
+							std::ifstream
+						>(
+							path,
+							std::ios_base::openmode{}
+						),
+						[
+							&path
+						]{
+							return
+								FCPPT_TEXT("Cannot open ")
+								+
+								fcppt::filesystem::path_to_string(
+									path
+								);
+						}
+					),
+					[
+						&path
+					](
+						std::ifstream &&_stream
+					)
+					{
+						return
+							make_file(
+								path,
+								_stream
+							);
+					}
 				),
 				[
 					&_arguments

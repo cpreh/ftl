@@ -12,18 +12,20 @@
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/cast/to_signed.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/either/error.hpp>
 #include <fcppt/either/fold_error.hpp>
+#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/filesystem/create_directories_recursive.hpp>
+#include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/io/ostream.hpp>
+#include <fcppt/io/write_chars.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
@@ -52,11 +54,11 @@
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/system/error_code.hpp>
 #include <cstdlib>
 #include <exception>
+#include <fstream>
 #include <ios>
 #include <iostream>
 #include <istream>
@@ -103,6 +105,72 @@ fcppt::either::error<
 	fcppt::string
 >
 either_error;
+
+either_error
+write_to_file(
+	boost::filesystem::path const &_path,
+	fcppt::io::buffer const &_buffer
+)
+{
+	return
+		fcppt::either::bind(
+			fcppt::either::from_optional(
+				fcppt::filesystem::open<
+					std::ofstream
+				>(
+					_path,
+					std::ios_base::binary
+				),
+				[
+					&_path
+				]{
+					return
+						FCPPT_TEXT("Failed to open ")
+						+
+						fcppt::filesystem::path_to_string(
+							_path
+						);
+				}
+			),
+			[
+				&_path,
+				&_buffer
+			](
+				std::ofstream &&_stream
+			)
+			{
+				fcppt::io::cout()
+					<<
+					FCPPT_TEXT("Extracting ")
+					<<
+					fcppt::filesystem::path_to_string(
+						_path
+					)
+					<<
+					FCPPT_TEXT('\n');
+
+				return
+					fcppt::io::write_chars(
+						_stream,
+						_buffer.data(),
+						_buffer.size()
+					)
+					?
+						either_error{
+							fcppt::either::no_error{}
+						}
+					:
+						either_error{
+							FCPPT_TEXT("Failed to write ")
+							+
+							fcppt::filesystem::path_to_string(
+								_path
+							)
+						}
+					;
+			}
+		);
+}
 
 either_error
 write_output(
@@ -160,62 +228,13 @@ write_output(
 							fcppt::io::buffer &&_buffer
 						)
 						{
-							boost::filesystem::path const path{
-								_output_path
-								/
-								_entry.first
-							};
-
-							boost::filesystem::ofstream output_stream{
-								path,
-								std::ios_base::binary
-							};
-
-							fcppt::io::cout()
-								<<
-								FCPPT_TEXT("Extracting ")
-								<<
-								fcppt::filesystem::path_to_string(
-									path
-								)
-								<<
-								FCPPT_TEXT('\n');
-
-							if(
-								!output_stream.is_open()
-							)
-								return
-									either_error{
-										FCPPT_TEXT("Failed to open ")
-										+
-										fcppt::filesystem::path_to_string(
-											path
-										)
-									};
-
-							// TODO: Make a function for this?
-							output_stream.write(
-								_buffer.data(),
-								fcppt::cast::to_signed(
-									_buffer.size()
-								)
-							);
-
 							return
-								output_stream
-								?
-									either_error{
-										fcppt::either::no_error{}
-									}
-								:
-									either_error{
-										FCPPT_TEXT("Failed to write ")
-										+
-										fcppt::filesystem::path_to_string(
-											path
-										)
-									}
-								;
+								write_to_file(
+									_output_path
+									/
+									_entry.first,
+									_buffer
+								);
 						}
 					);
 			},
