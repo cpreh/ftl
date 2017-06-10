@@ -1,5 +1,5 @@
 #include <libftl/archive/file_fwd.hpp>
-#include <libftl/impl/xml/read_without_root.hpp>
+#include <libftl/impl/xml/read.hpp>
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/sector.hpp>
@@ -21,7 +21,7 @@ libftl::xml::sector(
 )
 {
 	return
-		libftl::impl::xml::read_without_root(
+		libftl::impl::xml::read(
 			_file,
 			fcppt::function<
 				std::unique_ptr<

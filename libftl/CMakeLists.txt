@@ -109,7 +109,7 @@ set(
 	LIBFTL_FILES
 	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
 	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
-	libftl/impl/include/libftl/impl/xml/read_without_root.hpp
+	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/root_name.hpp
 	libftl/impl/include/libftl/impl/xml/root_name_fwd.hpp
 	libftl/include/libftl/archive/entry.hpp

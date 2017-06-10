@@ -1,5 +1,5 @@
-#ifndef LIBFTL_IMPL_XML_READ_WITHOUT_ROOT_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_READ_WITHOUT_ROOT_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_XML_READ_HPP_INCLUDED
+#define LIBFTL_IMPL_XML_READ_HPP_INCLUDED
 
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/file.hpp>
@@ -43,7 +43,7 @@ template<
 libftl::xml::result<
 	Result
 >
-read_without_root(
+read(
 	libftl::archive::file const &_file,
 	fcppt::function<
 		std::unique_ptr<
