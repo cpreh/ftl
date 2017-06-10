@@ -7,6 +7,7 @@
 #include <fcppt/function_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <memory>
+#include <regex>
 #include <string>
 #include <sstream>
 #include <fcppt/config/external_end.hpp>
@@ -37,8 +38,42 @@ libftl::xml::blueprints(
 					libftl::xml::generated::blueprints_root
 				>
 				{
+					std::string const fixed{
+						std::regex_replace(
+							std::regex_replace(
+								std::regex_replace(
+									std::regex_replace(
+										std::regex_replace(
+											_string,
+											std::regex{
+												"</clonebay>\\r\\s*<clonebay"
+											},
+											"</medbay><clonebay"
+										),
+										std::regex{
+											"</slot>\\r\\s*</slot>"
+										},
+										"</slot></shields>"
+									),
+									std::regex{
+										"false\"img"
+									},
+									"false\" img"
+								),
+								std::regex{
+									"true\"img"
+								},
+								"true\" img"
+							),
+							std::regex{
+								"</ship>"
+							},
+							"</shipBlueprint>"
+						)
+					};
+
 					std::istringstream stream{
-						_string
+						fixed
 					};
 
 					return

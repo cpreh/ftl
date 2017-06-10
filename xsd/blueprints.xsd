@@ -114,9 +114,9 @@
 			<xs:element name="cooldown" type="xs:unsignedInt"/>
 			<xs:element name="hullBust" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="speed" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="power" type="xs:unsignedInt"/>
-			<xs:element name="cost" type="xs:unsignedInt"/>
-			<xs:element name="bp" type="xs:unsignedInt"/>
+			<xs:element name="power" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="cost" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="bp" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="length" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="image" type="xs:string"/>

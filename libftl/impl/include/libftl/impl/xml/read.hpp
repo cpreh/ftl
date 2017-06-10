@@ -105,14 +105,22 @@ read(
 					'\n'
 				};
 
-				std::regex const regex{
+				std::regex const comment_regex{
 					"<!--[^]*?-->"
+				};
+
+				std::regex const version_regex{
+					"<\\?xml.*\\?>"
 				};
 
 				std::string const replaced{
 					std::regex_replace(
-						input,
-						regex,
+						std::regex_replace(
+							input,
+							comment_regex,
+							""
+						),
+						version_regex,
 						""
 					)
 				};
