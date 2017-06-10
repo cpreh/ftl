@@ -21,12 +21,16 @@
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/assert/optional_error.hpp>
 #include <fcppt/io/buffer.hpp>
+#include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/pop_warning.hpp>
+#include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/exceptions.hxx>
 #include <xsd/cxx/tree/exceptions.hxx>
 #include <memory>
 #include <regex>
 #include <string>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -131,6 +135,35 @@ read(
 				>
 				result_type;
 
+FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
+				auto const make_error(
+					[
+						&_file
+					](
+						fcppt::string &&_value
+					)
+					->
+					result_type
+					{
+						return
+							result_type{
+								FCPPT_TEXT("Failed to read ")
+								+
+								fcppt::insert_to_fcppt_string(
+									_file.entry
+								)
+								+
+								FCPPT_TEXT(": ")
+								+
+								std::move(
+									_value
+								)
+							};
+					}
+				);
+FCPPT_PP_POP_WARNING
+
 				try
 				{
 					return
@@ -145,17 +178,23 @@ read(
 						};
 				}
 				catch(
-					xsd::cxx::tree::exception<
+					xsd::cxx::tree::expected_element<
 						char
 					> const &_error
 				)
 				{
 					return
-						result_type{
-							FCPPT_TEXT("Failed to read ")
+						make_error(
+							FCPPT_TEXT("Expected element ")
 							+
-							fcppt::insert_to_fcppt_string(
-								_file.entry
+							fcppt::from_std_string(
+								_error.name()
+							)
+							+
+							FCPPT_TEXT(" in namespace ")
+							+
+							fcppt::from_std_string(
+								_error.namespace_()
 							)
 							+
 							FCPPT_TEXT(": ")
@@ -165,26 +204,34 @@ read(
 									_error
 								)
 							)
-						};
+						);
+
+				}
+				catch(
+					xsd::cxx::tree::exception<
+						char
+					> const &_error
+				)
+				{
+					return
+						make_error(
+							fcppt::from_std_string(
+								fcppt::insert_to_std_string(
+									_error
+								)
+							)
+						);
 				}
 				catch(
 					xsd::cxx::exception const &_error
 				)
 				{
 					return
-						result_type{
-							FCPPT_TEXT("Failed to read ")
-							+
-							fcppt::insert_to_fcppt_string(
-								_file.entry
-							)
-							+
-							FCPPT_TEXT(": ")
-							+
+						make_error(
 							fcppt::from_std_string(
 								_error.what()
 							)
-						};
+						);
 				}
 			}
 		);
