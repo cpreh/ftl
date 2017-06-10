@@ -8,6 +8,9 @@
 #include <libftl/xml/generated/sector.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
+#include <fcppt/enum_input.hpp>
+#include <fcppt/enum_names_array.hpp>
+#include <fcppt/enum_names_impl_fwd.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/main.hpp>
@@ -15,12 +18,9 @@
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr.hpp>
-#include <fcppt/algorithm/find_opt.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <fcppt/cast/int_to_enum.hpp>
 #include <fcppt/cast/size.hpp>
 #include <fcppt/cast/to_signed.hpp>
-#include <fcppt/container/enum_array.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
@@ -32,10 +32,7 @@
 #include <fcppt/filesystem/size_to_size_t.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
-#include <fcppt/io/extract.hpp>
 #include <fcppt/io/istream.hpp>
-#include <fcppt/io/ostream.hpp>
-#include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
@@ -44,6 +41,7 @@
 #include <fcppt/options/long_name.hpp>
 #include <fcppt/options/optional_help_text.hpp>
 #include <fcppt/options/parse_help.hpp>
+#include <fcppt/options/pretty_type_enum.hpp>
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
@@ -67,7 +65,6 @@
 #include <ios>
 #include <iosfwd>
 #include <iostream>
-#include <iterator>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
@@ -176,7 +173,6 @@ FCPPT_RECORD_MAKE_LABEL(
 	path_label
 );
 
-// TODO: Better pretty type for fcppt.options
 enum class xml_type
 {
 	blueprints,
@@ -185,9 +181,8 @@ enum class xml_type
 };
 
 typedef
-fcppt::container::enum_array<
-	xml_type,
-	fcppt::string
+fcppt::enum_names_array<
+	xml_type
 >
 xml_type_array;
 
@@ -196,20 +191,29 @@ xml_type_array const xml_types{{{
 	FCPPT_TEXT("sector_data")
 }}};
 
-/*
-fcppt::io::ostream &
-operator<<(
-	fcppt::io::ostream &_stream,
-	xml_type const _name
-)
+}
+
+namespace fcppt
 {
-	return
-		_stream
-		<<
-		xml_types[
-			_name
-		];
-}*/
+
+template<>
+struct enum_names_impl<
+	xml_type
+>
+{
+	static
+	xml_type_array const &
+	get()
+	{
+		return
+			xml_types;
+	}
+};
+
+}
+
+namespace
+{
 
 fcppt::io::istream &
 operator>>(
@@ -217,53 +221,11 @@ operator>>(
 	xml_type &_name
 )
 {
-	fcppt::optional::maybe_void(
-		fcppt::io::extract<
-			fcppt::string
-		>(
-			_stream
-		),
-		[
-			&_stream,
-			&_name
-		](
-			fcppt::string const &_value
-		)
-		{
-			fcppt::optional::maybe(
-				fcppt::algorithm::find_opt(
-					xml_types,
-					_value
-				),
-				[
-					&_stream
-				]{
-					_stream.setstate(
-						std::ios_base::failbit
-					);
-				},
-				[
-					&_name
-				](
-					xml_type_array::const_iterator const _it
-				)
-				{
-					_name =
-						fcppt::cast::int_to_enum<
-							xml_type
-						>(
-							std::distance(
-								xml_types.begin(),
-								_it
-							)
-						);
-				}
-			);
-		}
-	);
-
 	return
-		_stream;
+		fcppt::enum_input(
+			_stream,
+			_name
+		);
 }
 
 typedef
