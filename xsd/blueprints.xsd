@@ -18,7 +18,7 @@
 		<xs:attribute name="r" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="g" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="b" type="xs:unsignedInt" use="required"/>
-		<xs:attribute name="a" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="a" type="xs:decimal" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="layer">
@@ -34,7 +34,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="crew_blueprint">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="desc" type="xs:string"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
 			<xs:element name="bp" type="xs:unsignedInt"/>
@@ -43,7 +43,7 @@
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="powerList" type="power_list"/>
 			<xs:element name="colorList" type="color_list" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
@@ -54,7 +54,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="system_blueprint">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="desc" type="xs:string"/>
@@ -64,7 +64,7 @@
 			<xs:element name="upgradeCost" type="upgrade_cost"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
 			<xs:element name="locked" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
@@ -92,8 +92,16 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="weapon_blueprint">
+	<xs:complexType name="color2">
 		<xs:sequence>
+			<xs:element name="r" type="xs:unsignedInt"/>
+			<xs:element name="g" type="xs:unsignedInt"/>
+			<xs:element name="b" type="xs:unsignedInt"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="weapon_blueprint">
+		<xs:all>
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="short" type="xs:string"/>
@@ -103,15 +111,17 @@
 			<xs:element name="tooltip" type="xs:string"/>
 			<xs:element name="damage" type="xs:unsignedInt"/>
 			<xs:element name="sysDamage" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="persDamage" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="persDamage" type="xs:integer" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="ion" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="missiles" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="shots" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="sp" type="xs:unsignedInt"/>
 			<xs:element name="fireChance" type="xs:unsignedInt"/>
 			<xs:element name="breachChance" type="xs:unsignedInt"/>
+			<xs:element name="lockdown" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="stunChance" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="cooldown" type="xs:unsignedInt"/>
+			<xs:element name="color" type="color2" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="hullBust" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="speed" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="power" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
@@ -127,12 +137,12 @@
 			<xs:element name="missSounds" type="miss_sounds" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="weaponArt" type="xs:string"/>
 			<xs:element name="iconImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="drone_blueprint">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="locked" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="level" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
@@ -152,23 +162,23 @@
 			<xs:element name="weaponBlueprint" type="xs:string"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="iconImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="item_blueprint">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="desc" type="xs:string"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="aug_blueprint">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="desc" type="xs:string"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
@@ -176,7 +186,7 @@
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="stackable" type="xs:boolean"/>
 			<xs:element name="value" type="xs:decimal"/>
-		</xs:sequence>
+		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
@@ -206,7 +216,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="system_list">
-		<xs:sequence>
+		<xs:all>
 			<xs:element name="pilot" type="system"/>
 			<xs:element name="doors" type="system"/>
 			<xs:element name="sensors" type="system"/>
@@ -223,7 +233,7 @@
 			<xs:element name="battery" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="mind" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="hacking" type="system" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:all>
 	</xs:complexType>
 
 	<xs:complexType name="ship_weapon">
