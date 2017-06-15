@@ -8,9 +8,6 @@
 #include <libftl/xml/generated/sector.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
-#include <fcppt/enum_input.hpp>
-#include <fcppt/enum_names_array.hpp>
-#include <fcppt/enum_names_impl_fwd.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/main.hpp>
@@ -26,6 +23,9 @@
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
+#include <fcppt/enum/input.hpp>
+#include <fcppt/enum/names_array.hpp>
+#include <fcppt/enum/names_impl_fwd.hpp>
 #include <fcppt/filesystem/file_size.hpp>
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
@@ -181,7 +181,7 @@ enum class xml_type
 };
 
 typedef
-fcppt::enum_names_array<
+fcppt::enum_::names_array<
 	xml_type
 >
 xml_type_array;
@@ -195,9 +195,11 @@ xml_type_array const xml_types{{{
 
 namespace fcppt
 {
+namespace enum_
+{
 
 template<>
-struct enum_names_impl<
+struct names_impl<
 	xml_type
 >
 {
@@ -211,6 +213,7 @@ struct enum_names_impl<
 };
 
 }
+}
 
 namespace
 {
@@ -222,7 +225,7 @@ operator>>(
 )
 {
 	return
-		fcppt::enum_input(
+		fcppt::enum_::input(
 			_stream,
 			_name
 		);
