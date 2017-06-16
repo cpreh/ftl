@@ -2,8 +2,10 @@
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
+#include <libftl/xml/achievements.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/sector.hpp>
+#include <libftl/xml/generated/achievements.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/xml/generated/sector.hpp>
 #include <fcppt/args_char.hpp>
@@ -175,6 +177,7 @@ FCPPT_RECORD_MAKE_LABEL(
 
 enum class xml_type
 {
+	achievements,
 	blueprints,
 	sector_data,
 	fcppt_maximum = sector_data
@@ -187,6 +190,7 @@ fcppt::enum_::names_array<
 xml_type_array;
 
 xml_type_array const xml_types{{{
+	FCPPT_TEXT("achievements"),
 	FCPPT_TEXT("blueprints"),
 	FCPPT_TEXT("sector_data")
 }}};
@@ -259,6 +263,9 @@ main_program(
 
 	typedef
 	fcppt::variant::variadic<
+		fcppt::unique_ptr<
+			libftl::xml::generated::achievements_root
+		>,
 		fcppt::unique_ptr<
 			libftl::xml::generated::blueprints_root
 		>,
@@ -336,6 +343,14 @@ main_program(
 						)
 					)
 					{
+					case xml_type::achievements:
+						return
+							fcppt::either::map(
+								libftl::xml::achievements(
+									_file
+								),
+								wrap_result
+							);
 					case xml_type::blueprints:
 						return
 							fcppt::either::map(

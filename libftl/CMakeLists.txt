@@ -86,6 +86,7 @@ endfunction()
 
 set(
 	PARSER_NAMES
+	achievements
 	blueprints
 	sector
 )
@@ -110,6 +111,9 @@ set(
 	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
 	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
+	libftl/impl/include/libftl/impl/xml/replace.hpp
+	libftl/impl/include/libftl/impl/xml/replace_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/replace_list.hpp
 	libftl/impl/include/libftl/impl/xml/root_name.hpp
 	libftl/impl/include/libftl/impl/xml/root_name_fwd.hpp
 	libftl/include/libftl/archive/entry.hpp
@@ -122,6 +126,7 @@ set(
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
@@ -129,6 +134,7 @@ set(
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/xml/achievements.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/sector.cpp
 )
