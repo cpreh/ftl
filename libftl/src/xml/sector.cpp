@@ -11,7 +11,6 @@
 #include <memory>
 #include <regex>
 #include <string>
-#include <sstream>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -40,13 +39,9 @@ libftl::xml::sector(
 					libftl::xml::generated::sector_root
 				>
 				{
-					std::istringstream stream{
-						_string
-					};
-
 					return
 						libftl::xml::generated::sectorRoot(
-							stream,
+							_string,
 							xml_schema::flags::dont_validate
 						);
 				}
