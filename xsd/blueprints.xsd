@@ -9,7 +9,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="power_list">
-		<xs:sequence>
+		<xs:sequence minOccurs="0">
 			<xs:element name="power" type="xs:string" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -101,7 +101,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="weapon_blueprint">
-		<xs:all>
+		<xs:choice maxOccurs="unbounded">
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="short" type="xs:string"/>
@@ -137,7 +137,7 @@
 			<xs:element name="missSounds" type="miss_sounds" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="weaponArt" type="xs:string"/>
 			<xs:element name="iconImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-		</xs:all>
+		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 
@@ -156,10 +156,10 @@
 			<xs:element name="dodge" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="speed" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
-			<xs:element name="bp" type="xs:unsignedInt"/>
-			<xs:element name="droneImage" type="xs:string"/>
+			<xs:element name="bp" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="droneImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="image" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="weaponBlueprint" type="xs:string"/>
+			<xs:element name="weaponBlueprint" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="iconImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
 		</xs:all>
@@ -185,7 +185,7 @@
 			<xs:element name="bp" type="xs:unsignedInt"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="stackable" type="xs:boolean"/>
-			<xs:element name="value" type="xs:decimal"/>
+			<xs:element name="value" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
 		</xs:all>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
@@ -193,7 +193,7 @@
 	<xs:complexType name="slot">
 		<xs:sequence>
 			<xs:element name="direction" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="number" type="xs:unsignedInt"/>
+			<xs:element name="number" type="xs:integer"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -204,7 +204,7 @@
 		<xs:attribute name="power" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="max" type="xs:unsignedInt"/>
 		<xs:attribute name="room" type="xs:unsignedInt" use="required"/>
-		<xs:attribute name="start" type="xs:boolean" use="required"/>
+		<xs:attribute name="start" type="xs:boolean"/>
 		<xs:attribute name="img" type="xs:string"/>
 	</xs:complexType>
 
@@ -216,24 +216,24 @@
 	</xs:complexType>
 
 	<xs:complexType name="system_list">
-		<xs:all>
+		<xs:choice maxOccurs="unbounded">
 			<xs:element name="pilot" type="system"/>
-			<xs:element name="doors" type="system"/>
-			<xs:element name="sensors" type="system"/>
-			<xs:element name="medbay" type="system"/>
+			<xs:element name="doors" type="system" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="sensors" type="system" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="medbay" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="clonebay" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="oxygen" type="system"/>
 			<xs:element name="shields" type="system"/>
 			<xs:element name="engines" type="system"/>
 			<xs:element name="weapons" type="system"/>
-			<xs:element name="drones" type="system"/>
-			<xs:element name="teleporter" type="system"/>
-			<xs:element name="artillery" type="system_weapon"/>
-			<xs:element name="cloaking" type="system"/>
+			<xs:element name="drones" type="system" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="teleporter" type="system" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="artillery" type="system_weapon" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="cloaking" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="battery" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="mind" type="system" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="hacking" type="system" minOccurs="0" maxOccurs="1"/>
-		</xs:all>
+		</xs:choice>
 	</xs:complexType>
 
 	<xs:complexType name="ship_weapon">
@@ -249,7 +249,7 @@
 	</xs:complexType>
 
 	<xs:complexType name="weapon_list">
-		<xs:sequence>
+		<xs:sequence minOccurs="0">
 			<xs:element name="weapon" type="ship_weapon" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="count" type="xs:unsignedInt" use="required"/>
@@ -257,11 +257,12 @@
 	</xs:complexType>
 
 	<xs:complexType name="drone_list">
-		<xs:sequence>
+		<xs:sequence minOccurs="0">
 			<xs:element name="drone" type="ship_drone" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="count" type="xs:unsignedInt" use="required"/>
-		<xs:attribute name="drones" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="count" type="xs:unsignedInt"/>
+		<xs:attribute name="missiles" type="xs:unsignedInt"/>
+		<xs:attribute name="drones" type="xs:unsignedInt"/>
 	</xs:complexType>
 
 	<xs:complexType name="ship_health">
@@ -275,43 +276,44 @@
 	<xs:complexType name="ship_crew_count">
 		<xs:attribute name="amount" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="class" type="xs:string" use="required"/>
+		<xs:attribute name="max" type="xs:unsignedInt"/>
 	</xs:complexType>
 
 	<xs:complexType name="ship_blueprint">
-		<xs:sequence>
+		<xs:choice maxOccurs="unbounded">
 			<xs:element name="class" type="xs:string"/>
-			<xs:element name="name" type="xs:string"/>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="unlock" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="desc" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="systemList" type="system_list"/>
 			<xs:element name="weaponSlots" type="xs:unsignedInt"/>
 			<xs:element name="droneSlots" type="xs:unsignedInt"/>
 			<xs:element name="weaponList" type="weapon_list"/>
-			<xs:element name="aug" type="ship_aug" maxOccurs="unbounded"/>
-			<xs:element name="droneList" type="weapon_list" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="aug" type="ship_aug" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="droneList" type="drone_list" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="health" type="ship_health"/>
 			<xs:element name="maxPower" type="ship_max_power"/>
 			<xs:element name="boardingAI" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="crewCount" type="ship_crew_count" maxOccurs="unbounded"/>
 			<xs:element name="shieldImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="cloakImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
+		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="layout" type="xs:string" use="required"/>
 		<xs:attribute name="img" type="xs:string" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="blueprints_root">
-		<xs:sequence>
-			<xs:element name="blueprintList" type="blueprint_list" maxOccurs="unbounded"/>
-			<xs:element name="crewBlueprint" type="crew_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="systemBlueprint" type="system_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="weaponBlueprint" type="weapon_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="droneBlueprint" type="drone_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="itemBlueprint" type="item_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="augBlueprint" type="aug_blueprint" maxOccurs="unbounded"/>
-			<xs:element name="shipBlueprint" type="ship_blueprint" maxOccurs="unbounded"/>
-		</xs:sequence>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="blueprintList" type="blueprint_list"/>
+			<xs:element name="crewBlueprint" type="crew_blueprint"/>
+			<xs:element name="systemBlueprint" type="system_blueprint"/>
+			<xs:element name="weaponBlueprint" type="weapon_blueprint"/>
+			<xs:element name="droneBlueprint" type="drone_blueprint"/>
+			<xs:element name="itemBlueprint" type="item_blueprint"/>
+			<xs:element name="augBlueprint" type="aug_blueprint"/>
+			<xs:element name="shipBlueprint" type="ship_blueprint"/>
+		</xs:choice>
 	</xs:complexType>
 
 	<xs:element name="blueprintsRoot" type="blueprints_root"/>
