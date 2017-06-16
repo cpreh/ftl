@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:complexType name="img">
+		<xs:attribute name="x" type="xs:integer" use="required"/>
+		<xs:attribute name="y" type="xs:integer" use="required"/>
+		<xs:attribute name="w" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="h" type="xs:unsignedInt" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="offset">
+		<xs:attribute name="x" type="xs:integer" use="required"/>
+		<xs:attribute name="y" type="xs:integer" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="offsets">
+		<xs:all>
+			<xs:element name="floor" type="offset" minOccurs="0"/>
+			<xs:element name="cloak" type="offset" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="mount">
+		<xs:attribute name="x" type="xs:integer" use="required"/>
+		<xs:attribute name="y" type="xs:integer" use="required"/>
+		<xs:attribute name="rotate" type="xs:boolean" use="required"/>
+		<xs:attribute name="mirror" type="xs:boolean" use="required"/>
+		<xs:attribute name="gib" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="slide" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="weapon_mounts">
+		<xs:sequence>
+			<xs:element name="mount" type="mount" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="interval_int">
+		<xs:attribute name="min" type="xs:integer" use="required"/>
+		<xs:attribute name="max" type="xs:integer" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="interval_float">
+		<xs:attribute name="min" type="xs:decimal" use="required"/>
+		<xs:attribute name="max" type="xs:decimal" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="gib">
+		<xs:sequence>
+			<xs:element name="velocity" type="interval_float"/>
+			<xs:element name="direction" type="interval_int"/>
+			<xs:element name="angular" type="interval_float"/>
+			<xs:element name="glowOffset" type="offset" minOccurs="0"/>
+			<xs:element name="x" type="xs:integer"/>
+			<xs:element name="y" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="explosion">
+		<xs:sequence>
+			<xs:element name="gib1" type="gib"/>
+			<xs:element name="gib2" type="gib"/>
+			<xs:element name="gib3" type="gib"/>
+			<xs:element name="gib4" type="gib"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ship_root">
+		<xs:sequence>
+			<xs:element name="img" type="img"/>
+			<xs:element name="glowOffset" type="offset" minOccurs="0"/>
+			<xs:element name="offsets" type="offsets"/>
+			<xs:element name="weaponMounts" type="weapon_mounts"/>
+			<xs:element name="explosion" type="explosion"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="shipRoot" type="ship_root"/>
+</xs:schema>

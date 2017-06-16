@@ -5,9 +5,11 @@
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/sector.hpp>
+#include <libftl/xml/ship.hpp>
 #include <libftl/xml/generated/achievements.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/xml/generated/sector.hpp>
+#include <libftl/xml/generated/ship.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
@@ -180,7 +182,8 @@ enum class xml_type
 	achievements,
 	blueprints,
 	sector_data,
-	fcppt_maximum = sector_data
+	ship,
+	fcppt_maximum = ship
 };
 
 typedef
@@ -192,7 +195,8 @@ xml_type_array;
 xml_type_array const xml_types{{{
 	FCPPT_TEXT("achievements"),
 	FCPPT_TEXT("blueprints"),
-	FCPPT_TEXT("sector_data")
+	FCPPT_TEXT("sector_data"),
+	FCPPT_TEXT("ship")
 }}};
 
 }
@@ -271,6 +275,9 @@ main_program(
 		>,
 		fcppt::unique_ptr<
 			libftl::xml::generated::sector_root
+		>,
+		fcppt::unique_ptr<
+			libftl::xml::generated::ship_root
 		>
 	>
 	result_type;
@@ -363,6 +370,14 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::sector(
+									_file
+								),
+								wrap_result
+							);
+					case xml_type::ship:
+						return
+							fcppt::either::map(
+								libftl::xml::ship(
 									_file
 								),
 								wrap_result

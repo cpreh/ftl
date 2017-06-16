@@ -89,6 +89,7 @@ set(
 	achievements
 	blueprints
 	sector
+	ship
 )
 
 foreach(
@@ -132,12 +133,14 @@ set(
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sector.hpp
+	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/sector.cpp
+	libftl/src/xml/ship.cpp
 )
 
 set(
