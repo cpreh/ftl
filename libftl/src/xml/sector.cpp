@@ -1,5 +1,7 @@
 #include <libftl/archive/file_fwd.hpp>
 #include <libftl/impl/xml/read.hpp>
+#include <libftl/impl/xml/replace.hpp>
+#include <libftl/impl/xml/replace_list.hpp>
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/sector.hpp>
@@ -38,20 +40,8 @@ libftl::xml::sector(
 					libftl::xml::generated::sector_root
 				>
 				{
-					std::regex const fixup{
-						"sectorDescrption"
-					};
-
-					std::string const fixed{
-						std::regex_replace(
-							_string,
-							fixup,
-							"sectorDescription"
-						)
-					};
-
 					std::istringstream stream{
-						fixed
+						_string
 					};
 
 					return
@@ -63,6 +53,14 @@ libftl::xml::sector(
 			},
 			libftl::impl::xml::root_name{
 				"sectorRoot"
+			},
+			libftl::impl::xml::replace_list{
+				libftl::impl::xml::replace{
+					std::regex{
+						"sectorDescrption"
+					},
+					"sectorDescription"
+				}
 			}
 		);
 }

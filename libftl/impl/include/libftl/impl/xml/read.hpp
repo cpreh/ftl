@@ -6,6 +6,8 @@
 #include <libftl/archive/extract.hpp>
 #include <libftl/impl/xml/make_closing_tag.hpp>
 #include <libftl/impl/xml/make_opening_tag.hpp>
+#include <libftl/impl/xml/replace.hpp>
+#include <libftl/impl/xml/replace_list.hpp>
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
@@ -16,6 +18,8 @@
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_from_std.hpp>
+#include <fcppt/algorithm/fold.hpp>
+#include <fcppt/algorithm/join.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
@@ -56,7 +60,8 @@ read(
 			std::string const &
 		)
 	> const &_function,
-	libftl::impl::xml::root_name const &_root_name
+	libftl::impl::xml::root_name const &_root_name,
+	libftl::impl::xml::replace_list const &_replace
 )
 {
 	return
@@ -83,7 +88,8 @@ read(
 			[
 				&_function,
 				&_root_name,
-				&_file
+				&_file,
+				&_replace
 			](
 				fcppt::io::buffer const &_buffer
 			)
@@ -109,23 +115,40 @@ read(
 					'\n'
 				};
 
-				std::regex const comment_regex{
-					"<!--[^]*?-->"
-				};
-
-				std::regex const version_regex{
-					"<\\?xml.*\\?>"
-				};
-
 				std::string const replaced{
-					std::regex_replace(
-						std::regex_replace(
-							input,
-							comment_regex,
-							""
+					fcppt::algorithm::fold(
+						fcppt::algorithm::join(
+							libftl::impl::xml::replace_list{
+								libftl::impl::xml::replace{
+									std::regex{
+										"<\\?xml.*\\?>"
+									},
+									""
+								},
+								libftl::impl::xml::replace{
+									std::regex{
+										"<!--[^]*?-->"
+									},
+									""
+								}
+							},
+							_replace
 						),
-						version_regex,
-						""
+						input,
+						[](
+							libftl::impl::xml::replace const &_replace,
+							std::string &&_string
+						)
+						{
+							return
+								std::regex_replace(
+									std::move(
+										_string
+									),
+									_replace.regex_,
+									_replace.replace_string_
+								);
+						}
 					)
 				};
 
