@@ -61,7 +61,7 @@ read(
 		)
 	> const &_function,
 	libftl::impl::xml::root_name const &_root_name,
-	libftl::impl::xml::replace_list const &_replace
+	libftl::impl::xml::replace_list const &_replace_list
 )
 {
 	return
@@ -89,7 +89,7 @@ read(
 				&_function,
 				&_root_name,
 				&_file,
-				&_replace
+				&_replace_list
 			](
 				fcppt::io::buffer const &_buffer
 			)
@@ -132,7 +132,7 @@ read(
 									""
 								}
 							},
-							_replace
+							_replace_list
 						),
 						input,
 						[](
