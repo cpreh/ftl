@@ -1,14 +1,14 @@
 #include <libftl/archive/file_fwd.hpp>
+#include <libftl/impl/xml/load_function.hpp>
 #include <libftl/impl/xml/read.hpp>
 #include <libftl/impl/xml/replace_list.hpp>
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/generated/achievements.hpp>
-#include <fcppt/function_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
 #include <memory>
-#include <string>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -22,15 +22,11 @@ libftl::xml::achievements(
 	return
 		libftl::impl::xml::read(
 			_file,
-			fcppt::function<
-				std::unique_ptr<
-					libftl::xml::generated::achievements_root
-				>(
-					std::string const &
-				)
+			libftl::impl::xml::load_function<
+				libftl::xml::generated::achievements_root
 			>{
 				[](
-					std::string const &_string
+					std::istream &_stream
 				)
 				->
 				std::unique_ptr<
@@ -39,7 +35,7 @@ libftl::xml::achievements(
 				{
 					return
 						libftl::xml::generated::achievementsRoot(
-							_string,
+							_stream,
 							xml_schema::flags::dont_validate
 						);
 				}

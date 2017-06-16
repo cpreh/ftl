@@ -108,6 +108,7 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
 	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp

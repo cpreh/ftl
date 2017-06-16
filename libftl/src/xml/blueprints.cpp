@@ -1,4 +1,5 @@
 #include <libftl/archive/file_fwd.hpp>
+#include <libftl/impl/xml/load_function.hpp>
 #include <libftl/impl/xml/read.hpp>
 #include <libftl/impl/xml/replace.hpp>
 #include <libftl/impl/xml/replace_list.hpp>
@@ -6,11 +7,9 @@
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
-#include <fcppt/function_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <memory>
+#include <iosfwd>
 #include <regex>
-#include <string>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -24,15 +23,11 @@ libftl::xml::blueprints(
 	return
 		libftl::impl::xml::read(
 			_file,
-			fcppt::function<
-				std::unique_ptr<
-					libftl::xml::generated::blueprints_root
-				>(
-					std::string const &
-				)
+			libftl::impl::xml::load_function<
+				libftl::xml::generated::blueprints_root
 			>{
 				[](
-					std::string const &_string
+					std::istream &_stream
 				)
 				->
 				std::unique_ptr<
@@ -41,7 +36,7 @@ libftl::xml::blueprints(
 				{
 					return
 						libftl::xml::generated::blueprintsRoot(
-							_string,
+							_stream,
 							xml_schema::flags::dont_validate
 						);
 				}

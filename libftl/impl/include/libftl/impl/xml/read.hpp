@@ -4,6 +4,7 @@
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/extract.hpp>
+#include <libftl/impl/xml/load_function.hpp>
 #include <libftl/impl/xml/make_closing_tag.hpp>
 #include <libftl/impl/xml/make_opening_tag.hpp>
 #include <libftl/impl/xml/replace.hpp>
@@ -11,7 +12,6 @@
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/function_impl.hpp>
 #include <fcppt/identity.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/insert_to_std_string.hpp>
@@ -31,8 +31,8 @@
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/exceptions.hxx>
 #include <xsd/cxx/tree/exceptions.hxx>
-#include <memory>
 #include <regex>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
@@ -53,12 +53,8 @@ libftl::xml::result<
 >
 read(
 	libftl::archive::file const &_file,
-	fcppt::function<
-		std::unique_ptr<
-			Result
-		>(
-			std::string const &
-		)
+	libftl::impl::xml::load_function<
+		Result
 	> const &_function,
 	libftl::impl::xml::root_name const &_root_name,
 	libftl::impl::xml::replace_list const &_replace_list
@@ -189,12 +185,16 @@ FCPPT_PP_POP_WARNING
 
 				try
 				{
+					std::istringstream stream{
+						replaced
+					};
+
 					return
 						result_type{
 							FCPPT_ASSERT_OPTIONAL_ERROR(
 								fcppt::unique_ptr_from_std(
 									_function(
-										replaced
+										stream
 									)
 								)
 							)
