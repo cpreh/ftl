@@ -14,6 +14,13 @@ find_package(
 )
 
 find_package(
+	sge
+	REQUIRED
+	COMPONENTS
+	parse
+)
+
+find_package(
 	XercesC
 	REQUIRED
 )
@@ -128,6 +135,21 @@ set(
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/ship/door.hpp
+	libftl/include/libftl/ship/door_fwd.hpp
+	libftl/include/libftl/ship/ellipse.hpp
+	libftl/include/libftl/ship/ellipse_fwd.hpp
+	libftl/include/libftl/ship/layout.hpp
+	libftl/include/libftl/ship/layout_fwd.hpp
+	libftl/include/libftl/ship/parse_layout.hpp
+	libftl/include/libftl/ship/room.hpp
+	libftl/include/libftl/ship/room_fwd.hpp
+	libftl/include/libftl/ship/room_id.hpp
+	libftl/include/libftl/ship/tile_coordinate.hpp
+	libftl/include/libftl/ship/tile_pos.hpp
+	libftl/include/libftl/ship/tile_pos_fwd.hpp
+	libftl/include/libftl/ship/tile_rect.hpp
+	libftl/include/libftl/ship/tile_rect_fwd.hpp
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/result.hpp
@@ -137,6 +159,7 @@ set(
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/ship/parse_layout.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/sector.cpp
@@ -225,6 +248,7 @@ function(
 		fcppt_core_interface
 		PRIVATE
 		${XercesC_LIBRARIES}
+		${sgeparse_TARGET}
 		${alda_TARGET}
 		${fcppt_core_TARGET}
 	)
