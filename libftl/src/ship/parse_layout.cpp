@@ -12,6 +12,8 @@
 #include <sge/parse/result_code.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/make_cref.hpp>
+#include <fcppt/make_ref.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -28,6 +30,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_eol.hpp>
 #include <boost/spirit/include/qi_grammar.hpp>
 #include <boost/spirit/include/qi_int.hpp>
 #include <boost/spirit/include/qi_kleene.hpp>
@@ -36,8 +39,7 @@
 #include <boost/spirit/include/qi_sequence.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
 #include <boost/spirit/include/support_istream_iterator.hpp>
-#include <boost/spirit/include/support_standard.hpp>
-#include <iosfwd>
+#include <ios>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -45,11 +47,6 @@
 
 namespace
 {
-
-namespace
-encoding
-=
-boost::spirit::standard;
 
 typedef
 std::make_signed<
@@ -161,8 +158,7 @@ class grammar final
 	public
 	boost::spirit::qi::grammar<
 		In,
-		::layout(),
-		encoding::space_type
+		::layout()
 	>
 {
 	FCPPT_NONCOPYABLE(
@@ -184,67 +180,74 @@ public:
 		layout_{},
 		error_string_{}
 	{
+		using
+		boost::spirit::eol;
+
 		namespace
 		qi
 		=
 		boost::spirit::qi;
 
 		room_ %=
-			qi::lit("ROOM")
-			>>
-			room_id_int_
-			>>
-			tile_coordinate_int_
-			>>
-			tile_coordinate_int_
-			>>
-			tile_coordinate_int_
-			>>
-			tile_coordinate_int_;
+			qi::lit("ROOM") > eol
+			>
+			room_id_int_ > eol
+			>
+			tile_coordinate_int_ > eol
+			>
+			tile_coordinate_int_ > eol
+			>
+			tile_coordinate_int_ > eol
+			>
+			tile_coordinate_int_ > eol;
 
 		door_ %=
-			qi::lit("DOOR")
-			>>
-			tile_coordinate_int_
-			>>
-			tile_coordinate_int_
-			>>
-			room_id_signed_int_
-			>>
-			room_id_signed_int_
-			>>
-			qi::int_;
+			qi::lit("DOOR") > eol
+			>
+			tile_coordinate_int_ > eol
+			>
+			tile_coordinate_int_ > eol
+			>
+			room_id_signed_int_ > eol
+			>
+			room_id_signed_int_ > eol
+			>
+			qi::int_ > eol;
 
 		layout_ %=
-			qi::lit("X_OFFSET")
-			>>
-			offset_int_
-			>>
-			qi::lit("Y_OFFSET")
-			>>
-			offset_int_
-			>>
-			qi::lit("VERTICAL")
-			>>
-			qi::int_
-			>>
-			qi::lit("ELLIPSE")
-			>>
-			ellipse_int_
-			>>
-			ellipse_int_
-			>>
-			ellipse_int_
-			>>
-			ellipse_int_
-			>>
+			qi::lit("X_OFFSET") > eol
+			>
+			offset_int_ > eol
+			>
+			qi::lit("Y_OFFSET") > eol
+			>
+			offset_int_ > eol
+			>
+			qi::lit("VERTICAL") > eol
+			>
+			qi::int_ > eol
+			>
+			qi::lit("ELLIPSE") > eol
+			>
+			ellipse_int_ > eol
+			>
+			ellipse_int_ > eol
+			>
+			ellipse_int_ > eol
+			>
+			ellipse_int_ > eol
+			>
 			*room_
-			>>
+			>
 			*door_;
 
 		sge::parse::install_error_handler(
-			layout_,
-			error_string_
+			fcppt::make_ref(
+				layout_
+			),
+			fcppt::make_ref(
+				error_string_
+			)
 		);
 	}
 
@@ -286,22 +289,19 @@ public:
 
 	boost::spirit::qi::rule<
 		In,
-		::room(),
-		encoding::space_type
+		::room()
 	>
 	room_;
 
 	boost::spirit::qi::rule<
 		In,
-		::door(),
-		encoding::space_type
+		::door()
 	>
 	door_;
 
 	boost::spirit::qi::rule<
 		In,
-		::layout(),
-		encoding::space_type
+		::layout()
 	>
 	layout_;
 
@@ -487,6 +487,10 @@ libftl::ship::parse_layout(
 )
 try
 {
+	_stream.unsetf(
+		std::ios_base::skipws
+	);
+
 	boost::spirit::istream_iterator begin(
 		_stream
 	);
@@ -502,14 +506,15 @@ try
 
 	sge::parse::result const result{
 		sge::parse::make_result(
-			boost::spirit::qi::phrase_parse(
+			boost::spirit::qi::parse(
 				begin,
 				end,
 				parser,
-				encoding::space,
 				result_layout
 			),
-			begin,
+			fcppt::make_cref(
+				begin
+			),
 			end,
 			parser
 		)

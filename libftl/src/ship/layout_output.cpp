@@ -35,7 +35,7 @@ operator<<(
 		<<
 		_room.id_
 		<<
-		FCPPT_TEXT("tile_rect: ")
+		FCPPT_TEXT(", tile_rect: ")
 		<<
 		_room.rect_;
 }
@@ -59,15 +59,15 @@ operator<<(
 		<<
 		_door.pos_
 		<<
-		FCPPT_TEXT("left_top_room: ")
+		FCPPT_TEXT(", left_top_room: ")
 		<<
 		_door.left_top_room_
 		<<
-		FCPPT_TEXT("bottom_right_room: ")
+		FCPPT_TEXT(", bottom_right_room: ")
 		<<
 		_door.bottom_right_room_
 		<<
-		FCPPT_TEXT("vertical: ")
+		FCPPT_TEXT(", vertical: ")
 		<<
 		_door.vertical_;
 }
