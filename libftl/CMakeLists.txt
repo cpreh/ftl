@@ -141,6 +141,7 @@ set(
 	libftl/include/libftl/ship/ellipse_fwd.hpp
 	libftl/include/libftl/ship/layout.hpp
 	libftl/include/libftl/ship/layout_fwd.hpp
+	libftl/include/libftl/ship/layout_output.hpp
 	libftl/include/libftl/ship/parse_layout.hpp
 	libftl/include/libftl/ship/room.hpp
 	libftl/include/libftl/ship/room_fwd.hpp
@@ -159,6 +160,7 @@ set(
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/ship/layout_output.cpp
 	libftl/src/ship/parse_layout.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/blueprints.cpp

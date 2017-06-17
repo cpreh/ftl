@@ -6,7 +6,10 @@
 #include <libftl/ship/room_id.hpp>
 #include <libftl/ship/tile_coordinate.hpp>
 #include <sge/parse/install_error_handler.hpp>
+#include <sge/parse/make_result.hpp>
 #include <sge/parse/optional_error_string.hpp>
+#include <sge/parse/result.hpp>
+#include <sge/parse/result_code.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/noncopyable.hpp>
@@ -250,7 +253,7 @@ public:
 	}
 
 	sge::parse::optional_error_string const &
-	error() const
+	error_string() const
 	{
 		return
 			error_string_;
@@ -495,31 +498,38 @@ try
 	>
 	parser{};
 
-	::layout result{};
+	::layout result_layout{};
 
-	return
-		boost::spirit::qi::phrase_parse(
+	sge::parse::result const result{
+		sge::parse::make_result(
+			boost::spirit::qi::phrase_parse(
+				begin,
+				end,
+				parser,
+				encoding::space,
+				result_layout
+			),
 			begin,
 			end,
-			parser,
-			encoding::space,
-			result
+			parser
 		)
-		&&
-		begin
+	};
+
+	return
+		result.result_code()
 		==
-		end
+		sge::parse::result_code::ok
 		?
 			result_type{
 				translate_result(
-					result
+					result_layout
 				)
 			}
 		:
 			result_type{
 				fcppt::optional::from(
 					fcppt::optional::map(
-						parser.error(),
+						result.error_string(),
 						[](
 							sge::parse::error_string const &_error
 						)

@@ -1,15 +1,5 @@
-find_package(
-	Boost REQUIRED
-	COMPONENTS filesystem
-)
-
-find_package(
-	fcppt
-	REQUIRED
-)
-
 add_executable(
-	ftlxml
+	ftlship
 	main.cpp
 )
 
@@ -18,12 +8,12 @@ include(
 )
 
 fcppt_utils_set_target_compiler_flags(
-	ftlxml
+	ftlship
 )
 
 
 target_link_libraries(
-	ftlxml
+	ftlship
 	PRIVATE
 	${libftl_TARGET}
 	${fcppt_core_TARGET}
@@ -34,7 +24,7 @@ target_link_libraries(
 )
 
 target_compile_definitions(
-	ftlxml
+	ftlship
 	PRIVATE
 	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}
 )

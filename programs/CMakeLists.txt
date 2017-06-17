@@ -3,5 +3,9 @@ add_subdirectory(
 )
 
 add_subdirectory(
+	ship
+)
+
+add_subdirectory(
 	xml
 )
