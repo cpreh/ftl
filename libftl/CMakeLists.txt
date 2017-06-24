@@ -94,6 +94,7 @@ endfunction()
 set(
 	PARSER_NAMES
 	achievements
+	animations
 	blueprints
 	sectors
 	ship
@@ -152,6 +153,7 @@ set(
 	libftl/include/libftl/ship/tile_rect.hpp
 	libftl/include/libftl/ship/tile_rect_fwd.hpp
 	libftl/include/libftl/xml/achievements.hpp
+	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
@@ -163,6 +165,7 @@ set(
 	libftl/src/ship/layout_output.cpp
 	libftl/src/ship/parse_layout.cpp
 	libftl/src/xml/achievements.cpp
+	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/sectors.cpp
 	libftl/src/xml/ship.cpp
