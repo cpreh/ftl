@@ -452,12 +452,16 @@ translate_result(
 									_door.y_
 								}
 							},
-							translate_optional_door_room(
-								_door.left_top_
-							),
-							translate_optional_door_room(
-								_door.bottom_right_
-							),
+							libftl::ship::door::left_top_room{
+								translate_optional_door_room(
+									_door.left_top_
+								)
+							},
+							libftl::ship::door::bottom_right_room{
+								translate_optional_door_room(
+									_door.bottom_right_
+								)
+							},
 							libftl::ship::door::vertical(
 								translate_bool(
 									_door.vertical_

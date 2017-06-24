@@ -14,16 +14,16 @@ libftl::archive::extract(
 	libftl::archive::file const &_file
 )
 {
-	_file.stream.get().seekg(
-		_file.entry.offset.get(),
+	_file.stream_.get().seekg(
+		_file.entry_.offset_.get(),
 		std::ios_base::beg
 	);
 
 	return
 		fcppt::io::read_chars(
-			_file.stream.get(),
+			_file.stream_.get(),
 			fcppt::cast::to_unsigned(
-				_file.entry.length.get()
+				_file.entry_.length_.get()
 			)
 		);
 }

@@ -16,11 +16,29 @@ namespace archive
 
 struct file
 {
+	typedef
 	fcppt::reference<
 		std::istream
-	> stream;
+	>
+	istream_ref;
 
-	libftl::archive::entry entry;
+	file(
+		istream_ref const _stream,
+		libftl::archive::entry const _entry
+	)
+	:
+		stream_{
+			_stream
+		},
+		entry_{
+			_entry
+		}
+	{
+	}
+
+	istream_ref stream_;
+
+	libftl::archive::entry entry_;
 };
 
 }

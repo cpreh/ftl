@@ -13,9 +13,23 @@ namespace archive
 
 struct entry
 {
-	libftl::archive::offset offset;
+	entry(
+		libftl::archive::offset const _offset,
+		libftl::archive::length const _length
+	)
+	:
+		offset_{
+			_offset
+		},
+		length_{
+			_length
+		}
+	{
+	}
 
-	libftl::archive::length length;
+	libftl::archive::offset offset_;
+
+	libftl::archive::length length_;
 };
 
 }

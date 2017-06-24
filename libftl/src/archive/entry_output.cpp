@@ -16,9 +16,9 @@ libftl::archive::operator<<(
 		<<
 		FCPPT_TEXT("offset: ")
 		<<
-		_entry.offset
+		_entry.offset_
 		<<
 		FCPPT_TEXT(", length: ")
 		<<
-		_entry.length;
+		_entry.length_;
 }

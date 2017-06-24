@@ -26,11 +26,43 @@ struct door
 		vertical
 	);
 
+	FCPPT_MAKE_STRONG_TYPEDEF(
+		optional_room_id,
+		left_top_room
+	);
+
+	FCPPT_MAKE_STRONG_TYPEDEF(
+		optional_room_id,
+		bottom_right_room
+	);
+
+	door(
+		libftl::ship::tile_pos const _pos,
+		left_top_room const _left_top_room,
+		bottom_right_room _bottom_right_room,
+		vertical const _vertical
+	)
+	:
+		pos_{
+			_pos
+		},
+		left_top_room_{
+			_left_top_room
+		},
+		bottom_right_room_{
+			_bottom_right_room
+		},
+		vertical_{
+			_vertical
+		}
+	{
+	}
+
 	libftl::ship::tile_pos pos_;
 
-	optional_room_id left_top_room_;
+	left_top_room left_top_room_;
 
-	optional_room_id bottom_right_room_;
+	bottom_right_room bottom_right_room_;
 
 	vertical vertical_;
 };

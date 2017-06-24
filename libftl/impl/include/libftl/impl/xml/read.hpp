@@ -74,7 +74,7 @@ read(
 							FCPPT_TEXT("Failed to read ")
 							+
 							fcppt::insert_to_fcppt_string(
-								_file.entry
+								_file.entry_
 							)
 							+
 							FCPPT_TEXT(": Invalid read.")
@@ -170,7 +170,7 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 								FCPPT_TEXT("Failed to read ")
 								+
 								fcppt::insert_to_fcppt_string(
-									_file.entry
+									_file.entry_
 								)
 								+
 								FCPPT_TEXT(": ")

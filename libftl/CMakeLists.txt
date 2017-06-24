@@ -164,6 +164,7 @@ set(
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/ship/layout.cpp
 	libftl/src/ship/layout_output.cpp
 	libftl/src/ship/parse_layout.cpp
 	libftl/src/xml/achievements.cpp
