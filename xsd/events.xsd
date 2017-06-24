@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:complexType name="event_list">
+		<xs:sequence>
+			<xs:element name="event" type="anon_event" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="event_text">
+		<xs:attribute name="load" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="auto_reward">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="level" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="text_list_element">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="planet" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="text_list">
+		<xs:sequence>
+			<xs:element name="text" type="text_list_element" maxOccurs="unbounded"/>
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="event_img">
+		<xs:attribute name="back" type="xs:string"/>
+		<xs:attribute name="planet" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="modify_pursuit">
+		<xs:attribute name="amount" type="xs:integer" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="item">
+		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="min" type="xs:integer" use="required"/>
+		<xs:attribute name="max" type="xs:integer" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="item_modify">
+		<xs:sequence>
+			<xs:element name="item" type="item" maxOccurs="unbounded"/>
+		</xs:sequence>
+
+		<xs:attribute name="steal" type="xs:boolean"/>
+	</xs:complexType>
+
+	<xs:complexType name="boarders">
+		<xs:attribute name="min" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="max" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="class" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="quest">
+		<xs:attribute name="event" type="xs:string"/>
+		<xs:attribute name="load" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="damage">
+		<xs:attribute name="amount" type="xs:integer" use="required"/>
+		<xs:attribute name="system" type="xs:string"/>
+		<xs:attribute name="effect" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="crew_member">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="amount" type="xs:unsignedInt" use="required"/>
+				<xs:attribute name="class" type="xs:string"/>
+				<xs:attribute name="all_skills" type="xs:unsignedInt"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="distress_beacon">
+	</xs:complexType>
+
+	<xs:complexType name="augment">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="drone">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="environment">
+		<xs:attribute name="type" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="remove_crew">
+		<xs:sequence>
+			<xs:element name="clone" type="xs:boolean"/>
+			<xs:element name="text" type="xs:string"/>
+		</xs:sequence>
+
+		<xs:attribute name="class" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="repair">
+	</xs:complexType>
+
+	<xs:complexType name="reveal_map">
+	</xs:complexType>
+
+	<xs:complexType name="ship_ref">
+		<xs:attribute name="load" type="xs:string"/>
+		<xs:attribute name="hostile" type="xs:boolean" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="status">
+		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="target" type="xs:string" use="required"/>
+		<xs:attribute name="system" type="xs:string" use="required"/>
+		<xs:attribute name="amount" type="xs:integer" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="store">
+	</xs:complexType>
+
+	<xs:complexType name="text">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="load" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="unlock_ship">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="upgrade">
+		<xs:attribute name="amount" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="system" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="weapon">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="anon_event">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="text" type="xs:string" minOccurs="0"/>
+			<xs:element name="augment" type="augment" minOccurs="0"/>
+			<xs:element name="autoReward" type="auto_reward" minOccurs="0"/>
+			<xs:element name="boarders" type="boarders" minOccurs="0"/>
+			<xs:element name="crewMember" type="crew_member" minOccurs="0"/>
+			<xs:element name="damage" type="damage" minOccurs="0"/>
+			<xs:element name="drone" type="drone" minOccurs="0"/>
+			<xs:element name="item_modify" type="item_modify" minOccurs="0"/>
+			<xs:element name="modifyPursuit" type="modify_pursuit" minOccurs="0"/>
+			<xs:element name="quest" type="quest" minOccurs="0"/>
+			<xs:element name="ship" type="ship_ref" minOccurs="0"/>
+			<xs:element name="status" type="status" minOccurs="0"/>
+			<xs:element name="unlockShip" type="unlock_ship" minOccurs="0"/>
+			<xs:element name="upgrade" type="upgrade" minOccurs="0"/>
+			<xs:element name="removeCrew" type="remove_crew" minOccurs="0"/>
+			<xs:element name="reveal_map" type="reveal_map" minOccurs="0"/>
+			<xs:element name="weapon" type="weapon" minOccurs="0"/>
+			<xs:element name="choice" type="choice" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+
+		<xs:attribute name="load" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="event">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="distressBeacon" type="distress_beacon" minOccurs="0"/>
+			<xs:element name="environment" type="environment" minOccurs="0"/>
+			<xs:element name="fleet" type="xs:string" minOccurs="0"/>
+			<xs:element name="img" type="event_img" minOccurs="0"/>
+			<xs:element name="repair" type="repair" minOccurs="0"/>
+			<xs:element name="text" type="text"/>
+			<xs:element name="augment" type="augment" minOccurs="0"/>
+			<xs:element name="autoReward" type="auto_reward" minOccurs="0"/>
+			<xs:element name="boarders" type="boarders" minOccurs="0"/>
+			<xs:element name="crewMember" type="crew_member" minOccurs="0"/>
+			<xs:element name="damage" type="damage" minOccurs="0"/>
+			<xs:element name="drone" type="drone" minOccurs="0"/>
+			<xs:element name="item_modify" type="item_modify" minOccurs="0"/>
+			<xs:element name="reveal_map" type="reveal_map" minOccurs="0"/>
+			<xs:element name="ship" type="ship_ref" minOccurs="0"/>
+			<xs:element name="status" type="status" minOccurs="0"/>
+			<xs:element name="store" type="store" minOccurs="0"/>
+			<xs:element name="unlockShip" type="unlock_ship" minOccurs="0"/>
+			<xs:element name="upgrade" type="upgrade" minOccurs="0"/>
+			<xs:element name="weapon" type="weapon" minOccurs="0"/>
+			<xs:element name="choice" type="choice" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="unique" type="xs:boolean"/>
+	</xs:complexType>
+
+	<xs:complexType name="choice">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string"/>
+			<xs:element name="event" type="anon_event"/>
+		</xs:sequence>
+
+		<xs:attribute name="hidden" type="xs:boolean"/>
+		<xs:attribute name="req" type="xs:string"/>
+		<xs:attribute name="lvl" type="xs:unsignedInt"/>
+		<xs:attribute name="max_group" type="xs:unsignedInt"/>
+	</xs:complexType>
+
+	<xs:complexType name="escape">
+		<xs:attribute name="chance" type="xs:decimal" use="required"/>
+		<xs:attribute name="min" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="max" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="load" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="ship">
+		<xs:sequence>
+			<xs:element name="escape" type="escape" minOccurs="0"/>
+			<xs:element name="destroyed" type="anon_event"/>
+			<xs:element name="deadCrew" type="anon_event"/>
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="auto_blueprint" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="events_root">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="eventList" type="event_list" maxOccurs="unbounded"/>
+			<xs:element name="event" type="event" maxOccurs="unbounded"/>
+			<xs:element name="textList" type="text_list" maxOccurs="unbounded"/>
+			<xs:element name="ship" type="ship" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="eventsRoot" type="events_root"/>
+</xs:schema>

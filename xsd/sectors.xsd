@@ -31,7 +31,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="event">
+	<xs:complexType name="sector_event">
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="min" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="max" type="xs:unsignedInt" use="required"/>
@@ -43,7 +43,7 @@
 			<xs:element name="trackList" type="track_list" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="rarityList" type="track_list" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="startEvent" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="event" type="event" maxOccurs="unbounded"/>
+			<xs:element name="event" type="sector_event" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="minSector" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="unique" type="xs:boolean" use="required"/>

@@ -96,6 +96,7 @@ set(
 	achievements
 	animations
 	blueprints
+	events
 	sectors
 	ship
 )
@@ -155,6 +156,7 @@ set(
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
+	libftl/include/libftl/xml/events.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sectors.hpp
@@ -167,6 +169,7 @@ set(
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
+	libftl/src/xml/events.cpp
 	libftl/src/xml/sectors.cpp
 	libftl/src/xml/ship.cpp
 )
