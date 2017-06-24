@@ -49,12 +49,12 @@
 		<xs:attribute name="unique" type="xs:boolean" use="required"/>
 	</xs:complexType>
 
-	<xs:complexType name="sector_root">
+	<xs:complexType name="sectors_root">
 		<xs:sequence>
 			<xs:element name="sectorType" type="sector_type" maxOccurs="unbounded"/>
 			<xs:element name="sectorDescription" type="sector_description" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="sectorRoot" type="sector_root"/>
+	<xs:element name="sectorsRoot" type="sectors_root"/>
 </xs:schema>

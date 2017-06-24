@@ -1,10 +1,10 @@
-#ifndef LIBFTL_XML_SECTOR_HPP_INCLUDED
-#define LIBFTL_XML_SECTOR_HPP_INCLUDED
+#ifndef LIBFTL_XML_SECTORS_HPP_INCLUDED
+#define LIBFTL_XML_SECTORS_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
 #include <libftl/archive/file_fwd.hpp>
 #include <libftl/xml/result.hpp>
-#include <libftl/xml/generated/sector.hpp>
+#include <libftl/xml/generated/sectors.hpp>
 
 
 namespace libftl
@@ -14,9 +14,9 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::sector_root
+	libftl::xml::generated::sectors_root
 >
-sector(
+sectors(
 	libftl::archive::file const &
 );
 

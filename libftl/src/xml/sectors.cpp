@@ -5,8 +5,8 @@
 #include <libftl/impl/xml/replace_list.hpp>
 #include <libftl/impl/xml/root_name.hpp>
 #include <libftl/xml/result.hpp>
-#include <libftl/xml/sector.hpp>
-#include <libftl/xml/generated/sector.hpp>
+#include <libftl/xml/sectors.hpp>
+#include <libftl/xml/generated/sectors.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <memory>
 #include <regex>
@@ -14,9 +14,9 @@
 
 
 libftl::xml::result<
-	libftl::xml::generated::sector_root
+	libftl::xml::generated::sectors_root
 >
-libftl::xml::sector(
+libftl::xml::sectors(
 	libftl::archive::file const &_file
 )
 {
@@ -24,25 +24,25 @@ libftl::xml::sector(
 		libftl::impl::xml::read(
 			_file,
 			libftl::impl::xml::load_function<
-				libftl::xml::generated::sector_root
+				libftl::xml::generated::sectors_root
 			>{
 				[](
 					std::istream &_stream
 				)
 				->
 				std::unique_ptr<
-					libftl::xml::generated::sector_root
+					libftl::xml::generated::sectors_root
 				>
 				{
 					return
-						libftl::xml::generated::sectorRoot(
+						libftl::xml::generated::sectorsRoot(
 							_stream,
 							xml_schema::flags::dont_validate
 						);
 				}
 			},
 			libftl::impl::xml::root_name{
-				"sectorRoot"
+				"sectorsRoot"
 			},
 			libftl::impl::xml::replace_list{
 				libftl::impl::xml::replace{

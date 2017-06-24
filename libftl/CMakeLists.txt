@@ -95,7 +95,7 @@ set(
 	PARSER_NAMES
 	achievements
 	blueprints
-	sector
+	sectors
 	ship
 )
 
@@ -155,7 +155,7 @@ set(
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
-	libftl/include/libftl/xml/sector.hpp
+	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
@@ -164,7 +164,7 @@ set(
 	libftl/src/ship/parse_layout.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/blueprints.cpp
-	libftl/src/xml/sector.cpp
+	libftl/src/xml/sectors.cpp
 	libftl/src/xml/ship.cpp
 )
 
