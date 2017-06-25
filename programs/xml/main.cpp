@@ -60,10 +60,12 @@
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/record/variadic.hpp>
+#include <fcppt/variant/apply_unary.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <xsd/cxx/tree/std-ostream-operators.hxx>
 #include <boost/cstdint.hpp>
 #include <boost/filesystem/path.hpp>
 #include <cstddef>
@@ -434,6 +436,20 @@ main_program(
 				result_type const &_result
 			)
 			{
+				fcppt::variant::apply_unary(
+					[](
+						auto const &_element
+					)
+					{
+						fcppt::io::cout()
+							<<
+							*_element
+							<<
+							FCPPT_TEXT('\n');
+					},
+					_result
+				);
+
 				return
 					true;
 			}
