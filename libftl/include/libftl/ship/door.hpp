@@ -4,6 +4,7 @@
 #include <libftl/ship/door_fwd.hpp>
 #include <libftl/ship/room_id.hpp>
 #include <libftl/ship/tile_pos.hpp>
+#include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/optional/object_impl.hpp>
 

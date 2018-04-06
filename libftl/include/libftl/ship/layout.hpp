@@ -6,6 +6,7 @@
 #include <libftl/ship/ellipse.hpp>
 #include <libftl/ship/layout_fwd.hpp>
 #include <libftl/ship/room.hpp>
+#include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/math/vector/static.hpp>
 #include <fcppt/config/external_begin.hpp>
