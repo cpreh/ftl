@@ -118,15 +118,49 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/xml/encoding.hpp
+	libftl/impl/include/libftl/impl/xml/grammar_decl.hpp
+	libftl/impl/include/libftl/impl/xml/grammar_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/grammar_impl.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
 	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
+	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/replace.hpp
 	libftl/impl/include/libftl/impl/xml/replace_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/replace_list.hpp
 	libftl/impl/include/libftl/impl/xml/root_name.hpp
 	libftl/impl/include/libftl/impl/xml/root_name_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/spirit/variant_decl.hpp
+	libftl/impl/include/libftl/impl/xml/spirit/variant_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/spirit/variant_impl.hpp
+	libftl/impl/include/libftl/impl/xml/types/adapt_attribute.hpp
+	libftl/impl/include/libftl/impl/xml/types/adapt_inner_node.hpp
+	libftl/impl/include/libftl/impl/xml/types/adapt_leaf_node.hpp
+	libftl/impl/include/libftl/impl/xml/types/attribute.hpp
+	libftl/impl/include/libftl/impl/xml/types/attribute_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/attribute_vector.hpp
+	libftl/impl/include/libftl/impl/xml/types/document.hpp
+	libftl/impl/include/libftl/impl/xml/types/document_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/inner_node.hpp
+	libftl/impl/include/libftl/impl/xml/types/inner_node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/leaf_node.hpp
+	libftl/impl/include/libftl/impl/xml/types/leaf_node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_content.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_content_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_content_wrapper.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_content_wrapper_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_vector.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_vector_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_wrapper.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_wrapper_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/space.hpp
+	libftl/impl/include/libftl/impl/xml/types/string.hpp
+	libftl/impl/src/impl/xml/parse.cpp
+	libftl/impl/src/impl/xml/types/document.cpp
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
@@ -157,6 +191,7 @@ set(
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/events.hpp
+	libftl/include/libftl/xml/parse.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sectors.hpp
@@ -171,6 +206,7 @@ set(
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/events.cpp
+	libftl/src/xml/parse.cpp
 	libftl/src/xml/sectors.cpp
 	libftl/src/xml/ship.cpp
 )
