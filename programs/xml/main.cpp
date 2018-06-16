@@ -17,7 +17,7 @@
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
@@ -130,7 +130,7 @@ make_file(
 								return
 									FCPPT_TEXT("File size ")
 									+
-									fcppt::insert_to_fcppt_string(
+									fcppt::output_to_fcppt_string(
 										_size
 									)
 									+

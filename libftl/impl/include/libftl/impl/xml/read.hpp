@@ -13,8 +13,8 @@
 #include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/identity.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
-#include <fcppt/insert_to_std_string.hpp>
+#include <fcppt/output_to_fcppt_string.hpp>
+#include <fcppt/output_to_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_from_std.hpp>
@@ -73,7 +73,7 @@ read(
 						fcppt::string{
 							FCPPT_TEXT("Failed to read ")
 							+
-							fcppt::insert_to_fcppt_string(
+							fcppt::output_to_fcppt_string(
 								_file.entry_
 							)
 							+
@@ -169,7 +169,7 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 							result_type{
 								FCPPT_TEXT("Failed to read ")
 								+
-								fcppt::insert_to_fcppt_string(
+								fcppt::output_to_fcppt_string(
 									_file.entry_
 								)
 								+
@@ -223,7 +223,7 @@ FCPPT_PP_POP_WARNING
 							FCPPT_TEXT(": ")
 							+
 							fcppt::from_std_string(
-								fcppt::insert_to_std_string(
+								fcppt::output_to_std_string(
 									_error
 								)
 							)
@@ -239,7 +239,7 @@ FCPPT_PP_POP_WARNING
 					return
 						make_error(
 							fcppt::from_std_string(
-								fcppt::insert_to_std_string(
+								fcppt::output_to_std_string(
 									_error
 								)
 							)

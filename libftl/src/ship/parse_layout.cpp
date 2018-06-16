@@ -11,7 +11,7 @@
 #include <sge/parse/result.hpp>
 #include <sge/parse/result_code.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/noncopyable.hpp>
@@ -329,7 +329,7 @@ translate_bool(
 		fcppt::exception{
 			FCPPT_TEXT("Invalid boolean value ")
 			+
-			fcppt::insert_to_fcppt_string(
+			fcppt::output_to_fcppt_string(
 				_value
 			)
 		};
@@ -349,7 +349,7 @@ translate_optional_door_room(
 			fcppt::exception{
 				FCPPT_TEXT("Invalid door room ")
 				+
-				fcppt::insert_to_fcppt_string(
+				fcppt::output_to_fcppt_string(
 					_id
 				)
 			};

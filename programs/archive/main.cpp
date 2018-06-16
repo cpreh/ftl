@@ -7,7 +7,7 @@
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
@@ -216,7 +216,7 @@ write_output(
 								either_error{
 									FCPPT_TEXT("Failed to extract ")
 									+
-									fcppt::insert_to_fcppt_string(
+									fcppt::output_to_fcppt_string(
 										_entry
 									)
 								};
