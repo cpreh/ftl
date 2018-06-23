@@ -21,7 +21,7 @@ libftl::impl::xml::types::operator<<(
 {
 	_stream
 		<<
-		"<"
+		"I<"
 		<<
 		_node.opening_tag
 		<<

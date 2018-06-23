@@ -58,7 +58,7 @@ libftl::impl::xml::grammar<
 		boost::spirit::qi::lexeme[
 			qi::lit('"')
 			>
-			*encoding::char_
+			*~encoding::char_('"')
 			>
 			qi::lit('"')
 		];
@@ -69,9 +69,7 @@ libftl::impl::xml::grammar<
 
 	string_ %=
 		boost::spirit::qi::lexeme[
-			*(
-				~encoding::char_('<')
-			)
+			*~encoding::char_('<')
 		];
 
 	string_.name(
@@ -79,9 +77,7 @@ libftl::impl::xml::grammar<
 	);
 
 	inner_node_ %=
-		+(
-			~encoding::char_(" >")
-		)
+		+~encoding::char_(" >")
 		>>
 		attribute_vector_
 		>>
@@ -91,9 +87,7 @@ libftl::impl::xml::grammar<
 		>>
 		qi::lit("</")
 		>>
-		+(
-			~encoding::char_('>')
-		)
+		+~encoding::char_('>')
 		>>
 		qi::lit('>');
 
@@ -102,15 +96,9 @@ libftl::impl::xml::grammar<
 	);
 
 	leaf_node_ %=
-		+(
-			encoding::char_
-			-
-			(
-				qi::lit(' ')
-				|
-				qi::lit("/>")
-			)
-		)
+		boost::spirit::qi::lexeme[
+			+~encoding::char_(" /")
+		]
 		>>
 		attribute_vector_
 		>>
@@ -144,9 +132,7 @@ libftl::impl::xml::grammar<
 
 	attribute_ %=
 		(
-			+(
-				~encoding::char_(">=")
-			)
+			+~encoding::char_(">=")
 			>>
 			qi::lit('=')
 		)

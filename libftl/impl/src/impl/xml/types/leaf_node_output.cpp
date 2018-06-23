@@ -16,7 +16,7 @@ libftl::impl::xml::types::operator<<(
 	return
 		_stream
 		<<
-		"<"
+		"L<"
 		<<
 		_leaf_node.name
 		<<
