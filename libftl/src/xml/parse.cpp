@@ -1,7 +1,9 @@
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/types/document.hpp>
+#include <libftl/impl/xml/types/document_output.hpp>
 #include <libftl/xml/parse.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iostream>
 #include <regex>
 #include <string>
 #include <fcppt/config/external_end.hpp>
@@ -29,4 +31,6 @@ libftl::xml::parse(
 			removed_comments
 		)
 	);
+
+	std::cout << result << '\n';
 }

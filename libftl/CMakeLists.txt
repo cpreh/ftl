@@ -135,24 +135,30 @@ set(
 	libftl/impl/include/libftl/impl/xml/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/xml/spirit/variant_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/spirit/variant_impl.hpp
+	libftl/impl/include/libftl/impl/xml/spirit/variant_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/adapt_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/types/adapt_inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/types/adapt_leaf_node.hpp
 	libftl/impl/include/libftl/impl/xml/types/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/types/attribute_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/attribute_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/attribute_vector.hpp
 	libftl/impl/include/libftl/impl/xml/types/document.hpp
 	libftl/impl/include/libftl/impl/xml/types/document_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/document_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/types/inner_node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/inner_node_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/leaf_node.hpp
 	libftl/impl/include/libftl/impl/xml/types/leaf_node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/leaf_node_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/node.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_content.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_content_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_content_wrapper.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_content_wrapper_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/types/node_output.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_vector.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_vector_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/types/node_wrapper.hpp
@@ -160,7 +166,11 @@ set(
 	libftl/impl/include/libftl/impl/xml/types/space.hpp
 	libftl/impl/include/libftl/impl/xml/types/string.hpp
 	libftl/impl/src/impl/xml/parse.cpp
+	libftl/impl/src/impl/xml/types/attribute_output.cpp
 	libftl/impl/src/impl/xml/types/document.cpp
+	libftl/impl/src/impl/xml/types/document_output.cpp
+	libftl/impl/src/impl/xml/types/inner_node_output.cpp
+	libftl/impl/src/impl/xml/types/leaf_node_output.cpp
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
