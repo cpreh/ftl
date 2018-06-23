@@ -5,9 +5,9 @@
 #include <libftl/impl/xml/types/attribute_fwd.hpp>
 #include <libftl/impl/xml/types/attribute_vector.hpp>
 #include <libftl/impl/xml/types/document_fwd.hpp>
-#include <libftl/impl/xml/types/leaf_node_fwd.hpp>
+#include <libftl/impl/xml/types/inner_node_fwd.hpp>
 #include <libftl/impl/xml/types/node_content_wrapper_fwd.hpp>
-#include <libftl/impl/xml/types/node_wrapper_fwd.hpp>
+#include <libftl/impl/xml/types/node_fwd.hpp>
 #include <libftl/impl/xml/types/node_vector_fwd.hpp>
 #include <libftl/impl/xml/types/space.hpp>
 #include <libftl/impl/xml/types/string.hpp>
@@ -67,21 +67,12 @@ private:
 	>
 	string_;
 
-	// <node></code>
 	boost::spirit::qi::rule<
 		In,
 		libftl::impl::xml::types::inner_node(),
 		space_type
 	>
 	inner_node_;
-
-	// <node/>
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::types::leaf_node(),
-		space_type
-	>
-	leaf_node_;
 
 	boost::spirit::qi::rule<
 		In,
@@ -92,7 +83,7 @@ private:
 
 	boost::spirit::qi::rule<
 		In,
-		libftl::impl::xml::types::node_wrapper(),
+		libftl::impl::xml::types::node(),
 		space_type
 	>
 	node_;

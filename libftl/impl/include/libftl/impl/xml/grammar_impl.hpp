@@ -5,7 +5,7 @@
 #include <libftl/impl/xml/grammar_decl.hpp>
 #include <libftl/impl/xml/types/adapt_attribute.hpp>
 #include <libftl/impl/xml/types/adapt_inner_node.hpp>
-#include <libftl/impl/xml/types/adapt_leaf_node.hpp>
+#include <libftl/impl/xml/types/adapt_node.hpp>
 #include <sge/parse/install_error_handler.hpp>
 #include <sge/parse/optional_error_string.hpp>
 #include <fcppt/make_ref.hpp>
@@ -37,7 +37,6 @@ libftl::impl::xml::grammar<
 	quoted_string_(),
 	string_(),
 	inner_node_(),
-	leaf_node_(),
 	node_content_(),
 	node_(),
 	attribute_(),
@@ -77,12 +76,6 @@ libftl::impl::xml::grammar<
 	);
 
 	inner_node_ %=
-		+~encoding::char_(" >")
-		>>
-		attribute_vector_
-		>>
-		qi::lit('>')
-		>>
 		node_content_
 		>>
 		qi::lit("</")
@@ -93,19 +86,6 @@ libftl::impl::xml::grammar<
 
 	inner_node_.name(
 		"inner node"
-	);
-
-	leaf_node_ %=
-		boost::spirit::qi::lexeme[
-			+~encoding::char_(" /")
-		]
-		>>
-		attribute_vector_
-		>>
-		qi::lit("/>");
-
-	leaf_node_.name(
-		"leaf node"
 	);
 
 	node_content_ %=
@@ -120,10 +100,22 @@ libftl::impl::xml::grammar<
 	node_ %=
 		qi::lit('<')
 		>>
+		!qi::lit('/')
+		>>
+		boost::spirit::qi::lexeme[
+			+~encoding::char_(" />")
+		]
+		>>
+		attribute_vector_
+		>>
 		(
-			leaf_node_
+			qi::lit("/>")
 			|
-			inner_node_
+			-(
+				qi::lit(">")
+				>>
+				inner_node_
+			)
 		);
 
 	node_.name(

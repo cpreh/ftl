@@ -16,9 +16,9 @@ libftl::impl::xml::types::operator<<(
 		<<
 		_attribute.name
 		<<
-		"="
+		"=\""
 		<<
 		_attribute.value
 		<<
-		" ";
+		'"';
 }

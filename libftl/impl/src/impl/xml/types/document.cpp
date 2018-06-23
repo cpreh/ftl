@@ -2,7 +2,7 @@
 #include <libftl/impl/xml/types/node_vector.hpp>
 
 // TODO
-#include <libftl/impl/xml/types/node_wrapper.hpp>
+#include <libftl/impl/xml/types/node.hpp>
 
 
 libftl::impl::xml::types::document::document()

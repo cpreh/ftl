@@ -10,7 +10,8 @@
 
 
 // FIXME
-#include <libftl/impl/xml/types/node_wrapper.hpp>
+#include <libftl/impl/xml/types/node.hpp>
+
 void
 libftl::xml::parse(
 	std::string const &_input
