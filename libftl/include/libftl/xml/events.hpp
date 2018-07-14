@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::events_root
+	libftl::xml::generated::events::events_root
 >
 events(
 	libftl::archive::file const &

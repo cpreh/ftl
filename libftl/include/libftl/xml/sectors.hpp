@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::sectors_root
+	libftl::xml::generated::sectors::sectors_root
 >
 sectors(
 	libftl::archive::file const &

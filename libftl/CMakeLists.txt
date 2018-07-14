@@ -65,7 +65,7 @@ function(
 			--std
 			c++11
 			--namespace-map
-			=libftl::xml::generated
+			=libftl::xml::generated::${PARSER_NAME}
 			--hxx-prologue
 			"#include <fcppt/config/external_begin.hpp>"
 			--hxx-epilogue
@@ -123,16 +123,10 @@ set(
 	libftl/impl/include/libftl/impl/xml/grammar_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/grammar_impl.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
-	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
-	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
-	libftl/impl/include/libftl/impl/xml/replace.hpp
-	libftl/impl/include/libftl/impl/xml/replace_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/replace_list.hpp
-	libftl/impl/include/libftl/impl/xml/root_name.hpp
-	libftl/impl/include/libftl/impl/xml/root_name_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/include/libftl/impl/xml/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/xml/spirit/variant_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/spirit/variant_impl.hpp
@@ -165,6 +159,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/types/string.hpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
+	libftl/impl/src/impl/xml/remove_comments.cpp
 	libftl/impl/src/impl/xml/types/attribute_output.cpp
 	libftl/impl/src/impl/xml/types/document.cpp
 	libftl/impl/src/impl/xml/types/document_output.cpp
@@ -199,8 +194,10 @@ set(
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
+	libftl/include/libftl/xml/clean.hpp
+	libftl/include/libftl/xml/error.hpp
+	libftl/include/libftl/xml/error_fwd.hpp
 	libftl/include/libftl/xml/events.hpp
-	libftl/include/libftl/xml/parse.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sectors.hpp
@@ -214,8 +211,8 @@ set(
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
+	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
-	libftl/src/xml/parse.cpp
 	libftl/src/xml/sectors.cpp
 	libftl/src/xml/ship.cpp
 )

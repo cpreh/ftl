@@ -248,5 +248,5 @@
 		</xs:choice>
 	</xs:complexType>
 
-	<xs:element name="eventsRoot" type="events_root"/>
+	<xs:element name="root" type="events_root"/>
 </xs:schema>

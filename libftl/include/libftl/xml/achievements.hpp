@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::achievements_root
+	libftl::xml::generated::achievements::achievements_root
 >
 achievements(
 	libftl::archive::file const &

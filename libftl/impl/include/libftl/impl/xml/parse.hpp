@@ -1,10 +1,10 @@
 #ifndef LIBFTL_IMPL_XML_PARSE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_PARSE_HPP_INCLUDED
 
-#include <libftl/impl/xml/types/document_fwd.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <string>
-#include <fcppt/config/external_end.hpp>
+#include <libftl/archive/file_fwd.hpp>
+#include <libftl/xml/error.hpp>
+#include <libftl/impl/xml/types/document.hpp>
+#include <fcppt/either/object_impl.hpp>
 
 
 namespace libftl
@@ -14,9 +14,12 @@ namespace impl
 namespace xml
 {
 
-libftl::impl::xml::types::document
+fcppt::either::object<
+	libftl::xml::error,
+	libftl::impl::xml::types::document
+>
 parse(
-	std::string const &
+	libftl::archive::file const &
 );
 
 }

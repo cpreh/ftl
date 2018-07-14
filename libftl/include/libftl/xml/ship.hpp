@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::ship_root
+	libftl::xml::generated::ship::ship_root
 >
 ship(
 	libftl::archive::file const &

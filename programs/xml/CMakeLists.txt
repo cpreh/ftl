@@ -37,21 +37,3 @@ target_compile_definitions(
 	PRIVATE
 	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}
 )
-
-
-add_executable(
-	ftlxmlparse
-	parse.cpp
-)
-
-fcppt_utils_set_target_compiler_flags(
-	ftlxmlparse
-)
-
-target_link_libraries(
-	ftlxmlparse
-	PRIVATE
-	${libftl_TARGET}
-	${fcppt_core_TARGET}
-	${fcppt_filesystem_TARGET}
-)

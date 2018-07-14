@@ -316,5 +316,5 @@
 		</xs:choice>
 	</xs:complexType>
 
-	<xs:element name="blueprintsRoot" type="blueprints_root"/>
+	<xs:element name="root" type="blueprints_root"/>
 </xs:schema>

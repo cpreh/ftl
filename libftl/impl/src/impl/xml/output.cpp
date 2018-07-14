@@ -5,16 +5,24 @@
 #include <libftl/impl/xml/types/node.hpp>
 #include <libftl/impl/xml/types/node_vector.hpp>
 #include <libftl/impl/xml/types/string.hpp>
+#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/algorithm/loop.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ostream>
+#include <string>
 #include <fcppt/config/external_end.hpp>
 
 
 namespace
 {
+
+FCPPT_MAKE_STRONG_TYPEDEF(
+	std::string,
+	opening_tag
+);
 
 void
 node_output(
@@ -42,11 +50,12 @@ attribute_output(
 void
 inner_node_output(
 	std::ostream &_stream,
-	libftl::impl::xml::types::inner_node const &_node
+	libftl::impl::xml::types::inner_node const &_inner_node,
+	opening_tag const &_opening_tag
 )
 {
 	fcppt::variant::match(
-		_node.content.get(),
+		_inner_node.content.get(),
 		[
 			&_stream
 		](
@@ -88,7 +97,7 @@ inner_node_output(
 		<<
 		"</"
 		<<
-		_node.closing_tag
+		_opening_tag.get()
 		<<
 		">";
 }
@@ -103,9 +112,14 @@ node_output(
 		<<
 		'<'
 		<<
-		_node.opening_tag
-		<<
-		' ';
+		_node.opening_tag;
+
+	if(
+		!_node.attributes.empty()
+	)
+		_stream
+			<<
+			' ';
 
 	fcppt::algorithm::loop(
 		_node.attributes,
@@ -148,16 +162,11 @@ node_output(
 
 			inner_node_output(
 				_stream,
-				_inner_node
+				_inner_node,
+				opening_tag{
+					_node.opening_tag
+				}
 			);
-
-			_stream
-				<<
-				"</"
-				<<
-				_node.opening_tag
-				<<
-				'>';
 		}
 	);
 }

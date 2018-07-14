@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::animations_root
+	libftl::xml::generated::animations::animations_root
 >
 animations(
 	libftl::archive::file const &

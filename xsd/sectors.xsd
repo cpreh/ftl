@@ -56,5 +56,5 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="sectorsRoot" type="sectors_root"/>
+	<xs:element name="root" type="sectors_root"/>
 </xs:schema>

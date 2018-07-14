@@ -5,6 +5,7 @@
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/events.hpp>
 #include <libftl/xml/sectors.hpp>
 #include <libftl/xml/ship.hpp>
@@ -83,7 +84,7 @@ namespace
 {
 
 fcppt::either::object<
-	fcppt::string,
+	libftl::xml::error,
 	libftl::archive::file
 >
 make_file(
@@ -101,13 +102,15 @@ make_file(
 					&_path
 				]{
 					return
-						FCPPT_TEXT("Cannot read file size of \"")
-						+
-						fcppt::filesystem::path_to_string(
-							_path
-						)
-						+
-						FCPPT_TEXT("\".");
+						libftl::xml::error{
+							FCPPT_TEXT("Cannot read file size of \"")
+							+
+							fcppt::filesystem::path_to_string(
+								_path
+							)
+							+
+							FCPPT_TEXT("\".")
+						};
 				}
 			),
 			[
@@ -128,19 +131,21 @@ make_file(
 								_size
 							]{
 								return
-									FCPPT_TEXT("File size ")
-									+
-									fcppt::output_to_fcppt_string(
-										_size
-									)
-									+
-									FCPPT_TEXT(" of \"")
-									+
-									fcppt::filesystem::path_to_string(
-										_path
-									)
-									+
-									FCPPT_TEXT("\" too large.");
+									libftl::xml::error{
+										FCPPT_TEXT("File size ")
+										+
+										fcppt::output_to_fcppt_string(
+											_size
+										)
+										+
+										FCPPT_TEXT(" of \"")
+										+
+										fcppt::filesystem::path_to_string(
+											_path
+										)
+										+
+										FCPPT_TEXT("\" too large.")
+									};
 							}
 						),
 						[
@@ -278,22 +283,22 @@ main_program(
 	typedef
 	fcppt::variant::variadic<
 		fcppt::unique_ptr<
-			libftl::xml::generated::achievements_root
+			libftl::xml::generated::achievements::achievements_root
 		>,
 		fcppt::unique_ptr<
-			libftl::xml::generated::animations_root
+			libftl::xml::generated::animations::animations_root
 		>,
 		fcppt::unique_ptr<
-			libftl::xml::generated::blueprints_root
+			libftl::xml::generated::blueprints::blueprints_root
 		>,
 		fcppt::unique_ptr<
-			libftl::xml::generated::events_root
+			libftl::xml::generated::events::events_root
 		>,
 		fcppt::unique_ptr<
-			libftl::xml::generated::sectors_root
+			libftl::xml::generated::sectors::sectors_root
 		>,
 		fcppt::unique_ptr<
-			libftl::xml::generated::ship_root
+			libftl::xml::generated::ship::ship_root
 		>
 	>
 	result_type;
@@ -313,11 +318,13 @@ main_program(
 							&path
 						]{
 							return
-								FCPPT_TEXT("Cannot open ")
-								+
-								fcppt::filesystem::path_to_string(
-									path
-								);
+								libftl::xml::error{
+									FCPPT_TEXT("Cannot open ")
+									+
+									fcppt::filesystem::path_to_string(
+										path
+									)
+								};
 						}
 					),
 					[
@@ -340,7 +347,7 @@ main_program(
 				)
 				->
 				fcppt::either::object<
-					fcppt::string,
+					libftl::xml::error,
 					result_type
 				>
 				{
@@ -420,7 +427,7 @@ main_program(
 				}
 			),
 			[](
-				fcppt::string const &_error
+				libftl::xml::error const &_error
 			)
 			{
 				fcppt::io::cerr()

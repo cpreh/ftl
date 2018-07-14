@@ -75,5 +75,5 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="shipRoot" type="ship_root"/>
+	<xs:element name="root" type="ship_root"/>
 </xs:schema>

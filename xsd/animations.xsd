@@ -54,5 +54,5 @@
 		</xs:choice>
 	</xs:complexType>
 
-	<xs:element name="animationsRoot" type="animations_root"/>
+	<xs:element name="root" type="animations_root"/>
 </xs:schema>

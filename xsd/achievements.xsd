@@ -19,5 +19,5 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="achievementsRoot" type="achievements_root"/>
+	<xs:element name="root" type="achievements_root"/>
 </xs:schema>

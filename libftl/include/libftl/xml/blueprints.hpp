@@ -14,7 +14,7 @@ namespace xml
 
 LIBFTL_DETAIL_SYMBOL
 libftl::xml::result<
-	libftl::xml::generated::blueprints_root
+	libftl::xml::generated::blueprints::blueprints_root
 >
 blueprints(
 	libftl::archive::file const &
