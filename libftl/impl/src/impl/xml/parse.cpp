@@ -42,7 +42,7 @@ libftl::impl::xml::parse(
 			&begin,
 			&_input
 		]{
-			// TODO: Install erroer handler and return either
+			// TODO: Install error handler and return either
 			if(
 				begin
 				!=

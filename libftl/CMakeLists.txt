@@ -125,6 +125,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/make_closing_tag.hpp
 	libftl/impl/include/libftl/impl/xml/make_opening_tag.hpp
+	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/replace.hpp
@@ -162,6 +163,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/types/optional_inner_node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/types/space.hpp
 	libftl/impl/include/libftl/impl/xml/types/string.hpp
+	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
 	libftl/impl/src/impl/xml/types/attribute_output.cpp
 	libftl/impl/src/impl/xml/types/document.cpp
