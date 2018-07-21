@@ -1,7 +1,7 @@
-#ifndef LIBFTL_IMPL_XML_SPIRIT_VARIANT_DECL_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_SPIRIT_VARIANT_DECL_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_SPIRIT_VARIANT_DECL_HPP_INCLUDED
+#define LIBFTL_IMPL_SPIRIT_VARIANT_DECL_HPP_INCLUDED
 
-#include <libftl/impl/xml/spirit/variant_fwd.hpp>
+#include <libftl/impl/spirit/variant_fwd.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/variant/is_object.hpp>
 
@@ -9,8 +9,6 @@
 namespace libftl
 {
 namespace impl
-{
-namespace xml
 {
 namespace spirit
 {
@@ -58,7 +56,6 @@ private:
 	optional impl_;
 };
 
-}
 }
 }
 }

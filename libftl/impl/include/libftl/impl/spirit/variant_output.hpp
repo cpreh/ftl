@@ -1,7 +1,7 @@
-#ifndef LIBFTL_IMPL_XML_SPIRIT_VARIANT_OUTPUT_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_SPIRIT_VARIANT_OUTPUT_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_SPIRIT_VARIANT_OUTPUT_HPP_INCLUDED
+#define LIBFTL_IMPL_SPIRIT_VARIANT_OUTPUT_HPP_INCLUDED
 
-#include <libftl/impl/xml/spirit/variant_impl.hpp>
+#include <libftl/impl/spirit/variant_impl.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
@@ -12,8 +12,6 @@ namespace libftl
 {
 namespace impl
 {
-namespace xml
-{
 namespace spirit
 {
 
@@ -23,7 +21,7 @@ template<
 std::ostream &
 operator<<(
 	std::ostream &_stream,
-	libftl::impl::xml::spirit::variant<
+	libftl::impl::spirit::variant<
 		Variant
 	> const &_variant
 )
@@ -34,7 +32,6 @@ operator<<(
 		_variant.get();
 }
 
-}
 }
 }
 }

@@ -39,8 +39,8 @@
 #include <boost/spirit/include/qi_lit.hpp>
 #include <boost/spirit/include/qi_optional.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
-#include <boost/spirit/include/qi_sequence.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
+#include <boost/spirit/include/qi_sequence.hpp>
 #include <boost/spirit/include/support_istream_iterator.hpp>
 #include <ios>
 #include <type_traits>

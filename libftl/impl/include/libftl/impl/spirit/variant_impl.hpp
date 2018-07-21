@@ -1,13 +1,13 @@
-#ifndef LIBFTL_IMPL_XML_SPIRIT_VARIANT_IMPL_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_SPIRIT_VARIANT_IMPL_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_SPIRIT_VARIANT_IMPL_HPP_INCLUDED
+#define LIBFTL_IMPL_SPIRIT_VARIANT_IMPL_HPP_INCLUDED
 
-#include <libftl/impl/xml/spirit/variant_decl.hpp>
+#include <libftl/impl/spirit/variant_decl.hpp>
 
 
 template<
 	typename Variant
 >
-libftl::impl::xml::spirit::variant<
+libftl::impl::spirit::variant<
 	Variant
 >::variant()
 :
@@ -21,7 +21,7 @@ template<
 template<
 	typename Type
 >
-libftl::impl::xml::spirit::variant<
+libftl::impl::spirit::variant<
 	Variant
 >::variant(
 	Type const &_other
@@ -41,10 +41,10 @@ template<
 template<
 	typename Type
 >
-libftl::impl::xml::spirit::variant<
+libftl::impl::spirit::variant<
  	Variant
 > &
-libftl::impl::xml::spirit::variant<
+libftl::impl::spirit::variant<
 	Variant
 >::operator=(
 	Type const &_other
@@ -65,7 +65,7 @@ template<
 	typename Variant
 >
 Variant const &
-libftl::impl::xml::spirit::variant<
+libftl::impl::spirit::variant<
 	Variant
 >::get() const
 {

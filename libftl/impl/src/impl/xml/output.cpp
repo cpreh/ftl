@@ -1,10 +1,5 @@
+#include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/output.hpp>
-#include <libftl/impl/xml/types/attribute.hpp>
-#include <libftl/impl/xml/types/document.hpp>
-#include <libftl/impl/xml/types/inner_node.hpp>
-#include <libftl/impl/xml/types/node.hpp>
-#include <libftl/impl/xml/types/node_vector.hpp>
-#include <libftl/impl/xml/types/string.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/algorithm/loop.hpp>
@@ -27,22 +22,22 @@ FCPPT_MAKE_STRONG_TYPEDEF(
 void
 node_output(
 	std::ostream &,
-	libftl::impl::xml::types::node const &
+	libftl::impl::xml::document::node const &
 );
 
 void
 attribute_output(
 	std::ostream &_stream,
-	libftl::impl::xml::types::attribute const &_attribute
+	libftl::impl::xml::document::attribute const &_attribute
 )
 {
 	_stream
 		<<
-		_attribute.name
+		_attribute.name_
 		<<
 		"=\""
 		<<
-		_attribute.value
+		_attribute.value_
 		<<
 		'"';
 }
@@ -50,16 +45,16 @@ attribute_output(
 void
 inner_node_output(
 	std::ostream &_stream,
-	libftl::impl::xml::types::inner_node const &_inner_node,
+	libftl::impl::xml::document::inner_node const &_inner_node,
 	opening_tag const &_opening_tag
 )
 {
 	fcppt::variant::match(
-		_inner_node.content.get(),
+		_inner_node.content_.get(),
 		[
 			&_stream
 		](
-			libftl::impl::xml::types::node_vector const &_value
+			libftl::impl::xml::document::node_vector const &_value
 		)
 		{
 			fcppt::algorithm::loop(
@@ -67,7 +62,7 @@ inner_node_output(
 				[
 					&_stream
 				](
-					libftl::impl::xml::types::node const &_node
+					libftl::impl::xml::document::node const &_node
 				)
 				{
 					node_output(
@@ -80,7 +75,7 @@ inner_node_output(
 		[
 			&_stream
 		](
-			libftl::impl::xml::types::string const &_value
+			std::string const &_value
 		)
 		{
 			_stream
@@ -105,28 +100,28 @@ inner_node_output(
 void
 node_output(
 	std::ostream &_stream,
-	libftl::impl::xml::types::node const &_node
+	libftl::impl::xml::document::node const &_node
 )
 {
 	_stream
 		<<
 		'<'
 		<<
-		_node.opening_tag;
+		_node.opening_tag_;
 
 	if(
-		!_node.attributes.empty()
+		!_node.attributes_.empty()
 	)
 		_stream
 			<<
 			' ';
 
 	fcppt::algorithm::loop(
-		_node.attributes,
+		_node.attributes_,
 		[
 			&_stream
 		](
-			libftl::impl::xml::types::attribute const &_attribute
+			libftl::impl::xml::document::attribute const &_attribute
 		)
 		{
 			attribute_output(
@@ -141,7 +136,7 @@ node_output(
 	);
 
 	fcppt::optional::maybe(
-		_node.content,
+		_node.content_,
 		[
 			&_stream
 		]{
@@ -153,7 +148,7 @@ node_output(
 			&_node,
 			&_stream
 		](
-			libftl::impl::xml::types::inner_node const &_inner_node
+			libftl::impl::xml::document::inner_node const &_inner_node
 		)
 		{
 			_stream
@@ -164,7 +159,7 @@ node_output(
 				_stream,
 				_inner_node,
 				opening_tag{
-					_node.opening_tag
+					_node.opening_tag_
 				}
 			);
 		}
@@ -176,7 +171,7 @@ node_output(
 void
 libftl::impl::xml::output(
 	std::ostream &_stream,
-	libftl::impl::xml::types::document const &_document
+	libftl::impl::xml::document const &_document
 )
 {
 	_stream
@@ -184,11 +179,11 @@ libftl::impl::xml::output(
 		"<root>";
 
 	fcppt::algorithm::loop(
-		_document.nodes,
+		_document.nodes_,
 		[
 			&_stream
 		](
-			libftl::impl::xml::types::node const &_node
+			libftl::impl::xml::document::node const &_node
 		)
 		{
 			node_output(
