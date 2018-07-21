@@ -8,6 +8,7 @@
 libftl::ship::layout::layout(
 	offset_vector const _offset,
 	vertical const _vertical,
+	horizontal const _horizontal,
 	libftl::ship::ellipse const _ellipse,
 	room_list &&_rooms,
 	door_list &&_doors
@@ -18,6 +19,9 @@ libftl::ship::layout::layout(
 	},
 	vertical_{
 		_vertical
+	},
+	horizontal_{
+		_horizontal
 	},
 	ellipse_{
 		_ellipse

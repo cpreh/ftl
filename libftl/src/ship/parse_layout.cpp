@@ -24,6 +24,8 @@
 #include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/map.hpp>
+#include <fcppt/optional/object.hpp>
+#include <fcppt/optional/value_type.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
@@ -35,6 +37,7 @@
 #include <boost/spirit/include/qi_int.hpp>
 #include <boost/spirit/include/qi_kleene.hpp>
 #include <boost/spirit/include/qi_lit.hpp>
+#include <boost/spirit/include/qi_optional.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_sequence.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
@@ -49,9 +52,9 @@ namespace
 {
 
 typedef
-std::make_signed<
+std::make_signed_t<
 	libftl::ship::room_id::value_type
->::type
+>
 room_id_signed;
 
 struct room
@@ -82,11 +85,13 @@ struct door
 
 struct layout
 {
-	libftl::ship::layout::offset_vector::value_type x_;
+	libftl::ship::layout::offset_vector::value_type offset_x_;
 
-	libftl::ship::layout::offset_vector::value_type y_;
+	libftl::ship::layout::offset_vector::value_type offset_y_;
 
 	int vertical_;
+
+	fcppt::optional::object<int> horizontal_;
 
 	libftl::ship::ellipse::value_type::value_type ellipse_x_;
 
@@ -96,15 +101,9 @@ struct layout
 
 	libftl::ship::ellipse::value_type::value_type ellipse_h_;
 
-	std::vector<
-		room
-	>
-	rooms_;
+	std::vector<room> rooms_;
 
-	std::vector<
-		door
-	>
-	doors_;
+	std::vector<door> doors_;
 };
 
 }
@@ -134,9 +133,10 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	layout,
-	(libftl::ship::layout::offset_vector::value_type, x_)
-	(libftl::ship::layout::offset_vector::value_type, y_)
+	(libftl::ship::layout::offset_vector::value_type, offset_x_)
+	(libftl::ship::layout::offset_vector::value_type, offset_y_)
 	(int, vertical_)
+	(fcppt::optional::object<int>, horizontal_)
 	(libftl::ship::ellipse::value_type::value_type, ellipse_x_)
 	(libftl::ship::ellipse::value_type::value_type, ellipse_y_)
 	(libftl::ship::ellipse::value_type::value_type, ellipse_w_)
@@ -215,17 +215,27 @@ public:
 			qi::int_ > eol;
 
 		layout_ %=
-			qi::lit("X_OFFSET") > eol
+			-(
+				qi::lit("X_OFFSET") > eol
+				>
+				offset_int_ > eol
+			)
 			>
-			offset_int_ > eol
-			>
-			qi::lit("Y_OFFSET") > eol
-			>
-			offset_int_ > eol
+			-(
+				qi::lit("Y_OFFSET") > eol
+				>
+				offset_int_ > eol
+			)
 			>
 			qi::lit("VERTICAL") > eol
 			>
 			qi::int_ > eol
+			>
+			-(
+				qi::lit("HORIZONTAL") > eol
+				>
+				qi::int_ > eol
+			)
 			>
 			qi::lit("ELLIPSE") > eol
 			>
@@ -263,7 +273,9 @@ public:
 	}
 public:
 	boost::spirit::qi::int_parser<
-		libftl::ship::layout::offset_vector::value_type
+		fcppt::optional::value_type<
+			libftl::ship::layout::offset_vector::value_type
+		>
 	>
 	offset_int_;
 
@@ -380,13 +392,14 @@ translate_result(
 	return
 		libftl::ship::layout{
 			libftl::ship::layout::offset_vector{
-				_layout.x_,
-				_layout.y_
+				_layout.offset_x_,
+				_layout.offset_y_
 			},
 			libftl::ship::layout::vertical{
-				translate_bool(
-					_layout.vertical_
-				)
+				_layout.vertical_
+			},
+			libftl::ship::layout::horizontal{
+				_layout.horizontal_
 			},
 			libftl::ship::ellipse{
 				libftl::ship::ellipse::value_type{

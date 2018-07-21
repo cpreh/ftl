@@ -94,6 +94,10 @@ libftl::ship::operator<<(
 		<<
 		_layout.vertical_
 		<<
+		FCPPT_TEXT(", horizontal: ")
+		<<
+		_layout.horizontal_
+		<<
 		FCPPT_TEXT(", ellipse: ")
 		<<
 		_layout.ellipse_

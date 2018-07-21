@@ -73,7 +73,6 @@ main_program(
 		)
 	};
 
-
 	return
 		fcppt::either::match(
 			fcppt::either::bind(

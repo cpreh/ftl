@@ -8,6 +8,7 @@
 #include <libftl/ship/room.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/math/vector/static.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
@@ -23,14 +24,23 @@ struct layout
 {
 	typedef
 	fcppt::math::vector::static_<
-		unsigned,
+		fcppt::optional::object<
+			unsigned
+		>,
 		2
 	>
 	offset_vector;
 
 	FCPPT_MAKE_STRONG_TYPEDEF(
-		bool,
+		int,
 		vertical
+	);
+
+	FCPPT_MAKE_STRONG_TYPEDEF(
+		fcppt::optional::object<
+			int
+		>,
+		horizontal
 	);
 
 	typedef
@@ -49,6 +59,7 @@ struct layout
 	layout(
 		offset_vector,
 		vertical,
+		horizontal,
 		libftl::ship::ellipse,
 		room_list &&,
 		door_list &&
@@ -57,6 +68,8 @@ struct layout
 	offset_vector offset_;
 
 	vertical vertical_;
+
+	horizontal horizontal_;
 
 	libftl::ship::ellipse ellipse_;
 
