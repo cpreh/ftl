@@ -9,6 +9,7 @@
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/noncopyable.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/reference_to_base.hpp>
 #include <fcppt/text.hpp>
@@ -27,10 +28,86 @@
 #include <fstream>
 #include <ios>
 #include <istream>
+#include <streambuf>
 #include <sstream>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
+
+namespace
+{
+
+// TODO: Put this into fcppt?
+class io_buf
+:
+public
+	std::streambuf
+{
+	FCPPT_NONCOPYABLE(
+		io_buf
+	);
+public:
+	explicit
+	io_buf(
+		fcppt::io::buffer &&_buffer
+	)
+	:
+		std::streambuf{},
+		buffer_{
+			std::move(
+				_buffer
+			)
+		}
+	{
+		this->setg(
+			this->buffer_.data(),
+			this->buffer_.data(),
+			this->buffer_.data_end()
+		);
+	}
+
+	~io_buf()
+	override
+	{
+	}
+private:
+	fcppt::io::buffer buffer_;
+};
+
+class io_istream
+:
+public
+	std::istream
+{
+	FCPPT_NONCOPYABLE(
+		io_istream
+	);
+public:
+	explicit
+	io_istream(
+		fcppt::io::buffer &&_buffer
+	)
+	:
+		std::istream{
+			&buf_
+		},
+		buf_{
+			std::move(
+				_buffer
+			)
+		}
+	{
+	}
+
+	~io_istream()
+	override
+	{
+	}
+private:
+	io_buf buf_;
+};
+
+}
 
 libftl::impl::archive::native::native(
 	boost::filesystem::path &&_file_path,
@@ -174,14 +251,12 @@ libftl::impl::archive::native::open(
 											fcppt::unique_ptr_to_base<
 												std::istream
 											>(
-												// TODO: Use a streambuf that operates on io::buffer directly
 												fcppt::make_unique_ptr<
-													std::istringstream
+													io_istream
 												>(
-													std::string{
-														_buffer.begin(),
-														_buffer.end()
-													}
+													std::move(
+														_buffer
+													)
 												)
 											);
 									}
