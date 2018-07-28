@@ -118,6 +118,7 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/archive/filesystem.hpp
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_fwd.hpp
@@ -131,6 +132,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/xml/document.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
@@ -146,6 +148,7 @@ set(
 	libftl/include/libftl/archive/extract.hpp
 	libftl/include/libftl/archive/file.hpp
 	libftl/include/libftl/archive/file_fwd.hpp
+	libftl/include/libftl/archive/filesystem.hpp
 	libftl/include/libftl/archive/index.hpp
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
@@ -183,6 +186,7 @@ set(
 	libftl/src/archive/base.cpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
+	libftl/src/archive/filesystem.cpp
 	libftl/src/archive/open.cpp
 	libftl/src/archive/path.cpp
 	libftl/src/archive/read_index.cpp
