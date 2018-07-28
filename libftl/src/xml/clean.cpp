@@ -1,9 +1,9 @@
+#include <libftl/error.hpp>
 #include <libftl/archive/file_fwd.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/output.hpp>
 #include <libftl/impl/xml/document_fwd.hpp>
 #include <libftl/xml/clean.hpp>
-#include <libftl/xml/error.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -13,7 +13,7 @@
 
 
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	std::string
 >
 libftl::xml::clean(

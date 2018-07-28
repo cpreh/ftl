@@ -1,3 +1,4 @@
+#include <libftl/error.hpp>
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/extract.hpp>
 #include <libftl/archive/file.hpp>
@@ -354,7 +355,7 @@ main_program(
 				stream
 			),
 			[](
-				fcppt::string const &_error
+				libftl::error const &_error
 			)
 			{
 				fcppt::io::cerr()

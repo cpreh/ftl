@@ -1,3 +1,4 @@
+#include <libftl/error.hpp>
 #include <libftl/ship/door.hpp>
 #include <libftl/ship/ellipse.hpp>
 #include <libftl/ship/layout.hpp>
@@ -488,7 +489,7 @@ translate_result(
 
 typedef
 fcppt::either::object<
-	fcppt::string,
+	libftl::error,
 	libftl::ship::layout
 >
 result_type;
@@ -496,7 +497,7 @@ result_type;
 }
 
 fcppt::either::object<
-	fcppt::string,
+	libftl::error,
 	libftl::ship::layout
 >
 libftl::ship::parse_layout(
@@ -555,17 +556,19 @@ try
 						[](
 							sge::parse::error_string const &_error
 						)
-						->
-						fcppt::string
 						{
 							return
-								_error.get();
+								libftl::error{
+									_error.get()
+								};
 						}
 					),
 					[]{
 						return
-							fcppt::string{
-								FCPPT_TEXT("Unknown error")
+							libftl::error{
+								fcppt::string{
+									FCPPT_TEXT("Unknown error")
+								}
 							};
 					}
 				)
@@ -578,6 +581,8 @@ catch(
 {
 	return
 		result_type{
-			_error.string()
+			libftl::error{
+				_error.string()
+			}
 		};
 }

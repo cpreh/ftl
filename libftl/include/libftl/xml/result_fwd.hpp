@@ -1,7 +1,7 @@
 #ifndef LIBFTL_XML_RESULT_FWD_HPP_INCLUDED
 #define LIBFTL_XML_RESULT_FWD_HPP_INCLUDED
 
-#include <libftl/xml/error_fwd.hpp>
+#include <libftl/error_fwd.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 
@@ -18,7 +18,7 @@ using
 result
 =
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	fcppt::unique_ptr<
 		Type
 	>

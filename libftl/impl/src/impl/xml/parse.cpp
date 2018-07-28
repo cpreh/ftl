@@ -1,10 +1,10 @@
+#include <libftl/error.hpp>
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/extract.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/remove_comments.hpp>
-#include <libftl/xml/error.hpp>
 #include <sge/parse/error_string.hpp>
 #include <sge/parse/install_error_handler.hpp>
 #include <sge/parse/optional_error_string.hpp>
@@ -297,7 +297,7 @@ private:
 };
 
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	libftl::impl::xml::document
 >
 parse_string(
@@ -337,7 +337,7 @@ parse_string(
 					_input.end()
 					?
 						fcppt::either::make_success<
-							libftl::xml::error
+							libftl::error
 						>(
 							std::move(
 								result
@@ -347,7 +347,7 @@ parse_string(
 						fcppt::either::make_failure<
 							libftl::impl::xml::document
 						>(
-							libftl::xml::error{
+							libftl::error{
 								fcppt::from_std_string(
 									std::string{
 										begin,
@@ -366,7 +366,7 @@ parse_string(
 					fcppt::either::make_failure<
 						libftl::impl::xml::document
 					>(
-						libftl::xml::error{
+						libftl::error{
 							_error.get()
 						}
 					);
@@ -377,7 +377,7 @@ parse_string(
 }
 
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	libftl::impl::xml::document
 >
 libftl::impl::xml::parse(
@@ -394,7 +394,7 @@ libftl::impl::xml::parse(
 					&_file
 				]{
 					return
-						libftl::xml::error{
+						libftl::error{
 							FCPPT_TEXT("Failed to read ")
 							+
 							fcppt::output_to_fcppt_string(

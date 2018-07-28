@@ -1,3 +1,4 @@
+#include <libftl/error.hpp>
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/index.hpp>
 #include <libftl/archive/length.hpp>
@@ -284,7 +285,7 @@ make_index(
 }
 
 fcppt::either::object<
-	fcppt::string,
+	libftl::error,
 	libftl::archive::index
 >
 libftl::archive::read_index(
@@ -319,12 +320,14 @@ libftl::archive::read_index(
 				alda::raw::stream::error &&_error
 			){
 				return
-					fcppt::string{
-						FCPPT_TEXT("Error reading index of .dat file: ")
-						+
-						std::move(
-							_error.get()
-						)
+					libftl::error{
+						fcppt::string{
+							FCPPT_TEXT("Error reading index of .dat file: ")
+							+
+							std::move(
+								_error.get()
+							)
+						}
 					};
 			}
 		);

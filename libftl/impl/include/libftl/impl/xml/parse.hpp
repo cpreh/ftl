@@ -1,8 +1,8 @@
 #ifndef LIBFTL_IMPL_XML_PARSE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_PARSE_HPP_INCLUDED
 
+#include <libftl/error.hpp>
 #include <libftl/archive/file_fwd.hpp>
-#include <libftl/xml/error.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <fcppt/either/object_impl.hpp>
 
@@ -15,7 +15,7 @@ namespace xml
 {
 
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	libftl::impl::xml::document
 >
 parse(

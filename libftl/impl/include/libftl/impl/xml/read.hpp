@@ -1,11 +1,11 @@
 #ifndef LIBFTL_IMPL_XML_READ_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_READ_HPP_INCLUDED
 
+#include <libftl/error.hpp>
 #include <libftl/archive/entry_output.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/impl/xml/load_function.hpp>
 #include <libftl/xml/clean.hpp>
-#include <libftl/xml/error.hpp>
 #include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
@@ -78,7 +78,7 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 					{
 						return
 							result_type{
-								libftl::xml::error{
+								libftl::error{
 									FCPPT_TEXT("Failed to read ")
 									+
 									fcppt::output_to_fcppt_string(

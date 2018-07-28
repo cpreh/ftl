@@ -1,3 +1,4 @@
+#include <libftl/error.hpp>
 #include <libftl/ship/layout.hpp>
 #include <libftl/ship/layout_output.hpp>
 #include <libftl/ship/parse_layout.hpp>
@@ -87,11 +88,13 @@ main_program(
 						&path
 					]{
 						return
-							FCPPT_TEXT("Cannot open ")
-							+
-							fcppt::filesystem::path_to_string(
-								path
-							);
+							libftl::error{
+								FCPPT_TEXT("Cannot open ")
+								+
+								fcppt::filesystem::path_to_string(
+									path
+								)
+							};
 					}
 				),
 				[](
@@ -105,7 +108,7 @@ main_program(
 				}
 			),
 			[](
-				fcppt::string const &_error
+				libftl::error const &_error
 			)
 			{
 				fcppt::io::cerr()

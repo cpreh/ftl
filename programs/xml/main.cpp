@@ -1,3 +1,4 @@
+#include <libftl/error.hpp>
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/length.hpp>
@@ -5,7 +6,6 @@
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
-#include <libftl/xml/error.hpp>
 #include <libftl/xml/events.hpp>
 #include <libftl/xml/sectors.hpp>
 #include <libftl/xml/ship.hpp>
@@ -84,7 +84,7 @@ namespace
 {
 
 fcppt::either::object<
-	libftl::xml::error,
+	libftl::error,
 	libftl::archive::file
 >
 make_file(
@@ -102,7 +102,7 @@ make_file(
 					&_path
 				]{
 					return
-						libftl::xml::error{
+						libftl::error{
 							FCPPT_TEXT("Cannot read file size of \"")
 							+
 							fcppt::filesystem::path_to_string(
@@ -131,7 +131,7 @@ make_file(
 								_size
 							]{
 								return
-									libftl::xml::error{
+									libftl::error{
 										FCPPT_TEXT("File size ")
 										+
 										fcppt::output_to_fcppt_string(
@@ -318,7 +318,7 @@ main_program(
 							&path
 						]{
 							return
-								libftl::xml::error{
+								libftl::error{
 									FCPPT_TEXT("Cannot open ")
 									+
 									fcppt::filesystem::path_to_string(
@@ -347,7 +347,7 @@ main_program(
 				)
 				->
 				fcppt::either::object<
-					libftl::xml::error,
+					libftl::error,
 					result_type
 				>
 				{
@@ -427,7 +427,7 @@ main_program(
 				}
 			),
 			[](
-				libftl::xml::error const &_error
+				libftl::error const &_error
 			)
 			{
 				fcppt::io::cerr()
