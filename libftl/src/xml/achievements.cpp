@@ -1,4 +1,3 @@
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/impl/xml/load_function.hpp>
 #include <libftl/impl/xml/read.hpp>
 #include <libftl/xml/result.hpp>
@@ -14,12 +13,12 @@ libftl::xml::result<
 	libftl::xml::generated::achievements::achievements_root
 >
 libftl::xml::achievements(
-	libftl::archive::file const &_file
+	std::istream &_input
 )
 {
 	return
 		libftl::impl::xml::read(
-			_file,
+			_input,
 			libftl::impl::xml::load_function<
 				libftl::xml::generated::achievements::achievements_root
 			>{

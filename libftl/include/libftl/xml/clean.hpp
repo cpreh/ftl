@@ -2,10 +2,10 @@
 #define LIBFTL_XML_CLEAN_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
@@ -21,7 +21,7 @@ fcppt::either::object<
 	std::string
 >
 clean(
-	libftl::archive::file const &
+	std::istream &
 );
 
 }

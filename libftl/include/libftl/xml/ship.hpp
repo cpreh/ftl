@@ -2,9 +2,11 @@
 #define LIBFTL_XML_SHIP_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/generated/ship.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -17,7 +19,7 @@ libftl::xml::result<
 	libftl::xml::generated::ship::ship_root
 >
 ship(
-	libftl::archive::file const &
+	std::istream &
 );
 
 }

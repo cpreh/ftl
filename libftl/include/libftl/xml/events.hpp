@@ -2,9 +2,11 @@
 #define LIBFTL_XML_EVENTS_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/xml/result.hpp>
 #include <libftl/xml/generated/events.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -17,7 +19,7 @@ libftl::xml::result<
 	libftl::xml::generated::events::events_root
 >
 events(
-	libftl::archive::file const &
+	std::istream &
 );
 
 }

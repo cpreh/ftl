@@ -1,5 +1,4 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/output.hpp>
 #include <libftl/impl/xml/document_fwd.hpp>
@@ -7,6 +6,7 @@
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
 #include <sstream>
 #include <string>
 #include <fcppt/config/external_end.hpp>
@@ -17,13 +17,13 @@ fcppt::either::object<
 	std::string
 >
 libftl::xml::clean(
-	libftl::archive::file const &_file
+	std::istream &_stream
 )
 {
 	return
 		fcppt::either::map(
 			libftl::impl::xml::parse(
-				_file
+				_stream
 			),
 			[](
 				libftl::impl::xml::document const &_document

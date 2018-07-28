@@ -2,13 +2,10 @@
 #define LIBFTL_IMPL_XML_READ_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/archive/entry_output.hpp>
-#include <libftl/archive/file.hpp>
 #include <libftl/impl/xml/load_function.hpp>
 #include <libftl/xml/clean.hpp>
 #include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -21,6 +18,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/exceptions.hxx>
 #include <xsd/cxx/tree/exceptions.hxx>
+#include <iosfwd>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -41,7 +39,7 @@ libftl::xml::result<
 	Result
 >
 read(
-	libftl::archive::file const &_file,
+	std::istream &_stream,
 	libftl::impl::xml::load_function<
 		Result
 	> const &_function
@@ -50,10 +48,9 @@ read(
 	return
 		fcppt::either::bind(
 			libftl::xml::clean(
-				_file
+				_stream
 			),
 			[
-				&_file,
 				&_function
 			](
 				std::string &&_input
@@ -68,9 +65,7 @@ read(
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 				auto const make_error(
-					[
-						&_file
-					](
+					[](
 						fcppt::string &&_value
 					)
 					->
@@ -79,13 +74,7 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 						return
 							result_type{
 								libftl::error{
-									FCPPT_TEXT("Failed to read ")
-									+
-									fcppt::output_to_fcppt_string(
-										_file.entry_
-									)
-									+
-									FCPPT_TEXT(": ")
+									FCPPT_TEXT("Failed to read XML document: ")
 									+
 									std::move(
 										_value

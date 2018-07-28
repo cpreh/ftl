@@ -2,9 +2,11 @@
 #define LIBFTL_IMPL_XML_PARSE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/archive/file_fwd.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -19,7 +21,7 @@ fcppt::either::object<
 	libftl::impl::xml::document
 >
 parse(
-	libftl::archive::file const &
+	std::istream &
 );
 
 }

@@ -1,7 +1,4 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/entry_output.hpp>
-#include <libftl/archive/extract.hpp>
-#include <libftl/archive/file.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/remove_comments.hpp>
@@ -12,14 +9,10 @@
 #include <fcppt/identity.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
-#include <fcppt/algorithm/map.hpp>
-#include <fcppt/either/bind.hpp>
-#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/io/buffer.hpp>
+#include <fcppt/io/stream_to_string.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
@@ -36,6 +29,7 @@
 #include <boost/spirit/include/qi_plus.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
 #include <boost/spirit/include/qi_sequence.hpp>
+#include <iosfwd>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
@@ -381,43 +375,15 @@ fcppt::either::object<
 	libftl::impl::xml::document
 >
 libftl::impl::xml::parse(
-	libftl::archive::file const &_file
+	std::istream &_stream
 )
 {
 	return
-		fcppt::either::bind(
-			fcppt::either::from_optional(
-				libftl::archive::extract(
-					_file
-				),
-				[
-					&_file
-				]{
-					return
-						libftl::error{
-							FCPPT_TEXT("Failed to read ")
-							+
-							fcppt::output_to_fcppt_string(
-								_file.entry_
-							)
-						};
-				}
-			),
-			[](
-				fcppt::io::buffer &&_buffer
+		parse_string(
+			libftl::impl::xml::remove_comments(
+				fcppt::io::stream_to_string(
+					_stream
+				)
 			)
-			{
-				return
-					parse_string(
-						libftl::impl::xml::remove_comments(
-							fcppt::algorithm::map<
-								std::string
-							>(
-								_buffer,
-								fcppt::identity{}
-							)
-						)
-					);
-			}
 		);
 }

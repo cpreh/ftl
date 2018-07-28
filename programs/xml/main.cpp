@@ -1,8 +1,4 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/entry.hpp>
-#include <libftl/archive/file.hpp>
-#include <libftl/archive/length.hpp>
-#include <libftl/archive/offset.hpp>
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
@@ -18,15 +14,12 @@
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <fcppt/cast/size.hpp>
-#include <fcppt/cast/to_signed.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
@@ -35,10 +28,8 @@
 #include <fcppt/enum/input.hpp>
 #include <fcppt/enum/names_array.hpp>
 #include <fcppt/enum/names_impl_fwd.hpp>
-#include <fcppt/filesystem/file_size.hpp>
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
-#include <fcppt/filesystem/size_to_size_t.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/io/istream.hpp>
@@ -67,9 +58,7 @@
 #include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/tree/std-ostream-operators.hxx>
-#include <boost/cstdint.hpp>
 #include <boost/filesystem/path.hpp>
-#include <cstddef>
 #include <cstdlib>
 #include <exception>
 #include <fstream>
@@ -82,103 +71,6 @@
 
 namespace
 {
-
-fcppt::either::object<
-	libftl::error,
-	libftl::archive::file
->
-make_file(
-	boost::filesystem::path const &_path,
-	std::istream &_stream
-)
-{
-	return
-		fcppt::either::bind(
-			fcppt::either::from_optional(
-				fcppt::filesystem::file_size(
-					_path
-				),
-				[
-					&_path
-				]{
-					return
-						libftl::error{
-							FCPPT_TEXT("Cannot read file size of \"")
-							+
-							fcppt::filesystem::path_to_string(
-								_path
-							)
-							+
-							FCPPT_TEXT("\".")
-						};
-				}
-			),
-			[
-				&_stream,
-				&_path
-			](
-				boost::uintmax_t const _size
-			)
-			{
-				return
-					fcppt::either::map(
-						fcppt::either::from_optional(
-							fcppt::filesystem::size_to_size_t(
-								_size
-							),
-							[
-								&_path,
-								_size
-							]{
-								return
-									libftl::error{
-										FCPPT_TEXT("File size ")
-										+
-										fcppt::output_to_fcppt_string(
-											_size
-										)
-										+
-										FCPPT_TEXT(" of \"")
-										+
-										fcppt::filesystem::path_to_string(
-											_path
-										)
-										+
-										FCPPT_TEXT("\" too large.")
-									};
-							}
-						),
-						[
-							&_stream
-						](
-							std::size_t const _std_size
-						)
-						{
-							return
-								libftl::archive::file{
-									fcppt::make_ref(
-										_stream
-									),
-									libftl::archive::entry{
-										libftl::archive::offset{
-											0
-										},
-										libftl::archive::length{
-											fcppt::cast::size<
-												std::streamsize
-											>(
-												fcppt::cast::to_signed(
-													_std_size
-												)
-											)
-										}
-									}
-								};
-						}
-					);
-			}
-		);
-}
 
 FCPPT_RECORD_MAKE_LABEL(
 	type_label
@@ -306,44 +198,30 @@ main_program(
 	return
 		fcppt::either::match(
 			fcppt::either::bind(
-				fcppt::either::bind(
-					fcppt::either::from_optional(
-						fcppt::filesystem::open<
-							std::ifstream
-						>(
-							path,
-							std::ios_base::openmode{}
-						),
-						[
-							&path
-						]{
-							return
-								libftl::error{
-									FCPPT_TEXT("Cannot open ")
-									+
-									fcppt::filesystem::path_to_string(
-										path
-									)
-								};
-						}
+				fcppt::either::from_optional(
+					fcppt::filesystem::open<
+						std::ifstream
+					>(
+						path,
+						std::ios_base::openmode{}
 					),
 					[
 						&path
-					](
-						std::ifstream &&_stream
-					)
-					{
+					]{
 						return
-							make_file(
-								path,
-								_stream
-							);
+							libftl::error{
+								FCPPT_TEXT("Cannot open ")
+								+
+								fcppt::filesystem::path_to_string(
+									path
+								)
+							};
 					}
 				),
 				[
 					&_arguments
 				](
-					libftl::archive::file const &_file
+					std::ifstream &&_stream
 				)
 				->
 				fcppt::either::object<
@@ -377,7 +255,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::achievements(
-									_file
+									_stream
 								),
 								wrap_result
 							);
@@ -385,7 +263,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::animations(
-									_file
+									_stream
 								),
 								wrap_result
 							);
@@ -393,7 +271,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::blueprints(
-									_file
+									_stream
 								),
 								wrap_result
 							);
@@ -401,7 +279,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::events(
-									_file
+									_stream
 								),
 								wrap_result
 							);
@@ -409,7 +287,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::sectors(
-									_file
+									_stream
 								),
 								wrap_result
 							);
@@ -417,7 +295,7 @@ main_program(
 						return
 							fcppt::either::map(
 								libftl::xml::ship(
-									_file
+									_stream
 								),
 								wrap_result
 							);
