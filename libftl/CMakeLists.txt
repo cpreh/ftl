@@ -118,6 +118,7 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_fwd.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_impl.hpp
@@ -130,11 +131,15 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/xml/document.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
 	libftl/impl/src/impl/xml/remove_comments.cpp
+	libftl/include/libftl/archive/base.hpp
+	libftl/include/libftl/archive/base_fwd.hpp
+	libftl/include/libftl/archive/base_unique_ptr.hpp
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
@@ -144,7 +149,12 @@ set(
 	libftl/include/libftl/archive/index.hpp
 	libftl/include/libftl/archive/length.hpp
 	libftl/include/libftl/archive/offset.hpp
+	libftl/include/libftl/archive/open.hpp
+	libftl/include/libftl/archive/path.hpp
+	libftl/include/libftl/archive/path_fwd.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/error.hpp
+	libftl/include/libftl/error_fwd.hpp
 	libftl/include/libftl/ship/door.hpp
 	libftl/include/libftl/ship/door_fwd.hpp
 	libftl/include/libftl/ship/ellipse.hpp
@@ -165,15 +175,16 @@ set(
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/clean.hpp
-	libftl/include/libftl/xml/error.hpp
-	libftl/include/libftl/xml/error_fwd.hpp
 	libftl/include/libftl/xml/events.hpp
 	libftl/include/libftl/xml/result.hpp
 	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
+	libftl/src/archive/base.cpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
+	libftl/src/archive/open.cpp
+	libftl/src/archive/path.cpp
 	libftl/src/archive/read_index.cpp
 	libftl/src/ship/layout.cpp
 	libftl/src/ship/layout_output.cpp
