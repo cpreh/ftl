@@ -128,6 +128,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
+	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
