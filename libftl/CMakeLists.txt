@@ -67,6 +67,8 @@ function(
 			--namespace-map
 			=libftl::xml::generated::${PARSER_NAME}
 			--hxx-prologue
+			"#include <libftl/detail/symbol.hpp>"
+			--hxx-prologue
 			"#include <fcppt/config/external_begin.hpp>"
 			--hxx-epilogue
 			"#include <fcppt/config/external_end.hpp>"
@@ -75,6 +77,9 @@ function(
 			--fwd-suffix
 			"_fwd.hpp"
 			--generate-forward
+			--generate-ostream
+			--export-symbol
+			LIBFTL_DETAIL_SYMBOL
 			${XSD_FILE}
 		DEPENDS
 		${XSD_FILE}
