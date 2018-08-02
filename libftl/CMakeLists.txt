@@ -127,6 +127,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
+	libftl/impl/include/libftl/impl/xml/file_to_string.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/output.hpp
@@ -135,8 +136,8 @@ set(
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
-	libftl/impl/src/impl/xml/document.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
+	libftl/impl/src/impl/xml/file_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
 	libftl/impl/src/impl/xml/remove_comments.cpp

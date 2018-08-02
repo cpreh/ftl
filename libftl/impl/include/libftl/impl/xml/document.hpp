@@ -76,12 +76,20 @@ struct document
 		optional_inner_node content_;
 	};
 
-	document();
+	struct version
+	{
+		std::string version_;
 
-	explicit
-	document(
-		node_vector const &
-	);
+		std::string encoding_;
+	};
+
+	typedef
+	fcppt::optional::object<
+		version
+	>
+	optional_version;
+
+	optional_version version_;
 
 	node_vector nodes_;
 };

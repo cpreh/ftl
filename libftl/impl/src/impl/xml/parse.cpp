@@ -1,5 +1,6 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/document.hpp>
+#include <libftl/impl/xml/file_to_string.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/remove_comments.hpp>
 #include <sge/parse/error_string.hpp>
@@ -13,7 +14,6 @@
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/io/stream_to_string.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
@@ -50,8 +50,20 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	libftl::impl::xml::document::node,
 	(std::string, opening_tag_),
-	(libftl::impl::xml::document::attribute_vector, attributes_)
+	(libftl::impl::xml::document::attribute_vector, attributes_),
 	(libftl::impl::xml::document::optional_inner_node, content_)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+	libftl::impl::xml::document::version,
+	(std::string, version_),
+	(std::string, encoding_)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+	libftl::impl::xml::document,
+	(libftl::impl::xml::document::optional_version, version_),
+	(libftl::impl::xml::document::node_vector, nodes_)
 )
 
 namespace
@@ -95,6 +107,7 @@ public:
 		attribute_(),
 		attribute_vector_(),
 		node_vector_(),
+		version_(),
 		document_(),
 		error_string_()
 	{
@@ -197,7 +210,26 @@ public:
 			"node vector"
 		);
 
+		version_ %=
+			qi::lit("<?xml")
+			>>
+			qi::lit("version=")
+			>>
+			quoted_string_
+			>>
+			qi::lit("encoding=")
+			>>
+			quoted_string_
+			>>
+			qi::lit("?>");
+
+		version_.name(
+			"version"
+		);
+
 		document_ %=
+			-version_
+			>>
 			node_vector_;
 
 		document_.name(
@@ -280,6 +312,13 @@ private:
 		space_type
 	>
 	node_vector_;
+
+	boost::spirit::qi::rule<
+		In,
+		libftl::impl::xml::document::version(),
+		space_type
+	>
+	version_;
 
 	boost::spirit::qi::rule<
 		In,
@@ -386,7 +425,7 @@ libftl::impl::xml::parse(
 	return
 		parse_string(
 			libftl::impl::xml::remove_comments(
-				fcppt::io::stream_to_string(
+				libftl::impl::xml::file_to_string(
 					_stream
 				)
 			)
