@@ -31,13 +31,15 @@ operator<<(
 	return
 		_stream
 		<<
-		FCPPT_TEXT("id: ")
+		FCPPT_TEXT("{id: ")
 		<<
 		_room.id_
 		<<
 		FCPPT_TEXT(", tile_rect: ")
 		<<
-		_room.rect_;
+		_room.rect_
+		<<
+		FCPPT_TEXT("}");
 }
 
 fcppt::io::ostream &
@@ -55,7 +57,7 @@ operator<<(
 	return
 		_stream
 		<<
-		FCPPT_TEXT("pos: ")
+		FCPPT_TEXT("{pos: ")
 		<<
 		_door.pos_
 		<<
@@ -69,7 +71,9 @@ operator<<(
 		<<
 		FCPPT_TEXT(", vertical: ")
 		<<
-		_door.vertical_;
+		_door.vertical_
+		<<
+		FCPPT_TEXT("}");
 }
 
 }

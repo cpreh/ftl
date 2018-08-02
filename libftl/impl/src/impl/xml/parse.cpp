@@ -9,6 +9,7 @@
 #include <fcppt/identity.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/text.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
@@ -342,6 +343,8 @@ parse_string(
 							libftl::impl::xml::document
 						>(
 							libftl::error{
+								FCPPT_TEXT("Failed to parse starting from here:\n")
+								+
 								fcppt::from_std_string(
 									std::string{
 										begin,
@@ -361,6 +364,8 @@ parse_string(
 						libftl::impl::xml::document
 					>(
 						libftl::error{
+							FCPPT_TEXT("Failed to parse:\n")
+							+
 							_error.get()
 						}
 					);

@@ -310,6 +310,8 @@ main_program(
 			{
 				fcppt::io::cerr()
 					<<
+					FCPPT_TEXT("ERROR:\n")
+					<<
 					_error
 					<<
 					FCPPT_TEXT('\n');
@@ -327,6 +329,8 @@ main_program(
 					)
 					{
 						fcppt::io::cout()
+							<<
+							FCPPT_TEXT("SUCCESS:\n")
 							<<
 							*_element
 							<<
