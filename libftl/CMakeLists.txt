@@ -78,6 +78,8 @@ function(
 			"_fwd.hpp"
 			--generate-forward
 			--generate-ostream
+			--guard-prefix
+			LIBFTL_XML_GENERATED
 			--export-symbol
 			LIBFTL_DETAIL_SYMBOL
 			${XSD_FILE}
