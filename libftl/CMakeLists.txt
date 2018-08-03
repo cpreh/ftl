@@ -32,7 +32,7 @@ find_package(
 
 set(
 	GENERATED_XSD_INCLUDE_DIR
-	${CMAKE_CURRENT_BINARY_DIR}/xsd/include
+	${FCPPT_UTILS_PROJECT_BINARY_DIR}/xsd/include
 )
 
 function(
@@ -82,11 +82,11 @@ function(
 			LIBFTL_XML_GENERATED
 			--export-symbol
 			LIBFTL_DETAIL_SYMBOL
+			--output-dir
+			${OUTPUT_DIR}
 			${XSD_FILE}
 		DEPENDS
 		${XSD_FILE}
-		WORKING_DIRECTORY
-		${OUTPUT_DIR}
 		VERBATIM
 	)
 
