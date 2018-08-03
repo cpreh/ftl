@@ -31,6 +31,40 @@ libftl::archive::path::add(
 		);
 }
 
+libftl::archive::path &
+libftl::archive::path::operator+=(
+	path &&_other
+)
+{
+	rep_ =
+		std::move(
+			_other.rep_
+		)
+		+
+		"/"
+		+
+		std::move(
+			rep_
+		);
+
+	return
+		*this;
+}
+
+libftl::archive::path
+libftl::archive::operator+(
+	libftl::archive::path &&_path1,
+	libftl::archive::path &&_path2
+)
+{
+	return
+		_path1
+		+=
+		std::move(
+			_path2
+		);
+}
+
 libftl::archive::path
 libftl::archive::operator/(
 	libftl::archive::path &&_path,

@@ -21,5 +21,4 @@ operator<<(
 }
 }
 
-
 #endif

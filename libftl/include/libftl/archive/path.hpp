@@ -28,9 +28,22 @@ public:
 	add(
 		std::string &&
 	);
+
+	LIBFTL_DETAIL_SYMBOL
+	path &
+	operator+=(
+		path &&
+	);
 private:
 	std::string rep_;
 };
+
+LIBFTL_DETAIL_SYMBOL
+libftl::archive::path
+operator+(
+	libftl::archive::path &&,
+	libftl::archive::path &&
+);
 
 LIBFTL_DETAIL_SYMBOL
 libftl::archive::path

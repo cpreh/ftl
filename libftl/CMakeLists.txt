@@ -1,7 +1,22 @@
-#find_package(
-#	Boost REQUIRED
-#	COMPONENTS filesystem
-#)
+find_package(
+	Boost REQUIRED
+	COMPONENTS filesystem
+)
+
+find_package(
+	Brigand
+	REQUIRED
+)
+
+find_package(
+	awl
+	REQUIRED
+)
+
+find_package(
+	mizuiro
+	REQUIRED
+)
 
 find_package(
         fcppt
@@ -17,7 +32,13 @@ find_package(
 	sge
 	REQUIRED
 	COMPONENTS
+	image2d
+	imagecolor
+	media
 	parse
+	renderer
+	sprite
+	texture
 )
 
 find_package(
@@ -183,6 +204,12 @@ set(
 	libftl/include/libftl/ship/tile_pos_fwd.hpp
 	libftl/include/libftl/ship/tile_rect.hpp
 	libftl/include/libftl/ship/tile_rect_fwd.hpp
+	libftl/include/libftl/sprite/choices.hpp
+	libftl/include/libftl/sprite/color_format.hpp
+	libftl/include/libftl/sprite/draw.hpp
+	libftl/include/libftl/sprite/images.hpp
+	libftl/include/libftl/sprite/images_fwd.hpp
+	libftl/include/libftl/sprite/object.hpp
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
@@ -202,6 +229,8 @@ set(
 	libftl/src/ship/layout.cpp
 	libftl/src/ship/layout_output.cpp
 	libftl/src/ship/parse_layout.cpp
+	libftl/src/sprite/draw.cpp
+	libftl/src/sprite/images.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
@@ -267,7 +296,13 @@ function(
 		${LIBFTL_LIB_NAME}
 	)
 
-#	${Boost_INCLUDE_DIRS}
+	target_include_directories(
+		${LIBFTL_LIB_NAME}
+		PUBLIC
+		${Boost_INCLUDE_DIRS}
+		${Brigand_INCLUDE_DIRS}
+	)
+
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
 		PUBLIC
@@ -286,14 +321,23 @@ function(
 		"${LIBFTL_STATIC_LINK_FLAG}"
 	)
 
-#${Boost_FILESYSTEM_LIBRARIES}
 	target_link_libraries(
 		${LIBFTL_LIB_NAME}
-		PUBLIC
+		INTERFACE
 		fcppt_core_interface
+		sgeimagecolor_interface
+		sgerenderer_interface
+		sgesprite_interface
 		PRIVATE
+		${Boost_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
+		sgeimagecolor_interface
+		${sgeimage2d_TARGET}
+		${sgemedia_TARGET}
 		${sgeparse_TARGET}
+		${sgerenderer_TARGET}
+		${sgesprite_TARGET}
+		${sgetexture_TARGET}
 		${alda_TARGET}
 		${fcppt_core_TARGET}
 	)
