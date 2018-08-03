@@ -1,3 +1,13 @@
+find_package(
+	Boost REQUIRED
+	COMPONENTS filesystem
+)
+
+find_package(
+	fcppt
+	REQUIRED
+)
+
 add_executable(
 	ftlship
 	main.cpp
@@ -11,7 +21,6 @@ fcppt_utils_set_target_compiler_flags(
 	ftlship
 )
 
-
 target_link_libraries(
 	ftlship
 	PRIVATE
@@ -21,6 +30,12 @@ target_link_libraries(
 	${fcppt_options_TARGET}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
 	${Boost_FILESYSTEM_LIBRARIES}
+)
+
+target_include_directories(
+	ftlarchive
+	PRIVATE
+	${Boost_INCLUDE_DIRS}
 )
 
 target_compile_definitions(

@@ -1,4 +1,9 @@
 #include <libftl/archive/path.hpp>
+#include <fcppt/string.hpp>
+#include <fcppt/to_std_string.hpp>
+#include <fcppt/io/extract.hpp>
+#include <fcppt/io/istream.hpp>
+#include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
@@ -8,6 +13,18 @@
 libftl::archive::path::path()
 :
 	rep_{}
+{
+}
+
+libftl::archive::path::path(
+	std::string &&_rep
+)
+:
+	rep_{
+		std::move(
+			_rep
+		)
+	}
 {
 }
 
@@ -38,13 +55,13 @@ libftl::archive::path::operator+=(
 {
 	rep_ =
 		std::move(
-			_other.rep_
+			rep_
 		)
 		+
 		"/"
 		+
 		std::move(
-			rep_
+			_other.rep_
 		);
 
 	return
@@ -81,4 +98,37 @@ libftl::archive::operator/(
 		std::move(
 			_path
 		);
+}
+
+fcppt::io::istream &
+libftl::archive::operator>>(
+	fcppt::io::istream &_stream,
+	libftl::archive::path &_path
+)
+{
+	fcppt::optional::maybe_void(
+		fcppt::io::extract<
+			fcppt::string
+		>(
+			_stream
+		),
+		[
+			&_path
+		](
+			fcppt::string &&_value
+		)
+		{
+			_path =
+				libftl::archive::path{
+					fcppt::to_std_string(
+						std::move(
+							_value
+						)
+					)
+				};
+		}
+	);
+
+	return
+		_stream;
 }

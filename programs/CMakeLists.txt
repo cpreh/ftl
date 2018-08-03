@@ -3,6 +3,10 @@ add_subdirectory(
 )
 
 add_subdirectory(
+	draw
+)
+
+add_subdirectory(
 	ship
 )
 

@@ -326,6 +326,7 @@ main_program(
 		)
 	};
 
+// TODO: filesystem::open
 	boost::filesystem::ifstream stream{
 		path,
 		std::ios_base::binary

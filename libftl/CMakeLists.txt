@@ -331,7 +331,7 @@ function(
 		PRIVATE
 		${Boost_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
-		sgeimagecolor_interface
+		${sgeimagecolor_TARGET}
 		${sgeimage2d_TARGET}
 		${sgemedia_TARGET}
 		${sgeparse_TARGET}

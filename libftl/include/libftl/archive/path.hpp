@@ -3,6 +3,7 @@
 
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
+#include <fcppt/io/istream_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <fcppt/config/external_end.hpp>
@@ -18,6 +19,11 @@ class path
 public:
 	LIBFTL_DETAIL_SYMBOL
 	path();
+
+	explicit
+	path(
+		std::string &&
+	);
 
 	LIBFTL_DETAIL_SYMBOL
 	std::string const &
@@ -50,6 +56,13 @@ libftl::archive::path
 operator/(
 	libftl::archive::path &&,
 	std::string &&
+);
+
+LIBFTL_DETAIL_SYMBOL
+fcppt::io::istream &
+operator>>(
+	fcppt::io::istream &,
+	libftl::archive::path &
 );
 
 }

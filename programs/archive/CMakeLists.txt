@@ -33,6 +33,12 @@ target_link_libraries(
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
 )
 
+target_include_directories(
+	ftlarchive
+	PRIVATE
+	${Boost_INCLUDE_DIRS}
+)
+
 target_compile_definitions(
 	ftlarchive
 	PRIVATE
