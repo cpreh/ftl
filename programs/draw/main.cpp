@@ -7,6 +7,9 @@
 #include <libftl/sprite/draw.hpp>
 #include <libftl/sprite/images.hpp>
 #include <libftl/sprite/object.hpp>
+#include <libftl/xml/blueprints.hpp>
+#include <libftl/xml/result.hpp>
+#include <libftl/xml/generated/blueprints.hpp>
 #include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
@@ -60,15 +63,23 @@
 #include <awl/main/function_context.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/cast/dynamic.hpp>
+#include <fcppt/either/bind.hpp>
+#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
+#include <fcppt/either/object_impl.hpp>
 #include <fcppt/math/vector/null.hpp>
+#include <fcppt/optional/deref.hpp>
 #include <fcppt/optional/maybe_void.hpp>
+#include <fcppt/optional/reference.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
@@ -93,6 +104,8 @@
 #include <boost/filesystem/path.hpp>
 #include <brigand/sequences/list.hpp>
 #include <exception>
+#include <istream>
+#include <string>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -105,7 +118,7 @@ FCPPT_RECORD_MAKE_LABEL(
 );
 
 FCPPT_RECORD_MAKE_LABEL(
-	image_path_label
+	ship_name_label
 );
 
 typedef
@@ -115,8 +128,8 @@ fcppt::record::variadic<
 		boost::filesystem::path
 	>,
 	fcppt::record::element<
-		image_path_label,
-		libftl::archive::path
+		ship_name_label,
+		std::string
 	>
 >
 argument_record;
@@ -202,6 +215,135 @@ main_loop(
 						}
 					);
 				}
+			}
+		);
+}
+
+libftl::xml::result<
+	libftl::xml::generated::blueprints::blueprints_root
+>
+load_blueprints(
+	libftl::archive::base &_archive
+)
+{
+	return
+		fcppt::either::bind(
+			_archive.open(
+				libftl::archive::path{}
+				/
+				"data"
+				/
+				"blueprints.xml"
+			),
+			[](
+				fcppt::unique_ptr<
+					std::istream
+				> &&_stream
+			)
+			{
+				return
+					libftl::xml::blueprints(
+						*_stream
+					);
+			}
+		);
+}
+
+fcppt::optional::reference<
+	libftl::xml::generated::blueprints::ship_blueprint const
+>
+find_ship_blueprint(
+	libftl::xml::generated::blueprints::blueprints_root::shipBlueprint_sequence const &_blueprints,
+	std::string const &_name
+)
+{
+	return
+		fcppt::optional::deref(
+			fcppt::algorithm::find_if_opt(
+				_blueprints,
+				[
+					&_name
+				](
+					libftl::xml::generated::blueprints::ship_blueprint const &_blueprint
+				)
+				{
+					return
+						_blueprint.name1()
+						==
+						_name;
+				}
+			)
+		);
+}
+
+fcppt::either::object<
+	libftl::error,
+	sge::texture::const_part_shared_ptr
+>
+load_ship_image(
+	libftl::archive::base &_archive,
+	libftl::sprite::images &_images,
+	std::string const &_ship_name
+)
+{
+	return
+		fcppt::either::bind(
+			load_blueprints(
+				_archive
+			),
+			[
+				&_images,
+				&_ship_name
+			](
+				fcppt::unique_ptr<
+					libftl::xml::generated::blueprints::blueprints_root
+				> &&_blueprints
+			)
+			{
+				return
+					fcppt::either::bind(
+						fcppt::either::from_optional(
+							find_ship_blueprint(
+								_blueprints->shipBlueprint(),
+								_ship_name
+							),
+							[
+								&_ship_name
+							]{
+								return
+									libftl::error{
+										FCPPT_TEXT("Ship ")
+										+
+										fcppt::from_std_string(
+											_ship_name
+										)
+										+
+										FCPPT_TEXT(" not found!")
+									};
+							}
+						),
+						[
+							&_images
+						](
+							fcppt::reference<
+								libftl::xml::generated::blueprints::ship_blueprint const
+							> const _blueprint
+						)
+						{
+							return
+								_images.load(
+									libftl::archive::path{}
+									/
+									"ship"
+									/
+									(
+										_blueprint.get().img()
+										+
+										"_base.png"
+									)
+								);
+						}
+					);
 			}
 		);
 }
@@ -294,9 +436,11 @@ main_program(
 
 	return
 		fcppt::either::match(
-			images.load(
+			load_ship_image(
+				*archive,
+				images,
 				fcppt::record::get<
-					image_path_label
+					ship_name_label
 				>(
 					_arguments
 				)
@@ -357,15 +501,15 @@ try
 				}
 			},
 			fcppt::options::argument<
-				image_path_label,
-				libftl::archive::path
+				ship_name_label,
+				std::string
 			>{
 				fcppt::options::long_name{
-					FCPPT_TEXT("Path")
+					FCPPT_TEXT("ShipName")
 				},
 				fcppt::options::optional_help_text{
 					fcppt::options::help_text{
-						FCPPT_TEXT("Path of the png file")
+						FCPPT_TEXT("Name of the ship blueprint")
 					}
 				}
 			}
