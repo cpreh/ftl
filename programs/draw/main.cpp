@@ -67,8 +67,10 @@
 #include <fcppt/make_ref.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/reference_impl.hpp>
+#include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/to_std_string.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/cast/dynamic.hpp>
@@ -129,7 +131,7 @@ fcppt::record::variadic<
 	>,
 	fcppt::record::element<
 		ship_name_label,
-		std::string
+		fcppt::string
 	>
 >
 argument_record;
@@ -276,6 +278,33 @@ find_ship_blueprint(
 		);
 }
 
+std::string
+ship_path(
+	std::string const &_ship_name
+)
+{
+	std::string const prefix{
+		"PLAYER_SHIP"
+	};
+
+	return
+		_ship_name.compare(
+			0,
+			prefix.size(),
+			prefix
+		)
+		== 0
+		?
+			std::string{
+				"ship"
+			}
+		:
+			std::string{
+				"ships_noglow"
+			}
+		;
+}
+
 fcppt::either::object<
 	libftl::error,
 	sge::texture::const_part_shared_ptr
@@ -323,6 +352,7 @@ load_ship_image(
 							}
 						),
 						[
+							&_ship_name,
 							&_images
 						](
 							fcppt::reference<
@@ -333,7 +363,9 @@ load_ship_image(
 							return
 								_images.load(
 									libftl::archive::path{
-										"ship"
+										ship_path(
+											_ship_name
+										)
 									}
 									/
 									(
@@ -439,10 +471,12 @@ main_program(
 			load_ship_image(
 				*archive,
 				images,
-				fcppt::record::get<
-					ship_name_label
-				>(
-					_arguments
+				fcppt::to_std_string(
+					fcppt::record::get<
+						ship_name_label
+					>(
+						_arguments
+					)
 				)
 			),
 			[](
@@ -502,7 +536,7 @@ try
 			},
 			fcppt::options::argument<
 				ship_name_label,
-				std::string
+				fcppt::string
 			>{
 				fcppt::options::long_name{
 					FCPPT_TEXT("ShipName")
