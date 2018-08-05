@@ -229,9 +229,9 @@ load_blueprints(
 	return
 		fcppt::either::bind(
 			_archive.open(
-				libftl::archive::path{}
-				/
-				"data"
+				libftl::archive::path{
+					"data"
+				}
 				/
 				"blueprints.xml"
 			),
@@ -332,9 +332,9 @@ load_ship_image(
 						{
 							return
 								_images.load(
-									libftl::archive::path{}
-									/
-									"ship"
+									libftl::archive::path{
+										"ship"
+									}
 									/
 									(
 										_blueprint.get().img()

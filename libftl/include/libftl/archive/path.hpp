@@ -18,8 +18,6 @@ class path
 {
 public:
 	LIBFTL_DETAIL_SYMBOL
-	path();
-
 	explicit
 	path(
 		std::string &&

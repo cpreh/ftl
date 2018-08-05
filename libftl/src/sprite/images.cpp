@@ -75,9 +75,9 @@ libftl::sprite::images::load(
 {
 	libftl::archive::path const full_path{
 		(
-			libftl::archive::path{}
-			/
-			"img"
+			libftl::archive::path{
+				"img"
+			}
 		)
 		+
 		libftl::archive::path{

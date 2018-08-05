@@ -10,12 +10,6 @@
 #include <fcppt/config/external_end.hpp>
 
 
-libftl::archive::path::path()
-:
-	rep_{}
-{
-}
-
 libftl::archive::path::path(
 	std::string &&_rep
 )
