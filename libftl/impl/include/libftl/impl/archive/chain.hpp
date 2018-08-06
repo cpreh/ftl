@@ -1,15 +1,14 @@
-#ifndef LIBFTL_IMPL_ARCHIVE_NATIVE_HPP_INCLUDED
-#define LIBFTL_IMPL_ARCHIVE_NATIVE_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_ARCHIVE_CHAIN_HPP_INCLUDED
+#define LIBFTL_IMPL_ARCHIVE_CHAIN_HPP_INCLUDED
 
 #include <libftl/error_fwd.hpp>
 #include <libftl/archive/base.hpp>
-#include <libftl/archive/index.hpp>
+#include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
@@ -21,20 +20,20 @@ namespace impl
 namespace archive
 {
 
-class native
+class chain
 :
 	public libftl::archive::base
 {
 	FCPPT_NONCOPYABLE(
-		native
+		chain
 	);
 public:
-	native(
-		boost::filesystem::path &&,
-		libftl::archive::index &&
+	chain(
+		libftl::archive::base_unique_ptr &&,
+		libftl::archive::base_unique_ptr &&
 	);
 
-	~native()
+	~chain()
 	override;
 
 	fcppt::either::object<
@@ -48,9 +47,9 @@ public:
 	)
 	override;
 private:
-	boost::filesystem::path const file_path_;
+	libftl::archive::base_unique_ptr const archive1_;
 
-	libftl::archive::index const index_;
+	libftl::archive::base_unique_ptr const archive2_;
 };
 
 }

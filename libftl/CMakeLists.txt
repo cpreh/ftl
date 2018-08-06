@@ -146,6 +146,7 @@ add_custom_target(
 
 set(
 	LIBFTL_FILES
+	libftl/impl/include/libftl/impl/archive/chain.hpp
 	libftl/impl/include/libftl/impl/archive/filesystem.hpp
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
@@ -162,6 +163,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/src/impl/archive/chain.cpp
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
@@ -172,6 +174,7 @@ set(
 	libftl/include/libftl/archive/base.hpp
 	libftl/include/libftl/archive/base_fwd.hpp
 	libftl/include/libftl/archive/base_unique_ptr.hpp
+	libftl/include/libftl/archive/chain.hpp
 	libftl/include/libftl/archive/entry.hpp
 	libftl/include/libftl/archive/entry_fwd.hpp
 	libftl/include/libftl/archive/entry_output.hpp
@@ -188,6 +191,20 @@ set(
 	libftl/include/libftl/archive/read_index.hpp
 	libftl/include/libftl/error.hpp
 	libftl/include/libftl/error_fwd.hpp
+	libftl/include/libftl/options/create_resource_parser.hpp
+	libftl/include/libftl/options/data_file_label.hpp
+	libftl/include/libftl/options/native_resource_record.hpp
+	libftl/include/libftl/options/native_resource_record_fwd.hpp
+	libftl/include/libftl/options/open_archive.hpp
+	libftl/include/libftl/options/resource_file_label.hpp
+	libftl/include/libftl/options/resource_label.hpp
+	libftl/include/libftl/options/resource_parser.hpp
+	libftl/include/libftl/options/resource_parser_fwd.hpp
+	libftl/include/libftl/options/resource_path_label.hpp
+	libftl/include/libftl/options/resource_record.hpp
+	libftl/include/libftl/options/resource_record_fwd.hpp
+	libftl/include/libftl/options/unpacked_resource_record.hpp
+	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
 	libftl/include/libftl/ship/door.hpp
 	libftl/include/libftl/ship/door_fwd.hpp
 	libftl/include/libftl/ship/ellipse.hpp
@@ -220,12 +237,15 @@ set(
 	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/base.cpp
+	libftl/src/archive/chain.cpp
 	libftl/src/archive/entry_output.cpp
 	libftl/src/archive/extract.cpp
 	libftl/src/archive/filesystem.cpp
 	libftl/src/archive/open.cpp
 	libftl/src/archive/path.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/options/create_resource_parser.cpp
+	libftl/src/options/open_archive.cpp
 	libftl/src/ship/layout.cpp
 	libftl/src/ship/layout_output.cpp
 	libftl/src/ship/parse_layout.cpp
@@ -301,11 +321,6 @@ function(
 		PUBLIC
 		${Boost_INCLUDE_DIRS}
 		${Brigand_INCLUDE_DIRS}
-	)
-
-	target_include_directories(
-		${LIBFTL_LIB_NAME}
-		PUBLIC
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${XSD_INCLUDE_DIRS}
@@ -324,10 +339,11 @@ function(
 	target_link_libraries(
 		${LIBFTL_LIB_NAME}
 		INTERFACE
-		fcppt_core_interface
 		sgeimagecolor_interface
 		sgerenderer_interface
 		sgesprite_interface
+		fcppt_core_interface
+		fcppt_options_interface
 		PRIVATE
 		${Boost_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
@@ -340,6 +356,7 @@ function(
 		${sgetexture_TARGET}
 		${alda_TARGET}
 		${fcppt_core_TARGET}
+		${fcppt_options_TARGET}
 	)
 
 	add_dependencies(
