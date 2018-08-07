@@ -207,22 +207,22 @@ set(
 	libftl/include/libftl/options/resource_variant_fwd.hpp
 	libftl/include/libftl/options/unpacked_resource_record.hpp
 	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
-	libftl/include/libftl/ship/door.hpp
-	libftl/include/libftl/ship/door_fwd.hpp
-	libftl/include/libftl/ship/ellipse.hpp
-	libftl/include/libftl/ship/ellipse_fwd.hpp
-	libftl/include/libftl/ship/layout.hpp
-	libftl/include/libftl/ship/layout_fwd.hpp
-	libftl/include/libftl/ship/layout_output.hpp
-	libftl/include/libftl/ship/parse_layout.hpp
-	libftl/include/libftl/ship/room.hpp
-	libftl/include/libftl/ship/room_fwd.hpp
-	libftl/include/libftl/ship/room_id.hpp
-	libftl/include/libftl/ship/tile_coordinate.hpp
-	libftl/include/libftl/ship/tile_pos.hpp
-	libftl/include/libftl/ship/tile_pos_fwd.hpp
-	libftl/include/libftl/ship/tile_rect.hpp
-	libftl/include/libftl/ship/tile_rect_fwd.hpp
+	libftl/include/libftl/ship/layout/door.hpp
+	libftl/include/libftl/ship/layout/door_fwd.hpp
+	libftl/include/libftl/ship/layout/ellipse.hpp
+	libftl/include/libftl/ship/layout/ellipse_fwd.hpp
+	libftl/include/libftl/ship/layout/object.hpp
+	libftl/include/libftl/ship/layout/object_fwd.hpp
+	libftl/include/libftl/ship/layout/output.hpp
+	libftl/include/libftl/ship/layout/parse.hpp
+	libftl/include/libftl/ship/layout/room.hpp
+	libftl/include/libftl/ship/layout/room_fwd.hpp
+	libftl/include/libftl/ship/layout/room_id.hpp
+	libftl/include/libftl/ship/layout/tile_coordinate.hpp
+	libftl/include/libftl/ship/layout/tile_pos.hpp
+	libftl/include/libftl/ship/layout/tile_pos_fwd.hpp
+	libftl/include/libftl/ship/layout/tile_rect.hpp
+	libftl/include/libftl/ship/layout/tile_rect_fwd.hpp
 	libftl/include/libftl/sprite/choices.hpp
 	libftl/include/libftl/sprite/color_format.hpp
 	libftl/include/libftl/sprite/draw.hpp
@@ -248,9 +248,9 @@ set(
 	libftl/src/archive/read_index.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
-	libftl/src/ship/layout.cpp
-	libftl/src/ship/layout_output.cpp
-	libftl/src/ship/parse_layout.cpp
+	libftl/src/ship/layout/object.cpp
+	libftl/src/ship/layout/output.cpp
+	libftl/src/ship/layout/parse.cpp
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
 	libftl/src/xml/achievements.cpp

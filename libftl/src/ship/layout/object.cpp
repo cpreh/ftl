@@ -1,15 +1,15 @@
-#include <libftl/ship/ellipse.hpp>
-#include <libftl/ship/layout.hpp>
+#include <libftl/ship/layout/ellipse.hpp>
+#include <libftl/ship/layout/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
-libftl::ship::layout::layout(
+libftl::ship::layout::object::object(
 	offset_vector const _offset,
 	vertical const _vertical,
 	horizontal const _horizontal,
-	libftl::ship::ellipse const _ellipse,
+	libftl::ship::layout::ellipse const _ellipse,
 	room_list &&_rooms,
 	door_list &&_doors
 )

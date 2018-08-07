@@ -1,11 +1,11 @@
 #include <libftl/error.hpp>
-#include <libftl/ship/door.hpp>
-#include <libftl/ship/ellipse.hpp>
-#include <libftl/ship/layout.hpp>
-#include <libftl/ship/parse_layout.hpp>
-#include <libftl/ship/room.hpp>
-#include <libftl/ship/room_id.hpp>
-#include <libftl/ship/tile_coordinate.hpp>
+#include <libftl/ship/layout/door.hpp>
+#include <libftl/ship/layout/ellipse.hpp>
+#include <libftl/ship/layout/object.hpp>
+#include <libftl/ship/layout/parse.hpp>
+#include <libftl/ship/layout/room.hpp>
+#include <libftl/ship/layout/room_id.hpp>
+#include <libftl/ship/layout/tile_coordinate.hpp>
 #include <sge/parse/install_error_handler.hpp>
 #include <sge/parse/make_result.hpp>
 #include <sge/parse/optional_error_string.hpp>
@@ -54,28 +54,28 @@ namespace
 
 typedef
 std::make_signed_t<
-	libftl::ship::room_id::value_type
+	libftl::ship::layout::room_id::value_type
 >
 room_id_signed;
 
 struct room
 {
-	libftl::ship::room_id::value_type id_;
+	libftl::ship::layout::room_id::value_type id_;
 
-	libftl::ship::tile_coordinate::value_type x_;
+	libftl::ship::layout::tile_coordinate::value_type x_;
 
-	libftl::ship::tile_coordinate::value_type y_;
+	libftl::ship::layout::tile_coordinate::value_type y_;
 
-	libftl::ship::tile_coordinate::value_type w_;
+	libftl::ship::layout::tile_coordinate::value_type w_;
 
-	libftl::ship::tile_coordinate::value_type h_;
+	libftl::ship::layout::tile_coordinate::value_type h_;
 };
 
 struct door
 {
-	libftl::ship::tile_coordinate::value_type x_;
+	libftl::ship::layout::tile_coordinate::value_type x_;
 
-	libftl::ship::tile_coordinate::value_type y_;
+	libftl::ship::layout::tile_coordinate::value_type y_;
 
 	room_id_signed left_top_;
 
@@ -86,21 +86,21 @@ struct door
 
 struct layout
 {
-	libftl::ship::layout::offset_vector::value_type offset_x_;
+	libftl::ship::layout::object::offset_vector::value_type offset_x_;
 
-	libftl::ship::layout::offset_vector::value_type offset_y_;
+	libftl::ship::layout::object::offset_vector::value_type offset_y_;
 
 	int vertical_;
 
 	fcppt::optional::object<int> horizontal_;
 
-	libftl::ship::ellipse::value_type::value_type ellipse_x_;
+	libftl::ship::layout::ellipse::value_type::value_type ellipse_x_;
 
-	libftl::ship::ellipse::value_type::value_type ellipse_y_;
+	libftl::ship::layout::ellipse::value_type::value_type ellipse_y_;
 
-	libftl::ship::ellipse::value_type::value_type ellipse_w_;
+	libftl::ship::layout::ellipse::value_type::value_type ellipse_w_;
 
-	libftl::ship::ellipse::value_type::value_type ellipse_h_;
+	libftl::ship::layout::ellipse::value_type::value_type ellipse_h_;
 
 	std::vector<room> rooms_;
 
@@ -116,17 +116,17 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wunused-member-function)
 
 BOOST_FUSION_ADAPT_STRUCT(
 	room,
-	(libftl::ship::room_id::value_type, id_)
-	(libftl::ship::tile_coordinate::value_type, x_)
-	(libftl::ship::tile_coordinate::value_type, y_)
-	(libftl::ship::tile_coordinate::value_type, w_)
-	(libftl::ship::tile_coordinate::value_type, h_)
+	(libftl::ship::layout::room_id::value_type, id_)
+	(libftl::ship::layout::tile_coordinate::value_type, x_)
+	(libftl::ship::layout::tile_coordinate::value_type, y_)
+	(libftl::ship::layout::tile_coordinate::value_type, w_)
+	(libftl::ship::layout::tile_coordinate::value_type, h_)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	door,
-	(libftl::ship::tile_coordinate::value_type, x_)
-	(libftl::ship::tile_coordinate::value_type, y_)
+	(libftl::ship::layout::tile_coordinate::value_type, x_)
+	(libftl::ship::layout::tile_coordinate::value_type, y_)
 	(room_id_signed, left_top_)
 	(room_id_signed, bottom_right_)
 	(int, vertical_)
@@ -134,14 +134,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	layout,
-	(libftl::ship::layout::offset_vector::value_type, offset_x_)
-	(libftl::ship::layout::offset_vector::value_type, offset_y_)
+	(libftl::ship::layout::object::offset_vector::value_type, offset_x_)
+	(libftl::ship::layout::object::offset_vector::value_type, offset_y_)
 	(int, vertical_)
 	(fcppt::optional::object<int>, horizontal_)
-	(libftl::ship::ellipse::value_type::value_type, ellipse_x_)
-	(libftl::ship::ellipse::value_type::value_type, ellipse_y_)
-	(libftl::ship::ellipse::value_type::value_type, ellipse_w_)
-	(libftl::ship::ellipse::value_type::value_type, ellipse_h_)
+	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_x_)
+	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_y_)
+	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_w_)
+	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_h_)
 	(std::vector<room>, rooms_)
 	(std::vector<door>, doors_)
 )
@@ -275,18 +275,18 @@ public:
 public:
 	boost::spirit::qi::int_parser<
 		fcppt::optional::value_type<
-			libftl::ship::layout::offset_vector::value_type
+			libftl::ship::layout::object::offset_vector::value_type
 		>
 	>
 	offset_int_;
 
 	boost::spirit::qi::int_parser<
-		libftl::ship::ellipse::value_type::value_type
+		libftl::ship::layout::ellipse::value_type::value_type
 	>
 	ellipse_int_;
 
 	boost::spirit::qi::int_parser<
-		libftl::ship::room_id::value_type
+		libftl::ship::layout::room_id::value_type
 	>
 	room_id_int_;
 
@@ -296,7 +296,7 @@ public:
 	room_id_signed_int_;
 
 	boost::spirit::qi::int_parser<
-		libftl::ship::tile_coordinate::value_type
+		libftl::ship::layout::tile_coordinate::value_type
 	>
 	tile_coordinate_int_;
 
@@ -348,7 +348,7 @@ translate_bool(
 		};
 }
 
-libftl::ship::door::optional_room_id
+libftl::ship::layout::door::optional_room_id
 translate_optional_door_room(
 	room_id_signed const _id
 )
@@ -376,7 +376,7 @@ translate_optional_door_room(
 				_id
 			]{
 				return
-					libftl::ship::room_id{
+					libftl::ship::layout::room_id{
 						fcppt::cast::to_unsigned(
 							_id
 						)
@@ -385,37 +385,37 @@ translate_optional_door_room(
 		);
 }
 
-libftl::ship::layout
+libftl::ship::layout::object
 translate_result(
 	layout const &_layout
 )
 {
 	return
-		libftl::ship::layout{
-			libftl::ship::layout::offset_vector{
+		libftl::ship::layout::object{
+			libftl::ship::layout::object::offset_vector{
 				_layout.offset_x_,
 				_layout.offset_y_
 			},
-			libftl::ship::layout::vertical{
+			libftl::ship::layout::object::vertical{
 				_layout.vertical_
 			},
-			libftl::ship::layout::horizontal{
+			libftl::ship::layout::object::horizontal{
 				_layout.horizontal_
 			},
-			libftl::ship::ellipse{
-				libftl::ship::ellipse::value_type{
-					libftl::ship::ellipse::value_type::vector{
+			libftl::ship::layout::ellipse{
+				libftl::ship::layout::ellipse::value_type{
+					libftl::ship::layout::ellipse::value_type::vector{
 						_layout.ellipse_x_,
 						_layout.ellipse_y_
 					},
-					libftl::ship::ellipse::value_type::dim{
+					libftl::ship::layout::ellipse::value_type::dim{
 						_layout.ellipse_w_,
 						_layout.ellipse_h_
 					}
 				}
 			},
 			fcppt::algorithm::map<
-				libftl::ship::layout::room_list
+				libftl::ship::layout::object::room_list
 			>(
 				_layout.rooms_,
 				[](
@@ -423,24 +423,24 @@ translate_result(
 				)
 				{
 					return
-						libftl::ship::room{
-							libftl::ship::room_id{
+						libftl::ship::layout::room{
+							libftl::ship::layout::room_id{
 								_room.id_
 							},
-							libftl::ship::tile_rect{
-								libftl::ship::tile_rect::vector{
-									libftl::ship::tile_coordinate{
+							libftl::ship::layout::tile_rect{
+								libftl::ship::layout::tile_rect::vector{
+									libftl::ship::layout::tile_coordinate{
 										_room.x_
 									},
-									libftl::ship::tile_coordinate{
+									libftl::ship::layout::tile_coordinate{
 										_room.y_
 									}
 								},
-								libftl::ship::tile_rect::dim{
-									libftl::ship::tile_coordinate{
+								libftl::ship::layout::tile_rect::dim{
+									libftl::ship::layout::tile_coordinate{
 										_room.w_
 									},
-									libftl::ship::tile_coordinate{
+									libftl::ship::layout::tile_coordinate{
 										_room.h_
 									}
 								}
@@ -449,7 +449,7 @@ translate_result(
 				}
 			),
 			fcppt::algorithm::map<
-				libftl::ship::layout::door_list
+				libftl::ship::layout::object::door_list
 			>(
 				_layout.doors_,
 				[](
@@ -457,26 +457,26 @@ translate_result(
 				)
 				{
 					return
-						libftl::ship::door{
-							libftl::ship::tile_pos{
-								libftl::ship::tile_coordinate{
+						libftl::ship::layout::door{
+							libftl::ship::layout::tile_pos{
+								libftl::ship::layout::tile_coordinate{
 									_door.x_
 								},
-								libftl::ship::tile_coordinate{
+								libftl::ship::layout::tile_coordinate{
 									_door.y_
 								}
 							},
-							libftl::ship::door::left_top_room{
+							libftl::ship::layout::door::left_top_room{
 								translate_optional_door_room(
 									_door.left_top_
 								)
 							},
-							libftl::ship::door::bottom_right_room{
+							libftl::ship::layout::door::bottom_right_room{
 								translate_optional_door_room(
 									_door.bottom_right_
 								)
 							},
-							libftl::ship::door::vertical(
+							libftl::ship::layout::door::vertical(
 								translate_bool(
 									_door.vertical_
 								)
@@ -490,7 +490,7 @@ translate_result(
 typedef
 fcppt::either::object<
 	libftl::error,
-	libftl::ship::layout
+	libftl::ship::layout::object
 >
 result_type;
 
@@ -498,9 +498,9 @@ result_type;
 
 fcppt::either::object<
 	libftl::error,
-	libftl::ship::layout
+	libftl::ship::layout::object
 >
-libftl::ship::parse_layout(
+libftl::ship::layout::parse(
 	std::istream &_stream
 )
 try

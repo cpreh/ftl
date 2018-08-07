@@ -1,7 +1,7 @@
 #include <libftl/error.hpp>
-#include <libftl/ship/layout.hpp>
-#include <libftl/ship/layout_output.hpp>
-#include <libftl/ship/parse_layout.hpp>
+#include <libftl/ship/layout/object.hpp>
+#include <libftl/ship/layout/output.hpp>
+#include <libftl/ship/layout/parse.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
@@ -102,7 +102,7 @@ main_program(
 				)
 				{
 					return
-						libftl::ship::parse_layout(
+						libftl::ship::layout::parse(
 							_stream
 						);
 				}
@@ -121,7 +121,7 @@ main_program(
 					false;
 			},
 			[](
-				libftl::ship::layout const &_layout
+				libftl::ship::layout::object const &_layout
 			)
 			{
 				fcppt::io::cout()

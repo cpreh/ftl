@@ -1,9 +1,9 @@
-#ifndef LIBFTL_SHIP_DOOR_HPP_INCLUDED
-#define LIBFTL_SHIP_DOOR_HPP_INCLUDED
+#ifndef LIBFTL_SHIP_LAYOUT_DOOR_HPP_INCLUDED
+#define LIBFTL_SHIP_LAYOUT_DOOR_HPP_INCLUDED
 
-#include <libftl/ship/door_fwd.hpp>
-#include <libftl/ship/room_id.hpp>
-#include <libftl/ship/tile_pos.hpp>
+#include <libftl/ship/layout/door_fwd.hpp>
+#include <libftl/ship/layout/room_id.hpp>
+#include <libftl/ship/layout/tile_pos.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/optional/object_impl.hpp>
@@ -12,6 +12,8 @@
 namespace libftl
 {
 namespace ship
+{
+namespace layout
 {
 
 struct door
@@ -38,7 +40,7 @@ struct door
 	);
 
 	door(
-		libftl::ship::tile_pos const _pos,
+		libftl::ship::layout::tile_pos const _pos,
 		left_top_room const _left_top_room,
 		bottom_right_room _bottom_right_room,
 		vertical const _vertical
@@ -59,7 +61,7 @@ struct door
 	{
 	}
 
-	libftl::ship::tile_pos pos_;
+	libftl::ship::layout::tile_pos pos_;
 
 	left_top_room left_top_room_;
 
@@ -68,6 +70,7 @@ struct door
 	vertical vertical_;
 };
 
+}
 }
 }
 

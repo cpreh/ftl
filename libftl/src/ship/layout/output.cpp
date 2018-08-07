@@ -1,7 +1,7 @@
-#include <libftl/ship/door.hpp>
-#include <libftl/ship/layout.hpp>
-#include <libftl/ship/layout_output.hpp>
-#include <libftl/ship/room.hpp>
+#include <libftl/ship/layout/door.hpp>
+#include <libftl/ship/layout/object.hpp>
+#include <libftl/ship/layout/output.hpp>
+#include <libftl/ship/layout/room.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/output.hpp>
@@ -15,17 +15,19 @@ namespace libftl
 {
 namespace ship
 {
+namespace layout
+{
 
 fcppt::io::ostream &
 operator<<(
 	fcppt::io::ostream &,
-	libftl::ship::room const &
+	libftl::ship::layout::room const &
 );
 
 fcppt::io::ostream &
 operator<<(
 	fcppt::io::ostream &_stream,
-	libftl::ship::room const &_room
+	libftl::ship::layout::room const &_room
 )
 {
 	return
@@ -45,13 +47,13 @@ operator<<(
 fcppt::io::ostream &
 operator<<(
 	fcppt::io::ostream &,
-	libftl::ship::door const &
+	libftl::ship::layout::door const &
 );
 
 fcppt::io::ostream &
 operator<<(
 	fcppt::io::ostream &_stream,
-	libftl::ship::door const &_door
+	libftl::ship::layout::door const &_door
 )
 {
 	return
@@ -78,11 +80,12 @@ operator<<(
 
 }
 }
+}
 
 fcppt::io::ostream &
-libftl::ship::operator<<(
+libftl::ship::layout::operator<<(
 	fcppt::io::ostream &_stream,
-	libftl::ship::layout const &_layout
+	libftl::ship::layout::object const &_layout
 )
 {
 	return
