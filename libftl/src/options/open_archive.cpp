@@ -8,9 +8,8 @@
 #include <libftl/options/native_resource_record.hpp>
 #include <libftl/options/open_archive.hpp>
 #include <libftl/options/resource_file_label.hpp>
-#include <libftl/options/resource_label.hpp>
 #include <libftl/options/resource_path_label.hpp>
-#include <libftl/options/resource_record.hpp>
+#include <libftl/options/resource_variant.hpp>
 #include <libftl/options/unpacked_resource_record.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -30,16 +29,12 @@ fcppt::either::object<
 	libftl::archive::base_unique_ptr
 >
 libftl::options::open_archive(
-	libftl::options::resource_record const &_args
+	libftl::options::resource_variant const &_args
 )
 {
 	return
 		fcppt::variant::match(
-			fcppt::record::get<
-				libftl::options::resource_label
-			>(
-				_args
-			),
+			_args,
 			[](
 				fcppt::options::left<
 					libftl::options::native_resource_record

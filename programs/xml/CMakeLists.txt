@@ -26,7 +26,6 @@ target_link_libraries(
 	PRIVATE
 	${libftl_TARGET}
 	${fcppt_core_TARGET}
-	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
 	${Boost_FILESYSTEM_LIBRARIES}

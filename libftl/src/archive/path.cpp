@@ -1,4 +1,5 @@
 #include <libftl/archive/path.hpp>
+#include <fcppt/no_init_fwd.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/to_std_string.hpp>
 #include <fcppt/io/extract.hpp>
@@ -9,6 +10,14 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
+
+libftl::archive::path::path(
+	fcppt::no_init const &
+)
+:
+	rep_{}
+{
+}
 
 libftl::archive::path::path(
 	std::string &&_rep

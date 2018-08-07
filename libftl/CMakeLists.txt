@@ -203,6 +203,8 @@ set(
 	libftl/include/libftl/options/resource_path_label.hpp
 	libftl/include/libftl/options/resource_record.hpp
 	libftl/include/libftl/options/resource_record_fwd.hpp
+	libftl/include/libftl/options/resource_variant.hpp
+	libftl/include/libftl/options/resource_variant_fwd.hpp
 	libftl/include/libftl/options/unpacked_resource_record.hpp
 	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
 	libftl/include/libftl/ship/door.hpp

@@ -3,6 +3,7 @@
 
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
+#include <fcppt/no_init_fwd.hpp>
 #include <fcppt/io/istream_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
@@ -17,6 +18,12 @@ namespace archive
 class path
 {
 public:
+	LIBFTL_DETAIL_SYMBOL
+	explicit
+	path(
+		fcppt::no_init const &
+	);
+
 	LIBFTL_DETAIL_SYMBOL
 	explicit
 	path(

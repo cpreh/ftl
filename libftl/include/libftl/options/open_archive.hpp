@@ -4,7 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <libftl/options/resource_record_fwd.hpp>
+#include <libftl/options/resource_variant_fwd.hpp>
 #include <fcppt/either/object_impl.hpp>
 
 
@@ -19,7 +19,7 @@ fcppt::either::object<
 	libftl::archive::base_unique_ptr
 >
 open_archive(
-	libftl::options::resource_record const &
+	libftl::options::resource_variant const &
 );
 
 }

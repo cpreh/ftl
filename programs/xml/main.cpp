@@ -1,4 +1,11 @@
 #include <libftl/error.hpp>
+#include <libftl/archive/base.hpp>
+#include <libftl/archive/base_unique_ptr.hpp>
+#include <libftl/archive/path.hpp>
+#include <libftl/options/create_resource_parser.hpp>
+#include <libftl/options/open_archive.hpp>
+#include <libftl/options/resource_label.hpp>
+#include <libftl/options/resource_variant.hpp>
 #include <libftl/xml/achievements.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
@@ -15,26 +22,23 @@
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/main.hpp>
-#include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/either/bind.hpp>
-#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/enum/input.hpp>
 #include <fcppt/enum/names_array.hpp>
 #include <fcppt/enum/names_impl_fwd.hpp>
-#include <fcppt/filesystem/open.hpp>
-#include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/io/istream.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
+#include <fcppt/options/base.hpp>
 #include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
 #include <fcppt/options/help_text.hpp>
@@ -61,9 +65,7 @@
 #include <boost/filesystem/path.hpp>
 #include <cstdlib>
 #include <exception>
-#include <fstream>
-#include <ios>
-#include <iosfwd>
+#include <istream>
 #include <iostream>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
@@ -149,12 +151,16 @@ operator>>(
 typedef
 fcppt::record::variadic<
 	fcppt::record::element<
+		libftl::options::resource_label,
+		libftl::options::resource_variant
+	>,
+	fcppt::record::element<
 		type_label,
 		xml_type
 	>,
 	fcppt::record::element<
 		path_label,
-		fcppt::string
+		libftl::archive::path
 	>
 >
 argument_record;
@@ -164,14 +170,6 @@ main_program(
 	argument_record const &_arguments
 )
 {
-	boost::filesystem::path const path{
-		fcppt::record::get<
-			path_label
-		>(
-			_arguments
-		)
-	};
-
 	typedef
 	fcppt::variant::variadic<
 		fcppt::unique_ptr<
@@ -195,113 +193,124 @@ main_program(
 	>
 	result_type;
 
+	auto const load_xml(
+		[
+			&_arguments
+		](
+			fcppt::unique_ptr<
+				std::istream
+			> &&_stream
+		)
+		->
+		fcppt::either::object<
+			libftl::error,
+			result_type
+		>
+		{
+			auto const wrap_result(
+				[](
+					auto &&_result
+				)
+				{
+					return
+						result_type{
+							std::move(
+								_result
+							)
+						};
+				}
+			);
+
+			switch(
+				fcppt::record::get<
+					type_label
+				>(
+					_arguments
+				)
+			)
+			{
+			case xml_type::achievements:
+				return
+					fcppt::either::map(
+						libftl::xml::achievements(
+							*_stream
+						),
+						wrap_result
+					);
+			case xml_type::animations:
+				return
+					fcppt::either::map(
+						libftl::xml::animations(
+							*_stream
+						),
+						wrap_result
+					);
+			case xml_type::blueprints:
+				return
+					fcppt::either::map(
+						libftl::xml::blueprints(
+							*_stream
+						),
+						wrap_result
+					);
+			case xml_type::events:
+				return
+					fcppt::either::map(
+						libftl::xml::events(
+							*_stream
+						),
+						wrap_result
+					);
+			case xml_type::sectors:
+				return
+					fcppt::either::map(
+						libftl::xml::sectors(
+							*_stream
+						),
+						wrap_result
+					);
+			case xml_type::ship:
+				return
+					fcppt::either::map(
+						libftl::xml::ship(
+							*_stream
+						),
+						wrap_result
+					);
+			}
+
+			FCPPT_ASSERT_UNREACHABLE;
+		}
+	);
+
 	return
 		fcppt::either::match(
 			fcppt::either::bind(
-				fcppt::either::from_optional(
-					fcppt::filesystem::open<
-						std::ifstream
+				libftl::options::open_archive(
+					fcppt::record::get<
+						libftl::options::resource_label
 					>(
-						path,
-						std::ios_base::openmode{}
-					),
-					[
-						&path
-					]{
-						return
-							libftl::error{
-								FCPPT_TEXT("Cannot open ")
-								+
-								fcppt::filesystem::path_to_string(
-									path
-								)
-							};
-					}
+						_arguments
+					)
 				),
 				[
+					&load_xml,
 					&_arguments
 				](
-					std::ifstream &&_stream
+					libftl::archive::base_unique_ptr &&_archive
 				)
-				->
-				fcppt::either::object<
-					libftl::error,
-					result_type
-				>
 				{
-					auto const wrap_result(
-						[](
-							auto &&_result
-						)
-						{
-							return
-								result_type{
-									std::move(
-										_result
-									)
-								};
-						}
-					);
-
-					switch(
-						fcppt::record::get<
-							type_label
-						>(
-							_arguments
-						)
-					)
-					{
-					case xml_type::achievements:
-						return
-							fcppt::either::map(
-								libftl::xml::achievements(
-									_stream
-								),
-								wrap_result
-							);
-					case xml_type::animations:
-						return
-							fcppt::either::map(
-								libftl::xml::animations(
-									_stream
-								),
-								wrap_result
-							);
-					case xml_type::blueprints:
-						return
-							fcppt::either::map(
-								libftl::xml::blueprints(
-									_stream
-								),
-								wrap_result
-							);
-					case xml_type::events:
-						return
-							fcppt::either::map(
-								libftl::xml::events(
-									_stream
-								),
-								wrap_result
-							);
-					case xml_type::sectors:
-						return
-							fcppt::either::map(
-								libftl::xml::sectors(
-									_stream
-								),
-								wrap_result
-							);
-					case xml_type::ship:
-						return
-							fcppt::either::map(
-								libftl::xml::ship(
-									_stream
-								),
-								wrap_result
-							);
-					}
-
-					FCPPT_ASSERT_UNREACHABLE;
+					return
+						fcppt::either::bind(
+							_archive->open(
+								fcppt::record::get<
+									path_label
+								>(
+									_arguments
+								)
+							),
+							load_xml
+						);
 				}
 			),
 			[](
@@ -360,6 +369,7 @@ try
 {
 	auto const parser{
 		fcppt::options::apply(
+			libftl::options::create_resource_parser(),
 			fcppt::options::argument<
 				type_label,
 				xml_type
@@ -375,7 +385,7 @@ try
 			},
 			fcppt::options::argument<
 				path_label,
-				fcppt::string
+				libftl::archive::path
 			>{
 				fcppt::options::long_name{
 					FCPPT_TEXT("Path")

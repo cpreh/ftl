@@ -52,7 +52,7 @@ libftl::impl::archive::filesystem::open(
 		boost::filesystem::path{
 			this->directory_
 		}
-		+=
+		/
 		_path.rep()
 	};
 
