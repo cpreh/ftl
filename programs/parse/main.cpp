@@ -1,6 +1,9 @@
 #include <ftl/parse/ship/arguments.hpp>
 #include <ftl/parse/ship/main.hpp>
 #include <ftl/parse/ship/options_parser.hpp>
+#include <ftl/parse/xml/arguments.hpp>
+#include <ftl/parse/xml/main.hpp>
+#include <ftl/parse/xml/options_parser.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/base_unique_ptr.hpp>
@@ -56,6 +59,10 @@ FCPPT_RECORD_MAKE_LABEL(
 	ship_label
 );
 
+FCPPT_RECORD_MAKE_LABEL(
+	xml_label
+);
+
 typedef
 fcppt::record::variadic<
 	fcppt::record::element<
@@ -68,13 +75,23 @@ ship_command_arguments;
 typedef
 fcppt::record::variadic<
 	fcppt::record::element<
+		xml_label,
+		ftl::parse::xml::arguments
+	>
+>
+xml_command_arguments;
+
+typedef
+fcppt::record::variadic<
+	fcppt::record::element<
 		fcppt::options::options_label,
 		libftl::options::resource_record
 	>,
 	fcppt::record::element<
 		fcppt::options::sub_command_label,
 		fcppt::variant::variadic<
-			ship_command_arguments
+			ship_command_arguments,
+			xml_command_arguments
 		>
 	>
 >
@@ -125,6 +142,22 @@ main_program(
 											ship_label
 										>(
 											_ship_args
+										)
+									);
+							},
+							[
+								&_archive
+							](
+								xml_command_arguments const &_xml_args
+							)
+							{
+								return
+									ftl::parse::xml::main(
+										*_archive,
+										fcppt::record::get<
+											xml_label
+										>(
+											_xml_args
 										)
 									);
 							}
@@ -181,30 +214,29 @@ try
 		)
 	};
 
-/*
 	auto const xml_command{
 		fcppt::options::make_sub_command<
 			xml_label
 		>(
 			FCPPT_TEXT("xml"),
-			ftl::parse::ship::options_parser(),
+			ftl::parse::xml::options_parser(),
 			fcppt::options::optional_help_text{
 				fcppt::options::help_text{
 					FCPPT_TEXT("Parse an xml file")
 				}
 			}
 		)
-	};*/
+	};
 
 	auto const parser{
 		fcppt::options::make_commands(
 			libftl::options::create_resource_parser(),
 			fcppt::make_cref(
 				ship_command
-			)/*,
+			),
 			fcppt::make_cref(
 				xml_command
-			)*/
+			)
 		)
 	};
 
