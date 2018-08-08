@@ -11,6 +11,7 @@ namespace libftl
 namespace xml
 {
 
+// TODO: Remove this
 template<
 	typename Type
 >

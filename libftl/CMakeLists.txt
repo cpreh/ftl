@@ -189,6 +189,9 @@ set(
 	libftl/include/libftl/archive/path.hpp
 	libftl/include/libftl/archive/path_fwd.hpp
 	libftl/include/libftl/archive/read_index.hpp
+	libftl/include/libftl/blueprints/data.hpp
+	libftl/include/libftl/blueprints/data_fwd.hpp
+	libftl/include/libftl/blueprints/load.hpp
 	libftl/include/libftl/error.hpp
 	libftl/include/libftl/error_fwd.hpp
 	libftl/include/libftl/options/create_resource_parser.hpp
@@ -246,6 +249,8 @@ set(
 	libftl/src/archive/open.cpp
 	libftl/src/archive/path.cpp
 	libftl/src/archive/read_index.cpp
+	libftl/src/blueprints/data.cpp
+	libftl/src/blueprints/load.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
 	libftl/src/ship/layout/object.cpp
