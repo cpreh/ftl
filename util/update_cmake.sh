@@ -8,3 +8,9 @@ update_cmake \
 	libftl/impl \
 	libftl/include \
 	libftl/src
+
+update_cmake \
+	programs/parse/CMakeLists.txt \
+	FTLPARSE_FILES \
+	programs/parse/include \
+	programs/parse/src
