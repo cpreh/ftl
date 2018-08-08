@@ -113,7 +113,7 @@ ftl::parse::xml::options_parser()
 					},
 					fcppt::options::optional_help_text{
 						fcppt::options::help_text{
-							FCPPT_TEXT("Type of the XML file to parse")
+							FCPPT_TEXT("Type of the xml file to parse")
 						}
 					}
 				},
