@@ -30,7 +30,7 @@ ftl::parse::ship::options_parser()
 				},
 				fcppt::options::optional_help_text{
 					fcppt::options::help_text{
-						"Name of the ship .txt file"
+						FCPPT_TEXT("Name of the ship .txt file")
 					}
 				}
 			}
