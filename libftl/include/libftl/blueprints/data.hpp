@@ -22,38 +22,34 @@ class data
 		data
 	);
 public:
-	FCPPT_MAKE_STRONG_TYPEDEF(
+	typedef
+	std::vector<
 		fcppt::unique_ptr<
 			libftl::xml::generated::blueprints::blueprints_root
-		>,
+		>
+	>
+	blueprint_vector;
+
+	FCPPT_MAKE_STRONG_TYPEDEF(
+		blueprint_vector,
 		normal_blueprints
 	);
 
 	FCPPT_MAKE_STRONG_TYPEDEF(
-		fcppt::unique_ptr<
-			libftl::xml::generated::blueprints::blueprints_root
-		>,
+		blueprint_vector,
 		dlc_blueprints
 	);
 
 	FCPPT_MAKE_STRONG_TYPEDEF(
-		fcppt::unique_ptr<
-			libftl::xml::generated::blueprints::blueprints_root
-		>,
+		blueprint_vector,
 		dlc_blueprints_overwrites
 	);
 
 	LIBFTL_DETAIL_SYMBOL
 	data(
-		std::vector<
-			normal_blueprints
-		> &&,
-		std::vector<
-			dlc_blueprints
-		> &&,
-		std::vector<
-			dlc_blueprints_overwrites
-		> &&
+		normal_blueprints &&,
+		dlc_blueprints &&,
+		dlc_blueprints_overwrites &&
 	);
 
 	LIBFTL_DETAIL_SYMBOL
@@ -70,17 +66,11 @@ public:
 	LIBFTL_DETAIL_SYMBOL
 	~data();
 
-	std::vector<
-		normal_blueprints
-	> normal_blueprints_;
+	normal_blueprints normal_blueprints_;
 
-	std::vector<
-		dlc_blueprints
-	> dlc_blueprints_;
+	dlc_blueprints dlc_blueprints_;
 
-	std::vector<
-		dlc_blueprints_overwrites
-	> dlc_blueprints_overwrites_;
+	dlc_blueprints_overwrites dlc_blueprints_overwrites_;
 };
 
 }

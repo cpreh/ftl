@@ -14,7 +14,6 @@
 #include <istream>
 #include <string>
 #include <utility>
-#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -88,49 +87,39 @@ libftl::blueprints::load(
 			{
 				return
 					libftl::blueprints::data{
-						fcppt::container::make<
-							std::vector<
-								libftl::blueprints::data::normal_blueprints
-							>
-						>(
-							libftl::blueprints::data::normal_blueprints{
+						libftl::blueprints::data::normal_blueprints{
+							fcppt::container::make<
+								libftl::blueprints::data::blueprint_vector
+							>(
 								std::move(
 									_auto_blueprints
-								)
-							},
-							libftl::blueprints::data::normal_blueprints{
+								),
 								std::move(
 									_blueprints
 								)
-							}
-						),
-						fcppt::container::make<
-							std::vector<
-								libftl::blueprints::data::dlc_blueprints
-							>
-						>(
-							libftl::blueprints::data::dlc_blueprints{
+							)
+						},
+						libftl::blueprints::data::dlc_blueprints{
+							fcppt::container::make<
+								libftl::blueprints::data::blueprint_vector
+							>(
 								std::move(
 									_dlc_blueprints
-								)
-							},
-							libftl::blueprints::data::dlc_blueprints{
+								),
 								std::move(
 									_dlc_pirate_blueprints
 								)
-							}
-						),
-						fcppt::container::make<
-							std::vector<
-								libftl::blueprints::data::dlc_blueprints_overwrites
-							>
-						>(
-							libftl::blueprints::data::dlc_blueprints_overwrites{
+							)
+						},
+						libftl::blueprints::data::dlc_blueprints_overwrites{
+							fcppt::container::make<
+								libftl::blueprints::data::blueprint_vector
+							>(
 								std::move(
 									_dlc_blueprints_overwrites
 								)
-							}
-						)
+							)
+						}
 					};
 			},
 			load_blueprint(

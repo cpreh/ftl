@@ -149,6 +149,7 @@ set(
 	libftl/impl/include/libftl/impl/archive/chain.hpp
 	libftl/impl/include/libftl/impl/archive/filesystem.hpp
 	libftl/impl/include/libftl/impl/archive/native.hpp
+	libftl/impl/include/libftl/impl/blueprints/find.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_fwd.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_impl.hpp
@@ -191,6 +192,7 @@ set(
 	libftl/include/libftl/archive/read_index.hpp
 	libftl/include/libftl/blueprints/data.hpp
 	libftl/include/libftl/blueprints/data_fwd.hpp
+	libftl/include/libftl/blueprints/find_ship.hpp
 	libftl/include/libftl/blueprints/load.hpp
 	libftl/include/libftl/error.hpp
 	libftl/include/libftl/error_fwd.hpp
@@ -250,6 +252,7 @@ set(
 	libftl/src/archive/path.cpp
 	libftl/src/archive/read_index.cpp
 	libftl/src/blueprints/data.cpp
+	libftl/src/blueprints/find_ship.cpp
 	libftl/src/blueprints/load.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
