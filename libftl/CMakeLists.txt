@@ -164,6 +164,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
 	libftl/impl/src/impl/archive/chain.cpp
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
@@ -212,6 +213,8 @@ set(
 	libftl/include/libftl/options/resource_variant_fwd.hpp
 	libftl/include/libftl/options/unpacked_resource_record.hpp
 	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
+	libftl/include/libftl/ship/images.hpp
+	libftl/include/libftl/ship/images_fwd.hpp
 	libftl/include/libftl/ship/layout/door.hpp
 	libftl/include/libftl/ship/layout/door_fwd.hpp
 	libftl/include/libftl/ship/layout/ellipse.hpp
@@ -228,12 +231,19 @@ set(
 	libftl/include/libftl/ship/layout/tile_pos_fwd.hpp
 	libftl/include/libftl/ship/layout/tile_rect.hpp
 	libftl/include/libftl/ship/layout/tile_rect_fwd.hpp
+	libftl/include/libftl/ship/load_images.hpp
+	libftl/include/libftl/ship/name.hpp
+	libftl/include/libftl/ship/name_fwd.hpp
 	libftl/include/libftl/sprite/choices.hpp
+	libftl/include/libftl/sprite/choices_fwd.hpp
 	libftl/include/libftl/sprite/color_format.hpp
 	libftl/include/libftl/sprite/draw.hpp
 	libftl/include/libftl/sprite/images.hpp
 	libftl/include/libftl/sprite/images_fwd.hpp
 	libftl/include/libftl/sprite/object.hpp
+	libftl/include/libftl/sprite/object_fwd.hpp
+	libftl/include/libftl/sprite/type_choices.hpp
+	libftl/include/libftl/sprite/type_choices_fwd.hpp
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
@@ -256,9 +266,11 @@ set(
 	libftl/src/blueprints/load.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
+	libftl/src/ship/images.cpp
 	libftl/src/ship/layout/object.cpp
 	libftl/src/ship/layout/output.cpp
 	libftl/src/ship/layout/parse.cpp
+	libftl/src/ship/load_images.cpp
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
 	libftl/src/xml/achievements.cpp
@@ -367,6 +379,12 @@ function(
 		${alda_TARGET}
 		${fcppt_core_TARGET}
 		${fcppt_options_TARGET}
+	)
+
+	target_compile_definitions(
+		${LIBFTL_LIB_NAME}
+		PUBLIC
+		XSD_CXX11
 	)
 
 	add_dependencies(
