@@ -127,7 +127,7 @@ libftl::blueprints::load(
 				"dlcPirateBlueprints.xml"
 			),
 			load_blueprint(
-				"dlcBlueprintsOverwrites.xml"
+				"dlcBlueprintsOverwrite.xml"
 			)
 		);
 }

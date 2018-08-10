@@ -45,12 +45,12 @@ find_image(
 {
 	return
 		fcppt::either::match(
-			_images.load(libftl::archive::path{"img"} / "ship" / std::string{_file_name}),
+			_images.load(libftl::archive::path{"ship"} / std::string{_file_name}),
 			[&_file_name, &_images](libftl::error &&_error1)
 			{
 				return
 					fcppt::either::map_failure(
-						_images.load(libftl::archive::path{"img"} / "ships_noglow" / std::string{_file_name}),
+						_images.load(libftl::archive::path{"ships_noglow"} / std::string{_file_name}),
 						[&_error1](libftl::error &&_error2)
 						{
 							return
@@ -178,7 +178,7 @@ load_mandatory_gib(
 {
 	return
 		fcppt::either::map(
-			find_image(_images, _ship_name.get() + "_gib" + fcppt::output_to_std_string(_number)),
+			find_image(_images, _ship_name.get() + "_gib" + fcppt::output_to_std_string(_number) + ".png"),
 			[_gib](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
@@ -364,6 +364,7 @@ libftl::ship::images::load(
 							_offset.cloak();
 					}
 				},
+				// FIXME: Use the name from the ship's blueprint
 				"cloak"
 			),
 			load_gibs(_images, fcppt::make_cref(_ship.get().explosion()), _name)

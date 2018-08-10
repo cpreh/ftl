@@ -146,7 +146,7 @@
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="locked" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="level" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="tip" type="xs:string"/>
+			<xs:element name="tip" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="target" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="short" type="xs:string"/>
@@ -182,7 +182,7 @@
 			<xs:element name="title" type="xs:string"/>
 			<xs:element name="desc" type="xs:string"/>
 			<xs:element name="cost" type="xs:unsignedInt"/>
-			<xs:element name="bp" type="xs:unsignedInt"/>
+			<xs:element name="bp" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="rarity" type="xs:unsignedInt"/>
 			<xs:element name="stackable" type="xs:boolean"/>
 			<xs:element name="value" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
@@ -252,8 +252,9 @@
 		<xs:sequence minOccurs="0">
 			<xs:element name="weapon" type="ship_weapon" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="count" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="missiles" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="count" type="xs:unsignedInt"/>
+		<xs:attribute name="load" type="xs:string"/>
 	</xs:complexType>
 
 	<xs:complexType name="drone_list">
@@ -263,6 +264,7 @@
 		<xs:attribute name="count" type="xs:unsignedInt"/>
 		<xs:attribute name="missiles" type="xs:unsignedInt"/>
 		<xs:attribute name="drones" type="xs:unsignedInt"/>
+		<xs:attribute name="load" type="xs:string"/>
 	</xs:complexType>
 
 	<xs:complexType name="ship_health">
