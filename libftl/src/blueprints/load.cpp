@@ -5,6 +5,7 @@
 #include <libftl/blueprints/load.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/make.hpp>
@@ -58,7 +59,7 @@ libftl::blueprints::load(
 						return
 							libftl::error{
 								FCPPT_TEXT("In blueprint file \"")
-								+ _file
+								+ fcppt::from_std_string(_file)
 								+ FCPPT_TEXT("\": ")
 								+ std::move(_error.get())
 							};
