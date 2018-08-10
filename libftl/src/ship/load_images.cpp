@@ -44,70 +44,27 @@ find_image(
 {
 	return
 		fcppt::either::match(
-			_images.load(
-				libftl::archive::path{
-					"img"
-				}
-				/
-				"ship"
-				/
-				std::string{
-					_file_name
-				}
-			),
-			[
-				&_file_name,
-				&_images
-			](
-				libftl::error &&_error1
-			)
+			_images.load(libftl::archive::path{"img"} / "ship" / std::string{_file_name}),
+			[&_file_name, &_images](libftl::error &&_error1)
 			{
 				return
 					fcppt::either::map_failure(
-						_images.load(
-							libftl::archive::path{
-								"img"
-							}
-							/
-							"ships_noglow"
-							/
-							std::string{
-								_file_name
-							}
-						),
-						[
-							&_error1
-						](
-							libftl::error &&_error2
-						)
+						_images.load(libftl::archive::path{"img"} / "ships_noglow" / std::string{_file_name}),
+						[&_error1](libftl::error &&_error2)
 						{
 							return
 								libftl::error{
-									std::move(
-										_error1.get()
-									)
-									+
-									FCPPT_TEXT("\n")
-									+
-									std::move(
-										_error2.get()
-									)
+									std::move(_error1.get())
+									+ FCPPT_TEXT("\n")
+									+ std::move(_error2.get())
 								};
 						}
 					);
 			},
-			[](
-				sge::texture::const_part_shared_ptr &&_texture
-			)
+			[](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
-					fcppt::either::make_success<
-						libftl::error
-					>(
-						std::move(
-							_texture
-						)
-					);
+					fcppt::either::make_success<libftl::error>(std::move(_texture));
 			}
 		);
 }
@@ -123,31 +80,18 @@ load_base(
 {
 	return
 		fcppt::either::map(
-			find_image(
-				_images,
-				_name.get()
-				+
-				"_base.png"
-			),
-			[](
-				sge::texture::const_part_shared_ptr &&_texture
-			)
+			find_image(_images, _name.get() + "_base.png"),
+			[](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
-					libftl::ship::images::base{
-						std::move(
-							_texture
-						)
-					};
+					libftl::ship::images::base{std::move(_texture)};
 			}
 		);
 }
 
 typedef
 fcppt::function<
-	xsd::cxx::tree::optional<
-		libftl::xml::generated::ship::offset
-	> const & (
+	xsd::cxx::tree::optional<libftl::xml::generated::ship::offset> const & (
 		libftl::xml::generated::ship::offsets const &
 	)
 >
@@ -173,42 +117,20 @@ load_offset_image(
 )
 {
 	auto const image_from_offset(
-		[
-			&_images,
-			&_ship_name,
-			&_name
-		](
-			fcppt::reference<
-				libftl::xml::generated::ship::offset const
-			> const _offset
-		)
+		[&_images,&_ship_name,&_name]
+		(fcppt::reference<libftl::xml::generated::ship::offset const > const _offset)
 		{
 			return
 				fcppt::either::map(
-					find_image(
-						_images,
-						_ship_name.get()
-						+
-						"_"
-						+
-						_name
-						+
-						".png"
-					),
-					[
-						&_offset
-					](
-						sge::texture::const_part_shared_ptr &&_texture
-					)
+					find_image(_images, _ship_name.get() + "_" + _name + ".png"),
+					[&_offset](sge::texture::const_part_shared_ptr &&_texture)
 					{
 						return
 							fcppt::optional::make(
 								Type{
 									libftl::ship::images::offset_image{
 										_offset.get(),
-										std::move(
-											_texture
-										)
+										std::move(_texture)
 									}
 								}
 							);
@@ -220,37 +142,20 @@ load_offset_image(
 	return
 		fcppt::optional::maybe(
 			fcppt::optional::bind(
-				libftl::impl::xsd::to_fcppt_optional(
-					fcppt::make_cref(
-						_ship.get().offsets()
-					)
-				),
-				[
-					&_get_offset
-				](
-					fcppt::reference<
-						libftl::xml::generated::ship::offsets const
-					> const _offsets
-				)
+				libftl::impl::xsd::to_fcppt_optional(fcppt::make_cref(_ship.get().offsets())),
+				[&_get_offset]
+				(fcppt::reference<libftl::xml::generated::ship::offsets const > const _offsets)
 				{
 					return
 						libftl::impl::xsd::to_fcppt_optional(
-							fcppt::make_cref(
-								_get_offset(
-									_offsets.get()
-								)
-							)
+							fcppt::make_cref(_get_offset(_offsets.get()))
 						);
 				}
 			),
 			[]{
 				return
-					fcppt::either::make_success<
-						libftl::error
-					>(
-						fcppt::optional::object<
-							Type
-						>{}
+					fcppt::either::make_success<libftl::error>(
+						fcppt::optional::object<Type>{}
 					);
 			},
 			image_from_offset
@@ -272,27 +177,11 @@ load_mandatory_gib(
 {
 	return
 		fcppt::either::map(
-			find_image(
-				_images,
-				_ship_name.get()
-				+
-				"_gib"
-				+
-				_number
-			),
-			[
-				_gib
-			](
-				sge::texture::const_part_shared_ptr &&_texture
-			)
+			find_image(_images, _ship_name.get() + "_gib" + _number),
+			[_gib](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
-					libftl::ship::images::gib_image(
-						_gib.get(),
-						std::move(
-							_texture
-						)
-					);
+					libftl::ship::images::gib_image(_gib.get(), std::move(_texture));
 			}
 		);
 }
@@ -316,47 +205,23 @@ load_optional_gib(
 {
 	return
 		fcppt::optional::maybe(
-			libftl::impl::xsd::to_fcppt_optional(
-				fcppt::make_cref(
-					_opt_gib.get()
-				)
-			),
+			libftl::impl::xsd::to_fcppt_optional(fcppt::make_cref(_opt_gib.get())),
 			[]{
 				return
-					fcppt::either::make_success<
-						libftl::error
-					>(
-						fcppt::optional::object<
-							libftl::ship::images::gib_image
-						>{}
+					fcppt::either::make_success<libftl::error>(
+						fcppt::optional::object<libftl::ship::images::gib_image>{}
 					);
 			},
-			[
-				&_images,
-				&_ship_name,
-				&_number
-			](
-				fcppt::reference<
-					 libftl::xml::generated::ship::gib const
-				> const _gib
-			)
+			[&_images,&_ship_name,&_number]
+			(fcppt::reference<libftl::xml::generated::ship::gib const> const _gib)
 			{
 				return
 					fcppt::either::map(
-						load_mandatory_gib(
-							_images,
-							_gib,
-							_ship_name,
-							_number
-						),
-						[](
-							libftl::ship::images::gib_image &&_gib_image
-						)
+						load_mandatory_gib(_images,_gib,_ship_name,_number),
+						[](libftl::ship::images::gib_image &&_gib_image)
 						{
 							return
-								fcppt::optional::make(
-									_gib_image
-								);
+								fcppt::optional::make(_gib_image);
 						}
 					);
 			}
@@ -377,6 +242,26 @@ load_gibs(
 	libftl::ship::name const &_name
 )
 {
+	auto const load_mandatory_impl(
+		[&_name,&_images]
+		(fcppt::reference<libftl::xml::generated::ship::gib const> const _gib, std::string const &_number)
+		{
+			return
+				load_mandatory_gib(_images,_gib,_name,_number);
+		}
+	);
+
+	auto const load_optional_impl(
+		[&_name,&_images](
+			fcppt::reference<::xsd::cxx::tree::optional<libftl::xml::generated::ship::gib> const> const _gib,
+			std::string const &_number
+		)
+		{
+			return
+				load_optional_gib(_images,_gib,_name,_number);
+		}
+	);
+
 	return
 		fcppt::either::apply(
 			[](
@@ -394,90 +279,27 @@ load_gibs(
 			{
 				return
 					fcppt::algorithm::join(
-						std::vector<
-							libftl::ship::images::gib_image
-						>{
-							std::move(
-								_gib1
-							),
-							std::move(
-								_gib2
-							),
-							std::move(
-								_gib3
-							),
-							std::move(
-								_gib4
-							)
+						std::vector<libftl::ship::images::gib_image>
+						{
+							std::move(_gib1),
+							std::move(_gib2),
+							std::move(_gib3),
+							std::move(_gib4)
 						},
-						fcppt::optional::to_container<
-							std::vector<
-								libftl::ship::images::gib_image
-							>
-						>(
-							std::move(
-								_gib5
-							)
+						fcppt::optional::to_container<std::vector<libftl::ship::images::gib_image>>(
+							std::move(_gib5)
 						),
-						fcppt::optional::to_container<
-							std::vector<
-								libftl::ship::images::gib_image
-							>
-						>(
-							std::move(
-								_gib6
-							)
+						fcppt::optional::to_container<std::vector<libftl::ship::images::gib_image>>(
+							std::move(_gib6)
 						)
 					);
 			},
-			load_mandatory_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib1()
-				),
-				_name,
-				"1"
-			),
-			load_mandatory_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib2()
-				),
-				_name,
-				"2"
-			),
-			load_mandatory_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib3()
-				),
-				_name,
-				"3"
-			),
-			load_mandatory_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib4()
-				),
-				_name,
-				"4"
-			),
-			load_optional_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib5()
-				),
-				_name,
-				"5"
-			),
-			load_optional_gib(
-				_images,
-				fcppt::make_cref(
-					_explosion.get().gib6()
-				),
-				_name,
-				"6"
-			)
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib1()), "1"),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib2()), "2"),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib3()), "3"),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib4()), "4"),
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib5()), "5"),
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib6()), "6")
 		);
 }
 
@@ -497,53 +319,28 @@ libftl::ship::load_images(
 		fcppt::either::apply(
 			[](
 				libftl::ship::images::base &&_base,
-				fcppt::optional::object<
-					libftl::ship::images::floor
-				> &&_floor,
-				fcppt::optional::object<
-					libftl::ship::images::cloak
-				> &&_cloak,
-				std::vector<
-					libftl::ship::images::gib_image
-				> &&_gibs
+				fcppt::optional::object<libftl::ship::images::floor> &&_floor,
+				fcppt::optional::object<libftl::ship::images::cloak> &&_cloak,
+				std::vector<libftl::ship::images::gib_image> &&_gibs
 			)
 			{
 				return
 					libftl::ship::images{
-						std::move(
-							_base
-						),
-						std::move(
-							_floor
-						),
-						std::move(
-							_cloak
-						),
-						std::move(
-							_gibs
-						)
+						std::move(_base),
+						std::move(_floor),
+						std::move(_cloak),
+						std::move(_gibs)
 					};
 			},
-			load_base(
+			load_base(_images, _name),
+			load_offset_image<libftl::ship::images::floor>(
 				_images,
-				_name
-			),
-			load_offset_image<
-				libftl::ship::images::floor
-			>(
-				_images,
-				fcppt::make_cref(
-					_ship
-				),
+				fcppt::make_cref(_ship),
 				_name,
 				get_offset_function{
-					[](
-						libftl::xml::generated::ship::offsets const &_offset
-					)
+					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
-					xsd::cxx::tree::optional<
-						libftl::xml::generated::ship::offset
-					> const &
+					xsd::cxx::tree::optional<libftl::xml::generated::ship::offset> const &
 					{
 						return
 							_offset.floor();
@@ -551,22 +348,14 @@ libftl::ship::load_images(
 				},
 				"floor"
 			),
-			load_offset_image<
-				libftl::ship::images::cloak
-			>(
+			load_offset_image<libftl::ship::images::cloak>(
 				_images,
-				fcppt::make_cref(
-					_ship
-				),
+				fcppt::make_cref(_ship),
 				_name,
 				get_offset_function{
-					[](
-						libftl::xml::generated::ship::offsets const &_offset
-					)
+					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
-					xsd::cxx::tree::optional<
-						libftl::xml::generated::ship::offset
-					> const &
+					xsd::cxx::tree::optional<libftl::xml::generated::ship::offset> const &
 					{
 						return
 							_offset.cloak();
@@ -574,12 +363,6 @@ libftl::ship::load_images(
 				},
 				"cloak"
 			),
-			load_gibs(
-				_images,
-				fcppt::make_cref(
-					_ship.explosion()
-				),
-				_name
-			)
+			load_gibs(_images, fcppt::make_cref(_ship.explosion()), _name)
 		);
 }
