@@ -9,6 +9,7 @@
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/make_cref.hpp>
+#include <fcppt/output_to_std_string.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/join.hpp>
@@ -172,12 +173,12 @@ load_mandatory_gib(
 		libftl::xml::generated::ship::gib const
 	> const _gib,
 	libftl::ship::name const &_ship_name,
-	std::string const &_number
+	unsigned const _number
 )
 {
 	return
 		fcppt::either::map(
-			find_image(_images, _ship_name.get() + "_gib" + _number),
+			find_image(_images, _ship_name.get() + "_gib" + fcppt::output_to_std_string(_number)),
 			[_gib](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
@@ -200,7 +201,7 @@ load_optional_gib(
 		> const
 	> const _opt_gib,
 	libftl::ship::name const &_ship_name,
-	std::string const &_number
+	unsigned const _number
 )
 {
 	return
@@ -244,7 +245,7 @@ load_gibs(
 {
 	auto const load_mandatory_impl(
 		[&_name,&_images]
-		(fcppt::reference<libftl::xml::generated::ship::gib const> const _gib, std::string const &_number)
+		(fcppt::reference<libftl::xml::generated::ship::gib const> const _gib, unsigned const _number)
 		{
 			return
 				load_mandatory_gib(_images,_gib,_name,_number);
@@ -254,7 +255,7 @@ load_gibs(
 	auto const load_optional_impl(
 		[&_name,&_images](
 			fcppt::reference<::xsd::cxx::tree::optional<libftl::xml::generated::ship::gib> const> const _gib,
-			std::string const &_number
+			unsigned const _number
 		)
 		{
 			return
@@ -294,12 +295,12 @@ load_gibs(
 						)
 					);
 			},
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib1()), "1"),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib2()), "2"),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib3()), "3"),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib4()), "4"),
-			load_optional_impl(fcppt::make_cref(_explosion.get().gib5()), "5"),
-			load_optional_impl(fcppt::make_cref(_explosion.get().gib6()), "6")
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib1()), 1u),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib2()), 2u),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib3()), 3u),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib4()), 4u),
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib5()), 5u),
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib6()), 6u)
 		);
 }
 
