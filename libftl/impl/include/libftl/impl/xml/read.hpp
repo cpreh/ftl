@@ -135,6 +135,35 @@ FCPPT_PP_POP_WARNING
 
 				}
 				catch(
+					xsd::cxx::tree::expected_attribute<
+						char
+					> const &_error
+				)
+				{
+					return
+						make_error(
+							FCPPT_TEXT("Expected attribute ")
+							+
+							fcppt::from_std_string(
+								_error.name()
+							)
+							+
+							FCPPT_TEXT(" in namespace ")
+							+
+							fcppt::from_std_string(
+								_error.namespace_()
+							)
+							+
+							FCPPT_TEXT(": ")
+							+
+							fcppt::from_std_string(
+								fcppt::output_to_std_string(
+									_error
+								)
+							)
+						);
+				}
+				catch(
 					xsd::cxx::tree::exception<
 						char
 					> const &_error
