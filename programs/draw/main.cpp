@@ -1,16 +1,17 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/base_unique_ptr.hpp>
-#include <libftl/archive/filesystem.hpp>
-#include <libftl/archive/path.hpp>
-#include <libftl/sprite/color_format.hpp>
+#include <libftl/blueprints/data.hpp>
+#include <libftl/blueprints/load.hpp>
+#include <libftl/options/create_resource_parser.hpp>
+#include <libftl/options/open_archive.hpp>
+#include <libftl/options/resource_label.hpp>
+#include <libftl/options/resource_variant.hpp>
+#include <libftl/ship/draw.hpp>
+#include <libftl/ship/load.hpp>
+#include <libftl/ship/resources.hpp>
 #include <libftl/sprite/draw.hpp>
 #include <libftl/sprite/images.hpp>
-#include <libftl/sprite/object.hpp>
-#include <libftl/xml/blueprints.hpp>
-#include <libftl/xml/result.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
-#include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/media/extension.hpp>
@@ -30,9 +31,6 @@
 #include <sge/renderer/device/ffp.hpp>
 #include <sge/renderer/event/render.hpp>
 #include <sge/renderer/target/onscreen.hpp>
-#include <sge/sprite/roles/color.hpp>
-#include <sge/sprite/roles/pos.hpp>
-#include <sge/sprite/roles/texture0.hpp>
 #include <sge/systems/cursor_option_field.hpp>
 #include <sge/systems/input.hpp>
 #include <sge/systems/instance.hpp>
@@ -46,7 +44,6 @@
 #include <sge/systems/with_input.hpp>
 #include <sge/systems/with_renderer.hpp>
 #include <sge/systems/with_window.hpp>
-#include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/viewport/fill_on_resize.hpp>
 #include <sge/viewport/optional_resize_callback.hpp>
 #include <sge/window/loop.hpp>
@@ -63,7 +60,7 @@
 #include <awl/main/function_context.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/from_std_string.hpp>
+#include <fcppt/make_cref.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/reference_impl.hpp>
@@ -75,13 +72,10 @@
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/cast/dynamic.hpp>
 #include <fcppt/either/bind.hpp>
-#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
+#include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/math/vector/null.hpp>
-#include <fcppt/optional/deref.hpp>
 #include <fcppt/optional/maybe_void.hpp>
-#include <fcppt/optional/reference.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
@@ -103,21 +97,14 @@
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
 #include <brigand/sequences/list.hpp>
 #include <exception>
-#include <istream>
-#include <string>
-#include <vector>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
 namespace
 {
-
-FCPPT_RECORD_MAKE_LABEL(
-	archive_label
-);
 
 FCPPT_RECORD_MAKE_LABEL(
 	ship_name_label
@@ -126,8 +113,8 @@ FCPPT_RECORD_MAKE_LABEL(
 typedef
 fcppt::record::variadic<
 	fcppt::record::element<
-		archive_label,
-		boost::filesystem::path
+		libftl::options::resource_label,
+		libftl::options::resource_variant
 	>,
 	fcppt::record::element<
 		ship_name_label,
@@ -136,18 +123,33 @@ fcppt::record::variadic<
 >
 argument_record;
 
+struct resources
+{
+	resources(
+		libftl::blueprints::data &&_blueprints,
+		libftl::ship::resources &&_ship
+	)
+	:
+		blueprints_{std::move(_blueprints)},
+		ship_{std::move(_ship)}
+	{
+	}
+
+	libftl::blueprints::data blueprints_;
+
+	libftl::ship::resources ship_;
+};
+
 awl::main::exit_code
 main_loop(
 	sge::renderer::device::ffp &_renderer_device,
 	sge::window::system &_window_system,
-	sge::texture::const_part_shared_ptr const _texture
+	resources &&_resources
 )
 {
 	auto const draw(
-		[
-			&_renderer_device,
-			&_texture
-		]{
+		[&_renderer_device, &_resources]
+		{
 			sge::renderer::context::scoped_ffp const scoped_block(
 				_renderer_device,
 				_renderer_device.onscreen_target()
@@ -165,26 +167,9 @@ main_loop(
 			libftl::sprite::draw(
 				_renderer_device,
 				scoped_block.get(),
-				std::vector<
-					libftl::sprite::object
-				>{
-					libftl::sprite::object{
-						sge::sprite::roles::pos{} =
-							fcppt::math::vector::null<
-								libftl::sprite::object::vector
-							>(),
-						sge::sprite::roles::texture0{} =
-							libftl::sprite::object::texture_type{
-								_texture
-							},
-						sge::sprite::roles::color{} =
-							sge::image::color::convert<
-								libftl::sprite::color_format
-							>(
-								sge::image::color::predef::white()
-							)
-					}
-				}
+				libftl::ship::draw(
+					_resources.ship_
+				)
 			);
 		}
 	);
@@ -193,189 +178,16 @@ main_loop(
 		sge::window::loop(
 			_window_system,
 			sge::window::loop_function{
-				[
-					&draw
-				](
-					awl::event::base const &_event
-				)
+				[&draw](awl::event::base const &_event)
 				{
 					fcppt::optional::maybe_void(
-						fcppt::cast::dynamic<
-							sge::renderer::event::render const
-						>(
-							_event
-						),
-						[
-							&draw
-						](
-							fcppt::reference<
-								sge::renderer::event::render const
-							>
-						)
+						fcppt::cast::dynamic<sge::renderer::event::render const>(_event),
+						[&draw](fcppt::reference<sge::renderer::event::render const>)
 						{
 							draw();
 						}
 					);
 				}
-			}
-		);
-}
-
-libftl::xml::result<
-	libftl::xml::generated::blueprints::blueprints_root
->
-load_blueprints(
-	libftl::archive::base &_archive
-)
-{
-	return
-		fcppt::either::bind(
-			_archive.open(
-				libftl::archive::path{
-					"data"
-				}
-				/
-				"blueprints.xml"
-			),
-			[](
-				fcppt::unique_ptr<
-					std::istream
-				> &&_stream
-			)
-			{
-				return
-					libftl::xml::blueprints(
-						*_stream
-					);
-			}
-		);
-}
-
-fcppt::optional::reference<
-	libftl::xml::generated::blueprints::ship_blueprint const
->
-find_ship_blueprint(
-	libftl::xml::generated::blueprints::blueprints_root::shipBlueprint_sequence const &_blueprints,
-	std::string const &_name
-)
-{
-	return
-		fcppt::optional::deref(
-			fcppt::algorithm::find_if_opt(
-				_blueprints,
-				[
-					&_name
-				](
-					libftl::xml::generated::blueprints::ship_blueprint const &_blueprint
-				)
-				{
-					return
-						_blueprint.name1()
-						==
-						_name;
-				}
-			)
-		);
-}
-
-std::string
-ship_path(
-	std::string const &_ship_name
-)
-{
-	std::string const prefix{
-		"PLAYER_SHIP"
-	};
-
-	return
-		_ship_name.compare(
-			0,
-			prefix.size(),
-			prefix
-		)
-		== 0
-		?
-			std::string{
-				"ship"
-			}
-		:
-			std::string{
-				"ships_noglow"
-			}
-		;
-}
-
-fcppt::either::object<
-	libftl::error,
-	sge::texture::const_part_shared_ptr
->
-load_ship_image(
-	libftl::archive::base &_archive,
-	libftl::sprite::images &_images,
-	std::string const &_ship_name
-)
-{
-	return
-		fcppt::either::bind(
-			load_blueprints(
-				_archive
-			),
-			[
-				&_images,
-				&_ship_name
-			](
-				fcppt::unique_ptr<
-					libftl::xml::generated::blueprints::blueprints_root
-				> &&_blueprints
-			)
-			{
-				return
-					fcppt::either::bind(
-						fcppt::either::from_optional(
-							find_ship_blueprint(
-								_blueprints->shipBlueprint(),
-								_ship_name
-							),
-							[
-								&_ship_name
-							]{
-								return
-									libftl::error{
-										FCPPT_TEXT("Ship ")
-										+
-										fcppt::from_std_string(
-											_ship_name
-										)
-										+
-										FCPPT_TEXT(" not found!")
-									};
-							}
-						),
-						[
-							&_ship_name,
-							&_images
-						](
-							fcppt::reference<
-								libftl::xml::generated::blueprints::ship_blueprint const
-							> const _blueprint
-						)
-						{
-							return
-								_images.load(
-									libftl::archive::path{
-										ship_path(
-											_ship_name
-										)
-									}
-									/
-									(
-										_blueprint.get().img()
-										+
-										"_base.png"
-									)
-								);
-						}
-					);
 			}
 		);
 }
@@ -395,8 +207,7 @@ main_program(
 			sge::systems::with_image2d
 		>
 	> const sys(
-		sge::systems::make_list
-		(
+		sge::systems::make_list(
 			sge::systems::window{
 				sge::systems::window_source{
 					sge::systems::original_window{
@@ -406,8 +217,7 @@ main_program(
 					}
 				}
 			}
-		)
-		(
+		)(
 			sge::systems::renderer{
 				sge::renderer::pixel_format::object{
 					sge::renderer::pixel_format::color::depth32,
@@ -423,13 +233,11 @@ main_program(
 					sge::viewport::fill_on_resize()
 				}
 			}
-		)
-		(
+		)(
 			sge::systems::input(
 				sge::systems::cursor_option_field::null()
 			)
-		)
-		(
+		)(
 			sge::systems::image2d(
 				sge::media::optional_extension_set(
 					sge::media::extension_set{
@@ -442,67 +250,73 @@ main_program(
 		)
 	);
 
-	libftl::archive::base_unique_ptr const archive{
-		libftl::archive::filesystem(
-			boost::filesystem::path{
-				fcppt::record::get<
-					archive_label
-				>(
-					_arguments
-				)
-			}
-		)
-	};
-
-	libftl::sprite::images images{
-		fcppt::make_ref(
-			sys.renderer_device_core()
-		),
-		fcppt::make_ref(
-			sys.image_system()
-		),
-		fcppt::make_ref(
-			*archive
-		)
-	};
-
 	return
 		fcppt::either::match(
-			load_ship_image(
-				*archive,
-				images,
-				fcppt::to_std_string(
+			fcppt::either::bind(
+				libftl::options::open_archive(
 					fcppt::record::get<
-						ship_name_label
+						libftl::options::resource_label
 					>(
 						_arguments
 					)
-				)
+				),
+				[&sys, &_arguments]
+				(libftl::archive::base_unique_ptr &&_archive)
+				{
+					libftl::sprite::images images{
+						fcppt::make_ref(sys.renderer_device_core()),
+						fcppt::make_ref(sys.image_system()),
+						fcppt::make_ref(*_archive)
+					};
+
+					return
+						fcppt::either::bind(
+							libftl::blueprints::load(*_archive),
+							[&_archive, &_arguments, &images]
+							(libftl::blueprints::data &&_blueprints)
+							{
+								return
+									fcppt::either::map(
+										libftl::ship::load(
+											*_archive,
+											fcppt::make_cref(_blueprints),
+											images,
+											fcppt::to_std_string(
+												fcppt::record::get<
+													ship_name_label
+												>(
+													_arguments
+												)
+											)
+										),
+										[&_blueprints]
+										(libftl::ship::resources &&_ship)
+										{
+											return
+												resources{
+													std::move(_blueprints),
+													std::move(_ship)
+												};
+										}
+									);
+							}
+						);
+				}
 			),
-			[](
-				libftl::error const &_error
-			)
+			[](libftl::error const &_error)
 			{
-				awl::show_error(
-					fcppt::output_to_fcppt_string(
-						_error
-					)
-				);
+				awl::show_error(fcppt::output_to_fcppt_string(_error));
 
 				return
 					awl::main::exit_failure();
 			},
-			[
-				&sys
-			](
-				sge::texture::const_part_shared_ptr const _texture
-			)
+			[&sys](resources &&_resources)
 			{
 				return
 					main_loop(
 						sys.renderer_device_ffp(),
 						sys.window_system(),
-						_texture
+						std::move(_resources)
 					);
 			}
 		);
@@ -521,19 +335,7 @@ try
 {
 	auto const parser{
 		fcppt::options::apply(
-			fcppt::options::argument<
-				archive_label,
-				boost::filesystem::path
-			>{
-				fcppt::options::long_name{
-					FCPPT_TEXT("Archive")
-				},
-				fcppt::options::optional_help_text{
-					fcppt::options::help_text{
-						FCPPT_TEXT("Path to the FTL archive")
-					}
-				}
-			},
+			libftl::options::create_resource_parser(),
 			fcppt::options::argument<
 				ship_name_label,
 				fcppt::string
@@ -561,40 +363,25 @@ try
 			fcppt::options::parse_help(
 				fcppt::options::default_help_switch(),
 				parser,
-				fcppt::args_from_second(
-					_context.argc(),
-					_context.argv()
-				)
+				fcppt::args_from_second(_context.argc(), _context.argv())
 			),
 			[](
 				fcppt::options::result<
-					fcppt::options::result_of<
-						parser_type
-					>
+					fcppt::options::result_of<parser_type>
 				> const &_result
 			)
 			{
 				return
 					fcppt::either::match(
 						_result,
-						[](
-							fcppt::options::error const &_error
-						)
+						[](fcppt::options::error const &_error)
 						{
-							awl::show_error(
-								fcppt::output_to_fcppt_string(
-									_error
-								)
-							);
+							awl::show_error(fcppt::output_to_fcppt_string(_error));
 
 							return
 								awl::main::exit_failure();
 						},
-						[](
-							fcppt::options::result_of<
-								parser_type
-							> const &_arguments
-						)
+						[](fcppt::options::result_of<parser_type> const &_arguments)
 						{
 							return
 								main_program(
@@ -607,39 +394,25 @@ try
 						}
 					);
 			},
-			[](
-				fcppt::options::help_text const &_help_text
-			)
+			[](fcppt::options::help_text const &_help_text)
 			{
-				awl::show_message(
-					fcppt::output_to_fcppt_string(
-						_help_text
-					)
-				);
+				awl::show_message(fcppt::output_to_fcppt_string(_help_text));
 
 				return
 					awl::main::exit_success();
 			}
 		);
 }
-catch(
-	fcppt::exception const &_error
-)
+catch(fcppt::exception const &_error)
 {
-	awl::show_error(
-		_error.string()
-	);
+	awl::show_error(_error.string());
 
 	return
 		awl::main::exit_failure();
 }
-catch(
-	std::exception const &_error
-)
+catch(std::exception const &_error)
 {
-	awl::show_error_narrow(
-		_error.what()
-	);
+	awl::show_error_narrow(_error.what());
 
 	return
 		awl::main::exit_failure();
