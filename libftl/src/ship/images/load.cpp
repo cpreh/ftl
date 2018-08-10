@@ -1,9 +1,9 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/impl/xsd/to_fcppt_optional.hpp>
-#include <libftl/ship/images.hpp>
-#include <libftl/ship/load_images.hpp>
-#include <libftl/ship/name.hpp>
+#include <libftl/ship/images/load.hpp>
+#include <libftl/ship/images/name.hpp>
+#include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images.hpp>
 #include <libftl/xml/generated/ship_fwd.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
@@ -72,11 +72,11 @@ find_image(
 
 fcppt::either::object<
 	libftl::error,
-	libftl::ship::images::base
+	libftl::ship::images::object::base
 >
 load_base(
 	libftl::sprite::images &_images,
-	libftl::ship::name const &_name
+	libftl::ship::images::name const &_name
 )
 {
 	return
@@ -85,7 +85,7 @@ load_base(
 			[](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
-					libftl::ship::images::base{std::move(_texture)};
+					libftl::ship::images::object::base{std::move(_texture)};
 			}
 		);
 }
@@ -112,7 +112,7 @@ load_offset_image(
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const
 	> const _ship,
-	libftl::ship::name const &_ship_name,
+	libftl::ship::images::name const &_ship_name,
 	get_offset_function const &_get_offset,
 	std::string const &_name
 )
@@ -129,7 +129,7 @@ load_offset_image(
 						return
 							fcppt::optional::make(
 								Type{
-									libftl::ship::images::offset_image{
+									libftl::ship::images::object::offset_image{
 										_offset.get(),
 										std::move(_texture)
 									}
@@ -165,14 +165,14 @@ load_offset_image(
 
 fcppt::either::object<
 	libftl::error,
-	libftl::ship::images::gib_image
+	libftl::ship::images::object::gib_image
 >
 load_mandatory_gib(
 	libftl::sprite::images &_images,
 	fcppt::reference<
 		libftl::xml::generated::ship::gib const
 	> const _gib,
-	libftl::ship::name const &_ship_name,
+	libftl::ship::images::name const &_ship_name,
 	unsigned const _number
 )
 {
@@ -182,7 +182,7 @@ load_mandatory_gib(
 			[_gib](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
-					libftl::ship::images::gib_image(_gib.get(), std::move(_texture));
+					libftl::ship::images::object::gib_image(_gib.get(), std::move(_texture));
 			}
 		);
 }
@@ -190,7 +190,7 @@ load_mandatory_gib(
 fcppt::either::object<
 	libftl::error,
 	fcppt::optional::object<
-		libftl::ship::images::gib_image
+		libftl::ship::images::object::gib_image
 	>
 >
 load_optional_gib(
@@ -200,7 +200,7 @@ load_optional_gib(
 			libftl::xml::generated::ship::gib
 		> const
 	> const _opt_gib,
-	libftl::ship::name const &_ship_name,
+	libftl::ship::images::name const &_ship_name,
 	unsigned const _number
 )
 {
@@ -210,7 +210,7 @@ load_optional_gib(
 			[]{
 				return
 					fcppt::either::make_success<libftl::error>(
-						fcppt::optional::object<libftl::ship::images::gib_image>{}
+						fcppt::optional::object<libftl::ship::images::object::gib_image>{}
 					);
 			},
 			[&_images,&_ship_name,&_number]
@@ -219,7 +219,7 @@ load_optional_gib(
 				return
 					fcppt::either::map(
 						load_mandatory_gib(_images,_gib,_ship_name,_number),
-						[](libftl::ship::images::gib_image &&_gib_image)
+						[](libftl::ship::images::object::gib_image &&_gib_image)
 						{
 							return
 								fcppt::optional::make(_gib_image);
@@ -232,7 +232,7 @@ load_optional_gib(
 fcppt::either::object<
 	libftl::error,
 	std::vector<
-		libftl::ship::images::gib_image
+		libftl::ship::images::object::gib_image
 	>
 >
 load_gibs(
@@ -240,7 +240,7 @@ load_gibs(
 	fcppt::reference<
 		libftl::xml::generated::ship::explosion const
 	> const _explosion,
-	libftl::ship::name const &_name
+	libftl::ship::images::name const &_name
 )
 {
 	auto const load_mandatory_impl(
@@ -266,31 +266,35 @@ load_gibs(
 	return
 		fcppt::either::apply(
 			[](
-				libftl::ship::images::gib_image &&_gib1,
-				libftl::ship::images::gib_image &&_gib2,
-				libftl::ship::images::gib_image &&_gib3,
-				libftl::ship::images::gib_image &&_gib4,
+				libftl::ship::images::object::gib_image &&_gib1,
+				libftl::ship::images::object::gib_image &&_gib2,
+				libftl::ship::images::object::gib_image &&_gib3,
+				libftl::ship::images::object::gib_image &&_gib4,
 				fcppt::optional::object<
-					libftl::ship::images::gib_image
+					libftl::ship::images::object::gib_image
 				> &&_gib5,
 				fcppt::optional::object<
-					libftl::ship::images::gib_image
+					libftl::ship::images::object::gib_image
 				> &&_gib6
 			)
 			{
 				return
 					fcppt::algorithm::join(
-						std::vector<libftl::ship::images::gib_image>
+						std::vector<libftl::ship::images::object::gib_image>
 						{
 							std::move(_gib1),
 							std::move(_gib2),
 							std::move(_gib3),
 							std::move(_gib4)
 						},
-						fcppt::optional::to_container<std::vector<libftl::ship::images::gib_image>>(
+						fcppt::optional::to_container<
+							std::vector<libftl::ship::images::object::gib_image>
+						>(
 							std::move(_gib5)
 						),
-						fcppt::optional::to_container<std::vector<libftl::ship::images::gib_image>>(
+						fcppt::optional::to_container<
+							std::vector<libftl::ship::images::object::gib_image>
+						>(
 							std::move(_gib6)
 						)
 					);
@@ -308,25 +312,27 @@ load_gibs(
 
 fcppt::either::object<
 	libftl::error,
-	libftl::ship::images
+	libftl::ship::images::object
 >
-libftl::ship::load_images(
+libftl::ship::images::load(
 	libftl::sprite::images &_images,
-	libftl::xml::generated::ship::ship_root const &_ship,
-	libftl::ship::name const &_name
+	fcppt::reference<
+		libftl::xml::generated::ship::ship_root const
+	> const _ship,
+	libftl::ship::images::name const &_name
 )
 {
 	return
 		fcppt::either::apply(
 			[](
-				libftl::ship::images::base &&_base,
-				fcppt::optional::object<libftl::ship::images::floor> &&_floor,
-				fcppt::optional::object<libftl::ship::images::cloak> &&_cloak,
-				std::vector<libftl::ship::images::gib_image> &&_gibs
+				libftl::ship::images::object::base &&_base,
+				fcppt::optional::object<libftl::ship::images::object::floor> &&_floor,
+				fcppt::optional::object<libftl::ship::images::object::cloak> &&_cloak,
+				std::vector<libftl::ship::images::object::gib_image> &&_gibs
 			)
 			{
 				return
-					libftl::ship::images{
+					libftl::ship::images::object{
 						std::move(_base),
 						std::move(_floor),
 						std::move(_cloak),
@@ -334,10 +340,8 @@ libftl::ship::load_images(
 					};
 			},
 			load_base(_images, _name),
-			load_offset_image<libftl::ship::images::floor>(
-				_images,
-				fcppt::make_cref(_ship),
-				_name,
+			load_offset_image<libftl::ship::images::object::floor>(
+				_images, _ship, _name,
 				get_offset_function{
 					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
@@ -349,10 +353,8 @@ libftl::ship::load_images(
 				},
 				"floor"
 			),
-			load_offset_image<libftl::ship::images::cloak>(
-				_images,
-				fcppt::make_cref(_ship),
-				_name,
+			load_offset_image<libftl::ship::images::object::cloak>(
+				_images, _ship, _name,
 				get_offset_function{
 					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
@@ -364,6 +366,6 @@ libftl::ship::load_images(
 				},
 				"cloak"
 			),
-			load_gibs(_images, fcppt::make_cref(_ship.explosion()), _name)
+			load_gibs(_images, fcppt::make_cref(_ship.get().explosion()), _name)
 		);
 }

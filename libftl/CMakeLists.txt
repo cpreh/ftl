@@ -213,12 +213,16 @@ set(
 	libftl/include/libftl/options/resource_variant_fwd.hpp
 	libftl/include/libftl/options/unpacked_resource_record.hpp
 	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
-	libftl/include/libftl/ship/images.hpp
-	libftl/include/libftl/ship/images_fwd.hpp
+	libftl/include/libftl/ship/images/load.hpp
+	libftl/include/libftl/ship/images/name.hpp
+	libftl/include/libftl/ship/images/name_fwd.hpp
+	libftl/include/libftl/ship/images/object.hpp
+	libftl/include/libftl/ship/images/object_fwd.hpp
 	libftl/include/libftl/ship/layout/door.hpp
 	libftl/include/libftl/ship/layout/door_fwd.hpp
 	libftl/include/libftl/ship/layout/ellipse.hpp
 	libftl/include/libftl/ship/layout/ellipse_fwd.hpp
+	libftl/include/libftl/ship/layout/load_xml.hpp
 	libftl/include/libftl/ship/layout/object.hpp
 	libftl/include/libftl/ship/layout/object_fwd.hpp
 	libftl/include/libftl/ship/layout/output.hpp
@@ -231,9 +235,6 @@ set(
 	libftl/include/libftl/ship/layout/tile_pos_fwd.hpp
 	libftl/include/libftl/ship/layout/tile_rect.hpp
 	libftl/include/libftl/ship/layout/tile_rect_fwd.hpp
-	libftl/include/libftl/ship/load_images.hpp
-	libftl/include/libftl/ship/name.hpp
-	libftl/include/libftl/ship/name_fwd.hpp
 	libftl/include/libftl/sprite/choices.hpp
 	libftl/include/libftl/sprite/choices_fwd.hpp
 	libftl/include/libftl/sprite/color_format.hpp
@@ -266,11 +267,11 @@ set(
 	libftl/src/blueprints/load.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
-	libftl/src/ship/images.cpp
+	libftl/src/ship/images/load.cpp
+	libftl/src/ship/images/object.cpp
 	libftl/src/ship/layout/object.cpp
 	libftl/src/ship/layout/output.cpp
 	libftl/src/ship/layout/parse.cpp
-	libftl/src/ship/load_images.cpp
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
 	libftl/src/xml/achievements.cpp

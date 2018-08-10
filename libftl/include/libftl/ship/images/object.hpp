@@ -1,7 +1,7 @@
-#ifndef LIBFTL_SHIP_IMAGES_HPP_INCLUDED
-#define LIBFTL_SHIP_IMAGES_HPP_INCLUDED
+#ifndef LIBFTL_SHIP_IMAGES_OBJECT_HPP_INCLUDED
+#define LIBFTL_SHIP_IMAGES_OBJECT_HPP_INCLUDED
 
-#include <libftl/ship/images_fwd.hpp>
+#include <libftl/ship/images/object_fwd.hpp>
 #include <libftl/xml/generated/ship.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/make_strong_typedef.hpp>
@@ -17,8 +17,10 @@ namespace libftl
 {
 namespace ship
 {
+namespace images
+{
 
-struct images
+struct object
 {
 	FCPPT_MAKE_STRONG_TYPEDEF(
 		sge::texture::const_part_shared_ptr,
@@ -59,7 +61,7 @@ struct images
 		sge::texture::const_part_shared_ptr image_;
 	};
 
-	images(
+	object(
 		base &&,
 		fcppt::optional::object<
 			floor
@@ -87,6 +89,7 @@ struct images
 	> gibs_;
 };
 
+}
 }
 }
 

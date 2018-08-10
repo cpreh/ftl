@@ -1,4 +1,4 @@
-#include <libftl/ship/images.hpp>
+#include <libftl/ship/images/object.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -8,7 +8,7 @@
 #include <fcppt/config/external_end.hpp>
 
 
-libftl::ship::images::offset_image::offset_image(
+libftl::ship::images::object::offset_image::offset_image(
 	libftl::xml::generated::ship::offset const _offset,
 	sge::texture::const_part_shared_ptr &&_image
 )
@@ -24,7 +24,7 @@ libftl::ship::images::offset_image::offset_image(
 {
 }
 
-libftl::ship::images::gib_image::gib_image(
+libftl::ship::images::object::gib_image::gib_image(
 	libftl::xml::generated::ship::gib const _gib,
 	sge::texture::const_part_shared_ptr &&_image
 )
@@ -40,7 +40,7 @@ libftl::ship::images::gib_image::gib_image(
 {
 }
 
-libftl::ship::images::images(
+libftl::ship::images::object::object(
 	base &&_base,
 	fcppt::optional::object<
 		floor

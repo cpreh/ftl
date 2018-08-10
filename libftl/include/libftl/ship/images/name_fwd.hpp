@@ -1,5 +1,5 @@
-#ifndef LIBFTL_SHIP_NAME_FWD_HPP_INCLUDED
-#define LIBFTL_SHIP_NAME_FWD_HPP_INCLUDED
+#ifndef LIBFTL_SHIP_IMAGES_NAME_FWD_HPP_INCLUDED
+#define LIBFTL_SHIP_IMAGES_NAME_FWD_HPP_INCLUDED
 
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -11,12 +11,15 @@ namespace libftl
 {
 namespace ship
 {
+namespace images
+{
 
 FCPPT_MAKE_STRONG_TYPEDEF(
 	std::string,
 	name
 );
 
+}
 }
 }
 
