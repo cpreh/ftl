@@ -48,6 +48,7 @@
 #include <sge/viewport/optional_resize_callback.hpp>
 #include <sge/window/loop.hpp>
 #include <sge/window/loop_function.hpp>
+#include <sge/window/object.hpp>
 #include <sge/window/system_fwd.hpp>
 #include <sge/window/title.hpp>
 #include <awl/show_error.hpp>
@@ -216,7 +217,7 @@ main_program(
 						}
 					}
 				}
-			}
+			}.dont_show()
 		)(
 			sge::systems::renderer{
 				sge::renderer::pixel_format::object{
@@ -312,6 +313,8 @@ main_program(
 			},
 			[&sys](resources &&_resources)
 			{
+				sys.window().show();
+
 				return
 					main_loop(
 						sys.renderer_device_ffp(),
