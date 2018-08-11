@@ -1,4 +1,6 @@
 #include <libftl/sprite/choices.hpp>
+#include <libftl/sprite/depth.hpp>
+#include <libftl/sprite/depth_role.hpp>
 #include <libftl/sprite/draw.hpp>
 #include <libftl/sprite/object.hpp>
 #include <sge/renderer/context/ffp.hpp>
@@ -12,7 +14,12 @@
 #include <sge/sprite/state/all_choices.hpp>
 #include <sge/sprite/state/object.hpp>
 #include <sge/sprite/state/parameters.hpp>
+#include <fcppt/algorithm/fold.hpp>
+#include <fcppt/enum/array_impl.hpp>
+#include <fcppt/enum/array_init.hpp>
+#include <fcppt/enum/make_range.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -40,6 +47,7 @@ libftl::sprite::draw(
 	sge::sprite::state::all_choices
 	state_choices;
 
+	// TODO: Project FTL's resolution of 1280 x 720
 	sge::sprite::state::object<
 		state_choices
 	>
@@ -50,13 +58,57 @@ libftl::sprite::draw(
 		>{}
 	};
 
-	sge::sprite::process::all(
-		_renderer_context,
-		sge::sprite::geometry::make_random_access_range(
-			_sprites
-		),
-		sprite_buffers,
-		sge::sprite::compare::nothing{},
-		sprite_states
-	);
+	typedef
+	fcppt::enum_::array<
+		libftl::sprite::depth,
+		std::vector<
+			libftl::sprite::object
+		>
+	>
+	sprite_depth_array;
+
+	sprite_depth_array const sprite_levels{
+		fcppt::algorithm::fold(
+			_sprites,
+			fcppt::enum_::array_init<
+				sprite_depth_array
+			>(
+				[](libftl::sprite::depth)
+				{
+					return
+						std::vector<libftl::sprite::object>{};
+				}
+			),
+			[](libftl::sprite::object const &_sprite, sprite_depth_array &&_sprite_levels)
+			{
+				_sprite_levels[
+					_sprite.get<
+						libftl::sprite::depth_role
+					>()
+				].push_back(
+					_sprite
+				);
+
+				return
+					std::move(_sprite_levels);
+			}
+		)
+	};
+
+	for(
+		libftl::sprite::depth const depth
+		:
+		fcppt::enum_::make_range<
+			libftl::sprite::depth
+		>()
+	)
+		sge::sprite::process::all(
+			_renderer_context,
+			sge::sprite::geometry::make_random_access_range(
+				sprite_levels[depth]
+			),
+			sprite_buffers,
+			sge::sprite::compare::nothing{},
+			sprite_states
+		);
 }
