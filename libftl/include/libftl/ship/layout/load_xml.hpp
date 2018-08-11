@@ -3,6 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/archive/base_fwd.hpp>
+#include <libftl/detail/symbol.hpp>
 #include <libftl/ship/layout/name_fwd.hpp>
 #include <libftl/xml/generated/ship_fwd.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
