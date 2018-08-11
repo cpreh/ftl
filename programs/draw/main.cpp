@@ -44,7 +44,8 @@
 #include <sge/systems/with_input.hpp>
 #include <sge/systems/with_renderer.hpp>
 #include <sge/systems/with_window.hpp>
-#include <sge/viewport/fill_on_resize.hpp>
+#include <sge/viewport/fractional_aspect.hpp>
+#include <sge/viewport/maintain_aspect.hpp>
 #include <sge/viewport/optional_resize_callback.hpp>
 #include <sge/window/loop.hpp>
 #include <sge/window/loop_function.hpp>
@@ -231,7 +232,12 @@ main_program(
 					sge::renderer::display_mode::optional_object()
 				},
 				sge::viewport::optional_resize_callback{
-					sge::viewport::fill_on_resize()
+					sge::viewport::maintain_aspect(
+						sge::viewport::fractional_aspect{
+							1280,
+							720
+						}
+					)
 				}
 			}
 		)(

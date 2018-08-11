@@ -250,6 +250,8 @@ set(
 	libftl/include/libftl/sprite/images_fwd.hpp
 	libftl/include/libftl/sprite/object.hpp
 	libftl/include/libftl/sprite/object_fwd.hpp
+	libftl/include/libftl/sprite/size_or_texture_size.hpp
+	libftl/include/libftl/sprite/size_or_texture_size_fwd.hpp
 	libftl/include/libftl/sprite/type_choices.hpp
 	libftl/include/libftl/sprite/type_choices_fwd.hpp
 	libftl/include/libftl/xml/achievements.hpp

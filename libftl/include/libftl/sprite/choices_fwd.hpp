@@ -30,7 +30,7 @@ sge::sprite::config::choices<
 		sge::sprite::config::pos_option::pos
 	>,
 	sge::sprite::config::normal_size<
-		sge::sprite::config::texture_size_option::always
+		sge::sprite::config::texture_size_option::maybe
 	>,
 	brigand::list<
 		sge::sprite::config::with_color<
