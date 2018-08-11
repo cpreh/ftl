@@ -80,16 +80,54 @@ fcppt::either::object<
 >
 load_base(
 	libftl::sprite::images &_images,
-	libftl::ship::images::name const &_name
+	libftl::ship::images::name const &_ship_name
 )
 {
 	return
 		fcppt::either::map(
-			find_image(_images, _name.get() + "_base.png"),
+			find_image(_images, _ship_name.get() + "_base.png"),
 			[](sge::texture::const_part_shared_ptr &&_texture)
 			{
 				return
 					libftl::ship::images::object::base{std::move(_texture)};
+			}
+		);
+}
+
+fcppt::either::object<
+	libftl::error,
+	libftl::ship::images::object::shield
+>
+load_shield(
+	libftl::sprite::images &_images,
+	libftl::ship::images::name const &_ship_name,
+	libftl::xml::generated::blueprints::ship_blueprint const &_blueprint
+)
+{
+	return
+		fcppt::either::map(
+			find_image(
+				_images,
+				fcppt::optional::from(
+					fcppt::optional::map(
+						fcppt::container::maybe_front(_blueprint.shieldImage()),
+						[](fcppt::reference<xml_schema::string const> const _shield)
+						{
+							return
+								std::string{_shield.get()};
+						}
+					),
+					[&_ship_name]{
+						return
+							_ship_name.get();
+					}
+				)
+				+ "_shields1.png"
+			),
+			[](sge::texture::const_part_shared_ptr &&_texture)
+			{
+				return
+					libftl::ship::images::object::shield{std::move(_texture)};
 			}
 		);
 }
@@ -243,26 +281,26 @@ load_gibs(
 	fcppt::reference<
 		libftl::xml::generated::ship::explosion const
 	> const _explosion,
-	libftl::ship::images::name const &_name
+	libftl::ship::images::name const &_ship_name
 )
 {
 	auto const load_mandatory_impl(
-		[&_name,&_images]
+		[&_ship_name,&_images]
 		(fcppt::reference<libftl::xml::generated::ship::gib const> const _gib, unsigned const _number)
 		{
 			return
-				load_mandatory_gib(_images,_gib,_name,_number);
+				load_mandatory_gib(_images,_gib,_ship_name,_number);
 		}
 	);
 
 	auto const load_optional_impl(
-		[&_name,&_images](
+		[&_ship_name,&_images](
 			fcppt::reference<::xsd::cxx::tree::optional<libftl::xml::generated::ship::gib> const> const _gib,
 			unsigned const _number
 		)
 		{
 			return
-				load_optional_gib(_images,_gib,_name,_number);
+				load_optional_gib(_images,_gib,_ship_name,_number);
 		}
 	);
 
@@ -330,6 +368,7 @@ libftl::ship::images::load(
 		fcppt::either::apply(
 			[](
 				libftl::ship::images::object::base &&_base,
+				libftl::ship::images::object::shield &&_shield,
 				fcppt::optional::object<libftl::ship::images::object::floor> &&_floor,
 				fcppt::optional::object<libftl::ship::images::object::cloak> &&_cloak,
 				std::vector<libftl::ship::images::object::gib_image> &&_gibs
@@ -338,12 +377,14 @@ libftl::ship::images::load(
 				return
 					libftl::ship::images::object{
 						std::move(_base),
+						std::move(_shield),
 						std::move(_floor),
 						std::move(_cloak),
 						std::move(_gibs)
 					};
 			},
 			load_base(_images, _ship_name),
+			load_shield(_images, _ship_name, _blueprint),
 			load_offset_image<libftl::ship::images::object::floor>(
 				_images, _ship,
 				get_offset_function{

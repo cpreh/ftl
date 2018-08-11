@@ -42,6 +42,7 @@ libftl::ship::images::object::gib_image::gib_image(
 
 libftl::ship::images::object::object(
 	base &&_base,
+	shield &&_shield,
 	fcppt::optional::object<
 		floor
 	> &&_floor,
@@ -56,6 +57,11 @@ libftl::ship::images::object::object(
 	base_{
 		std::move(
 			_base
+		)
+	},
+	shield_{
+		std::move(
+			_shield
 		)
 	},
 	floor_{

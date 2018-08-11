@@ -27,6 +27,11 @@ struct object
 		base
 	);
 
+	FCPPT_MAKE_STRONG_TYPEDEF(
+		sge::texture::const_part_shared_ptr,
+		shield
+	);
+
 	struct offset_image
 	{
 		offset_image(
@@ -63,6 +68,7 @@ struct object
 
 	object(
 		base &&,
+		shield &&,
 		fcppt::optional::object<
 			floor
 		> &&,
@@ -75,6 +81,8 @@ struct object
 	);
 
 	base base_;
+
+	shield shield_;
 
 	fcppt::optional::object<
 		floor
