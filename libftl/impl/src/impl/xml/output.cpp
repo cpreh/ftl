@@ -80,11 +80,7 @@ inner_node_output(
 		{
 			_stream
 				<<
-				'"'
-				<<
-				_value
-				<<
-				'"';
+				_value;
 		}
 	);
 
