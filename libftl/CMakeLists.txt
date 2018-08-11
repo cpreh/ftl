@@ -245,6 +245,11 @@ set(
 	libftl/include/libftl/sprite/choices.hpp
 	libftl/include/libftl/sprite/choices_fwd.hpp
 	libftl/include/libftl/sprite/color_format.hpp
+	libftl/include/libftl/sprite/depth.hpp
+	libftl/include/libftl/sprite/depth_fwd.hpp
+	libftl/include/libftl/sprite/depth_role.hpp
+	libftl/include/libftl/sprite/detail/depth_element.hpp
+	libftl/include/libftl/sprite/detail/depth_element_fwd.hpp
 	libftl/include/libftl/sprite/draw.hpp
 	libftl/include/libftl/sprite/images.hpp
 	libftl/include/libftl/sprite/images_fwd.hpp

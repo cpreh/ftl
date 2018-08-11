@@ -3,6 +3,7 @@
 
 #include <libftl/sprite/color_format.hpp>
 #include <libftl/sprite/type_choices_fwd.hpp>
+#include <libftl/sprite/detail/depth_element_fwd.hpp>
 #include <sge/sprite/config/choices_fwd.hpp>
 #include <sge/sprite/config/normal_size_fwd.hpp>
 #include <sge/sprite/config/pos_fwd.hpp>
@@ -42,7 +43,8 @@ sge::sprite::config::choices<
 			>,
 			sge::sprite::config::texture_coordinates::automatic,
 			sge::sprite::config::texture_ownership::shared
-		>
+		>,
+		libftl::sprite::detail::depth_element
 	>
 >
 choices;

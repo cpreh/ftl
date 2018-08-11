@@ -161,7 +161,7 @@ main_loop(
 				sge::renderer::clear::parameters()
 				.back_buffer(
 					sge::image::color::any::object{
-						sge::image::color::predef::black()
+						sge::image::color::predef::blue()
 					}
 				)
 			);
