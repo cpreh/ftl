@@ -78,7 +78,8 @@ libftl::ship::load(
 												std::move(_layout)
 											};
 									},
-									libftl::ship::images::load(_images, fcppt::make_cref(*_ship_root), image_name),
+									libftl::ship::images::load(
+										_images, _blueprint.get(), fcppt::make_cref(*_ship_root), image_name),
 									libftl::ship::layout::load(_archive, layout_name)
 								);
 						}

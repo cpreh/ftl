@@ -5,7 +5,8 @@
 #include <libftl/ship/images/name.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images.hpp>
-#include <libftl/xml/generated/ship_fwd.hpp>
+#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/generated/ship.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/make_cref.hpp>
@@ -13,6 +14,7 @@
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/join.hpp>
+#include <fcppt/container/maybe_front.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
@@ -20,7 +22,9 @@
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/bind.hpp>
+#include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make.hpp>
+#include <fcppt/optional/map.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/optional/to_container.hpp>
@@ -112,18 +116,17 @@ load_offset_image(
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const
 	> const _ship,
-	libftl::ship::images::name const &_ship_name,
 	get_offset_function const &_get_offset,
 	std::string const &_name
 )
 {
 	auto const image_from_offset(
-		[&_images,&_ship_name,&_name]
+		[&_images,&_name]
 		(fcppt::reference<libftl::xml::generated::ship::offset const > const _offset)
 		{
 			return
 				fcppt::either::map(
-					find_image(_images, _ship_name.get() + "_" + _name + ".png"),
+					find_image(_images, _name),
 					[&_offset](sge::texture::const_part_shared_ptr &&_texture)
 					{
 						return
@@ -316,10 +319,11 @@ fcppt::either::object<
 >
 libftl::ship::images::load(
 	libftl::sprite::images &_images,
+	libftl::xml::generated::blueprints::ship_blueprint const &_blueprint,
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const
 	> const _ship,
-	libftl::ship::images::name const &_name
+	libftl::ship::images::name const &_ship_name
 )
 {
 	return
@@ -339,9 +343,9 @@ libftl::ship::images::load(
 						std::move(_gibs)
 					};
 			},
-			load_base(_images, _name),
+			load_base(_images, _ship_name),
 			load_offset_image<libftl::ship::images::object::floor>(
-				_images, _ship, _name,
+				_images, _ship,
 				get_offset_function{
 					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
@@ -351,10 +355,10 @@ libftl::ship::images::load(
 							_offset.floor();
 					}
 				},
-				"floor"
+				_ship_name.get() + "_floor.png"
 			),
 			load_offset_image<libftl::ship::images::object::cloak>(
-				_images, _ship, _name,
+				_images, _ship,
 				get_offset_function{
 					[](libftl::xml::generated::ship::offsets const &_offset)
 					->
@@ -364,9 +368,22 @@ libftl::ship::images::load(
 							_offset.cloak();
 					}
 				},
-				// FIXME: Use the name from the ship's blueprint
-				"cloak"
+				fcppt::optional::from(
+					fcppt::optional::map(
+						fcppt::container::maybe_front(_blueprint.cloakImage()),
+						[](fcppt::reference<xml_schema::string const> const _cloak)
+						{
+							return
+								std::string{_cloak.get()};
+						}
+					),
+					[&_ship_name]{
+						return
+							_ship_name.get();
+					}
+				)
+				+ "_cloak.png"
 			),
-			load_gibs(_images, fcppt::make_cref(_ship.get().explosion()), _name)
+			load_gibs(_images, fcppt::make_cref(_ship.get().explosion()), _ship_name)
 		);
 }
