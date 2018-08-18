@@ -68,7 +68,9 @@ struct object
 
 	object(
 		base &&,
-		shield &&,
+		fcppt::optional::object<
+			shield
+		> &&,
 		fcppt::optional::object<
 			floor
 		> &&,
@@ -82,7 +84,9 @@ struct object
 
 	base base_;
 
-	shield shield_;
+	fcppt::optional::object<
+		shield
+	> shield_;
 
 	fcppt::optional::object<
 		floor

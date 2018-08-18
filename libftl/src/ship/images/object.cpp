@@ -42,7 +42,9 @@ libftl::ship::images::object::gib_image::gib_image(
 
 libftl::ship::images::object::object(
 	base &&_base,
-	shield &&_shield,
+	fcppt::optional::object<
+		shield
+	> &&_shield,
 	fcppt::optional::object<
 		floor
 	> &&_floor,
