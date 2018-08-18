@@ -2,9 +2,20 @@
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/sprite/images.hpp>
+#include <sge/image2d/dim.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/file_unique_ptr.hpp>
 #include <sge/image2d/system.hpp>
+#include <sge/image2d/algorithm/fill.hpp>
+#include <sge/image2d/store/a8.hpp>
+#include <sge/image2d/view/const_object.hpp>
+#include <sge/image2d/view/object.hpp>
+#include <sge/image/channel8.hpp>
+#include <sge/image/algorithm/uninitialized.hpp>
+#include <sge/image/color/a8.hpp>
+#include <sge/image/color/any/object.hpp>
+#include <sge/image/color/init/alpha.hpp>
+#include <sge/image/view/wrap.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/optional_extension.hpp>
 #include <sge/media/optional_name.hpp>
@@ -12,12 +23,14 @@
 #include <sge/renderer/resource_flags_field.hpp>
 #include <sge/renderer/device/core_fwd.hpp>
 #include <sge/renderer/texture/create_planar_from_file.hpp>
+#include <sge/renderer/texture/create_planar_from_view.hpp>
 #include <sge/renderer/texture/emulate_srgb.hpp>
 #include <sge/renderer/texture/planar.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/part_raw_ptr.hpp>
 #include <fcppt/from_std_string.hpp>
+#include <fcppt/literal.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/reference_impl.hpp>
@@ -28,6 +41,7 @@
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/math/dim/fill.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -57,12 +71,69 @@ libftl::sprite::images::images(
 	archive_{
 		_archive
 	},
+	opaque_{
+		[&_renderer_device]
+		{
+			typedef
+			sge::image2d::store::a8
+			store;
+
+			store data{
+				fcppt::math::dim::fill<
+					sge::image2d::dim
+				>(32),
+				store::init_function{
+					[](store::view_type const &_view)
+					{
+						sge::image2d::algorithm::fill(
+							sge::image2d::view::object{
+								sge::image::view::wrap(
+									_view
+								)
+							},
+							sge::image::color::any::object{
+								sge::image::color::a8{
+									sge::image::color::init::alpha() =
+										fcppt::literal<
+											sge::image::channel8
+										>(255)
+								}
+							},
+							sge::image::algorithm::uninitialized::yes
+						);
+					}
+				}
+			};
+
+			return
+				fcppt::make_shared_ptr<
+					sge::texture::part_raw_ptr
+				>(
+					sge::renderer::texture::create_planar_from_view(
+						_renderer_device.get(),
+						sge::image2d::view::const_object{
+							data.const_wrapped_view()
+						},
+						sge::renderer::texture::mipmap::off(),
+						sge::renderer::resource_flags_field::null(),
+						sge::renderer::texture::emulate_srgb::no
+					)
+				);
+		}()
+	},
 	impl_{}
 {
 }
 
 libftl::sprite::images::~images()
 {
+}
+
+sge::texture::const_part_shared_ptr
+libftl::sprite::images::opaque() const
+{
+	return
+		opaque_;
 }
 
 fcppt::either::object<

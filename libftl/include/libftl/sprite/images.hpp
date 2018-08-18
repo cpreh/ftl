@@ -46,6 +46,10 @@ public:
 	~images();
 
 	LIBFTL_DETAIL_SYMBOL
+	sge::texture::const_part_shared_ptr
+	opaque() const;
+
+	LIBFTL_DETAIL_SYMBOL
 	fcppt::either::object<
 		libftl::error,
 		sge::texture::const_part_shared_ptr
@@ -65,6 +69,8 @@ private:
 	fcppt::reference<
 		libftl::archive::base
 	> const archive_;
+
+	sge::texture::const_part_shared_ptr const opaque_;
 
 	std::unordered_map<
 		std::string,
