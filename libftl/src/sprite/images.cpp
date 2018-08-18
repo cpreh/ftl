@@ -245,7 +245,7 @@ libftl::sprite::images::load(
 													*_file,
 													sge::renderer::texture::mipmap::off(),
 													sge::renderer::resource_flags_field::null(),
-													sge::renderer::texture::emulate_srgb::no
+													sge::renderer::texture::emulate_srgb::yes
 												)
 											)
 										};
