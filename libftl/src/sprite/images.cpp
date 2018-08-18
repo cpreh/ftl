@@ -7,14 +7,15 @@
 #include <sge/image2d/file_unique_ptr.hpp>
 #include <sge/image2d/system.hpp>
 #include <sge/image2d/algorithm/fill.hpp>
-#include <sge/image2d/store/a8.hpp>
+#include <sge/image2d/store/la8.hpp>
 #include <sge/image2d/view/const_object.hpp>
 #include <sge/image2d/view/object.hpp>
 #include <sge/image/channel8.hpp>
 #include <sge/image/algorithm/uninitialized.hpp>
-#include <sge/image/color/a8.hpp>
+#include <sge/image/color/la8.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/image/color/init/alpha.hpp>
+#include <sge/image/color/init/luminance.hpp>
 #include <sge/image/view/wrap.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/optional_extension.hpp>
@@ -75,7 +76,7 @@ libftl::sprite::images::images(
 		[&_renderer_device]
 		{
 			typedef
-			sge::image2d::store::a8
+			sge::image2d::store::la8
 			store;
 
 			store data{
@@ -85,6 +86,12 @@ libftl::sprite::images::images(
 				store::init_function{
 					[](store::view_type const &_view)
 					{
+						auto const channel(
+							fcppt::literal<
+								sge::image::channel8
+							>(255)
+						);
+
 						sge::image2d::algorithm::fill(
 							sge::image2d::view::object{
 								sge::image::view::wrap(
@@ -92,11 +99,9 @@ libftl::sprite::images::images(
 								)
 							},
 							sge::image::color::any::object{
-								sge::image::color::a8{
-									sge::image::color::init::alpha() =
-										fcppt::literal<
-											sge::image::channel8
-										>(255)
+								sge::image::color::la8{
+									(sge::image::color::init::luminance() = channel)
+									(sge::image::color::init::alpha() = channel)
 								}
 							},
 							sge::image::algorithm::uninitialized::yes
