@@ -125,6 +125,15 @@ libftl::sprite::images::images(
 {
 }
 
+libftl::sprite::images::images(
+	images &&
+) = default;
+
+libftl::sprite::images &
+libftl::sprite::images::operator=(
+	images &&
+) = default;
+
 libftl::sprite::images::~images()
 {
 }

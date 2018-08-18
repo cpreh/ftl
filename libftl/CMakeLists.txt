@@ -150,6 +150,7 @@ set(
 	libftl/impl/include/libftl/impl/archive/filesystem.hpp
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/blueprints/find.hpp
+	libftl/impl/include/libftl/impl/room/draw.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_fwd.hpp
 	libftl/impl/include/libftl/impl/spirit/variant_impl.hpp
@@ -168,6 +169,7 @@ set(
 	libftl/impl/src/impl/archive/chain.cpp
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
+	libftl/impl/src/impl/room/draw.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/file_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp

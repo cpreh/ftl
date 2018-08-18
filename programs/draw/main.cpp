@@ -129,14 +129,22 @@ argument_record;
 struct resources
 {
 	resources(
+		libftl::archive::base_unique_ptr &&_archive,
+		libftl::sprite::images &&_images,
 		libftl::blueprints::data &&_blueprints,
 		libftl::ship::resources &&_ship
 	)
 	:
+		archive_{std::move(_archive)},
+		images_{std::move(_images)},
 		blueprints_{std::move(_blueprints)},
 		ship_{std::move(_ship)}
 	{
 	}
+
+	libftl::archive::base_unique_ptr archive_;
+
+	libftl::sprite::images images_;
 
 	libftl::blueprints::data blueprints_;
 
@@ -171,6 +179,7 @@ main_loop(
 				_renderer_device,
 				scoped_block.get(),
 				libftl::ship::draw(
+					_resources.images_,
 					_resources.ship_
 				)
 			);
@@ -296,11 +305,13 @@ main_program(
 												)
 											)
 										),
-										[&_blueprints]
+										[&_blueprints,&images,&_archive]
 										(libftl::ship::resources &&_ship)
 										{
 											return
 												resources{
+													std::move(_archive),
+													std::move(images),
 													std::move(_blueprints),
 													std::move(_ship)
 												};

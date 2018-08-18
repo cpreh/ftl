@@ -62,20 +62,20 @@ struct room
 {
 	libftl::ship::layout::room_id::value_type id_;
 
-	libftl::ship::layout::tile_coordinate::value_type x_;
+	libftl::ship::layout::tile_coordinate x_;
 
-	libftl::ship::layout::tile_coordinate::value_type y_;
+	libftl::ship::layout::tile_coordinate y_;
 
-	libftl::ship::layout::tile_coordinate::value_type w_;
+	libftl::ship::layout::tile_coordinate w_;
 
-	libftl::ship::layout::tile_coordinate::value_type h_;
+	libftl::ship::layout::tile_coordinate h_;
 };
 
 struct door
 {
-	libftl::ship::layout::tile_coordinate::value_type x_;
+	libftl::ship::layout::tile_coordinate x_;
 
-	libftl::ship::layout::tile_coordinate::value_type y_;
+	libftl::ship::layout::tile_coordinate y_;
 
 	room_id_signed left_top_;
 
@@ -117,16 +117,16 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wunused-member-function)
 BOOST_FUSION_ADAPT_STRUCT(
 	room,
 	(libftl::ship::layout::room_id::value_type, id_)
-	(libftl::ship::layout::tile_coordinate::value_type, x_)
-	(libftl::ship::layout::tile_coordinate::value_type, y_)
-	(libftl::ship::layout::tile_coordinate::value_type, w_)
-	(libftl::ship::layout::tile_coordinate::value_type, h_)
+	(libftl::ship::layout::tile_coordinate, x_)
+	(libftl::ship::layout::tile_coordinate, y_)
+	(libftl::ship::layout::tile_coordinate, w_)
+	(libftl::ship::layout::tile_coordinate, h_)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	door,
-	(libftl::ship::layout::tile_coordinate::value_type, x_)
-	(libftl::ship::layout::tile_coordinate::value_type, y_)
+	(libftl::ship::layout::tile_coordinate, x_)
+	(libftl::ship::layout::tile_coordinate, y_)
 	(room_id_signed, left_top_)
 	(room_id_signed, bottom_right_)
 	(int, vertical_)
@@ -296,7 +296,7 @@ public:
 	room_id_signed_int_;
 
 	boost::spirit::qi::int_parser<
-		libftl::ship::layout::tile_coordinate::value_type
+		libftl::ship::layout::tile_coordinate
 	>
 	tile_coordinate_int_;
 

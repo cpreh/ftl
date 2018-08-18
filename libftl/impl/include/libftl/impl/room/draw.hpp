@@ -1,8 +1,7 @@
-#ifndef LIBFTL_SHIP_DRAW_HPP_INCLUDED
-#define LIBFTL_SHIP_DRAW_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_ROOM_DRAW_HPP_INCLUDED
+#define LIBFTL_IMPL_ROOM_DRAW_HPP_INCLUDED
 
-#include <libftl/detail/symbol.hpp>
-#include <libftl/ship/resources_fwd.hpp>
+#include <libftl/ship/layout/object_fwd.hpp>
 #include <libftl/sprite/images_fwd.hpp>
 #include <libftl/sprite/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -12,18 +11,20 @@
 
 namespace libftl
 {
-namespace ship
+namespace impl
+{
+namespace room
 {
 
-LIBFTL_DETAIL_SYMBOL
 std::vector<
 	libftl::sprite::object
 >
 draw(
 	libftl::sprite::images &,
-	libftl::ship::resources const &
+	libftl::ship::layout::object const &
 );
 
+}
 }
 }
 

@@ -1,7 +1,9 @@
+#include <libftl/impl/room/draw.hpp>
 #include <libftl/ship/draw.hpp>
 #include <libftl/ship/resources.hpp>
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
+#include <libftl/sprite/images_fwd.hpp>
 #include <libftl/sprite/object.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
 #include <libftl/sprite/white.hpp>
@@ -112,6 +114,7 @@ std::vector<
 	libftl::sprite::object
 >
 libftl::ship::draw(
+	libftl::sprite::images &_images,
 	libftl::ship::resources const &_resources
 )
 {
@@ -124,6 +127,10 @@ libftl::ship::draw(
 				std::vector<libftl::sprite::object>
 			>(
 				floor_image(_resources)
+			),
+			libftl::impl::room::draw(
+				_images,
+				_resources.layout_
 			)
 		);
 }

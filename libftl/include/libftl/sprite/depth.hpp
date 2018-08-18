@@ -15,6 +15,7 @@ enum class depth
 	background,
 	base,
 	floor,
+	tile,
 	crew,
 	something,
 	fcppt_maximum = something

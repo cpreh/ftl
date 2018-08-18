@@ -43,6 +43,17 @@ public:
 	);
 
 	LIBFTL_DETAIL_SYMBOL
+	images(
+		images &&
+	);
+
+	LIBFTL_DETAIL_SYMBOL
+	images &
+	operator=(
+		images &&
+	);
+
+	LIBFTL_DETAIL_SYMBOL
 	~images();
 
 	LIBFTL_DETAIL_SYMBOL
@@ -60,17 +71,17 @@ public:
 private:
 	fcppt::reference<
 		sge::renderer::device::core
-	> const renderer_device_;
+	> renderer_device_;
 
 	fcppt::reference<
 		sge::image2d::system
-	> const image_system_;
+	> image_system_;
 
 	fcppt::reference<
 		libftl::archive::base
-	> const archive_;
+	> archive_;
 
-	sge::texture::const_part_shared_ptr const opaque_;
+	sge::texture::const_part_shared_ptr opaque_;
 
 	std::unordered_map<
 		std::string,
