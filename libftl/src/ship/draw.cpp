@@ -1,12 +1,10 @@
 #include <libftl/ship/draw.hpp>
 #include <libftl/ship/resources.hpp>
-#include <libftl/sprite/color_format.hpp>
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
 #include <libftl/sprite/object.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
-#include <sge/image/color/convert.hpp>
-#include <sge/image/color/predef.hpp>
+#include <libftl/sprite/white.hpp>
 #include <sge/sprite/roles/color.hpp>
 #include <sge/sprite/roles/pos.hpp>
 #include <sge/sprite/roles/size_or_texture_size.hpp>
@@ -57,11 +55,7 @@ base_image(
 					_resources.images_.base_.get()
 				},
 			sge::sprite::roles::color{} =
-				sge::image::color::convert<
-					libftl::sprite::color_format
-				>(
-					sge::image::color::predef::white()
-				),
+				libftl::sprite::white(),
 			libftl::sprite::depth_role{} =
 				libftl::sprite::depth::base
 		};
@@ -104,11 +98,7 @@ floor_image(
 								_floor.get().image_
 							},
 						sge::sprite::roles::color{} =
-							sge::image::color::convert<
-								libftl::sprite::color_format
-							>(
-								sge::image::color::predef::white()
-							),
+							libftl::sprite::white(),
 						libftl::sprite::depth_role{} =
 							libftl::sprite::depth::floor
 					};

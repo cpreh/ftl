@@ -244,7 +244,9 @@ set(
 	libftl/include/libftl/ship/resources_fwd.hpp
 	libftl/include/libftl/sprite/choices.hpp
 	libftl/include/libftl/sprite/choices_fwd.hpp
+	libftl/include/libftl/sprite/color.hpp
 	libftl/include/libftl/sprite/color_format.hpp
+	libftl/include/libftl/sprite/color_fwd.hpp
 	libftl/include/libftl/sprite/depth.hpp
 	libftl/include/libftl/sprite/depth_fwd.hpp
 	libftl/include/libftl/sprite/depth_role.hpp
@@ -260,6 +262,7 @@ set(
 	libftl/include/libftl/sprite/size_or_texture_size_fwd.hpp
 	libftl/include/libftl/sprite/type_choices.hpp
 	libftl/include/libftl/sprite/type_choices_fwd.hpp
+	libftl/include/libftl/sprite/white.hpp
 	libftl/include/libftl/xml/achievements.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
@@ -293,6 +296,7 @@ set(
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
 	libftl/src/sprite/resolution.cpp
+	libftl/src/sprite/white.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
