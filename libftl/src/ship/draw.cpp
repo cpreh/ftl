@@ -130,6 +130,7 @@ libftl::ship::draw(
 			),
 			libftl::impl::room::draw(
 				_images,
+				*_resources.ship_root_,
 				_resources.layout_
 			)
 		);

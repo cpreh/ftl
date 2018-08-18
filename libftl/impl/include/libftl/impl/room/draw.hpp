@@ -4,6 +4,7 @@
 #include <libftl/ship/layout/object_fwd.hpp>
 #include <libftl/sprite/images_fwd.hpp>
 #include <libftl/sprite/object.hpp>
+#include <libftl/xml/generated/ship_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -21,6 +22,7 @@ std::vector<
 >
 draw(
 	libftl::sprite::images &,
+	libftl::xml::generated::ship::ship_root const &,
 	libftl::ship::layout::object const &
 );
 

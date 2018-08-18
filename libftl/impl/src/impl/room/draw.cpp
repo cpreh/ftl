@@ -10,17 +10,20 @@
 #include <libftl/sprite/object.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
 #include <libftl/sprite/white.hpp>
+#include <libftl/xml/generated/ship.hpp>
 #include <sge/sprite/roles/color.hpp>
 #include <sge/sprite/roles/pos.hpp>
 #include <sge/sprite/roles/size_or_texture_size.hpp>
 #include <sge/sprite/roles/texture0.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/algorithm/map_concat.hpp>
+#include <fcppt/cast/size.hpp>
 #include <fcppt/cast/to_signed.hpp>
 #include <fcppt/container/grid/make_min.hpp>
 #include <fcppt/container/grid/make_pos_range_start_end.hpp>
 #include <fcppt/container/grid/make_sup.hpp>
 #include <fcppt/math/dim/fill.hpp>
+#include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/map.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
@@ -66,6 +69,7 @@ std::vector<
 >
 room_tiles(
 	libftl::sprite::images &_images,
+	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::tile_rect const _tiles
 )
 {
@@ -83,7 +87,7 @@ room_tiles(
 					_tiles.max()
 				)
 			),
-			[&_images]
+			[&_images,&_ship_root]
 			(libftl::ship::layout::tile_pos const _pos)
 			{
 				return
@@ -104,6 +108,19 @@ room_tiles(
 									};
 							}
 						)
+						-
+						libftl::sprite::object::vector{
+							fcppt::cast::size<
+								libftl::sprite::object::unit
+							>(
+								_ship_root.img().x()
+							),
+							fcppt::cast::size<
+								libftl::sprite::object::unit
+							>(
+								_ship_root.img().y()
+							)
+						}
 					);
 			}
 		);
@@ -114,6 +131,7 @@ std::vector<
 >
 draw_tiles(
 	libftl::sprite::images &_images,
+	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::object const &_layout
 )
 {
@@ -124,12 +142,13 @@ draw_tiles(
 			>
 		>(
 			_layout.rooms_,
-			[&_images]
+			[&_images,_ship_root]
 			(libftl::ship::layout::room const &_room)
 			{
 				return
 					room_tiles(
 						_images,
+						_ship_root,
 						_room.rect_
 					);
 			}
@@ -143,10 +162,13 @@ std::vector<
 >
 libftl::impl::room::draw(
 	libftl::sprite::images &_images,
+	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::object const &_layout
 )
 {
 	return
 		// TODO!
-		draw_tiles(_images,_layout);
+		draw_tiles(
+			_images, _ship_root, _layout
+		);
 }
