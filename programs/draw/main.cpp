@@ -12,6 +12,7 @@
 #include <libftl/ship/resources.hpp>
 #include <libftl/sprite/draw.hpp>
 #include <libftl/sprite/images.hpp>
+#include <libftl/sprite/resolution.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/media/extension.hpp>
@@ -44,7 +45,7 @@
 #include <sge/systems/with_input.hpp>
 #include <sge/systems/with_renderer.hpp>
 #include <sge/systems/with_window.hpp>
-#include <sge/viewport/fractional_aspect.hpp>
+#include <sge/viewport/aspect_from_screen_size.hpp>
 #include <sge/viewport/maintain_aspect.hpp>
 #include <sge/viewport/optional_resize_callback.hpp>
 #include <sge/window/loop.hpp>
@@ -233,10 +234,9 @@ main_program(
 				},
 				sge::viewport::optional_resize_callback{
 					sge::viewport::maintain_aspect(
-						sge::viewport::fractional_aspect{
-							1280,
-							720
-						}
+						sge::viewport::aspect_from_screen_size(
+							libftl::sprite::resolution()
+						)
 					)
 				}
 			}

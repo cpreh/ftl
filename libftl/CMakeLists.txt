@@ -255,6 +255,7 @@ set(
 	libftl/include/libftl/sprite/images_fwd.hpp
 	libftl/include/libftl/sprite/object.hpp
 	libftl/include/libftl/sprite/object_fwd.hpp
+	libftl/include/libftl/sprite/resolution.hpp
 	libftl/include/libftl/sprite/size_or_texture_size.hpp
 	libftl/include/libftl/sprite/size_or_texture_size_fwd.hpp
 	libftl/include/libftl/sprite/type_choices.hpp
@@ -291,6 +292,7 @@ set(
 	libftl/src/ship/resources.cpp
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
+	libftl/src/sprite/resolution.cpp
 	libftl/src/xml/achievements.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
