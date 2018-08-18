@@ -264,8 +264,6 @@ set(
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/clean.hpp
 	libftl/include/libftl/xml/events.hpp
-	libftl/include/libftl/xml/result.hpp
-	libftl/include/libftl/xml/result_fwd.hpp
 	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/base.cpp

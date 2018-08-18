@@ -4,13 +4,14 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/load_function.hpp>
 #include <libftl/xml/clean.hpp>
-#include <libftl/xml/result.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_from_std.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/bind.hpp>
+#include <fcppt/either/object_impl.hpp>
 #include <fcppt/assert/optional_error.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
@@ -35,8 +36,11 @@ namespace xml
 template<
 	typename Result
 >
-libftl::xml::result<
-	Result
+fcppt::either::object<
+	libftl::error,
+	fcppt::unique_ptr<
+		Result
+	>
 >
 read(
 	std::istream &_stream,
@@ -57,8 +61,11 @@ read(
 			)
 			{
 				typedef
-				libftl::xml::result<
-					Result
+				fcppt::either::object<
+					libftl::error,
+					fcppt::unique_ptr<
+						Result
+					>
 				>
 				result_type;
 
