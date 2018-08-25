@@ -12,8 +12,8 @@
 #include <sge/sprite/roles/size_or_texture_size.hpp>
 #include <sge/sprite/roles/texture0.hpp>
 #include <sge/sprite/types/texture_size.hpp>
-#include <fcppt/algorithm/join.hpp>
 #include <fcppt/cast/size.hpp>
+#include <fcppt/container/join.hpp>
 #include <fcppt/math/vector/null.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object_impl.hpp>
@@ -119,7 +119,7 @@ libftl::ship::draw(
 )
 {
 	return
-		fcppt::algorithm::join(
+		fcppt::container::join(
 			std::vector<libftl::sprite::object>{
 				base_image(_resources)
 			},

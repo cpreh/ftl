@@ -13,7 +13,7 @@
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/algorithm/join.hpp>
+#include <fcppt/container/join.hpp>
 #include <fcppt/container/maybe_front.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -330,7 +330,7 @@ load_gibs(
 			)
 			{
 				return
-					fcppt::algorithm::join(
+					fcppt::container::join(
 						std::vector<libftl::ship::images::object::gib_image>
 						{
 							std::move(_gib1),
