@@ -15,6 +15,7 @@ enum class depth
 	background,
 	base,
 	floor,
+	tile_background,
 	tile,
 	crew,
 	something,
