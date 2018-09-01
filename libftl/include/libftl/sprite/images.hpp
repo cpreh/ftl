@@ -60,6 +60,7 @@ public:
 	sge::texture::const_part_shared_ptr
 	opaque() const;
 
+	// TODO: Make this const
 	LIBFTL_DETAIL_SYMBOL
 	fcppt::either::object<
 		libftl::error,
