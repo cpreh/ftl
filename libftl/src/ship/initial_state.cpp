@@ -33,7 +33,7 @@ fcppt::either::object<
 	>
 >
 load_system(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	::xsd::cxx::tree::sequence<
 		libftl::xml::generated::blueprints::system
 	> const &_room_list,

@@ -36,7 +36,7 @@ libftl::ship::load(
 	fcppt::reference<
 		libftl::blueprints::data const
 	> const _blueprints,
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	std::string const &_name
 )
 {

@@ -29,7 +29,7 @@ load(
 	fcppt::reference<
 		libftl::blueprints::data const
 	>,
-	libftl::sprite::images &,
+	libftl::sprite::images const &,
 	std::string const &
 );
 

@@ -114,7 +114,7 @@ std::vector<
 	libftl::sprite::object
 >
 libftl::ship::draw(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::ship::resources const &_resources
 )
 {

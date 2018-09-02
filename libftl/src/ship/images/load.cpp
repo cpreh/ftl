@@ -43,7 +43,7 @@ fcppt::either::object<
 	sge::texture::const_part_shared_ptr
 >
 find_image(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	std::string const &_file_name
 )
 {
@@ -79,7 +79,7 @@ fcppt::either::object<
 	libftl::ship::images::object::base
 >
 load_base(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::ship::images::name const &_ship_name
 )
 {
@@ -101,7 +101,7 @@ fcppt::either::object<
 	>
 >
 load_shield(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::xml::generated::blueprints::ship_blueprint const &_blueprint
 )
 {
@@ -160,7 +160,7 @@ fcppt::either::object<
 	>
 >
 load_offset_image(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const
 	> const _ship,
@@ -219,7 +219,7 @@ fcppt::either::object<
 	libftl::ship::images::object::gib_image
 >
 load_mandatory_gib(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	fcppt::reference<
 		libftl::xml::generated::ship::gib const
 	> const _gib,
@@ -245,7 +245,7 @@ fcppt::either::object<
 	>
 >
 load_optional_gib(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	fcppt::reference<
 		::xsd::cxx::tree::optional<
 			libftl::xml::generated::ship::gib
@@ -287,7 +287,7 @@ fcppt::either::object<
 	>
 >
 load_gibs(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	fcppt::reference<
 		libftl::xml::generated::ship::explosion const
 	> const _explosion,
@@ -366,7 +366,7 @@ fcppt::either::object<
 	libftl::ship::images::object
 >
 libftl::ship::images::load(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::xml::generated::blueprints::ship_blueprint const &_blueprint,
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const

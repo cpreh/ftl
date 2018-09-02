@@ -20,7 +20,7 @@ std::vector<
 	libftl::sprite::object
 >
 draw(
-	libftl::sprite::images &,
+	libftl::sprite::images const &,
 	libftl::ship::resources const &
 );
 

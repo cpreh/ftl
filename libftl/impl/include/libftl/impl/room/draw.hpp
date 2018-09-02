@@ -21,7 +21,7 @@ std::vector<
 	libftl::sprite::object
 >
 draw(
-	libftl::sprite::images &,
+	libftl::sprite::images const &,
 	libftl::xml::generated::ship::ship_root const &,
 	libftl::ship::layout::object const &
 );

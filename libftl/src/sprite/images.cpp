@@ -156,7 +156,7 @@ fcppt::either::object<
 >
 libftl::sprite::images::load(
 	libftl::archive::path const &_path
-)
+) const
 {
 	libftl::archive::path const full_path{
 		(

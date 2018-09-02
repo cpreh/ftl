@@ -21,7 +21,7 @@ fcppt::either::object<
 >
 initial_state(
 	libftl::xml::generated::blueprints::ship_blueprint const &,
-	libftl::sprite::images &
+	libftl::sprite::images const &
 );
 
 }

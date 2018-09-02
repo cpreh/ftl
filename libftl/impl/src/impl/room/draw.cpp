@@ -44,7 +44,7 @@ libftl::sprite::object::unit const tile_size{
 
 libftl::sprite::object
 tile_background(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::sprite::object::vector const _pos
 )
 {
@@ -75,7 +75,7 @@ tile_background(
 
 libftl::sprite::object
 tile_foreground(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::sprite::rect const _rect
 )
 {
@@ -159,7 +159,7 @@ std::vector<
 	libftl::sprite::object
 >
 room_tiles(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::tile_rect const _tiles
 )
@@ -231,7 +231,7 @@ std::vector<
 	libftl::sprite::object
 >
 draw_tiles(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::object const &_layout
 )
@@ -262,7 +262,7 @@ std::vector<
 	libftl::sprite::object
 >
 libftl::impl::room::draw(
-	libftl::sprite::images &_images,
+	libftl::sprite::images const &_images,
 	libftl::xml::generated::ship::ship_root const &_ship_root,
 	libftl::ship::layout::object const &_layout
 )

@@ -68,7 +68,7 @@ public:
 	>
 	load(
 		libftl::archive::path const &
-	);
+	) const;
 private:
 	fcppt::reference<
 		sge::renderer::device::core
@@ -84,6 +84,7 @@ private:
 
 	sge::texture::const_part_shared_ptr opaque_;
 
+	mutable
 	std::unordered_map<
 		std::string,
 		sge::texture::const_part_shared_ptr

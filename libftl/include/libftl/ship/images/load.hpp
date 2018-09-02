@@ -25,7 +25,7 @@ fcppt::either::object<
 	libftl::ship::images::object
 >
 load(
-	libftl::sprite::images &,
+	libftl::sprite::images const &,
 	libftl::xml::generated::blueprints::ship_blueprint const &,
 	fcppt::reference<
 		libftl::xml::generated::ship::ship_root const
