@@ -27,7 +27,7 @@
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/record/get.hpp>
-#include <fcppt/variant/apply_unary.hpp>
+#include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <istream>
@@ -172,7 +172,7 @@ ftl::parse::xml::main(
 				result_type const &_result
 			)
 			{
-				fcppt::variant::apply_unary(
+				fcppt::variant::apply(
 					[](
 						auto const &_element
 					)
