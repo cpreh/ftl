@@ -14,12 +14,16 @@
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/either/sequence.hpp>
+#include <fcppt/optional/cat.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/tree/containers.hxx>
+#include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -132,27 +136,58 @@ load_system(
 		);
 }
 
-/*
-std::vector<
-	libftl::room::state
+fcppt::either::object<
+	libftl::error,
+	std::vector<
+		libftl::room::system
+	>
 >
-load_rooms(
-	libftl::xml::generated::blueprints::system_list const &_systems
+load_all_systems(
+	libftl::xml::generated::blueprints::system_list const &_systems,
+	libftl::sprite::images const &_images
 )
 {
 	return
-		fcppt::optional::cat(
-			std::vector<
-				fcppt::optional::object<
-					libftl::room::state
+		fcppt::either::map(
+			fcppt::either::sequence<
+				std::vector<
+					fcppt::optional::object<
+						libftl::room::system
+					>
 				>
-			>{
-				load_system(_systems.pilot(), libftl::room::type::pilot)
-				// TODO...
+			>(
+				std::vector<
+					fcppt::either::object<
+						libftl::error,
+						fcppt::optional::object<
+							libftl::room::system
+						>
+					>
+				>{
+					load_system(_images, _systems.pilot(), libftl::room::type::pilot),
+					load_system(_images, _systems.sensors(), libftl::room::type::sensors)
+					// TODO
+				}
+			),
+			[](
+				std::vector<
+					fcppt::optional::object<
+						libftl::room::system
+					>
+				> &&_systems
+			)
+			{
+				return
+					fcppt::optional::cat<
+						std::vector<
+							libftl::room::system
+						>
+					>(
+						std::move(_systems)
+					);
 			}
 		);
 }
-*/
 
 }
 
@@ -163,6 +198,7 @@ fcppt::either::object<
 >
 libftl::ship::initial_state(
 	libftl::xml::generated::ship::ship_root const &_ship_root,
+	libftl::ship::layout::object const &,
 	libftl::sprite::images &_images
 )
 {
