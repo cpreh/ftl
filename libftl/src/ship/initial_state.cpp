@@ -174,7 +174,7 @@ load_all_systems(
 					fcppt::optional::object<
 						libftl::room::system
 					>
-				> &&_systems
+				> &&_result
 			)
 			{
 				return
@@ -183,7 +183,7 @@ load_all_systems(
 							libftl::room::system
 						>
 					>(
-						std::move(_systems)
+						std::move(_result)
 					);
 			}
 		);

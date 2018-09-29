@@ -75,6 +75,7 @@
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/cast/dynamic.hpp>
 #include <fcppt/either/bind.hpp>
+#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
@@ -291,30 +292,54 @@ main_program(
 							[&_archive, &_arguments, &images]
 							(libftl::blueprints::data &&_blueprints)
 							{
+								fcppt::string const &ship_name{
+									fcppt::record::get<
+										ship_name_label
+									>(
+										_arguments
+									)
+								};
+
 								return
-									fcppt::either::map(
-										libftl::ship::load(
-											*_archive,
-											fcppt::make_cref(_blueprints),
-											images,
+									fcppt::either::bind(
+										fcppt::either::from_optional(
 											fcppt::to_std_string(
-												fcppt::record::get<
-													ship_name_label
-												>(
-													_arguments
-												)
-											)
+												ship_name
+											),
+											[&ship_name]
+											{
+												return
+													libftl::error{
+														FCPPT_TEXT("Failed to convert ship name")
+														+ ship_name
+													};
+											}
 										),
-										[&_blueprints,&images,&_archive]
-										(libftl::ship::resources &&_ship)
+										[&_archive,&images,&_blueprints]
+										(
+											std::string const &_name
+										)
 										{
 											return
-												resources{
-													std::move(_archive),
-													std::move(images),
-													std::move(_blueprints),
-													std::move(_ship)
-												};
+												fcppt::either::map(
+													libftl::ship::load(
+														*_archive,
+														fcppt::make_cref(_blueprints),
+														images,
+														_name
+													),
+													[&_blueprints,&images,&_archive]
+													(libftl::ship::resources &&_ship)
+													{
+														return
+															resources{
+																std::move(_archive),
+																std::move(images),
+																std::move(_blueprints),
+																std::move(_ship)
+															};
+													}
+												);
 										}
 									);
 							}

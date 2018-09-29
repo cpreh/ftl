@@ -4,6 +4,7 @@
 #include <fcppt/to_std_string.hpp>
 #include <fcppt/io/extract.hpp>
 #include <fcppt/io/istream.hpp>
+#include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
@@ -116,19 +117,37 @@ libftl::archive::operator>>(
 			_stream
 		),
 		[
+			&_stream,
 			&_path
 		](
 			fcppt::string &&_value
 		)
 		{
-			_path =
-				libftl::archive::path{
-					fcppt::to_std_string(
-						std::move(
-							_value
-						)
+			fcppt::optional::maybe(
+				fcppt::to_std_string(
+					std::move(
+						_value
 					)
-				};
+				),
+				[
+					&_stream
+				]{
+					_stream.fail();
+				},
+				[
+					&_path
+				](
+					std::string &&_string
+				)
+				{
+					_path =
+						libftl::archive::path{
+							std::move(
+								_string
+							)
+						};
+				}
+			);
 		}
 	);
 
