@@ -15,6 +15,9 @@
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/maybe.hpp>
+#include <fcppt/preprocessor/disable_clang_warning.hpp>
+#include <fcppt/preprocessor/pop_warning.hpp>
+#include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
@@ -34,6 +37,9 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
+
+FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wdisabled-macro-expansion)
 
 BOOST_FUSION_ADAPT_STRUCT(
 	libftl::impl::xml::document::attribute,
@@ -65,6 +71,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(libftl::impl::xml::document::optional_version, version_),
 	(libftl::impl::xml::document::node_vector, nodes_)
 )
+
+FCPPT_PP_POP_WARNING
 
 namespace
 {

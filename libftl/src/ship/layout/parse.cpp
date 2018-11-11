@@ -20,14 +20,13 @@
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/cast/to_unsigned.hpp>
-#include <fcppt/config/compiler.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/value_type.hpp>
-#include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -110,9 +109,8 @@ struct layout
 }
 
 FCPPT_PP_PUSH_WARNING
-#if defined(FCPPT_CONFIG_CLANG_COMPILER)
-FCPPT_PP_DISABLE_GCC_WARNING(-Wunused-member-function)
-#endif
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wunused-member-function)
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wdisabled-macro-expansion)
 
 BOOST_FUSION_ADAPT_STRUCT(
 	room,

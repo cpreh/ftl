@@ -93,6 +93,14 @@ function(
 			"#include <fcppt/config/external_begin.hpp>"
 			--hxx-epilogue
 			"#include <fcppt/config/external_end.hpp>"
+			--cxx-prologue
+			"#include <fcppt/config/external_begin.hpp>"
+			--cxx-epilogue
+			"#include <fcppt/config/external_end.hpp>"
+			--fwd-prologue
+			"#include <fcppt/config/external_begin.hpp>"
+			--fwd-epilogue
+			"#include <fcppt/config/external_end.hpp>"
 			--hxx-suffix
 			".hpp"
 			--fwd-suffix

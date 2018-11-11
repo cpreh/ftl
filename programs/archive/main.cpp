@@ -43,6 +43,7 @@
 #include <fcppt/options/short_name.hpp>
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
+#include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
@@ -68,6 +69,7 @@
 
 
 FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
 // FIXME

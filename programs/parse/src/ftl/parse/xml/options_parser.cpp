@@ -18,6 +18,7 @@
 #include <fcppt/options/make_base.hpp>
 #include <fcppt/options/optional_help_text.hpp>
 #include <fcppt/options/pretty_type_enum.hpp>
+#include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
@@ -32,6 +33,10 @@ fcppt::enum_::names_array<
 >
 xml_type_array;
 
+FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wglobal-constructors)
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wexit-time-destructors)
+
 xml_type_array const xml_types{{{
 	FCPPT_TEXT("achievements"),
 	FCPPT_TEXT("animations"),
@@ -40,6 +45,8 @@ xml_type_array const xml_types{{{
 	FCPPT_TEXT("sectors"),
 	FCPPT_TEXT("ship")
 }}};
+
+FCPPT_PP_POP_WARNING
 
 }
 
@@ -73,6 +80,7 @@ namespace xml
 {
 
 FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
 fcppt::io::istream &
