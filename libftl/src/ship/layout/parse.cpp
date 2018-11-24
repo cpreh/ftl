@@ -334,7 +334,7 @@ translate_bool(
 	case 1:
 		return
 			true;
-	};
+	}
 
 	throw
 		fcppt::exception{
