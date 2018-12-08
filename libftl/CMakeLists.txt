@@ -431,6 +431,7 @@ function(
 		${LIBFTL_LIB_NAME}
 		PUBLIC
 		XSD_CXX11
+		_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
 	)
 
 	add_dependencies(
