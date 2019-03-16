@@ -50,7 +50,7 @@ inner_node_output(
 )
 {
 	fcppt::variant::match(
-		_inner_node.content_.get(),
+		_inner_node.content_,
 		[
 			&_stream
 		](

@@ -6,7 +6,6 @@
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_coordinate.hpp>
-#include <sge/parse/install_error_handler.hpp>
 #include <sge/parse/make_result.hpp>
 #include <sge/parse/optional_error_string.hpp>
 #include <sge/parse/result.hpp>
@@ -14,7 +13,6 @@
 #include <fcppt/exception.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/make_cref.hpp>
-#include <fcppt/make_ref.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -30,18 +28,6 @@
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_eol.hpp>
-#include <boost/spirit/include/qi_grammar.hpp>
-#include <boost/spirit/include/qi_int.hpp>
-#include <boost/spirit/include/qi_kleene.hpp>
-#include <boost/spirit/include/qi_lit.hpp>
-#include <boost/spirit/include/qi_optional.hpp>
-#include <boost/spirit/include/qi_parse.hpp>
-#include <boost/spirit/include/qi_rule.hpp>
-#include <boost/spirit/include/qi_sequence.hpp>
-#include <boost/spirit/include/support_istream_iterator.hpp>
 #include <ios>
 #include <type_traits>
 #include <vector>
@@ -108,44 +94,6 @@ struct layout
 
 }
 
-FCPPT_PP_PUSH_WARNING
-FCPPT_PP_DISABLE_CLANG_WARNING(-Wunused-member-function)
-FCPPT_PP_DISABLE_CLANG_WARNING(-Wdisabled-macro-expansion)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	room,
-	(libftl::ship::layout::room_id::value_type, id_)
-	(libftl::ship::layout::tile_coordinate, x_)
-	(libftl::ship::layout::tile_coordinate, y_)
-	(libftl::ship::layout::tile_coordinate, w_)
-	(libftl::ship::layout::tile_coordinate, h_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	door,
-	(libftl::ship::layout::tile_coordinate, x_)
-	(libftl::ship::layout::tile_coordinate, y_)
-	(room_id_signed, left_top_)
-	(room_id_signed, bottom_right_)
-	(int, vertical_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	layout,
-	(libftl::ship::layout::object::offset_vector::value_type, offset_x_)
-	(libftl::ship::layout::object::offset_vector::value_type, offset_y_)
-	(int, vertical_)
-	(fcppt::optional::object<int>, horizontal_)
-	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_x_)
-	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_y_)
-	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_w_)
-	(libftl::ship::layout::ellipse::value_type::value_type, ellipse_h_)
-	(std::vector<room>, rooms_)
-	(std::vector<door>, doors_)
-)
-
-FCPPT_PP_POP_WARNING
-
 namespace
 {
 
@@ -176,8 +124,7 @@ public:
 		tile_coordinate_int_{},
 		room_{},
 		door_{},
-		layout_{},
-		error_string_{}
+		layout_{}
 	{
 		using
 		boost::spirit::eol;
@@ -249,26 +196,10 @@ public:
 			*room_
 			>
 			*door_;
-
-		sge::parse::install_error_handler(
-			fcppt::make_ref(
-				layout_
-			),
-			fcppt::make_ref(
-				error_string_
-			)
-		);
 	}
 
 	~grammar()
 	{
-	}
-
-	sge::parse::optional_error_string const &
-	error_string() const
-	{
-		return
-			error_string_;
 	}
 public:
 	boost::spirit::qi::int_parser<
@@ -315,8 +246,6 @@ public:
 		::layout()
 	>
 	layout_;
-
-	sge::parse::optional_error_string error_string_;
 };
 
 bool

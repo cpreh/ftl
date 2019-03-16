@@ -49,7 +49,7 @@ operator<<(
 )
 {
 	fcppt::variant::match(
-		_node.content_.get(),
+		_node.content_,
 		[
 			&_stream
 		](

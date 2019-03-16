@@ -35,7 +35,6 @@ find_package(
 	image2d
 	imagecolor
 	media
-	parse
 	renderer
 	sprite
 	texture
@@ -159,10 +158,6 @@ set(
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/blueprints/find.hpp
 	libftl/impl/include/libftl/impl/room/draw.hpp
-	libftl/impl/include/libftl/impl/spirit/variant_decl.hpp
-	libftl/impl/include/libftl/impl/spirit/variant_fwd.hpp
-	libftl/impl/include/libftl/impl/spirit/variant_impl.hpp
-	libftl/impl/include/libftl/impl/spirit/variant_output.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -425,6 +420,7 @@ function(
 		${alda_TARGET}
 		${fcppt_core_TARGET}
 		${fcppt_options_TARGET}
+		fcppt_parse_interface
 	)
 
 	target_compile_definitions(

@@ -1,7 +1,6 @@
 #ifndef LIBFTL_IMPL_XML_DOCUMENT_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_DOCUMENT_HPP_INCLUDED
 
-#include <libftl/impl/spirit/variant_impl.hpp>
 #include <libftl/impl/xml/document_fwd.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/variant/variadic.hpp>
@@ -35,15 +34,9 @@ struct document
 	>
 	node_content;
 
-	typedef
-	libftl::impl::spirit::variant<
-		node_content
-	>
-	node_content_wrapper;
-
 	struct inner_node
 	{
-		node_content_wrapper content_;
+		node_content content_;
 
 		std::string closing_tag_;
 	};

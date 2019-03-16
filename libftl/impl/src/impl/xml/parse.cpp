@@ -3,99 +3,51 @@
 #include <libftl/impl/xml/file_to_string.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/remove_comments.hpp>
-#include <sge/parse/error_string.hpp>
-#include <sge/parse/install_error_handler.hpp>
-#include <sge/parse/optional_error_string.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/identity.hpp>
-#include <fcppt/make_ref.hpp>
+#include <fcppt/make_cref.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/text.hpp>
-#include <fcppt/either/make_failure.hpp>
-#include <fcppt/either/make_success.hpp>
+#include <fcppt/unit.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/optional/maybe.hpp>
-#include <fcppt/preprocessor/disable_clang_warning.hpp>
-#include <fcppt/preprocessor/pop_warning.hpp>
-#include <fcppt/preprocessor/push_warning.hpp>
+#include <fcppt/optional/object_impl.hpp>
+#include <fcppt/parse/as_struct.hpp>
+#include <fcppt/parse/char_set.hpp>
+#include <fcppt/parse/error.hpp>
+#include <fcppt/parse/literal.hpp>
+#include <fcppt/parse/make_convert.hpp>
+#include <fcppt/parse/make_lexeme.hpp>
+#include <fcppt/parse/grammar.hpp>
+#include <fcppt/parse/grammar_parse_string.hpp>
+#include <fcppt/parse/space_skipper.hpp>
+#include <fcppt/parse/string.hpp>
+#include <fcppt/parse/operators/alternative.hpp>
+#include <fcppt/parse/operators/complement.hpp>
+#include <fcppt/parse/operators/not.hpp>
+#include <fcppt/parse/operators/optional.hpp>
+#include <fcppt/parse/operators/repetition.hpp>
+#include <fcppt/parse/operators/repetition_plus.hpp>
+#include <fcppt/parse/operators/sequence.hpp>
+#include <fcppt/variant/match.hpp>
+#include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/fusion/adapted/struct/adapt_struct.hpp>
-#include <boost/spirit/home/support/common_terminals.hpp>
-#include <boost/spirit/include/qi_alternative.hpp>
-#include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_grammar.hpp>
-#include <boost/spirit/include/qi_kleene.hpp>
-#include <boost/spirit/include/qi_lexeme.hpp>
-#include <boost/spirit/include/qi_lit.hpp>
-#include <boost/spirit/include/qi_not_predicate.hpp>
-#include <boost/spirit/include/qi_optional.hpp>
-#include <boost/spirit/include/qi_parse.hpp>
-#include <boost/spirit/include/qi_plus.hpp>
-#include <boost/spirit/include/qi_rule.hpp>
-#include <boost/spirit/include/qi_sequence.hpp>
 #include <iosfwd>
 #include <string>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
-
-FCPPT_PP_PUSH_WARNING
-FCPPT_PP_DISABLE_CLANG_WARNING(-Wdisabled-macro-expansion)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	libftl::impl::xml::document::attribute,
-	(std::string, name_),
-	(std::string, value_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	libftl::impl::xml::document::inner_node,
-	(libftl::impl::xml::document::node_content_wrapper, content_),
-	(std::string, closing_tag_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	libftl::impl::xml::document::node,
-	(std::string, opening_tag_),
-	(libftl::impl::xml::document::attribute_vector, attributes_),
-	(libftl::impl::xml::document::optional_inner_node, content_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	libftl::impl::xml::document::version,
-	(std::string, version_),
-	(std::string, encoding_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	libftl::impl::xml::document,
-	(libftl::impl::xml::document::optional_version, version_),
-	(libftl::impl::xml::document::node_vector, nodes_)
-)
-
-FCPPT_PP_POP_WARNING
 
 namespace
 {
 
-namespace
-encoding
-=
-boost::spirit::standard;
-
-typedef
-encoding::space_type
-space_type;
-
-template<
-	typename In
->
 class grammar final
 :
 public
-	boost::spirit::qi::grammar<
-		In,
-		libftl::impl::xml::document(),
-		space_type
+	fcppt::parse::grammar<
+		libftl::impl::xml::document,
+		char,
+		decltype(
+			fcppt::parse::space_skipper()
+		)
 	>
 {
 	FCPPT_NONCOPYABLE(
@@ -104,238 +56,248 @@ public
 public:
 	grammar()
 	:
-		grammar::base_type(
-			document_
-		),
-		quoted_string_(),
-		string_(),
-		inner_node_(),
-		node_content_(),
-		node_(),
-		attribute_(),
-		attribute_vector_(),
-		node_vector_(),
-		version_(),
-		document_(),
-		error_string_()
-	{
-		namespace
-		qi = boost::spirit::qi;
-
-		quoted_string_ %=
-			boost::spirit::qi::lexeme[
-				qi::lit('"')
-				>
-				*~encoding::char_('"')
-				>
-				qi::lit('"')
-			];
-
-		quoted_string_.name(
-			"quoted string"
-		);
-
-		string_ %=
-			boost::spirit::qi::lexeme[
-				*~encoding::char_('<')
-			];
-
-		string_.name(
-			"string"
-		);
-
-		inner_node_ %=
-			node_content_
-			>>
-			qi::lit("</")
-			>>
-			+~encoding::char_('>')
-			>>
-			qi::lit('>');
-
-		inner_node_.name(
-			"inner node"
-		);
-
-		node_content_ %=
-			node_vector_
-			|
-			string_;
-
-		node_content_.name(
-			"node content"
-		);
-
-		node_ %=
-			qi::lit('<')
-			>>
-			!qi::lit('/')
-			>>
-			boost::spirit::qi::lexeme[
-				+~encoding::char_(" />")
-			]
-			>>
-			attribute_vector_
-			>>
-			(
-				qi::lit("/>")
-				|
-				-(
-					qi::lit(">")
-					>>
-					inner_node_
-				)
-			);
-
-		node_.name(
-			"node"
-		);
-
-		attribute_ %=
-			(
-				+~encoding::char_(">=")
-				>>
-				qi::lit('=')
-			)
-			>>
-			quoted_string_;
-
-		attribute_.name(
-			"attribute"
-		);
-
-		attribute_vector_ %=
-			*attribute_;
-
-		attribute_vector_.name(
-			"attribute vector"
-		);
-
-		node_vector_ %=
-			+node_;
-
-		node_vector_.name(
-			"node vector"
-		);
-
-		version_ %=
-			qi::lit("<?xml")
-			>>
-			qi::lit("version=")
-			>>
-			quoted_string_
-			>>
-			qi::lit("encoding=")
-			>>
-			quoted_string_
-			>>
-			qi::lit("?>");
-
-		version_.name(
-			"version"
-		);
-
-		document_ %=
-			-version_
-			>>
-			node_vector_;
-
-		document_.name(
-			"document"
-		);
-
-		sge::parse::install_error_handler(
-			fcppt::make_ref(
-				node_vector_
+		grammar::grammar_base{
+			fcppt::make_cref(
+				this->document_
 			),
-			fcppt::make_ref(
-				error_string_
+			fcppt::parse::space_skipper()
+		},
+		quoted_string_{
+			this->make_base(
+				fcppt::parse::make_lexeme(
+					fcppt::parse::literal{'"'}
+					>>
+					*~fcppt::parse::char_set{'"'}
+					>>
+					fcppt::parse::literal{'"'}
+				)
 			)
-		);
+		},
+		string_{
+			this->make_base(
+				fcppt::parse::make_lexeme(
+					*~fcppt::parse::char_set{'<'}
+				)
+			)
+		},
+		inner_node_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					libftl::impl::xml::document::inner_node
+				>(
+					fcppt::make_cref(
+						this->node_content_
+					)
+					>>
+					fcppt::parse::string{"</"}
+					>>
+					+~fcppt::parse::char_set{'>'}
+					>>
+					fcppt::parse::literal{'>'}
+				)
+			)
+		},
+		node_content_{
+			this->make_base(
+				fcppt::make_cref(
+					this->node_vector_
+				)
+				|
+				fcppt::make_cref(
+					this->string_
+				)
+			)
+		},
+		node_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					libftl::impl::xml::document::node
+				>(
+					fcppt::parse::literal{'<'}
+					>>
+					!
+					fcppt::parse::literal{'/'}
+					>>
+					fcppt::parse::make_lexeme(
+						+~fcppt::parse::char_set{' ', '/', '>'}
+					)
+					>>
+					fcppt::make_cref(
+						this->attribute_vector_
+					)
+					>>
+					fcppt::parse::make_convert(
+						fcppt::parse::string{"/>"}
+						|
+						-(
+							fcppt::parse::literal{'>'}
+							>>
+							fcppt::make_cref(
+								this->inner_node_
+							)
+						),
+						[](
+							fcppt::variant::variadic<
+								fcppt::unit,
+								fcppt::optional::object<
+									libftl::impl::xml::document::inner_node
+								>
+							> &&_value
+						)
+						{
+							return
+								fcppt::variant::match(
+									std::move(_value),
+									[](fcppt::unit)
+									{
+										return
+											fcppt::optional::object<
+												libftl::impl::xml::document::inner_node
+											>();
+									},
+									[](
+										fcppt::optional::object<
+											libftl::impl::xml::document::inner_node
+										> &&_inner
+									)
+									{
+										return
+											std::move(_inner);
+									}
+								);
+						}
+					)
+				)
+			)
+		},
+		attribute_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					libftl::impl::xml::document::attribute
+				>(
+					(
+						+~fcppt::parse::char_set{'>', '='}
+						>>
+						fcppt::parse::literal{'='}
+					)
+					>>
+					fcppt::make_cref(
+						this->quoted_string_
+					)
+				)
+			)
+		},
+		attribute_vector_{
+			this->make_base(
+				*
+				fcppt::make_cref(
+					this->attribute_
+				)
+			)
+		},
+		node_vector_{
+			this->make_base(
+				+
+				fcppt::make_cref(
+					this->node_
+				)
+			)
+		},
+		version_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					libftl::impl::xml::document::version
+				>(
+					fcppt::parse::string{"<?xml"}
+					>>
+					fcppt::parse::string{"version="}
+					>>
+					fcppt::make_cref(
+						this->quoted_string_
+					)
+					>>
+					fcppt::parse::string{"encoding="}
+					>>
+					fcppt::make_cref(
+						this->quoted_string_
+					)
+					>>
+					fcppt::parse::string{"?>"}
+				)
+			)
+		},
+		document_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					libftl::impl::xml::document
+				>(
+					-
+					fcppt::make_cref(
+						this->version_
+					)
+					>>
+					fcppt::make_cref(
+						this->node_vector_
+					)
+				)
+			)
+		}
+	{
 	}
 
 	~grammar()
 	{
 	}
-
-	sge::parse::optional_error_string const &
-	error_string() const
-	{
-		return
-			error_string_;
-	}
 private:
-	boost::spirit::qi::rule<
-		In,
-		std::string(),
-		space_type
+	base_type<
+		std::string
 	>
 	quoted_string_;
 
-	boost::spirit::qi::rule<
-		In,
-		std::string(),
-		space_type
+	base_type<
+		std::string
 	>
 	string_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::inner_node(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::inner_node
 	>
 	inner_node_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::node_content_wrapper(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::node_content
 	>
 	node_content_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::node(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::node
 	>
 	node_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::attribute(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::attribute
 	>
 	attribute_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::attribute_vector(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::attribute_vector
 	>
 	attribute_vector_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::node_vector(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::node_vector
 	>
 	node_vector_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document::version(),
-		space_type
+	base_type<
+		libftl::impl::xml::document::version
 	>
 	version_;
 
-	boost::spirit::qi::rule<
-		In,
-		libftl::impl::xml::document(),
-		space_type
+	base_type<
+		libftl::impl::xml::document
 	>
 	document_;
-
-	sge::parse::optional_error_string error_string_;
 };
 
 fcppt::either::object<
@@ -346,76 +308,28 @@ parse_string(
 	std::string const &_input
 )
 {
-	grammar<
-		std::string::const_iterator
-	>
-	parser{};
-
-	std::string::const_iterator begin{
-		_input.begin()
-	};
-
-	libftl::impl::xml::document result{};
-
-	boost::spirit::qi::phrase_parse(
-		begin,
-		_input.end(),
-		parser,
-		encoding::space,
-		result
-	);
-
 	return
-		fcppt::optional::maybe(
-			parser.error_string(),
-			[
-				begin,
-				&result,
-				&_input
-			]{
-				return
-					begin
-					==
-					_input.end()
-					?
-						fcppt::either::make_success<
-							libftl::error
-						>(
-							std::move(
-								result
-							)
-						)
-					:
-						fcppt::either::make_failure<
-							libftl::impl::xml::document
-						>(
-							libftl::error{
-								FCPPT_TEXT("Failed to parse starting from here:\n")
-								+
-								fcppt::from_std_string(
-									std::string{
-										begin,
-										_input.end()
-									}
-								)
-							}
-						)
-					;
-			},
+		fcppt::either::map_failure(
+			fcppt::parse::grammar_parse_string(
+				std::string{
+					_input
+				},
+				grammar{}
+			),
 			[](
-				sge::parse::error_string const &_error
+				fcppt::parse::error<
+					char
+				> &&_error
 			)
 			{
 				return
-					fcppt::either::make_failure<
-						libftl::impl::xml::document
-					>(
-						libftl::error{
-							FCPPT_TEXT("Failed to parse:\n")
-							+
-							_error.get()
-						}
-					);
+					libftl::error{
+						fcppt::from_std_string(
+							std::move(
+								_error.get()
+							)
+						)
+					};
 			}
 		);
 }
