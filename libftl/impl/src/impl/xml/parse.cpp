@@ -6,6 +6,7 @@
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/text.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
@@ -324,6 +325,8 @@ parse_string(
 			{
 				return
 					libftl::error{
+						FCPPT_TEXT("Parsing failed: ")
+						+
 						fcppt::from_std_string(
 							std::move(
 								_error.get()

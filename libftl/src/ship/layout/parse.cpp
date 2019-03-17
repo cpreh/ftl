@@ -6,11 +6,8 @@
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_coordinate.hpp>
-#include <sge/parse/make_result.hpp>
-#include <sge/parse/optional_error_string.hpp>
-#include <sge/parse/result.hpp>
-#include <sge/parse/result_code.hpp>
 #include <fcppt/exception.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/noncopyable.hpp>
@@ -18,18 +15,28 @@
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/cast/to_unsigned.hpp>
+#include <fcppt/either/map.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/value_type.hpp>
-#include <fcppt/preprocessor/disable_clang_warning.hpp>
-#include <fcppt/preprocessor/pop_warning.hpp>
-#include <fcppt/preprocessor/push_warning.hpp>
+#include <fcppt/parse/as_struct.hpp>
+#include <fcppt/parse/error.hpp>
+#include <fcppt/parse/grammar.hpp>
+#include <fcppt/parse/grammar_parse_stream.hpp>
+#include <fcppt/parse/int.hpp>
+#include <fcppt/parse/literal.hpp>
+#include <fcppt/parse/make_skipper.hpp>
+#include <fcppt/parse/string.hpp>
+#include <fcppt/parse/operators/optional.hpp>
+#include <fcppt/parse/operators/repetition.hpp>
+#include <fcppt/parse/operators/sequence.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <type_traits>
+#include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -97,15 +104,56 @@ struct layout
 namespace
 {
 
-template<
-	typename In
+auto
+eol()
+{
+	return
+		fcppt::parse::make_skipper(
+			fcppt::parse::literal{'\n'}
+		);
+}
+
+typedef
+fcppt::parse::int_<
+	fcppt::optional::value_type<
+		libftl::ship::layout::object::offset_vector::value_type
+	>
 >
-class grammar final
+offset_int;
+
+typedef
+fcppt::parse::int_<
+	libftl::ship::layout::ellipse::value_type::value_type
+>
+ellipse_int;
+
+typedef
+fcppt::parse::int_<
+	libftl::ship::layout::room_id::value_type
+>
+room_id_int;
+
+typedef
+fcppt::parse::int_<
+	room_id_signed
+>
+room_id_signed_int;
+
+typedef
+fcppt::parse::int_<
+	libftl::ship::layout::tile_coordinate
+>
+tile_coordinate_int;
+
+class grammar
 :
-	public
-	boost::spirit::qi::grammar<
-		In,
-		::layout()
+public
+	fcppt::parse::grammar<
+		::layout,
+		char,
+		decltype(
+			eol()
+		)
 	>
 {
 	FCPPT_NONCOPYABLE(
@@ -114,136 +162,116 @@ class grammar final
 public:
 	grammar()
 	:
-		grammar::base_type(
-			layout_
+		grammar::grammar_base(
+			fcppt::make_cref(
+				this->layout_
+			),
+			eol()
 		),
-		offset_int_{},
-		ellipse_int_{},
-		room_id_int_{},
-		room_id_signed_int_{},
-		tile_coordinate_int_{},
-		room_{},
-		door_{},
-		layout_{}
+		room_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					::room
+				>(
+					fcppt::parse::string{"ROOM"}
+					>>
+					room_id_int{}
+					>>
+					tile_coordinate_int{}
+					>>
+					tile_coordinate_int{}
+					>>
+					tile_coordinate_int{}
+					>>
+					tile_coordinate_int{}
+				)
+			)
+		},
+		door_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					::door
+				>(
+					fcppt::parse::string{"DOOR"}
+					>>
+					tile_coordinate_int{}
+					>>
+					tile_coordinate_int{}
+					>>
+					room_id_signed_int{}
+					>>
+					room_id_signed_int{}
+					>>
+					fcppt::parse::int_<int>{}
+				)
+			)
+		},
+		layout_{
+			this->make_base(
+				fcppt::parse::as_struct<
+					::layout
+				>(
+					-(
+						fcppt::parse::string{"X_OFFSET"}
+						>>
+						offset_int{}
+					)
+					>>
+					-(
+						fcppt::parse::string{"Y_OFFSET"}
+						>>
+						offset_int{}
+					)
+					>>
+					fcppt::parse::string{"VERTICAL"}
+					>>
+					fcppt::parse::int_<int>{}
+					>>
+					-(
+						fcppt::parse::string{"HORIZONTAL"}
+						>>
+						fcppt::parse::int_<int>{}
+					)
+					>>
+					fcppt::parse::string{"ELLIPSE"}
+					>>
+					ellipse_int{}
+					>>
+					ellipse_int{}
+					>>
+					ellipse_int{}
+					>>
+					ellipse_int{}
+					>>
+					*fcppt::make_cref(
+						this->room_
+					)
+					>>
+					*fcppt::make_cref(
+						this->door_
+					)
+				)
+			)
+		}
 	{
-		using
-		boost::spirit::eol;
-
-		namespace
-		qi
-		=
-		boost::spirit::qi;
-
-		room_ %=
-			qi::lit("ROOM") > eol
-			>
-			room_id_int_ > eol
-			>
-			tile_coordinate_int_ > eol
-			>
-			tile_coordinate_int_ > eol
-			>
-			tile_coordinate_int_ > eol
-			>
-			tile_coordinate_int_ > eol;
-
-		door_ %=
-			qi::lit("DOOR") > eol
-			>
-			tile_coordinate_int_ > eol
-			>
-			tile_coordinate_int_ > eol
-			>
-			room_id_signed_int_ > eol
-			>
-			room_id_signed_int_ > eol
-			>
-			qi::int_ > eol;
-
-		layout_ %=
-			-(
-				qi::lit("X_OFFSET") > eol
-				>
-				offset_int_ > eol
-			)
-			>
-			-(
-				qi::lit("Y_OFFSET") > eol
-				>
-				offset_int_ > eol
-			)
-			>
-			qi::lit("VERTICAL") > eol
-			>
-			qi::int_ > eol
-			>
-			-(
-				qi::lit("HORIZONTAL") > eol
-				>
-				qi::int_ > eol
-			)
-			>
-			qi::lit("ELLIPSE") > eol
-			>
-			ellipse_int_ > eol
-			>
-			ellipse_int_ > eol
-			>
-			ellipse_int_ > eol
-			>
-			ellipse_int_ > eol
-			>
-			*room_
-			>
-			*door_;
 	}
 
 	~grammar()
 	{
 	}
 public:
-	boost::spirit::qi::int_parser<
-		fcppt::optional::value_type<
-			libftl::ship::layout::object::offset_vector::value_type
-		>
-	>
-	offset_int_;
-
-	boost::spirit::qi::int_parser<
-		libftl::ship::layout::ellipse::value_type::value_type
-	>
-	ellipse_int_;
-
-	boost::spirit::qi::int_parser<
-		libftl::ship::layout::room_id::value_type
-	>
-	room_id_int_;
-
-	boost::spirit::qi::int_parser<
-		room_id_signed
-	>
-	room_id_signed_int_;
-
-	boost::spirit::qi::int_parser<
-		libftl::ship::layout::tile_coordinate
-	>
-	tile_coordinate_int_;
-
-	boost::spirit::qi::rule<
-		In,
-		::room()
+	base_type<
+		::room
 	>
 	room_;
 
-	boost::spirit::qi::rule<
-		In,
-		::door()
+	base_type<
+		::door
 	>
 	door_;
 
-	boost::spirit::qi::rule<
-		In,
-		::layout()
+	base_type<
+		::layout
 	>
 	layout_;
 };
@@ -436,71 +464,33 @@ try
 		std::ios_base::skipws
 	);
 
-	boost::spirit::istream_iterator begin(
-		_stream
-	);
-
-	boost::spirit::istream_iterator end{};
-
-	grammar<
-		boost::spirit::istream_iterator
-	>
-	parser{};
-
-	::layout result_layout{};
-
-	sge::parse::result const result{
-		sge::parse::make_result(
-			boost::spirit::qi::parse(
-				begin,
-				end,
-				parser,
-				result_layout
-			),
-			fcppt::make_cref(
-				begin
-			),
-			end,
-			parser
-		)
-	};
-
 	return
-		result.result_code()
-		==
-		sge::parse::result_code::ok
-		?
-			result_type{
-				translate_result(
-					result_layout
-				)
-			}
-		:
-			result_type{
-				fcppt::optional::from(
-					fcppt::optional::map(
-						result.error_string(),
-						[](
-							sge::parse::error_string const &_error
+		fcppt::either::map_failure(
+			fcppt::either::map(
+				fcppt::parse::grammar_parse_stream(
+					_stream,
+					grammar{}
+				),
+				translate_result
+			),
+			[](
+				fcppt::parse::error<
+					char
+				> &&_error
+			)
+			{
+				return
+					libftl::error{
+						FCPPT_TEXT("Parsing failed: ")
+						+
+						fcppt::from_std_string(
+							std::move(
+								_error.get()
+							)
 						)
-						{
-							return
-								libftl::error{
-									_error.get()
-								};
-						}
-					),
-					[]{
-						return
-							libftl::error{
-								fcppt::string{
-									FCPPT_TEXT("Unknown error")
-								}
-							};
-					}
-				)
+					};
 			}
-		;
+		);
 }
 catch(
 	fcppt::exception const &_error
