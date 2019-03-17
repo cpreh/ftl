@@ -23,11 +23,11 @@
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/value_type.hpp>
 #include <fcppt/parse/as_struct.hpp>
+#include <fcppt/parse/char_set.hpp>
 #include <fcppt/parse/error.hpp>
 #include <fcppt/parse/grammar.hpp>
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/int.hpp>
-#include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_skipper.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/optional.hpp>
@@ -109,7 +109,7 @@ eol()
 {
 	return
 		fcppt::parse::make_skipper(
-			fcppt::parse::literal{'\n'}
+			fcppt::parse::char_set{'\r', '\n'}
 		);
 }
 
