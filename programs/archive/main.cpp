@@ -15,10 +15,10 @@
 #include <fcppt/text.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/either/error.hpp>
-#include <fcppt/either/fold_error.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/either/no_error.hpp>
+#include <fcppt/either/sequence_error.hpp>
 #include <fcppt/filesystem/create_directories_recursive.hpp>
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
@@ -273,7 +273,7 @@ create_outputs(
 )
 {
 	return
-		fcppt::either::fold_error(
+		fcppt::either::sequence_error(
 			_index,
 			[
 				&_stream,
