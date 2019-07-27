@@ -3,6 +3,10 @@ cmake_minimum_required(
 	3.3
 )
 
+project(
+	ftl
+)
+
 list(
 	APPEND
 	CMAKE_MODULE_PATH
