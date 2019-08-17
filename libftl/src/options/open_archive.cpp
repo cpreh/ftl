@@ -19,7 +19,7 @@
 #include <fcppt/record/get.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
@@ -59,7 +59,7 @@ libftl::options::open_archive(
 								);
 						},
 						libftl::archive::open(
-							boost::filesystem::path{
+							std::filesystem::path{
 								fcppt::record::get<
 									libftl::options::data_file_label
 								>(
@@ -68,7 +68,7 @@ libftl::options::open_archive(
 							}
 						),
 						libftl::archive::open(
-							boost::filesystem::path{
+							std::filesystem::path{
 								fcppt::record::get<
 									libftl::options::resource_file_label
 								>(
@@ -89,7 +89,7 @@ libftl::options::open_archive(
 						libftl::error
 					>(
 						libftl::archive::filesystem(
-							boost::filesystem::path{
+							std::filesystem::path{
 								fcppt::record::get<
 									libftl::options::resource_path_label
 								>(

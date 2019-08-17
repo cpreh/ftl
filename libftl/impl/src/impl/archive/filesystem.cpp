@@ -12,7 +12,7 @@
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fstream>
 #include <ios>
 #include <iosfwd>
@@ -22,7 +22,7 @@
 
 
 libftl::impl::archive::filesystem::filesystem(
-	boost::filesystem::path &&_path
+	std::filesystem::path &&_path
 )
 :
 	libftl::archive::base{},
@@ -48,8 +48,8 @@ libftl::impl::archive::filesystem::open(
 	libftl::archive::path const &_path
 )
 {
-	boost::filesystem::path const full_path{
-		boost::filesystem::path{
+	std::filesystem::path const full_path{
+		std::filesystem::path{
 			this->directory_
 		}
 		/

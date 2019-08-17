@@ -24,7 +24,7 @@
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fstream>
 #include <ios>
 #include <istream>
@@ -110,7 +110,7 @@ private:
 }
 
 libftl::impl::archive::native::native(
-	boost::filesystem::path &&_file_path,
+	std::filesystem::path &&_file_path,
 	libftl::archive::index &&_index
 )
 :

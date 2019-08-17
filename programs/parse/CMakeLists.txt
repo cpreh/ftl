@@ -1,9 +1,4 @@
 find_package(
-	Boost REQUIRED
-	COMPONENTS filesystem
-)
-
-find_package(
 	fcppt
 	REQUIRED
 )
@@ -54,14 +49,13 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_options_TARGET}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
-	${Boost_FILESYSTEM_LIBRARIES}
+	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 )
 
 target_include_directories(
 	ftlparse
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
-	${Boost_INCLUDE_DIRS}
 )
 
 target_compile_definitions(

@@ -19,7 +19,7 @@
 #include <fcppt/options/optional_help_text.hpp>
 #include <fcppt/options/optional_short_name.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -41,14 +41,14 @@ libftl::options::create_resource_parser()
 					fcppt::options::apply(
 						fcppt::options::option<
 							libftl::options::data_file_label,
-							boost::filesystem::path
+							std::filesystem::path
 						>{
 							fcppt::options::optional_short_name{},
 							fcppt::options::long_name{
 								FCPPT_TEXT("data-file")
 							},
 							fcppt::options::no_default_value<
-								boost::filesystem::path
+								std::filesystem::path
 							>(),
 							fcppt::options::optional_help_text{
 								fcppt::options::help_text{
@@ -58,14 +58,14 @@ libftl::options::create_resource_parser()
 						},
 						fcppt::options::option<
 							libftl::options::resource_file_label,
-							boost::filesystem::path
+							std::filesystem::path
 						>{
 							fcppt::options::optional_short_name{},
 							fcppt::options::long_name{
 								FCPPT_TEXT("resource-file")
 							},
 							fcppt::options::no_default_value<
-								boost::filesystem::path
+								std::filesystem::path
 							>(),
 							fcppt::options::optional_help_text{
 								fcppt::options::help_text{
@@ -80,14 +80,14 @@ libftl::options::create_resource_parser()
 				>(
 					fcppt::options::option<
 						libftl::options::resource_path_label,
-						boost::filesystem::path
+						std::filesystem::path
 					>{
 						fcppt::options::optional_short_name{},
 						fcppt::options::long_name{
 							FCPPT_TEXT("resource-path")
 						},
 						fcppt::options::no_default_value<
-							boost::filesystem::path
+							std::filesystem::path
 						>(),
 						fcppt::options::optional_help_text{
 							fcppt::options::help_text{

@@ -15,7 +15,7 @@
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fstream>
 #include <ios>
 #include <istream>
@@ -28,7 +28,7 @@ fcppt::either::object<
 	libftl::archive::base_unique_ptr
 >
 libftl::archive::open(
-	boost::filesystem::path &&_path
+	std::filesystem::path &&_path
 )
 {
 	return

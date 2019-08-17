@@ -1,9 +1,4 @@
 find_package(
-	Boost REQUIRED
-	COMPONENTS filesystem
-)
-
-find_package(
 	Brigand
 	REQUIRED
 )
@@ -71,15 +66,13 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
-	${fcppt_system_TARGET}
-	${Boost_FILESYSTEM_LIBRARIES}
+	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 )
 
 target_include_directories(
 	ftlarchive
 	PRIVATE
 	${Brigand_INCLUDE_DIRS}
-	${Boost_INCLUDE_DIRS}
 )
 
 target_compile_definitions(

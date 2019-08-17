@@ -1,9 +1,4 @@
 find_package(
-	Boost REQUIRED
-	COMPONENTS filesystem
-)
-
-find_package(
 	Brigand
 	REQUIRED
 )
@@ -19,7 +14,7 @@ find_package(
 )
 
 find_package(
-        fcppt
+	fcppt
 	REQUIRED
 )
 
@@ -382,7 +377,6 @@ function(
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
 		PUBLIC
-		${Boost_INCLUDE_DIRS}
 		${Brigand_INCLUDE_DIRS}
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -408,7 +402,7 @@ function(
 		fcppt_core_interface
 		fcppt_options_interface
 		PRIVATE
-		${Boost_FILESYSTEM_LIBRARIES}
+		${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
 		${sgeimagecolor_TARGET}
 		${sgeimage2d_TARGET}

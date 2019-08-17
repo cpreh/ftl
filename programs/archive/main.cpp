@@ -6,6 +6,7 @@
 #include <libftl/archive/read_index.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
+#include <fcppt/error_code_to_string.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
@@ -52,12 +53,10 @@
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/record/variadic.hpp>
-#include <fcppt/system/error_code_to_string.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/system/error_code.hpp>
+#include <filesystem>
 #include <cstdlib>
 #include <exception>
 #include <fstream>
@@ -65,6 +64,7 @@
 #include <iostream>
 #include <istream>
 #include <ostream>
+#include <system_error>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -111,7 +111,7 @@ either_error;
 
 either_error
 write_to_file(
-	boost::filesystem::path const &_path,
+	std::filesystem::path const &_path,
 	fcppt::io::buffer const &_buffer
 )
 {
@@ -178,11 +178,11 @@ write_to_file(
 either_error
 write_output(
 	std::istream &_stream,
-	boost::filesystem::path const &_output_path,
+	std::filesystem::path const &_output_path,
 	libftl::archive::index::value_type const &_entry
 )
 {
-	boost::filesystem::path const output_directory{
+	std::filesystem::path const output_directory{
 		(
 			_output_path
 			/
@@ -244,7 +244,7 @@ write_output(
 			[
 				&output_directory
 			](
-				boost::system::error_code const _error
+				std::error_code const _error
 			)
 			{
 				return
@@ -257,7 +257,7 @@ write_output(
 						+
 						FCPPT_TEXT(" - ")
 						+
-						fcppt::system::error_code_to_string(
+						fcppt::error_code_to_string(
 							_error
 						)
 					};
@@ -268,7 +268,7 @@ write_output(
 either_error
 create_outputs(
 	std::istream &_stream,
-	boost::filesystem::path const &_output_path,
+	std::filesystem::path const &_output_path,
 	libftl::archive::index const &_index
 )
 {
@@ -320,7 +320,7 @@ main_program(
 	argument_record const &_arguments
 )
 {
-	boost::filesystem::path const path{
+	std::filesystem::path const path{
 		fcppt::record::get<
 			path_label
 		>(
@@ -329,7 +329,7 @@ main_program(
 	};
 
 // TODO: filesystem::open
-	boost::filesystem::ifstream stream{
+	std::ifstream stream{
 		path,
 		std::ios_base::binary
 	};
@@ -409,7 +409,7 @@ main_program(
 								fcppt::either::match(
 									create_outputs(
 										stream,
-										boost::filesystem::path{
+										std::filesystem::path{
 											_output_path
 										},
 										_index

@@ -6,7 +6,7 @@
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -21,7 +21,7 @@ fcppt::either::object<
 	libftl::archive::base_unique_ptr
 >
 open(
-	boost::filesystem::path &&
+	std::filesystem::path &&
 );
 
 }

@@ -8,7 +8,7 @@
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
@@ -30,7 +30,7 @@ class filesystem
 public:
 	explicit
 	filesystem(
-		boost::filesystem::path &&
+		std::filesystem::path &&
 	);
 
 	~filesystem()
@@ -47,7 +47,7 @@ public:
 	)
 	override;
 private:
-	boost::filesystem::path const directory_;
+	std::filesystem::path const directory_;
 };
 
 }

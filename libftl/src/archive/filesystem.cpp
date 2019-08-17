@@ -5,14 +5,14 @@
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
 libftl::archive::base_unique_ptr
 libftl::archive::filesystem(
-	boost::filesystem::path &&_path
+	std::filesystem::path &&_path
 )
 {
 	return

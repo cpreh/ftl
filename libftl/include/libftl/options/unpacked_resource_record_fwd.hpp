@@ -5,7 +5,7 @@
 #include <fcppt/record/element_fwd.hpp>
 #include <fcppt/record/variadic_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -18,7 +18,7 @@ typedef
 fcppt::record::variadic<
 	fcppt::record::element<
 		libftl::options::resource_path_label,
-		boost::filesystem::path
+		std::filesystem::path
 	>
 >
 unpacked_resource_record;

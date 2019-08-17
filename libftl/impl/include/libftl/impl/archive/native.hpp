@@ -9,7 +9,7 @@
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
@@ -30,7 +30,7 @@ class native
 	);
 public:
 	native(
-		boost::filesystem::path &&,
+		std::filesystem::path &&,
 		libftl::archive::index &&
 	);
 
@@ -48,7 +48,7 @@ public:
 	)
 	override;
 private:
-	boost::filesystem::path const file_path_;
+	std::filesystem::path const file_path_;
 
 	libftl::archive::index const index_;
 };
