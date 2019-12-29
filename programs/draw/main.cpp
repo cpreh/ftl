@@ -97,12 +97,11 @@
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/make_label.hpp>
+#include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
-#include <fcppt/record/variadic.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <brigand/sequences/list.hpp>
 #include <exception>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
@@ -116,7 +115,7 @@ FCPPT_RECORD_MAKE_LABEL(
 );
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::resource_label,
 		libftl::options::resource_variant
@@ -212,14 +211,12 @@ main_program(
 )
 {
 	sge::systems::instance<
-		brigand::list<
-			sge::systems::with_window,
-			sge::systems::with_renderer<
-				sge::systems::renderer_caps::ffp
-			>,
-			sge::systems::with_input,
-			sge::systems::with_image2d
-		>
+		sge::systems::with_window,
+		sge::systems::with_renderer<
+			sge::systems::renderer_caps::ffp
+		>,
+		sge::systems::with_input,
+		sge::systems::with_image2d
 	> const sys(
 		sge::systems::make_list(
 			sge::systems::window{

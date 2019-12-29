@@ -6,7 +6,7 @@
 #include <libftl/options/unpacked_resource_record.hpp>
 #include <fcppt/options/left.hpp>
 #include <fcppt/options/right.hpp>
-#include <fcppt/variant/variadic.hpp>
+#include <fcppt/variant/object.hpp>
 
 
 #endif

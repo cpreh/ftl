@@ -6,7 +6,7 @@
 #include <libftl/sprite/detail/depth_element_fwd.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <brigand/sequences/list.hpp>
+#include <metal.hpp>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -25,7 +25,7 @@ struct depth_element
 	struct apply
 	{
 		typedef
-		brigand::list<
+		metal::list<
 			fcppt::record::element<
 				libftl::sprite::depth_role,
 				libftl::sprite::depth

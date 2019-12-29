@@ -15,7 +15,7 @@
 #include <sge/sprite/config/with_color_fwd.hpp>
 #include <sge/sprite/config/with_texture_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <brigand/sequences/list.hpp>
+#include <metal.hpp>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -33,7 +33,7 @@ sge::sprite::config::choices<
 	sge::sprite::config::normal_size<
 		sge::sprite::config::texture_size_option::maybe
 	>,
-	brigand::list<
+	metal::list<
 		sge::sprite::config::with_color<
 			libftl::sprite::color_format
 		>,

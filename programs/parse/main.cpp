@@ -40,11 +40,11 @@
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/make_label.hpp>
+#include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
-#include <fcppt/record/variadic.hpp>
 #include <fcppt/variant/match.hpp>
+#include <fcppt/variant/object.hpp>
 #include <fcppt/variant/output.hpp>
-#include <fcppt/variant/variadic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstdlib>
 #include <exception>
@@ -64,7 +64,7 @@ FCPPT_RECORD_MAKE_LABEL(
 );
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		ship_label,
 		ftl::parse::ship::arguments
@@ -73,7 +73,7 @@ fcppt::record::variadic<
 ship_command_arguments;
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		xml_label,
 		ftl::parse::xml::arguments
@@ -82,14 +82,14 @@ fcppt::record::variadic<
 xml_command_arguments;
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		fcppt::options::options_label,
 		libftl::options::resource_record
 	>,
 	fcppt::record::element<
 		fcppt::options::sub_command_label,
-		fcppt::variant::variadic<
+		fcppt::variant::object<
 			ship_command_arguments,
 			xml_command_arguments
 		>

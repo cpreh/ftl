@@ -3,7 +3,7 @@
 
 #include <libftl/impl/xml/document_fwd.hpp>
 #include <fcppt/optional/object.hpp>
-#include <fcppt/variant/variadic.hpp>
+#include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <vector>
@@ -28,7 +28,7 @@ struct document
 	node_vector;
 
 	typedef
-	fcppt::variant::variadic<
+	fcppt::variant::object<
 		node_vector,
 		std::string
 	>

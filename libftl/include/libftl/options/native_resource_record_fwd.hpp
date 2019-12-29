@@ -4,7 +4,7 @@
 #include <libftl/options/data_file_label.hpp>
 #include <libftl/options/resource_file_label.hpp>
 #include <fcppt/record/element_fwd.hpp>
-#include <fcppt/record/variadic_fwd.hpp>
+#include <fcppt/record/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <filesystem>
 #include <fcppt/config/external_end.hpp>
@@ -16,7 +16,7 @@ namespace options
 {
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::data_file_label,
 		std::filesystem::path

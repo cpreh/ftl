@@ -5,7 +5,7 @@
 #include <ftl/parse/xml/type.hpp>
 #include <libftl/archive/path.hpp>
 #include <fcppt/record/element.hpp>
-#include <fcppt/record/variadic.hpp>
+#include <fcppt/record/object.hpp>
 
 
 #endif

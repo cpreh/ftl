@@ -18,6 +18,11 @@ find_package(
 	REQUIRED
 )
 
+find_package(
+	Metal
+	REQUIRED
+)
+
 include(
 	FcpptCMakeUtils
 )

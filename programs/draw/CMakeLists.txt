@@ -1,9 +1,4 @@
 find_package(
-	Brigand
-	REQUIRED
-)
-
-find_package(
 	fcppt
 	REQUIRED
 )
@@ -67,12 +62,6 @@ target_link_libraries(
 	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
 	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
-)
-
-target_include_directories(
-	ftlarchive
-	PRIVATE
-	${Brigand_INCLUDE_DIRS}
 )
 
 target_compile_definitions(

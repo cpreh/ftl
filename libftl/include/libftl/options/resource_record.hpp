@@ -4,7 +4,7 @@
 #include <libftl/options/resource_record_fwd.hpp>
 #include <libftl/options/resource_variant.hpp>
 #include <fcppt/record/element.hpp>
-#include <fcppt/record/variadic.hpp>
+#include <fcppt/record/object.hpp>
 
 
 #endif

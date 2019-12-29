@@ -3,7 +3,7 @@
 
 #include <libftl/options/unpacked_resource_record_fwd.hpp>
 #include <fcppt/record/element.hpp>
-#include <fcppt/record/variadic.hpp>
+#include <fcppt/record/object.hpp>
 
 
 #endif

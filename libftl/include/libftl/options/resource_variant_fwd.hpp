@@ -5,7 +5,7 @@
 #include <libftl/options/unpacked_resource_record_fwd.hpp>
 #include <fcppt/options/left_fwd.hpp>
 #include <fcppt/options/right_fwd.hpp>
-#include <fcppt/variant/variadic_fwd.hpp>
+#include <fcppt/variant/object_fwd.hpp>
 
 
 namespace libftl
@@ -14,7 +14,7 @@ namespace options
 {
 
 typedef
-fcppt::variant::variadic<
+fcppt::variant::object<
 	fcppt::options::left<
 		libftl::options::native_resource_record
 	>,

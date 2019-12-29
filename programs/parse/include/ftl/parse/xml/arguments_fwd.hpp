@@ -6,7 +6,7 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <fcppt/record/element_fwd.hpp>
-#include <fcppt/record/variadic_fwd.hpp>
+#include <fcppt/record/object_fwd.hpp>
 
 
 namespace ftl
@@ -17,7 +17,7 @@ namespace xml
 {
 
 typedef
-fcppt::record::variadic<
+fcppt::record::object<
 	fcppt::record::element<
 		ftl::parse::xml::type_label,
 		ftl::parse::xml::type

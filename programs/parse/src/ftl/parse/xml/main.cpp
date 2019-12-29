@@ -28,7 +28,7 @@
 #include <fcppt/io/cout.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/variant/apply.hpp>
-#include <fcppt/variant/variadic.hpp>
+#include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <istream>
 #include <utility>
@@ -44,7 +44,7 @@ ftl::parse::xml::main(
 )
 {
 	typedef
-	fcppt::variant::variadic<
+	fcppt::variant::object<
 		fcppt::unique_ptr<
 			libftl::xml::generated::achievements::achievements_root
 		>,

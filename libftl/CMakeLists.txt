@@ -1,9 +1,4 @@
 find_package(
-	Brigand
-	REQUIRED
-)
-
-find_package(
 	awl
 	REQUIRED
 )
@@ -377,7 +372,6 @@ function(
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
 		PUBLIC
-		${Brigand_INCLUDE_DIRS}
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${XSD_INCLUDE_DIRS}
@@ -396,12 +390,14 @@ function(
 	target_link_libraries(
 		${LIBFTL_LIB_NAME}
 		INTERFACE
+		Metal
 		sgeimagecolor_interface
 		sgerenderer_interface
 		sgesprite_interface
 		fcppt_core_interface
 		fcppt_options_interface
 		PRIVATE
+		Metal
 		${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
 		${sgeimagecolor_TARGET}

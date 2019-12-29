@@ -29,7 +29,7 @@
 #include <fcppt/parse/operators/repetition_plus.hpp>
 #include <fcppt/parse/operators/sequence.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/variadic.hpp>
+#include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <string>
@@ -138,7 +138,7 @@ public:
 							)
 						),
 						[](
-							fcppt::variant::variadic<
+							fcppt::variant::object<
 								fcppt::unit,
 								fcppt::optional::object<
 									libftl::impl::xml::document::inner_node
