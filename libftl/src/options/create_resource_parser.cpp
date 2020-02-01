@@ -3,9 +3,9 @@
 #include <libftl/options/native_resource_record.hpp>
 #include <libftl/options/resource_file_label.hpp>
 #include <libftl/options/resource_label.hpp>
+#include <libftl/options/resource_parser.hpp>
 #include <libftl/options/resource_path_label.hpp>
 #include <libftl/options/resource_record.hpp>
-#include <libftl/options/resource_parser.hpp>
 #include <libftl/options/unpacked_resource_record.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>

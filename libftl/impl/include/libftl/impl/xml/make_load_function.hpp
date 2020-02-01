@@ -3,8 +3,8 @@
 
 #include <libftl/impl/xml/load_function.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <memory>
 #include <istream>
+#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 

@@ -1,9 +1,9 @@
 #ifndef LIBFTL_ARCHIVE_BASE_HPP_INCLUDED
 #define LIBFTL_ARCHIVE_BASE_HPP_INCLUDED
 
+#include <libftl/error_fwd.hpp>
 #include <libftl/archive/base_fwd.hpp>
 #include <libftl/archive/path_fwd.hpp>
-#include <libftl/error_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>

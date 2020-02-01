@@ -8,9 +8,9 @@
 #include <libftl/ship/layout/tile_coordinate.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>

@@ -14,11 +14,11 @@
 #include <fcppt/parse/as_struct.hpp>
 #include <fcppt/parse/char_set.hpp>
 #include <fcppt/parse/error.hpp>
+#include <fcppt/parse/grammar.hpp>
+#include <fcppt/parse/grammar_parse_string.hpp>
 #include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_convert.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
-#include <fcppt/parse/grammar.hpp>
-#include <fcppt/parse/grammar_parse_string.hpp>
 #include <fcppt/parse/space_skipper.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>

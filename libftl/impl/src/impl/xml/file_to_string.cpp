@@ -1,9 +1,9 @@
 #include <libftl/impl/xml/file_to_string.hpp>
 #include <fcppt/literal.hpp>
 #include <fcppt/reference_impl.hpp>
-#include <fcppt/io/peek.hpp>
 #include <fcppt/container/maybe_back.hpp>
 #include <fcppt/container/pop_back.hpp>
+#include <fcppt/io/peek.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <istream>

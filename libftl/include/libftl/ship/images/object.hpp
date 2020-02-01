@@ -8,7 +8,6 @@
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <libftl/xml/generated/ship.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 

@@ -2,9 +2,9 @@
 #define LIBFTL_ROOM_STATE_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
-#include <libftl/ship/layout/room.hpp>
 #include <libftl/room/state_fwd.hpp>
 #include <libftl/room/system.hpp>
+#include <libftl/ship/layout/room.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
 

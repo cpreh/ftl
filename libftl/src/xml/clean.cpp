@@ -1,7 +1,7 @@
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/parse.hpp>
-#include <libftl/impl/xml/output.hpp>
 #include <libftl/impl/xml/document_fwd.hpp>
+#include <libftl/impl/xml/output.hpp>
+#include <libftl/impl/xml/parse.hpp>
 #include <libftl/xml/clean.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>

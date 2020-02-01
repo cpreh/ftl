@@ -2,6 +2,13 @@
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/sprite/images.hpp>
+#include <sge/image/channel8.hpp>
+#include <sge/image/algorithm/uninitialized.hpp>
+#include <sge/image/color/la8.hpp>
+#include <sge/image/color/any/object.hpp>
+#include <sge/image/color/init/alpha.hpp>
+#include <sge/image/color/init/luminance.hpp>
+#include <sge/image/view/wrap.hpp>
 #include <sge/image2d/dim.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/file_unique_ptr.hpp>
@@ -10,13 +17,6 @@
 #include <sge/image2d/store/la8.hpp>
 #include <sge/image2d/view/const_object.hpp>
 #include <sge/image2d/view/object.hpp>
-#include <sge/image/channel8.hpp>
-#include <sge/image/algorithm/uninitialized.hpp>
-#include <sge/image/color/la8.hpp>
-#include <sge/image/color/any/object.hpp>
-#include <sge/image/color/init/alpha.hpp>
-#include <sge/image/color/init/luminance.hpp>
-#include <sge/image/view/wrap.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/optional_extension.hpp>
 #include <sge/media/optional_name.hpp>

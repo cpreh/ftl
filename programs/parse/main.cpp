@@ -14,8 +14,8 @@
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/make_cref.hpp>
 #include <fcppt/main.hpp>
+#include <fcppt/make_cref.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/either/bind.hpp>
@@ -23,14 +23,13 @@
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
-#include <fcppt/options/error.hpp>
 #include <fcppt/options/default_help_switch.hpp>
+#include <fcppt/options/error.hpp>
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/make_commands.hpp>
 #include <fcppt/options/make_sub_command.hpp>
 #include <fcppt/options/optional_help_text.hpp>
 #include <fcppt/options/parse_help.hpp>
-#include <fcppt/options/sub_command_label.hpp>
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
 #include <fcppt/options/sub_command_label.hpp>

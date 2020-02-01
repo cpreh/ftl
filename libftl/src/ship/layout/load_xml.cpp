@@ -1,10 +1,10 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/path.hpp>
-#include <libftl/ship/layout/name.hpp>
 #include <libftl/ship/layout/load_xml.hpp>
-#include <libftl/xml/generated/ship.hpp>
+#include <libftl/ship/layout/name.hpp>
 #include <libftl/xml/ship.hpp>
+#include <libftl/xml/generated/ship.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>

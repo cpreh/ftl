@@ -11,14 +11,14 @@
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/container/maybe_front.hpp>
-#include <fcppt/either/map.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/either/sequence.hpp>
 #include <fcppt/optional/cat.hpp>
 #include <fcppt/optional/make.hpp>
-#include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/map.hpp>
+#include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <xsd/cxx/tree/containers.hxx>

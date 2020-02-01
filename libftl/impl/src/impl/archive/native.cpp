@@ -28,8 +28,8 @@
 #include <fstream>
 #include <ios>
 #include <istream>
-#include <streambuf>
 #include <sstream>
+#include <streambuf>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 

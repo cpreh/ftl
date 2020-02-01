@@ -6,8 +6,8 @@
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <fcppt/from_std_string.hpp>
-#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/bind.hpp>

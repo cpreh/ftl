@@ -2,8 +2,8 @@
 #define LIBFTL_SHIP_STATE_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
-#include <libftl/ship/state_fwd.hpp>
 #include <libftl/room/state.hpp>
+#include <libftl/ship/state_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

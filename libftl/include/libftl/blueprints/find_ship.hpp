@@ -2,8 +2,8 @@
 #define LIBFTL_BLUEPRINTS_FIND_SHIP_HPP_INCLUDED
 
 #include <libftl/blueprints/data_fwd.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/detail/symbol.hpp>
+#include <libftl/xml/generated/blueprints.hpp>
 #include <fcppt/reference_fwd.hpp>
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/config/external_begin.hpp>

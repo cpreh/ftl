@@ -1,8 +1,8 @@
-#include <sge/image/color/convert.hpp>
-#include <sge/image/color/predef.hpp>
 #include <libftl/sprite/color.hpp>
 #include <libftl/sprite/color_format.hpp>
 #include <libftl/sprite/white.hpp>
+#include <sge/image/color/convert.hpp>
+#include <sge/image/color/predef.hpp>
 
 
 libftl::sprite::color

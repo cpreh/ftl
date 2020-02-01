@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+LIBS=(--library ftl --library libftl --library alda --library sge --library awl --library mizuiro --library fcppt)
+DIRS=(libftl programs)
+
+prettify_includes "${LIBS[@]}" "${DIRS[@]}"

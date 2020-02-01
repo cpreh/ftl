@@ -5,8 +5,8 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <libftl/sprite/images_fwd.hpp>
 #include <libftl/ship/resources.hpp>
+#include <libftl/sprite/images_fwd.hpp>
 #include <fcppt/reference_fwd.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>

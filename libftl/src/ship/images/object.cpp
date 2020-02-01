@@ -1,8 +1,8 @@
 #include <libftl/ship/images/object.hpp>
+#include <libftl/xml/generated/ship.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <libftl/xml/generated/ship.hpp>
 #include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

@@ -1,8 +1,8 @@
 #ifndef LIBFTL_ARCHIVE_EXTRACT_HPP_INCLUDED
 #define LIBFTL_ARCHIVE_EXTRACT_HPP_INCLUDED
 
-#include <libftl/detail/symbol.hpp>
 #include <libftl/archive/file_fwd.hpp>
+#include <libftl/detail/symbol.hpp>
 #include <fcppt/io/optional_buffer.hpp>
 
 

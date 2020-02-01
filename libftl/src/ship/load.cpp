@@ -3,7 +3,6 @@
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/blueprints/find_ship.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <libftl/sprite/images_fwd.hpp>
 #include <libftl/ship/load.hpp>
 #include <libftl/ship/resources.hpp>
 #include <libftl/ship/images/load.hpp>
@@ -11,6 +10,7 @@
 #include <libftl/ship/layout/load.hpp>
 #include <libftl/ship/layout/load_xml.hpp>
 #include <libftl/ship/layout/name.hpp>
+#include <libftl/sprite/images_fwd.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/xml/generated/ship.hpp>
 #include <fcppt/from_std_string.hpp>

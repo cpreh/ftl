@@ -2,9 +2,9 @@
 #define LIBFTL_ROOM_SYSTEM_HPP_INCLUDED
 
 #include <libftl/detail/symbol.hpp>
-#include <libftl/ship/layout/room_id.hpp>
 #include <libftl/room/system_fwd.hpp>
 #include <libftl/room/type.hpp>
+#include <libftl/ship/layout/room_id.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>

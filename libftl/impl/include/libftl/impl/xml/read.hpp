@@ -10,9 +10,9 @@
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_from_std.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/assert/optional_error.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>
-#include <fcppt/assert/optional_error.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>

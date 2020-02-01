@@ -1,9 +1,9 @@
-#include <libftl/archive/path.hpp>
 #include <ftl/parse/path_label.hpp>
 #include <ftl/parse/xml/arguments.hpp>
 #include <ftl/parse/xml/options_parser.hpp>
 #include <ftl/parse/xml/type.hpp>
 #include <ftl/parse/xml/type_label.hpp>
+#include <libftl/archive/path.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/enum/input.hpp>
 #include <fcppt/enum/names_array.hpp>
