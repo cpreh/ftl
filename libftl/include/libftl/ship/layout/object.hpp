@@ -9,6 +9,9 @@
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/math/vector/static.hpp>
+#include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/pop_warning.hpp>
+#include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
@@ -21,6 +24,9 @@ namespace ship
 {
 namespace layout
 {
+
+FCPPT_PP_PUSH_WARNING
+FCPPT_PP_DISABLE_GCC_WARNING(-Wnull-dereference)
 
 struct object
 {
@@ -79,6 +85,8 @@ struct object
 
 	door_list doors_;
 };
+
+FCPPT_PP_POP_WARNING
 
 }
 }
