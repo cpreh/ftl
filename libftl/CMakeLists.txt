@@ -36,7 +36,7 @@ find_package(
 )
 
 find_package(
-	xsd
+	XSD
 	REQUIRED
 )
 
