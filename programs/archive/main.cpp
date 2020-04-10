@@ -304,12 +304,12 @@ typedef
 fcppt::record::object<
 	fcppt::record::element<
 		path_label,
-		fcppt::string
+		std::filesystem::path
 	>,
 	fcppt::record::element<
 		output_path_label,
 		fcppt::optional::object<
-			fcppt::string
+			std::filesystem::path
 		>
 	>
 >
@@ -328,42 +328,24 @@ main_program(
 		)
 	};
 
-// TODO: filesystem::open
-	std::ifstream stream{
-		path,
-		std::ios_base::binary
-	};
-
-	if(
-		!stream.is_open()
-	)
-	{
-		fcppt::io::cerr()
-			<<
-			FCPPT_TEXT("Cannot open ")
-			<<
-			fcppt::filesystem::path_to_string(
-				path
-			)
-			<<
-			FCPPT_TEXT('\n');
-
-		return
-			EXIT_FAILURE;
-	}
-
 	return
-		fcppt::either::match(
-			libftl::archive::read_index(
-				stream
+		fcppt::optional::maybe(
+			fcppt::filesystem::open<
+				std::ifstream
+			>(
+				path,
+				std::ios_base::binary
 			),
-			[](
-				libftl::error const &_error
-			)
-			{
+			[
+				&path
+			]{
 				fcppt::io::cerr()
 					<<
-					_error
+					FCPPT_TEXT("Cannot open ")
+					<<
+					fcppt::filesystem::path_to_string(
+						path
+					)
 					<<
 					FCPPT_TEXT('\n');
 
@@ -371,68 +353,92 @@ main_program(
 					EXIT_FAILURE;
 			},
 			[
-				&stream,
 				&_arguments
 			](
-				libftl::archive::index const &_index
+				std::ifstream &&_stream
 			)
 			{
 				return
-					fcppt::optional::maybe(
-						fcppt::record::get<
-							output_path_label
-						>(
-							_arguments
+					fcppt::either::match(
+						libftl::archive::read_index(
+							_stream
 						),
-						[
-							&_index
-						]{
-							fcppt::io::cout()
+						[](
+							libftl::error const &_error
+						)
+						{
+							fcppt::io::cerr()
 								<<
-								fcppt::container::output(
-									_index
-								)
+								_error
 								<<
 								FCPPT_TEXT('\n');
 
 							return
-								EXIT_SUCCESS;
+								EXIT_FAILURE;
 						},
 						[
-							&stream,
-							&_index
+							&_stream,
+							&_arguments
 						](
-							fcppt::string const &_output_path
+							libftl::archive::index const &_index
 						)
 						{
 							return
-								fcppt::either::match(
-									create_outputs(
-										stream,
-										std::filesystem::path{
-											_output_path
-										},
-										_index
+								fcppt::optional::maybe(
+									fcppt::record::get<
+										output_path_label
+									>(
+										_arguments
 									),
-									[](
-										fcppt::string const &_error
-									)
-									{
-										fcppt::io::cerr()
+									[
+										&_index
+									]{
+										fcppt::io::cout()
 											<<
-											_error
+											fcppt::container::output(
+												_index
+											)
 											<<
 											FCPPT_TEXT('\n');
 
 										return
-											EXIT_FAILURE;
+											EXIT_SUCCESS;
 									},
-									[](
-										fcppt::either::no_error
+									[
+										&_stream,
+										&_index
+									](
+										std::filesystem::path const &_output_path
 									)
 									{
 										return
-											EXIT_SUCCESS;
+											fcppt::either::match(
+												create_outputs(
+													_stream,
+													_output_path,
+													_index
+												),
+												[](
+													fcppt::string const &_error
+												)
+												{
+													fcppt::io::cerr()
+														<<
+														_error
+														<<
+														FCPPT_TEXT('\n');
+
+													return
+														EXIT_FAILURE;
+												},
+												[](
+													fcppt::either::no_error
+												)
+												{
+													return
+														EXIT_SUCCESS;
+												}
+											);
 									}
 								);
 						}
@@ -454,7 +460,7 @@ try
 		fcppt::options::apply(
 			fcppt::options::argument<
 				path_label,
-				fcppt::string
+				std::filesystem::path
 			>{
 				fcppt::options::long_name{
 					FCPPT_TEXT("Path")
@@ -468,7 +474,7 @@ try
 			fcppt::options::make_optional(
 				fcppt::options::option<
 					output_path_label,
-					fcppt::string
+					std::filesystem::path
 				>{
 					fcppt::options::optional_short_name{
 						fcppt::options::short_name{
@@ -479,7 +485,7 @@ try
 						FCPPT_TEXT("output-path")
 					},
 					fcppt::options::no_default_value<
-						fcppt::string
+						std::filesystem::path
 					>(),
 					fcppt::options::optional_help_text{
 						fcppt::options::help_text{
