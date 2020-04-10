@@ -91,7 +91,7 @@ operator<<(
 			_pair.first
 		)
 		<<
-		FCPPT_TEXT(',')
+		FCPPT_TEXT(", ")
 		<<
 		_pair.second
 		<<
