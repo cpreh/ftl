@@ -481,8 +481,6 @@ try
 			{
 				return
 					libftl::error{
-						FCPPT_TEXT("Parsing failed: ")
-						+
 						fcppt::from_std_string(
 							std::move(
 								_error.get()
