@@ -6,10 +6,11 @@
 #include <libftl/archive/index.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/impl/archive/native.hpp>
+#include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_ref.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/reference_to_base.hpp>
 #include <fcppt/text.hpp>
@@ -23,6 +24,9 @@
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
+#include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/pop_warning.hpp>
+#include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <filesystem>
 #include <fstream>
@@ -37,13 +41,12 @@
 namespace
 {
 
-// TODO: Put this into fcppt?
 class io_buf
 :
 public
 	std::streambuf
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		io_buf
 	);
 public:
@@ -59,10 +62,8 @@ public:
 			)
 		}
 	{
-		this->setg(
-			this->buffer_.data(),
-			this->buffer_.data(),
-			this->buffer_.data_end()
+		this->set_pos_impl(
+			0
 		);
 	}
 
@@ -71,6 +72,142 @@ public:
 	{
 	}
 private:
+	void
+	set_pos_impl(
+		pos_type const _pos
+	)
+	{
+		this->setg(
+			this->buffer_.data(),
+			this->buffer_.data()
+			+
+			_pos,
+			this->buffer_.data_end()
+		);
+	}
+
+	[[nodiscard]]
+	pos_type
+	set_pos(
+		pos_type const _pos
+	)
+	{
+		if(
+			_pos < 0
+			||
+			_pos > (this->egptr() - this->eback())
+		)
+			return
+				pos_type{
+					-1
+				};
+
+		this->set_pos_impl(
+			_pos
+		);
+
+		return
+			_pos;
+	}
+
+	static
+	void
+	check_mode(
+		std::ios_base::openmode const _mode
+	)
+	{
+		if(
+			_mode
+			&
+			std::ios_base::out
+		)
+			throw
+				fcppt::exception{
+					FCPPT_TEXT("ios_base::out specified in seekoff of readonly stream")
+				};
+
+		if(
+			!(
+				_mode
+				&
+				std::ios_base::in
+			)
+		)
+			throw
+				fcppt::exception{
+					FCPPT_TEXT("ios_base::in missing in seekoff of readonly stream")
+				};
+	}
+
+	pos_type
+	seekoff(
+		off_type const _off,
+		std::ios_base::seekdir const _dir,
+		std::ios_base::openmode const _mode
+	)
+	override
+	{
+		check_mode(
+			_mode
+		);
+
+		return
+			this->set_pos(
+				[
+					this,
+					_off,
+					_dir
+				]()
+				->
+				pos_type
+				{
+				FCPPT_PP_PUSH_WARNING
+				FCPPT_PP_DISABLE_GCC_WARNING(-Wswitch)
+					switch(
+						_dir
+					)
+					{
+					case std::ios_base::beg:
+						return
+							_off;
+					case std::ios_base::cur:
+						return
+							(this->gptr() - this->eback())
+							+
+							_off;
+					case std::ios_base::end:
+						return
+							(this->egptr() - this->eback())
+							+
+							_off;
+					}
+				FCPPT_PP_POP_WARNING
+
+					throw
+						fcppt::exception{
+							FCPPT_TEXT("Invalid ios_base::seekdir")
+						};
+				}()
+			);
+	}
+
+	pos_type
+	seekpos(
+		pos_type const _pos,
+		std::ios_base::openmode const _mode
+	)
+	override
+	{
+		check_mode(
+			_mode
+		);
+
+		return
+			this->set_pos(
+				_pos
+			);
+	}
+
 	fcppt::io::buffer buffer_;
 };
 
@@ -79,7 +216,7 @@ class io_istream
 public
 	std::istream
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		io_istream
 	);
 public:
