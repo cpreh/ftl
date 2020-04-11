@@ -314,9 +314,7 @@ main_program(
 											}
 										),
 										[&_archive,&images,&_blueprints]
-										(
-											std::string const &_name
-										)
+										(std::string const &_name)
 										{
 											return
 												fcppt::either::map(
@@ -407,7 +405,10 @@ try
 			fcppt::options::parse_help(
 				fcppt::options::default_help_switch(),
 				parser,
-				fcppt::args_from_second(_context.argc(), _context.argv())
+				fcppt::args_from_second(
+					_context.argc(),
+					_context.argv()
+				)
 			),
 			[](
 				fcppt::options::result<
