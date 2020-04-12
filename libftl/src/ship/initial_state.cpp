@@ -155,6 +155,13 @@ load_all_systems(
 	libftl::sprite::images const &_images
 )
 {
+#define LOAD_IMPL(name)\
+	load_system(\
+		_images,\
+		_systems.name(),\
+		libftl::room::type::name\
+	)
+
 	return
 		fcppt::either::map(
 			fcppt::either::sequence<
@@ -172,9 +179,22 @@ load_all_systems(
 						>
 					>
 				>{
-					load_system(_images, _systems.pilot(), libftl::room::type::pilot),
-					load_system(_images, _systems.sensors(), libftl::room::type::sensors)
-					// TODO
+					LOAD_IMPL(pilot),
+					LOAD_IMPL(sensors),
+					LOAD_IMPL(doors),
+					LOAD_IMPL(shields),
+					LOAD_IMPL(engines),
+					LOAD_IMPL(medbay),
+					LOAD_IMPL(clonebay),
+					LOAD_IMPL(oxygen),
+					LOAD_IMPL(teleporter),
+					LOAD_IMPL(mind),
+					LOAD_IMPL(hacking),
+					LOAD_IMPL(drones),
+					LOAD_IMPL(weapons),
+					LOAD_IMPL(battery),
+					LOAD_IMPL(cloaking)//,
+					//LOAD_IMPL(artillery) TODO
 				}
 			),
 			[](

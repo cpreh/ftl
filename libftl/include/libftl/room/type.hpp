@@ -20,12 +20,13 @@ enum class type
 	clonebay,
 	oxygen,
 	teleporter,
-	mindcontrol,
+	mind,
 	hacking,
-	dronecontrol,
+	drones,
 	weapons,
 	battery,
-	cloaking
+	cloaking,
+	artillery
 };
 
 }
