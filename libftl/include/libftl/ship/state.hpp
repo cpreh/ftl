@@ -27,7 +27,7 @@ struct state
 
 	std::vector<
 		libftl::room::state
-	> room_list_;
+	> rooms_;
 };
 
 }

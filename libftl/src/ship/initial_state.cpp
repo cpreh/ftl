@@ -1,16 +1,24 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/path.hpp>
+#include <libftl/impl/xsd/require_one.hpp>
 #include <libftl/impl/xsd/to_fcppt_optional.hpp>
 #include <libftl/room/system.hpp>
 #include <libftl/room/type.hpp>
 #include <libftl/ship/initial_state.hpp>
 #include <libftl/ship/state.hpp>
+#include <libftl/ship/layout/object.hpp>
+#include <libftl/ship/layout/room.hpp>
 #include <libftl/sprite/images.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
+#include <fcppt/const.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/algorithm/find_if_opt.hpp>
+#include <fcppt/algorithm/map.hpp>
 #include <fcppt/container/maybe_front.hpp>
+#include <fcppt/either/bind.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
@@ -191,39 +199,78 @@ load_all_systems(
 
 }
 
-/*
 fcppt::either::object<
 	libftl::error,
 	libftl::ship::state
 >
 libftl::ship::initial_state(
-	libftl::xml::generated::ship::ship_root const &_ship_root,
-	libftl::ship::layout::object const &,
-	libftl::sprite::images &_images
+	libftl::xml::generated::blueprints::ship_blueprint const &_blueprint,
+	libftl::ship::layout::object const &_layout,
+	libftl::sprite::images const &_images
 )
 {
 	return
-		libftl::ship::state{
-			fcppt::optional::maybe(
-				fcppt::optional::maybe_front(
-					_ship_root.systemList()
-				),
-				[]{
-					return
-						std::vector<
-							libftl::room::state
-						>{};
-				},
-				[](
-					fcppt::reference<
-						libftl::xml::generated::blueprints::system_list const
-					> const _systems
-				)
-				{
-					return
-						load_rooms(_systems.get());
-				}
-			)
-		};
+		fcppt::either::bind(
+			libftl::impl::xsd::require_one(
+				FCPPT_TEXT("systemList"),
+				_blueprint.systemList()
+			),
+			[&_images,&_layout]
+			(fcppt::reference<libftl::xml::generated::blueprints::system_list const> const _system_list)
+			{
+				return
+					fcppt::either::map(
+						load_all_systems(
+							_system_list.get(),
+							_images
+						),
+						[&_layout]
+						(std::vector<libftl::room::system> const &_systems)
+						{
+							return
+								libftl::ship::state{
+									fcppt::algorithm::map<
+										std::vector<libftl::room::state>
+									>(
+										_layout.rooms_,
+										[&_systems]
+										(libftl::ship::layout::room const &_room)
+										{
+											return
+												libftl::room::state{
+													fcppt::optional::map(
+														fcppt::algorithm::find_if_opt(
+															_systems,
+															[&_room]
+															(libftl::room::system const &_system)
+															{
+																return
+																	_system.room_ == _room.id_
+																	&&
+																	fcppt::optional::maybe(
+																		_system.available_,
+																		fcppt::const_(true),
+																		[](libftl::room::system::available const _has_room)
+																		{
+																			return
+																				_has_room.get();
+																		}
+																	);
+															}
+														),
+														[](auto const _iterator)
+														{
+															return
+																*_iterator;
+														}
+													),
+													_room
+												};
+										}
+									)
+								};
+						}
+					);
+			}
+		);
 }
-*/

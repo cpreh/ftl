@@ -158,6 +158,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/include/libftl/impl/xsd/require_one.hpp
 	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
 	libftl/impl/src/impl/archive/chain.cpp
 	libftl/impl/src/impl/archive/filesystem.cpp
@@ -289,6 +290,8 @@ set(
 	libftl/src/blueprints/load.cpp
 	libftl/src/options/create_resource_parser.cpp
 	libftl/src/options/open_archive.cpp
+	libftl/src/room/state.cpp
+	libftl/src/room/system.cpp
 	libftl/src/ship/draw.cpp
 	libftl/src/ship/images/load.cpp
 	libftl/src/ship/images/object.cpp
@@ -300,6 +303,7 @@ set(
 	libftl/src/ship/layout/parse.cpp
 	libftl/src/ship/load.cpp
 	libftl/src/ship/resources.cpp
+	libftl/src/ship/state.cpp
 	libftl/src/sprite/draw.cpp
 	libftl/src/sprite/images.cpp
 	libftl/src/sprite/resolution.cpp
