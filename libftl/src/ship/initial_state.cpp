@@ -18,11 +18,14 @@
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/container/maybe_front.hpp>
-#include <fcppt/either/bind.hpp>
+#include <fcppt/either/error.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
+#include <fcppt/either/monad.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/either/sequence.hpp>
+#include <fcppt/monad/do.hpp>
+#include <fcppt/monad/return.hpp>
 #include <fcppt/optional/cat.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/map.hpp>
@@ -217,6 +220,44 @@ load_all_systems(
 		);
 }
 
+libftl::room::state
+make_room_state(
+	std::vector<libftl::room::system> const &_systems,
+	libftl::ship::layout::room const &_room
+)
+{
+	return
+		libftl::room::state{
+			fcppt::optional::map(
+				fcppt::algorithm::find_if_opt(
+					_systems,
+					[&_room]
+					(libftl::room::system const &_system)
+					{
+						return
+							_system.room_ == _room.id_
+							&&
+							fcppt::optional::maybe(
+								_system.available_,
+								fcppt::const_(true),
+								[](libftl::room::system::available const _has_room)
+								{
+									return
+										_has_room.get();
+								}
+							);
+					}
+				),
+				[](auto const _iterator)
+				{
+					return
+						*_iterator;
+				}
+			),
+			_room
+		};
+}
+
 }
 
 fcppt::either::object<
@@ -230,65 +271,42 @@ libftl::ship::initial_state(
 )
 {
 	return
-		fcppt::either::bind(
+		fcppt::monad::do_(
 			libftl::impl::xsd::require_one(
 				FCPPT_TEXT("systemList"),
 				_blueprint.systemList()
 			),
-			[&_images,&_layout]
+			[&_images]
 			(fcppt::reference<libftl::xml::generated::blueprints::system_list const> const _system_list)
 			{
 				return
-					fcppt::either::map(
-						load_all_systems(
-							_system_list.get(),
-							_images
-						),
-						[&_layout]
-						(std::vector<libftl::room::system> const &_systems)
-						{
-							return
-								libftl::ship::state{
-									fcppt::algorithm::map<
-										std::vector<libftl::room::state>
-									>(
-										_layout.rooms_,
-										[&_systems]
-										(libftl::ship::layout::room const &_room)
-										{
-											return
-												libftl::room::state{
-													fcppt::optional::map(
-														fcppt::algorithm::find_if_opt(
-															_systems,
-															[&_room]
-															(libftl::room::system const &_system)
-															{
-																return
-																	_system.room_ == _room.id_
-																	&&
-																	fcppt::optional::maybe(
-																		_system.available_,
-																		fcppt::const_(true),
-																		[](libftl::room::system::available const _has_room)
-																		{
-																			return
-																				_has_room.get();
-																		}
-																	);
-															}
-														),
-														[](auto const _iterator)
-														{
-															return
-																*_iterator;
-														}
-													),
-													_room
-												};
-										}
-									)
-								};
+					load_all_systems(
+						_system_list.get(),
+						_images
+					);
+			},
+			[&_layout]
+			(std::vector<libftl::room::system> const &_systems)
+			{
+				return
+					fcppt::monad::return_<
+						fcppt::either::error<libftl::error>
+					>(
+						libftl::ship::state{
+							fcppt::algorithm::map<
+								std::vector<libftl::room::state>
+							>(
+								_layout.rooms_,
+								[&_systems]
+								(libftl::ship::layout::room const &_room)
+								{
+									return
+										make_room_state(
+											_systems,
+											_room
+										);
+								}
+							)
 						}
 					);
 			}
