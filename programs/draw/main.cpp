@@ -31,6 +31,7 @@
 #include <sge/renderer/pixel_format/object.hpp>
 #include <sge/renderer/pixel_format/optional_multi_samples.hpp>
 #include <sge/renderer/pixel_format/srgb.hpp>
+#include <sge/renderer/target/base.hpp>
 #include <sge/renderer/target/onscreen.hpp>
 #include <sge/systems/cursor_option_field.hpp>
 #include <sge/systems/input.hpp>
@@ -67,6 +68,7 @@
 #include <fcppt/make_ref.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/reference_impl.hpp>
+#include <fcppt/reference_to_base.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
@@ -163,8 +165,10 @@ main_loop(
 		[&_renderer_device, &_resources]
 		{
 			sge::renderer::context::scoped_ffp const scoped_block(
-				_renderer_device,
-				_renderer_device.onscreen_target()
+				fcppt::make_ref(_renderer_device),
+				fcppt::reference_to_base<sge::renderer::target::base>(
+					fcppt::make_ref(_renderer_device.onscreen_target())
+				)
 			);
 
 			scoped_block.get().clear(
