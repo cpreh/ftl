@@ -115,7 +115,7 @@ libftl::sprite::images::images(
 					sge::texture::part_raw_ptr
 				>(
 					sge::renderer::texture::create_planar_from_view(
-						_renderer_device.get(),
+						_renderer_device,
 						sge::image2d::view::const_object{
 							data.const_wrapped_view()
 						},
@@ -241,7 +241,7 @@ libftl::sprite::images::load(
 												sge::texture::part_raw_ptr
 											>(
 												sge::renderer::texture::create_planar_from_file(
-													this->renderer_device_.get(),
+													this->renderer_device_,
 													*_file,
 													sge::renderer::texture::mipmap::off(),
 													sge::renderer::resource_flags_field::null(),
