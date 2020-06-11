@@ -5,6 +5,7 @@
 #include <libftl/sprite/object.hpp>
 #include <libftl/sprite/resolution.hpp>
 #include <sge/renderer/context/ffp.hpp>
+#include <sge/renderer/device/core.hpp>
 #include <sge/renderer/device/ffp.hpp>
 #include <sge/sprite/projection_dim.hpp>
 #include <sge/sprite/buffers/option.hpp>
@@ -19,6 +20,8 @@
 #include <sge/sprite/state/default_options.hpp>
 #include <sge/sprite/state/object.hpp>
 #include <sge/sprite/state/parameters.hpp>
+#include <fcppt/make_ref.hpp>
+#include <fcppt/reference_to_base.hpp>
 #include <fcppt/algorithm/fold.hpp>
 #include <fcppt/enum/array_impl.hpp>
 #include <fcppt/enum/array_init.hpp>
@@ -44,7 +47,13 @@ libftl::sprite::draw(
 		>
 	>
 	sprite_buffers{
-		_renderer_device,
+		fcppt::reference_to_base<
+			sge::renderer::device::core
+		>(
+			fcppt::make_ref(
+				_renderer_device
+			)
+		),
 		sge::sprite::buffers::option::static_
 	};
 
