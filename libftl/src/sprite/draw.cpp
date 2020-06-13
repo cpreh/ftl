@@ -65,7 +65,9 @@ libftl::sprite::draw(
 		state_choices
 	>
 	sprite_states{
-		_renderer_device,
+		fcppt::make_ref(
+			_renderer_device
+		),
 		sge::sprite::state::parameters<
 			state_choices
 		>{}
