@@ -373,7 +373,7 @@ FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
-awl::main::exit_code const
+awl::main::exit_code
 draw_main(
 	awl::main::function_context const &_context
 )
