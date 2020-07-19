@@ -30,6 +30,7 @@
 #include <fcppt/parse/int.hpp>
 #include <fcppt/parse/make_skipper.hpp>
 #include <fcppt/parse/string.hpp>
+#include <fcppt/parse/uint.hpp>
 #include <fcppt/parse/operators/optional.hpp>
 #include <fcppt/parse/operators/repetition.hpp>
 #include <fcppt/parse/operators/sequence.hpp>
@@ -114,7 +115,7 @@ eol()
 }
 
 typedef
-fcppt::parse::int_<
+fcppt::parse::uint<
 	fcppt::optional::value_type<
 		libftl::ship::layout::object::offset_vector::value_type
 	>
@@ -128,7 +129,7 @@ fcppt::parse::int_<
 ellipse_int;
 
 typedef
-fcppt::parse::int_<
+fcppt::parse::uint<
 	libftl::ship::layout::room_id::value_type
 >
 room_id_int;
@@ -140,7 +141,7 @@ fcppt::parse::int_<
 room_id_signed_int;
 
 typedef
-fcppt::parse::int_<
+fcppt::parse::uint<
 	libftl::ship::layout::tile_coordinate
 >
 tile_coordinate_int;
