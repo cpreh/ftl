@@ -24,7 +24,7 @@
 #include <fcppt/either/monad.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/either/sequence.hpp>
-#include <fcppt/monad/do.hpp>
+#include <fcppt/monad/chain.hpp>
 #include <fcppt/monad/return.hpp>
 #include <fcppt/optional/cat.hpp>
 #include <fcppt/optional/make.hpp>
@@ -271,7 +271,7 @@ libftl::ship::initial_state(
 )
 {
 	return
-		fcppt::monad::do_(
+		fcppt::monad::chain(
 			libftl::impl::xsd::require_one(
 				FCPPT_TEXT("systemList"),
 				_blueprint.systemList()
