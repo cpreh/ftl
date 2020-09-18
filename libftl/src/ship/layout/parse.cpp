@@ -38,7 +38,6 @@
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <type_traits>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -113,11 +112,7 @@ eol()
 	return
 		*
 		fcppt::parse::skipper::char_set{
-			std::unordered_set<
-				char
-			>{
-				'\r', '\n'
-			}
+			'\r', '\n'
 		};
 }
 
