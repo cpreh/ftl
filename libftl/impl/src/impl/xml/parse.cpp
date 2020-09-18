@@ -19,7 +19,6 @@
 #include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_convert.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
-#include <fcppt/parse/space_skipper.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>
 #include <fcppt/parse/operators/complement.hpp>
@@ -28,6 +27,7 @@
 #include <fcppt/parse/operators/repetition.hpp>
 #include <fcppt/parse/operators/repetition_plus.hpp>
 #include <fcppt/parse/operators/sequence.hpp>
+#include <fcppt/parse/skipper/space.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -47,7 +47,7 @@ public
 		libftl::impl::xml::document,
 		char,
 		decltype(
-			fcppt::parse::space_skipper()
+			fcppt::parse::skipper::space()
 		)
 	>
 {
@@ -61,7 +61,7 @@ public:
 			fcppt::make_cref(
 				this->document_
 			),
-			fcppt::parse::space_skipper()
+			fcppt::parse::skipper::space()
 		},
 		quoted_string_{
 			this->make_base(

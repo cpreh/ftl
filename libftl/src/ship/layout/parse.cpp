@@ -28,15 +28,17 @@
 #include <fcppt/parse/grammar.hpp>
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/int.hpp>
-#include <fcppt/parse/make_skipper.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/uint.hpp>
 #include <fcppt/parse/operators/optional.hpp>
 #include <fcppt/parse/operators/repetition.hpp>
 #include <fcppt/parse/operators/sequence.hpp>
+#include <fcppt/parse/skipper/char_set.hpp>
+#include <fcppt/parse/skipper/operators/repetition.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <type_traits>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -109,9 +111,14 @@ auto
 eol()
 {
 	return
-		fcppt::parse::make_skipper(
-			fcppt::parse::char_set{'\r', '\n'}
-		);
+		*
+		fcppt::parse::skipper::char_set{
+			std::unordered_set<
+				char
+			>{
+				'\r', '\n'
+			}
+		};
 }
 
 typedef
