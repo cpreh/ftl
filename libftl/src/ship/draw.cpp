@@ -91,7 +91,6 @@ floor_image(
 								)
 							},
 						sge::sprite::roles::size_or_texture_size{} =
-							// TODO?
 							libftl::sprite::size_or_texture_size{
 								sge::sprite::types::texture_size{}
 							},

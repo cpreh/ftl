@@ -10,11 +10,12 @@ namespace libftl
 namespace sprite
 {
 
-typedef
+using
+size_or_texture_size
+=
 sge::sprite::types::size_or_texture_size<
 	libftl::sprite::type_choices
->
-size_or_texture_size;
+>;
 
 }
 }

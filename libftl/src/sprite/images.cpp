@@ -1,5 +1,6 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
+#include <libftl/archive/base_ref.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/sprite/images.hpp>
 #include <sge/image/channel8.hpp>
@@ -13,6 +14,7 @@
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/file_unique_ptr.hpp>
 #include <sge/image2d/system.hpp>
+#include <sge/image2d/system_ref.hpp>
 #include <sge/image2d/algorithm/fill.hpp>
 #include <sge/image2d/store/la8.hpp>
 #include <sge/image2d/view/const_object.hpp>
@@ -22,7 +24,7 @@
 #include <sge/media/optional_name.hpp>
 #include <sge/media/stream_unique_ptr.hpp>
 #include <sge/renderer/resource_flags_field.hpp>
-#include <sge/renderer/device/core_fwd.hpp>
+#include <sge/renderer/device/core_ref.hpp>
 #include <sge/renderer/texture/create_planar_from_file.hpp>
 #include <sge/renderer/texture/create_planar_from_view.hpp>
 #include <sge/renderer/texture/emulate_srgb.hpp>
@@ -52,15 +54,9 @@
 
 
 libftl::sprite::images::images(
-	fcppt::reference<
-		sge::renderer::device::core
-	> const _renderer_device,
-	fcppt::reference<
-		sge::image2d::system
-	> const _image_system,
-	fcppt::reference<
-		libftl::archive::base
-	> const _archive
+	sge::renderer::device::core_ref const _renderer_device,
+	sge::image2d::system_ref const _image_system,
+	libftl::archive::base_ref const _archive
 )
 :
 	renderer_device_{
@@ -75,14 +71,15 @@ libftl::sprite::images::images(
 	opaque_{
 		[&_renderer_device]
 		{
-			typedef
-			sge::image2d::store::la8
-			store;
+			using
+			store
+			=
+			sge::image2d::store::la8;
 
 			store data{
 				fcppt::math::dim::fill<
 					sge::image2d::dim
-				>(32),
+				>(32), // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 				store::init_function{
 					[](store::view_type const &_view)
 					{
@@ -132,16 +129,19 @@ libftl::sprite::images::images(
 
 libftl::sprite::images::images(
 	images &&
-) = default;
+)
+noexcept
+= default;
 
 libftl::sprite::images &
 libftl::sprite::images::operator=(
 	images &&
-) = default;
+)
+noexcept
+= default;
 
 libftl::sprite::images::~images()
-{
-}
+= default;
 
 sge::texture::const_part_shared_ptr
 libftl::sprite::images::opaque() const
@@ -203,7 +203,6 @@ libftl::sprite::images::load(
 											)
 										},
 										sge::media::optional_extension{
-											// TODO
 											sge::media::extension{
 												FCPPT_TEXT("png")
 											}

@@ -4,6 +4,9 @@
 #include <libftl/ship/layout/room_fwd.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <utility>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -17,14 +20,16 @@ struct room
 {
 	room(
 		libftl::ship::layout::room_id const _id,
-		libftl::ship::layout::tile_rect const _rect
+		libftl::ship::layout::tile_rect _rect
 	)
 	:
 		id_{
 			_id
 		},
 		rect_{
-			_rect
+			std::move(
+				_rect
+			)
 		}
 	{
 	}

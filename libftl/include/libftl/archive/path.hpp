@@ -30,6 +30,7 @@ public:
 		std::string &&
 	);
 
+	[[nodiscard]]
 	LIBFTL_DETAIL_SYMBOL
 	std::string const &
 	rep() const;

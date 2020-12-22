@@ -22,8 +22,8 @@ fcppt::either::object<
 	libftl::ship::layout::object
 >
 load(
-	libftl::archive::base &,
-	libftl::ship::layout::name
+	libftl::archive::base &, // NOLINT(google-runtime-references)
+	libftl::ship::layout::name const &
 );
 
 }

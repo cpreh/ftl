@@ -171,6 +171,7 @@ set(
 	libftl/impl/src/impl/xml/remove_comments.cpp
 	libftl/include/libftl/archive/base.hpp
 	libftl/include/libftl/archive/base_fwd.hpp
+	libftl/include/libftl/archive/base_ref.hpp
 	libftl/include/libftl/archive/base_unique_ptr.hpp
 	libftl/include/libftl/archive/chain.hpp
 	libftl/include/libftl/archive/entry.hpp
@@ -376,13 +377,19 @@ function(
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
 		PUBLIC
-		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/impl/include
+	)
+
+	target_include_directories(
+		${LIBFTL_LIB_NAME}
+		SYSTEM
+		PUBLIC
+		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${XSD_INCLUDE_DIRS}
 		${XercesC_INCLUDE_DIRS}
 		${GENERATED_XSD_INCLUDE_DIR}
-		PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/impl/include
 	)
 
 	fcppt_utils_interface_static_link(
@@ -402,7 +409,6 @@ function(
 		fcppt_options_interface
 		PRIVATE
 		Metal
-		${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 		${XercesC_LIBRARIES}
 		${sgeimagecolor_TARGET}
 		${sgeimage2d_TARGET}

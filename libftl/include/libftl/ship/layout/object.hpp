@@ -30,14 +30,15 @@ FCPPT_PP_DISABLE_GCC_WARNING(-Wnull-dereference)
 
 struct object
 {
-	typedef
+	using
+	offset_vector
+	=
 	fcppt::math::vector::static_<
 		fcppt::optional::object<
 			unsigned
 		>,
 		2
-	>
-	offset_vector;
+	>;
 
 	FCPPT_MAKE_STRONG_TYPEDEF(
 		int,
@@ -51,17 +52,19 @@ struct object
 		horizontal
 	);
 
-	typedef
+	using
+	room_list
+	=
 	std::vector<
 		libftl::ship::layout::room
-	>
-	room_list;
+	>;
 
-	typedef
+	using
+	door_list
+	=
 	std::vector<
 		libftl::ship::layout::door
-	>
-	door_list;
+	>;
 
 	LIBFTL_DETAIL_SYMBOL
 	object(

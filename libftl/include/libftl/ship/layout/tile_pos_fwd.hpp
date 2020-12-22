@@ -12,12 +12,13 @@ namespace ship
 namespace layout
 {
 
-typedef
+using
+tile_pos
+=
 fcppt::math::vector::static_<
 	libftl::ship::layout::tile_coordinate,
 	2
->
-tile_pos;
+>;
 
 }
 }

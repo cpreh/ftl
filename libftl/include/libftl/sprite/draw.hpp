@@ -18,8 +18,8 @@ namespace sprite
 LIBFTL_DETAIL_SYMBOL
 void
 draw(
-	sge::renderer::device::ffp &,
-	sge::renderer::context::ffp &,
+	sge::renderer::device::ffp &, // NOLINT(google-runtime-references)
+	sge::renderer::context::ffp &, // NOLINT(google-runtime-references)
 	std::vector<
 		libftl::sprite::object
 	> const &

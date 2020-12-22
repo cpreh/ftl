@@ -5,7 +5,7 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -20,7 +20,7 @@ namespace archive
 
 class base
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		base
 	);
 protected:
@@ -30,6 +30,7 @@ public:
 	virtual
 	~base();
 
+	[[nodiscard]]
 	virtual
 	fcppt::either::object<
 		libftl::error,

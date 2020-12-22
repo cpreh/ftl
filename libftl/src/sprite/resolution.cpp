@@ -7,6 +7,6 @@ libftl::sprite::resolution()
 {
 	return
 			sge::renderer::screen_size{
-				1280u,720u
+				1280U,720U // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 			};
 }

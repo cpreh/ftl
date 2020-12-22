@@ -12,14 +12,15 @@ namespace libftl
 namespace options
 {
 
-typedef
+using
+resource_record
+=
 fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::resource_label,
 		libftl::options::resource_variant
 	>
->
-resource_record;
+>;
 
 }
 }

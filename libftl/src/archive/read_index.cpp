@@ -42,44 +42,50 @@
 namespace
 {
 
-typedef
-std::uint32_t
-int_type;
+using
+int_type
+=
+std::uint32_t;
 
-typedef
+using
+int_binding
+=
 alda::bindings::unsigned_<
 	int_type,
 	fcppt::endianness::format::little
->
-int_binding;
+>;
 
-typedef
+using
+int_vector
+=
 std::vector<
 	int_type
->
-int_vector;
+>;
 
-typedef
+using
+offset_binding
+=
 alda::bindings::dynamic_len<
 	int_vector,
 	int_binding,
 	int_binding
->
-offset_binding;
+>;
 
-typedef
+using
+char_binding
+=
 alda::bindings::fundamental<
 	char
->
-char_binding;
+>;
 
-typedef
+using
+string_binding
+=
 alda::bindings::dynamic_len<
 	std::string,
 	char_binding,
 	int_binding
->
-string_binding;
+>;
 
 FCPPT_RECORD_MAKE_LABEL(
 	size_label
@@ -89,7 +95,9 @@ FCPPT_RECORD_MAKE_LABEL(
 	path_label
 );
 
-typedef
+using
+record_binding
+=
 alda::bindings::record_variadic<
 	fcppt::record::element<
 		size_label,
@@ -99,15 +107,15 @@ alda::bindings::record_variadic<
 		path_label,
 		string_binding
 	>
->
-record_binding;
+>;
 
-typedef
+using
+index_pair
+=
 std::pair<
 	std::string,
 	libftl::archive::entry
->
-index_pair;
+>;
 
 index_pair
 transform_entry(
@@ -265,7 +273,7 @@ make_index(
 							_indices
 						),
 						[](
-							// TODO: Why does && not work here?
+							// TODO(philipp): Why does && not work here?
 							index_pair _index
 						)
 						{

@@ -14,14 +14,15 @@ namespace parse
 namespace ship
 {
 
-typedef
+using
+arguments
+=
 fcppt::record::object<
 	fcppt::record::element<
 		ftl::parse::path_label,
 		libftl::archive::path
 	>
->
-arguments;
+>;
 
 }
 }

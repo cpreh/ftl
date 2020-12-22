@@ -12,11 +12,12 @@ namespace ship
 namespace layout
 {
 
-typedef
+using
+tile_rect
+=
 fcppt::math::box::rect<
 	libftl::ship::layout::tile_coordinate
->
-tile_rect;
+>;
 
 }
 }

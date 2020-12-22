@@ -13,12 +13,13 @@ namespace libftl
 namespace archive
 {
 
-typedef
+using
+index
+=
 std::unordered_map<
 	std::string,
 	libftl::archive::entry
->
-index;
+>;
 
 }
 }

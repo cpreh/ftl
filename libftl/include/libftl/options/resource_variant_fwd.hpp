@@ -13,7 +13,9 @@ namespace libftl
 namespace options
 {
 
-typedef
+using
+resource_variant
+=
 fcppt::variant::object<
 	fcppt::options::left<
 		libftl::options::native_resource_record
@@ -21,8 +23,7 @@ fcppt::variant::object<
 	fcppt::options::right<
 		libftl::options::unpacked_resource_record
 	>
->
-resource_variant;
+>;
 
 }
 }

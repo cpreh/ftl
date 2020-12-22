@@ -10,11 +10,12 @@ namespace libftl
 namespace sprite
 {
 
-typedef
+using
+color
+=
 sge::sprite::color<
 	libftl::sprite::choices
->
-color;
+>;
 
 }
 }

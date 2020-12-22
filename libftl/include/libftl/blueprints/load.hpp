@@ -19,8 +19,8 @@ fcppt::either::object<
 	libftl::blueprints::data
 >
 load(
-	libftl::archive::base &
-);
+	libftl::archive::base & // NOLINT(google-runtime-references)
+); // NOLINT(google-runtime-references)
 
 }
 }

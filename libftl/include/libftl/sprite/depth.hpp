@@ -11,7 +11,6 @@ namespace sprite
 
 enum class depth
 {
-	// TODO
 	background,
 	base,
 	floor,

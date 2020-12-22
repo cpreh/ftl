@@ -108,9 +108,11 @@ node_output(
 	if(
 		!_node.attributes_.empty()
 	)
+	{
 		_stream
 			<<
 			' ';
+	}
 
 	fcppt::algorithm::loop(
 		_node.attributes_,

@@ -9,9 +9,10 @@ namespace ship
 namespace layout
 {
 
-typedef
-unsigned
-tile_coordinate;
+using
+tile_coordinate
+=
+unsigned;
 
 }
 }

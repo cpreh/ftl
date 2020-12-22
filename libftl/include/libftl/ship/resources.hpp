@@ -32,13 +32,15 @@ public:
 	LIBFTL_DETAIL_SYMBOL
 	resources(
 		resources &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	resources &
 	operator=(
 		resources &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	~resources();

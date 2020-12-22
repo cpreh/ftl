@@ -93,7 +93,7 @@ load_system(
 											/ "interior"
 											/ (_name.get() + ".png")
 										),
-										[](sge::texture::const_part_shared_ptr const _texture)
+										[](sge::texture::const_part_shared_ptr const &_texture)
 										{
 											return
 												fcppt::optional::make(_texture);
@@ -102,7 +102,7 @@ load_system(
 							}
 						),
 						[&_system, _room_type]
-						(fcppt::optional::object<sge::texture::const_part_shared_ptr> const _texture)
+						(fcppt::optional::object<sge::texture::const_part_shared_ptr> const &_texture)
 						{
 							return
 								fcppt::optional::make(

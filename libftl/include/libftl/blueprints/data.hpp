@@ -22,13 +22,14 @@ class data
 		data
 	);
 public:
-	typedef
+	using
+	blueprint_vector
+	=
 	std::vector<
 		fcppt::unique_ptr<
 			libftl::xml::generated::blueprints::blueprints_root
 		>
-	>
-	blueprint_vector;
+	>;
 
 	FCPPT_MAKE_STRONG_TYPEDEF(
 		blueprint_vector,
@@ -55,13 +56,15 @@ public:
 	LIBFTL_DETAIL_SYMBOL
 	data(
 		data &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	data &
 	operator=(
 		data &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	~data();

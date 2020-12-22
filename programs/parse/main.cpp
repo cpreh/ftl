@@ -62,25 +62,29 @@ FCPPT_RECORD_MAKE_LABEL(
 	xml_label
 );
 
-typedef
+using
+ship_command_arguments
+=
 fcppt::record::object<
 	fcppt::record::element<
 		ship_label,
 		ftl::parse::ship::arguments
 	>
->
-ship_command_arguments;
+>;
 
-typedef
+using
+xml_command_arguments
+=
 fcppt::record::object<
 	fcppt::record::element<
 		xml_label,
 		ftl::parse::xml::arguments
 	>
->
-xml_command_arguments;
+>;
 
-typedef
+using
+arguments
+=
 fcppt::record::object<
 	fcppt::record::element<
 		fcppt::options::options_label,
@@ -93,8 +97,7 @@ fcppt::record::object<
 			xml_command_arguments
 		>
 	>
->
-arguments;
+>;
 
 bool
 main_program(
@@ -239,11 +242,12 @@ try
 		)
 	};
 
-	typedef
+	using
+	parser_type
+	=
 	decltype(
 		parser
-	)
-	parser_type;
+	);
 
 	return
 		fcppt::variant::match(

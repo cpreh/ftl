@@ -16,11 +16,12 @@ namespace archive
 
 struct file
 {
-	typedef
+	using
+	istream_ref
+	=
 	fcppt::reference<
 		std::istream
-	>
-	istream_ref;
+	>;
 
 	file(
 		istream_ref const _stream,

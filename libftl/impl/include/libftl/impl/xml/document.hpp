@@ -21,18 +21,20 @@ struct document
 {
 	struct node;
 
-	typedef
+	using
+	node_vector
+	=
 	std::vector<
 		node
-	>
-	node_vector;
+	>;
 
-	typedef
+	using
+	node_content
+	=
 	fcppt::variant::object<
 		node_vector,
 		std::string
-	>
-	node_content;
+	>;
 
 	struct inner_node
 	{
@@ -41,11 +43,12 @@ struct document
 		std::string closing_tag_;
 	};
 
-	typedef
+	using
+	optional_inner_node
+	=
 	fcppt::optional::object<
 		inner_node
-	>
-	optional_inner_node;
+	>;
 
 	struct attribute
 	{
@@ -54,11 +57,12 @@ struct document
 		std::string value_;
 	};
 
-	typedef
+	using
+	attribute_vector
+	=
 	std::vector<
 		attribute
-	>
-	attribute_vector;
+	>;
 
 	struct node
 	{
@@ -76,11 +80,12 @@ struct document
 		std::string encoding_;
 	};
 
-	typedef
+	using
+	optional_version
+	=
 	fcppt::optional::object<
 		version
-	>
-	optional_version;
+	>;
 
 	optional_version version_;
 

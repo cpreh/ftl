@@ -16,11 +16,11 @@ libftl::room::system::system(
 	power const _power,
 	fcppt::optional::object<
 		max_power
-	> _max_power,
+	> const _max_power,
 	libftl::ship::layout::room_id const _room,
 	fcppt::optional::object<
 		available
-	> _available
+	> const _available
 )
 :
 	type_{
@@ -35,17 +35,13 @@ libftl::room::system::system(
 		_power
 	},
 	max_power_{
-		std::move(
-			_max_power
-		)
+		_max_power
 	},
 	room_{
 		_room
 	},
 	available_{
-		std::move(
-			_available
-		)
+		_available
 	}
 {
 }

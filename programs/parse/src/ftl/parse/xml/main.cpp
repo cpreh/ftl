@@ -38,12 +38,14 @@
 fcppt::either::error<
 	libftl::error
 >
-ftl::parse::xml::main(
+ftl::parse::xml::main( // NOLINT(bugprone-exception-escape)
 	libftl::archive::base &_archive,
 	ftl::parse::xml::arguments const &_args
 )
 {
-	typedef
+	using
+	result_type
+	=
 	fcppt::variant::object<
 		fcppt::unique_ptr<
 			libftl::xml::generated::achievements::achievements_root
@@ -63,8 +65,7 @@ ftl::parse::xml::main(
 		fcppt::unique_ptr<
 			libftl::xml::generated::ship::ship_root
 		>
-	>
-	result_type;
+	>;
 
 	auto const load_xml(
 		[
@@ -87,7 +88,11 @@ ftl::parse::xml::main(
 				{
 					return
 						result_type{
-							std::move(
+							std::forward<
+								decltype(
+									_result
+								)
+							>(
 								_result
 							)
 						};

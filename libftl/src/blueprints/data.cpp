@@ -31,14 +31,15 @@ libftl::blueprints::data::data(
 libftl::blueprints::data::data(
 	data &&
 )
+noexcept
 = default;
 
 libftl::blueprints::data &
 libftl::blueprints::data::operator=(
 	data &&
 )
+noexcept
 = default;
 
 libftl::blueprints::data::~data()
-{
-}
+= default;

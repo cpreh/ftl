@@ -15,7 +15,9 @@ namespace libftl
 namespace options
 {
 
-typedef
+using
+native_resource_record
+=
 fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::data_file_label,
@@ -25,8 +27,7 @@ fcppt::record::object<
 		libftl::options::resource_file_label,
 		std::filesystem::path
 	>
->
-native_resource_record;
+>;
 
 }
 }

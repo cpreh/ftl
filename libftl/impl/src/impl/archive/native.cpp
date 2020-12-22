@@ -69,8 +69,7 @@ public:
 
 	~io_buf()
 	override
-	{
-	}
+	= default;
 private:
 	void
 	set_pos_impl(
@@ -97,10 +96,12 @@ private:
 			||
 			_pos > (this->egptr() - this->eback())
 		)
+		{
 			return
 				pos_type{
 					-1
 				};
+		}
 
 		this->set_pos_impl(
 			_pos
@@ -117,28 +118,35 @@ private:
 	)
 	{
 		if(
-			_mode
-			&
-			std::ios_base::out
+			(
+				_mode
+				&
+				std::ios_base::out
+			) != 0
 		)
+		{
 			throw
 				fcppt::exception{
 					FCPPT_TEXT("ios_base::out specified in seekoff of readonly stream")
 				};
+		}
 
 		if(
-			!(
+			(
 				_mode
 				&
 				std::ios_base::in
-			)
+			) == 0
 		)
+		{
 			throw
 				fcppt::exception{
 					FCPPT_TEXT("ios_base::in missing in seekoff of readonly stream")
 				};
+		}
 	}
 
+	[[nodiscard]]
 	pos_type
 	seekoff(
 		off_type const _off,
@@ -191,6 +199,7 @@ private:
 			);
 	}
 
+	[[nodiscard]]
 	pos_type
 	seekpos(
 		pos_type const _pos,
@@ -211,6 +220,7 @@ private:
 	fcppt::io::buffer buffer_;
 };
 
+// NOLINTNEXTLINE(fuchsia-multiple-inheritance)
 class io_istream
 :
 public
@@ -238,8 +248,7 @@ public:
 
 	~io_istream()
 	override
-	{
-	}
+	= default;
 private:
 	io_buf buf_;
 };
@@ -266,8 +275,7 @@ libftl::impl::archive::native::native(
 }
 
 libftl::impl::archive::native::~native()
-{
-}
+= default;
 
 fcppt::either::object<
 	libftl::error,

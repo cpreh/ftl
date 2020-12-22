@@ -24,14 +24,15 @@ struct depth_element
 	>
 	struct apply
 	{
-		typedef
+		using
+		type
+		=
 		metal::list<
 			fcppt::record::element<
 				libftl::sprite::depth_role,
 				libftl::sprite::depth
 			>
-		>
-		type;
+		>;
 	};
 };
 

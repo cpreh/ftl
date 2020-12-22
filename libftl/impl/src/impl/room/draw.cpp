@@ -38,14 +38,14 @@
 namespace
 {
 
-libftl::sprite::object::unit const tile_size{
-	35
+constexpr libftl::sprite::object::unit const tile_size{
+	35 // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 };
 
 libftl::sprite::object
 tile_background(
 	libftl::sprite::images const &_images,
-	libftl::sprite::object::vector const _pos
+	libftl::sprite::object::vector const &_pos
 )
 {
 	return
@@ -76,7 +76,7 @@ tile_background(
 libftl::sprite::object
 tile_foreground(
 	libftl::sprite::images const &_images,
-	libftl::sprite::rect const _rect
+	libftl::sprite::rect const &_rect
 )
 {
 	return
@@ -100,8 +100,8 @@ tile_foreground(
 
 libftl::sprite::rect
 foreground_rect(
-	libftl::ship::layout::tile_pos const _pos,
-	libftl::ship::layout::tile_rect const _tiles
+	libftl::ship::layout::tile_pos const &_pos,
+	libftl::ship::layout::tile_rect const &_tiles
 )
 {
 	return
@@ -161,7 +161,7 @@ std::vector<
 room_tiles(
 	libftl::sprite::images const &_images,
 	libftl::xml::generated::ship::ship_root const &_ship_root,
-	libftl::ship::layout::tile_rect const _tiles
+	libftl::ship::layout::tile_rect const &_tiles
 )
 {
 	return
@@ -179,7 +179,7 @@ room_tiles(
 				)
 			),
 			[&_images,&_ship_root,_tiles]
-			(libftl::ship::layout::tile_pos const _pos)
+			(libftl::ship::layout::tile_pos const &_pos)
 			{
 				libftl::sprite::object::vector const offset{
 					fcppt::cast::size<
@@ -268,7 +268,6 @@ libftl::impl::room::draw(
 )
 {
 	return
-		// TODO!
 		draw_tiles(
 			_images, _ship_root, _layout
 		);

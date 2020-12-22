@@ -3,7 +3,6 @@
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/impl/archive/chain.hpp>
-#include <fcppt/noncopyable.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -36,8 +35,7 @@ libftl::impl::archive::chain::chain(
 }
 
 libftl::impl::archive::chain::~chain()
-{
-}
+= default;
 
 fcppt::either::object<
 	libftl::error,

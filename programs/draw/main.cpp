@@ -116,7 +116,9 @@ FCPPT_RECORD_MAKE_LABEL(
 	ship_name_label
 );
 
-typedef
+using
+argument_record
+=
 fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::resource_label,
@@ -126,8 +128,7 @@ fcppt::record::object<
 		ship_name_label,
 		fcppt::string
 	>
->
-argument_record;
+>;
 
 struct resources
 {
@@ -156,8 +157,8 @@ struct resources
 
 awl::main::exit_code
 main_loop(
-	sge::renderer::device::ffp &_renderer_device,
-	sge::window::system &_window_system,
+	sge::renderer::device::ffp &_renderer_device, // NOLINT(google-runtime-references)
+	sge::window::system &_window_system, // NOLINT(google-runtime-references)
 	resources &&_resources
 )
 {
@@ -398,11 +399,12 @@ try
 		)
 	};
 
-	typedef
+	using
+	parser_type
+	=
 	decltype(
 		parser
-	)
-	parser_type;
+	);
 
 	return
 		fcppt::variant::match(

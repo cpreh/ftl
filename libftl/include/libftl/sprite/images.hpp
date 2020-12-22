@@ -2,15 +2,14 @@
 #define LIBFTL_SPRITE_IMAGES_HPP_INCLUDED
 
 #include <libftl/error_fwd.hpp>
-#include <libftl/archive/base_fwd.hpp>
+#include <libftl/archive/base_ref.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
 #include <libftl/sprite/images_fwd.hpp>
-#include <sge/image2d/system_fwd.hpp>
-#include <sge/renderer/device/core_fwd.hpp>
+#include <sge/image2d/system_ref.hpp>
+#include <sge/renderer/device/core_ref.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/reference_impl.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
@@ -31,27 +30,23 @@ class images
 public:
 	LIBFTL_DETAIL_SYMBOL
 	images(
-		fcppt::reference<
-			sge::renderer::device::core
-		>,
-		fcppt::reference<
-			sge::image2d::system
-		>,
-		fcppt::reference<
-			libftl::archive::base
-		>
+		sge::renderer::device::core_ref,
+		sge::image2d::system_ref,
+		libftl::archive::base_ref
 	);
 
 	LIBFTL_DETAIL_SYMBOL
 	images(
 		images &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	images &
 	operator=(
 		images &&
-	);
+	)
+	noexcept;
 
 	LIBFTL_DETAIL_SYMBOL
 	~images();
@@ -60,7 +55,6 @@ public:
 	sge::texture::const_part_shared_ptr
 	opaque() const;
 
-	// TODO: Make this const
 	LIBFTL_DETAIL_SYMBOL
 	fcppt::either::object<
 		libftl::error,
@@ -70,17 +64,11 @@ public:
 		libftl::archive::path const &
 	) const;
 private:
-	fcppt::reference<
-		sge::renderer::device::core
-	> renderer_device_;
+	sge::renderer::device::core_ref renderer_device_;
 
-	fcppt::reference<
-		sge::image2d::system
-	> image_system_;
+	sge::image2d::system_ref image_system_;
 
-	fcppt::reference<
-		libftl::archive::base
-	> archive_;
+	libftl::archive::base_ref archive_;
 
 	sge::texture::const_part_shared_ptr opaque_;
 

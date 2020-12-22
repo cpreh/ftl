@@ -16,7 +16,9 @@ namespace parse
 namespace xml
 {
 
-typedef
+using
+arguments
+=
 fcppt::record::object<
 	fcppt::record::element<
 		ftl::parse::xml::type_label,
@@ -26,8 +28,7 @@ fcppt::record::object<
 		ftl::parse::path_label,
 		libftl::archive::path
 	>
->
-arguments;
+>;
 
 }
 }

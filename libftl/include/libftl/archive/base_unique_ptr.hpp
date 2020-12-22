@@ -10,11 +10,12 @@ namespace libftl
 namespace archive
 {
 
-typedef
+using
+base_unique_ptr
+=
 fcppt::unique_ptr<
 	libftl::archive::base
->
-base_unique_ptr;
+>;
 
 }
 }

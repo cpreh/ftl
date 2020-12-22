@@ -10,11 +10,12 @@ namespace libftl
 namespace options
 {
 
-typedef
+using
+resource_parser
+=
 fcppt::options::base<
 	libftl::options::resource_record
->
-resource_parser;
+>;
 
 }
 }

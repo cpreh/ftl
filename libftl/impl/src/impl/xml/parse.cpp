@@ -5,7 +5,7 @@
 #include <libftl/impl/xml/remove_comments.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/either/map_failure.hpp>
@@ -51,7 +51,7 @@ public
 		)
 	>
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		grammar
 	);
 public:
@@ -64,7 +64,7 @@ public:
 			fcppt::parse::skipper::space()
 		},
 		quoted_string_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::make_lexeme(
 					fcppt::parse::literal{'"'}
 					>>
@@ -75,14 +75,14 @@ public:
 			)
 		},
 		string_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::make_lexeme(
 					*~fcppt::parse::char_set{'<'}
 				)
 			)
 		},
 		inner_node_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::as_struct<
 					libftl::impl::xml::document::inner_node
 				>(
@@ -99,7 +99,7 @@ public:
 			)
 		},
 		node_content_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::make_cref(
 					this->node_vector_
 				)
@@ -110,7 +110,7 @@ public:
 			)
 		},
 		node_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::as_struct<
 					libftl::impl::xml::document::node
 				>(
@@ -172,7 +172,7 @@ public:
 			)
 		},
 		attribute_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::as_struct<
 					libftl::impl::xml::document::attribute
 				>(
@@ -189,7 +189,7 @@ public:
 			)
 		},
 		attribute_vector_{
-			this->make_base(
+			grammar::make_base(
 				*
 				fcppt::make_cref(
 					this->attribute_
@@ -197,7 +197,7 @@ public:
 			)
 		},
 		node_vector_{
-			this->make_base(
+			grammar::make_base(
 				+
 				fcppt::make_cref(
 					this->node_
@@ -205,7 +205,7 @@ public:
 			)
 		},
 		version_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::as_struct<
 					libftl::impl::xml::document::version
 				>(
@@ -228,7 +228,7 @@ public:
 			)
 		},
 		document_{
-			this->make_base(
+			grammar::make_base(
 				fcppt::parse::as_struct<
 					libftl::impl::xml::document
 				>(
@@ -247,8 +247,7 @@ public:
 	}
 
 	~grammar()
-	{
-	}
+	= default;
 private:
 	base_type<
 		std::string

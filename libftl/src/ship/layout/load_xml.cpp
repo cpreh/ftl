@@ -21,7 +21,7 @@ fcppt::either::object<
 >
 libftl::ship::layout::load_xml(
 	libftl::archive::base &_archive,
-	libftl::ship::layout::name const _name
+	libftl::ship::layout::name const &_name
 )
 {
 	return

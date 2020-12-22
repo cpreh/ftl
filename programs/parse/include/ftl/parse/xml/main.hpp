@@ -17,8 +17,8 @@ namespace xml
 fcppt::either::error<
 	libftl::error
 >
-main(
-	libftl::archive::base &,
+main( // NOLINT(bugprone-exception-escape)
+	libftl::archive::base &, // NOLINT(google-runtime-references)
 	ftl::parse::xml::arguments const &
 );
 

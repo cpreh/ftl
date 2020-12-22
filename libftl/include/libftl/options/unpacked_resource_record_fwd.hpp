@@ -14,14 +14,15 @@ namespace libftl
 namespace options
 {
 
-typedef
+using
+unpacked_resource_record
+=
 fcppt::record::object<
 	fcppt::record::element<
 		libftl::options::resource_path_label,
 		std::filesystem::path
 	>
->
-unpacked_resource_record;
+>;
 
 }
 }

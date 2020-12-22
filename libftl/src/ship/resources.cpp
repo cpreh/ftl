@@ -24,13 +24,16 @@ libftl::ship::resources::resources(
 
 libftl::ship::resources::resources(
 	resources &&
-) = default;
+)
+noexcept
+= default;
 
 libftl::ship::resources &
 libftl::ship::resources::operator=(
 	resources &&
-) = default;
+)
+noexcept
+= default;
 
 libftl::ship::resources::~resources()
-{
-}
+= default;

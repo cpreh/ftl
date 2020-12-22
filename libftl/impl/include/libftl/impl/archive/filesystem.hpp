@@ -4,7 +4,7 @@
 #include <libftl/error_fwd.hpp>
 #include <libftl/archive/base.hpp>
 #include <libftl/archive/path_fwd.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>
 #include <fcppt/either/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -24,7 +24,7 @@ class filesystem
 :
 	public libftl::archive::base
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		filesystem
 	);
 public:
@@ -36,6 +36,7 @@ public:
 	~filesystem()
 	override;
 
+	[[nodiscard]]
 	fcppt::either::object<
 		libftl::error,
 		fcppt::unique_ptr<

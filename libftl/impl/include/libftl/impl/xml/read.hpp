@@ -60,14 +60,15 @@ read(
 				std::string &&_input
 			)
 			{
-				typedef
+				using
+				result_type
+				=
 				fcppt::either::object<
 					libftl::error,
 					fcppt::unique_ptr<
 						Result
 					>
-				>
-				result_type;
+				>;
 
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
@@ -95,9 +96,7 @@ FCPPT_PP_POP_WARNING
 				try
 				{
 					std::istringstream stream{
-						std::move(
-							_input
-						)
+						_input
 					};
 
 					return

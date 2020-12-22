@@ -35,8 +35,7 @@ libftl::impl::archive::filesystem::filesystem(
 }
 
 libftl::impl::archive::filesystem::~filesystem()
-{
-}
+= default;
 
 fcppt::either::object<
 	libftl::error,
@@ -53,7 +52,7 @@ libftl::impl::archive::filesystem::open(
 			this->directory_
 		}
 		/
-		_path.rep()
+		_path.rep() // NOLINT(fuchsia-default-arguments-calls)
 	};
 
 	return

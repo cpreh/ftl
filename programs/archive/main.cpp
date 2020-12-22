@@ -103,11 +103,12 @@ operator<<(
 namespace
 {
 
-typedef
+using
+either_error
+=
 fcppt::either::error<
 	fcppt::string
->
-either_error;
+>;
 
 either_error
 write_to_file(
@@ -300,7 +301,9 @@ FCPPT_RECORD_MAKE_LABEL(
 	output_path_label
 );
 
-typedef
+using
+argument_record
+=
 fcppt::record::object<
 	fcppt::record::element<
 		path_label,
@@ -312,15 +315,14 @@ fcppt::record::object<
 			std::filesystem::path
 		>
 	>
->
-argument_record;
+>;
 
 int
 main_program(
 	argument_record const &_arguments
 )
 {
-	std::filesystem::path const path{
+	std::filesystem::path const &path{
 		fcppt::record::get<
 			path_label
 		>(
@@ -497,11 +499,12 @@ try
 		)
 	};
 
-	typedef
+	using
+	parser_type
+	=
 	decltype(
 		parser
-	)
-	parser_type;
+	);
 
 	return
 		fcppt::variant::match(

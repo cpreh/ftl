@@ -10,11 +10,12 @@ namespace libftl
 namespace sprite
 {
 
-typedef
+using
+rect
+=
 sge::sprite::types::rect<
 	libftl::sprite::type_choices
->
-rect;
+>;
 
 }
 }

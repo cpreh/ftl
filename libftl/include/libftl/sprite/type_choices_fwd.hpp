@@ -11,7 +11,9 @@ namespace libftl
 namespace sprite
 {
 
-typedef
+using
+type_choices
+=
 sge::sprite::config::type_choices<
 	sge::sprite::config::unit_type<
 		int
@@ -19,8 +21,7 @@ sge::sprite::config::type_choices<
 	sge::sprite::config::float_type<
 		float
 	>
->
-type_choices;
+>;
 
 }
 }

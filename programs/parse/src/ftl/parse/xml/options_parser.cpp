@@ -27,16 +27,18 @@
 namespace
 {
 
-typedef
+using
+xml_type_array
+=
 fcppt::enum_::names_array<
 	ftl::parse::xml::type
->
-xml_type_array;
+>;
 
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wglobal-constructors)
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wexit-time-destructors)
 
+// NOLINTNEXTLINE(fuchsia-statically-constructed-objects,cert-err58-cpp)
 xml_type_array const xml_types{{{
 	FCPPT_TEXT("achievements"),
 	FCPPT_TEXT("animations"),
@@ -50,9 +52,7 @@ FCPPT_PP_POP_WARNING
 
 }
 
-namespace fcppt
-{
-namespace enum_
+namespace fcppt::enum_
 {
 
 template<>
@@ -70,13 +70,8 @@ struct names_impl<
 };
 
 }
-}
 
-namespace ftl
-{
-namespace parse
-{
-namespace xml
+namespace ftl::parse::xml
 {
 
 FCPPT_PP_PUSH_WARNING
@@ -98,8 +93,6 @@ operator>>(
 
 FCPPT_PP_POP_WARNING
 
-}
-}
 }
 
 fcppt::options::base_unique_ptr<

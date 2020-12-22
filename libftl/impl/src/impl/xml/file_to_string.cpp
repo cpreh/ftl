@@ -36,7 +36,9 @@ remove_char(
 				==
 				_ch
 			)
+			{
 				_stream.get();
+			}
 		}
 	);
 }
@@ -51,7 +53,7 @@ remove_bom(
 		fcppt::literal<
 			char
 		>(
-			239
+			239 // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		)
 	);
 
@@ -60,7 +62,7 @@ remove_bom(
 		fcppt::literal<
 			char
 		>(
-			187
+			187 // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		)
 	);
 
@@ -69,7 +71,7 @@ remove_bom(
 		fcppt::literal<
 			char
 		>(
-			191
+			191 // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		)
 	);
 }
@@ -107,9 +109,11 @@ read_file(
 					==
 					'\r'
 				)
+				{
 					fcppt::container::pop_back(
 						line
 					);
+				}
 			}
 		);
 
@@ -130,9 +134,11 @@ read_file(
 					!=
 					'\n'
 				)
+				{
 					line.push_back(
 						'\n'
 					);
+				}
 			}
 		);
 

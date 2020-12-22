@@ -16,7 +16,6 @@ namespace ship
 
 struct state
 {
-	// TODO
 	LIBFTL_DETAIL_SYMBOL
 	explicit
 	state(

@@ -57,9 +57,10 @@ libftl::sprite::draw(
 		sge::sprite::buffers::option::static_
 	};
 
-	typedef
-	sge::sprite::state::all_choices
-	state_choices;
+	using
+	state_choices
+	=
+	sge::sprite::state::all_choices;
 
 	sge::sprite::state::object<
 		state_choices
@@ -73,20 +74,22 @@ libftl::sprite::draw(
 		>{}
 	};
 
-	typedef
+	using
+	sprite_options
+	=
 	sge::sprite::process::options<
 		sge::sprite::process::geometry_options::update
-	>
-	sprite_options;
+	>;
 
-	typedef
+	using
+	sprite_depth_array
+	=
 	fcppt::enum_::array<
 		libftl::sprite::depth,
 		std::vector<
 			libftl::sprite::object
 		>
-	>
-	sprite_depth_array;
+	>;
 
 	sprite_depth_array const sprite_levels{
 		fcppt::algorithm::fold(
@@ -123,6 +126,7 @@ libftl::sprite::draw(
 			libftl::sprite::depth
 		>()
 	)
+	{
 		sge::sprite::process::with_options<
 			sprite_options
 		>(
@@ -141,4 +145,5 @@ libftl::sprite::draw(
 				}
 			)
 		);
+	}
 }
