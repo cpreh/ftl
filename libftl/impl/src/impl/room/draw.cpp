@@ -18,7 +18,6 @@
 #include <sge/sprite/roles/pos.hpp>
 #include <sge/sprite/roles/size_or_texture_size.hpp>
 #include <sge/sprite/roles/texture0.hpp>
-#include <fcppt/make_homogenous_pair.hpp>
 #include <fcppt/algorithm/map_concat.hpp>
 #include <fcppt/cast/size.hpp>
 #include <fcppt/cast/to_signed.hpp>
@@ -30,6 +29,7 @@
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/at.hpp>
 #include <fcppt/math/vector/map.hpp>
+#include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -129,7 +129,7 @@ foreground_rect(
 				libftl::sprite::object::unit const gap{2};
 
 				return
-					fcppt::make_homogenous_pair(
+					fcppt::tuple::make(
 						coord
 						==
 						fcppt::math::vector::at<
