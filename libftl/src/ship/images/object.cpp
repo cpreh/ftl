@@ -9,7 +9,7 @@
 
 
 libftl::ship::images::object::offset_image::offset_image(
-	libftl::xml::generated::ship::offset const _offset,
+	libftl::xml::generated::ship::offset const &_offset,
 	sge::texture::const_part_shared_ptr &&_image
 )
 :
@@ -25,7 +25,7 @@ libftl::ship::images::object::offset_image::offset_image(
 }
 
 libftl::ship::images::object::gib_image::gib_image(
-	libftl::xml::generated::ship::gib const _gib,
+	libftl::xml::generated::ship::gib const &_gib,
 	sge::texture::const_part_shared_ptr &&_image
 )
 :

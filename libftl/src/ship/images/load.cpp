@@ -142,13 +142,14 @@ load_shield(
 		);
 }
 
-typedef
+using
+get_offset_function
+=
 fcppt::function<
 	xsd::cxx::tree::optional<libftl::xml::generated::ship::offset> const & (
 		libftl::xml::generated::ship::offsets const &
 	)
->
-get_offset_function;
+>;
 
 template<
 	typename Type
@@ -350,12 +351,12 @@ load_gibs(
 						)
 					);
 			},
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib1()), 1u),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib2()), 2u),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib3()), 3u),
-			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib4()), 4u),
-			load_optional_impl(fcppt::make_cref(_explosion.get().gib5()), 5u),
-			load_optional_impl(fcppt::make_cref(_explosion.get().gib6()), 6u)
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib1()), 1U),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib2()), 2U),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib3()), 3U),
+			load_mandatory_impl(fcppt::make_cref(_explosion.get().gib4()), 4U),
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib5()), 5U), // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+			load_optional_impl(fcppt::make_cref(_explosion.get().gib6()), 6U) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 		);
 }
 
@@ -429,7 +430,6 @@ libftl::ship::images::load(
 						}
 					),
 					[&_ship_name]{
-						// TODO: Do we need this?
 						return
 							_ship_name.get();
 					}

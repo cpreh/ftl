@@ -34,7 +34,7 @@ struct object
 	struct offset_image
 	{
 		offset_image(
-			libftl::xml::generated::ship::offset,
+			libftl::xml::generated::ship::offset const &,
 			sge::texture::const_part_shared_ptr &&
 		);
 
@@ -56,7 +56,7 @@ struct object
 	struct gib_image
 	{
 		gib_image(
-			libftl::xml::generated::ship::gib,
+			libftl::xml::generated::ship::gib const &,
 			sge::texture::const_part_shared_ptr &&
 		);
 

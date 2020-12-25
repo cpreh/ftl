@@ -9,7 +9,7 @@
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -46,11 +46,12 @@
 namespace
 {
 
-typedef
+using
+room_id_signed
+=
 std::make_signed_t<
 	libftl::ship::layout::room_id::value_type
->
-room_id_signed;
+>;
 
 struct room
 {
@@ -116,37 +117,42 @@ eol()
 		};
 }
 
-typedef
+using
+offset_int
+=
 fcppt::parse::uint<
 	fcppt::optional::value_type<
 		libftl::ship::layout::object::offset_vector::value_type
 	>
->
-offset_int;
+>;
 
-typedef
+using
+ellipse_int
+=
 fcppt::parse::int_<
 	libftl::ship::layout::ellipse::value_type::value_type
->
-ellipse_int;
+>;
 
-typedef
+using
+room_id_int
+=
 fcppt::parse::uint<
 	libftl::ship::layout::room_id::value_type
->
-room_id_int;
+>;
 
-typedef
+using
+room_id_signed_int
+=
 fcppt::parse::int_<
 	room_id_signed
->
-room_id_signed_int;
+>;
 
-typedef
+using
+tile_coordinate_int
+=
 fcppt::parse::uint<
 	libftl::ship::layout::tile_coordinate
->
-tile_coordinate_int;
+>;
 
 class grammar
 :
@@ -159,7 +165,7 @@ public
 		)
 	>
 {
-	FCPPT_NONCOPYABLE(
+	FCPPT_NONMOVABLE(
 		grammar
 	);
 public:
@@ -172,7 +178,7 @@ public:
 			eol()
 		),
 		room_{
-			this->make_base(
+			grammar_base::make_base(
 				fcppt::parse::as_struct<
 					::room
 				>(
@@ -191,7 +197,7 @@ public:
 			)
 		},
 		door_{
-			this->make_base(
+			grammar_base::make_base(
 				fcppt::parse::as_struct<
 					::door
 				>(
@@ -210,7 +216,7 @@ public:
 			)
 		},
 		layout_{
-			this->make_base(
+			grammar_base::make_base(
 				fcppt::parse::as_struct<
 					::layout
 				>(
@@ -260,9 +266,8 @@ public:
 	}
 
 	~grammar()
-	{
-	}
-public:
+	= default;
+private:
 	base_type<
 		::room
 	>
@@ -294,6 +299,8 @@ translate_bool(
 	case 1:
 		return
 			true;
+	default:
+		break;
 	}
 
 	throw
@@ -316,6 +323,7 @@ translate_optional_door_room(
 		<
 		-1
 	)
+	{
 		throw
 			fcppt::exception{
 				FCPPT_TEXT("Invalid door room ")
@@ -324,6 +332,7 @@ translate_optional_door_room(
 					_id
 				)
 			};
+	}
 
 	return
 		fcppt::optional::make_if(
@@ -445,12 +454,13 @@ translate_result(
 		};
 }
 
-typedef
+using
+result_type
+=
 fcppt::either::object<
 	libftl::error,
 	libftl::ship::layout::object
->
-result_type;
+>;
 
 }
 
