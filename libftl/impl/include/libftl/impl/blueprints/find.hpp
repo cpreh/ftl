@@ -9,7 +9,7 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/algorithm/find_by_opt.hpp>
 #include <fcppt/algorithm/find_if_opt.hpp>
-#include <fcppt/container/array/make.hpp>
+#include <fcppt/array/make.hpp>
 #include <fcppt/optional/deref.hpp>
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
@@ -56,7 +56,7 @@ find(
 
 	return
 		fcppt::algorithm::find_by_opt(
-			fcppt::container::array::make(
+			fcppt::array::make(
 				// TODO(philipp): Add option to enable DLC or not
 				fcppt::make_cref(
 					_data.get().dlc_blueprints_overwrites_.get()
