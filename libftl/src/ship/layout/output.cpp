@@ -11,11 +11,7 @@
 #include <fcppt/optional/output.hpp>
 
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 
 fcppt::io::ostream &
@@ -78,8 +74,6 @@ operator<<(
 		FCPPT_TEXT("}");
 }
 
-}
-}
 }
 
 fcppt::io::ostream &

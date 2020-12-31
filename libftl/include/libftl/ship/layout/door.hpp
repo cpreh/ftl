@@ -7,9 +7,6 @@
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/optional/object_impl.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <utility>
-#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -44,16 +41,14 @@ struct door
 	);
 
 	door(
-		libftl::ship::layout::tile_pos _pos,
+		libftl::ship::layout::tile_pos const _pos,
 		left_top_room const _left_top_room,
 		bottom_right_room _bottom_right_room,
 		vertical const _vertical
 	)
 	:
 		pos_{
-			std::move(
-				_pos
-			)
+			_pos
 		},
 		left_top_room_{
 			_left_top_room

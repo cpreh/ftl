@@ -11,7 +11,7 @@ libftl::room::state::state(
 	fcppt::optional::object<
 		libftl::room::system
 	> &&_system,
-	libftl::ship::layout::room _layout
+	libftl::ship::layout::room const _layout
 )
 :
 	system_{
@@ -20,9 +20,7 @@ libftl::room::state::state(
 		)
 	},
 	layout_{
-		std::move(
-			_layout
-		)
+		_layout
 	}
 {
 }

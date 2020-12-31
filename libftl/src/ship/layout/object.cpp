@@ -6,18 +6,16 @@
 
 
 libftl::ship::layout::object::object(
-	offset_vector _offset,
+	offset_vector const _offset,
 	vertical const _vertical,
 	horizontal const _horizontal,
-	libftl::ship::layout::ellipse _ellipse,
+	libftl::ship::layout::ellipse const _ellipse,
 	room_list &&_rooms,
 	door_list &&_doors
 )
 :
 	offset_{
-		std::move(
-			_offset
-		)
+		_offset
 	},
 	vertical_{
 		_vertical
@@ -26,9 +24,7 @@ libftl::ship::layout::object::object(
 		_horizontal
 	},
 	ellipse_{
-		std::move(
-			_ellipse
-		)
+		_ellipse
 	},
 	rooms_{
 		std::move(
