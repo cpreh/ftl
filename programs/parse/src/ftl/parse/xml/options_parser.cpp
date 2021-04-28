@@ -4,11 +4,10 @@
 #include <ftl/parse/xml/type.hpp>
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/archive/path.hpp>
-#include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/enum/input.hpp>
-#include <fcppt/enum/names_array.hpp>
-#include <fcppt/enum/names_impl_fwd.hpp>
+#include <fcppt/enum/to_string_case.hpp>
+#include <fcppt/enum/to_string_impl_fwd.hpp>
 #include <fcppt/io/istream.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
@@ -23,50 +22,32 @@
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <string_view>
+#include <fcppt/config/external_end.hpp>
 
-
-namespace
-{
-
-using
-xml_type_array
-=
-fcppt::enum_::names_array<
-	ftl::parse::xml::type
->;
-
-FCPPT_PP_PUSH_WARNING
-FCPPT_PP_DISABLE_CLANG_WARNING(-Wglobal-constructors)
-FCPPT_PP_DISABLE_CLANG_WARNING(-Wexit-time-destructors)
-
-// NOLINTNEXTLINE(fuchsia-statically-constructed-objects,cert-err58-cpp)
-xml_type_array const xml_types{
-	fcppt::string{FCPPT_TEXT("achievements")},
-	fcppt::string{FCPPT_TEXT("animations")},
-	fcppt::string{FCPPT_TEXT("blueprints")},
-	fcppt::string{FCPPT_TEXT("events")},
-	fcppt::string{FCPPT_TEXT("sectors")},
-	fcppt::string{FCPPT_TEXT("ship")}
-};
-
-FCPPT_PP_POP_WARNING
-
-}
 
 namespace fcppt::enum_
 {
 
 template<>
-struct names_impl<
+struct to_string_impl<
 	ftl::parse::xml::type
 >
 {
-	static
-	xml_type_array const &
-	get()
+	static std::string_view get(ftl::parse::xml::type const _type)
 	{
-		return
-			xml_types;
+#define TO_STRING_CASE(name) FCPPT_ENUM_TO_STRING_CASE(ftl::parse::xml::type,name)
+		switch(_type)
+		{
+			TO_STRING_CASE(achievements);
+			TO_STRING_CASE(animations);
+			TO_STRING_CASE(blueprints);
+			TO_STRING_CASE(events);
+			TO_STRING_CASE(sectors);
+			TO_STRING_CASE(ship);
+		}
+#undef TO_STRING_CASE
 	}
 };
 
