@@ -5,6 +5,7 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/archive/path.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/assert/unreachable.hpp>
 #include <fcppt/enum/input.hpp>
 #include <fcppt/enum/to_string_case.hpp>
 #include <fcppt/enum/to_string_impl_fwd.hpp>
@@ -48,6 +49,7 @@ struct to_string_impl<
 			TO_STRING_CASE(ship);
 		}
 #undef TO_STRING_CASE
+		FCPPT_ASSERT_UNREACHABLE;
 	}
 };
 
