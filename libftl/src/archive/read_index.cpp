@@ -24,12 +24,12 @@
 #include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/either/sequence.hpp>
-#include <fcppt/endianness/format.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <bit>
 #include <cstddef>
 #include <ios>
 #include <istream>
@@ -52,7 +52,7 @@ int_binding
 =
 alda::bindings::unsigned_<
 	int_type,
-	fcppt::endianness::format::little
+	std::endian::little
 >;
 
 using
