@@ -4,10 +4,8 @@
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
 #include <libftl/sprite/detail/depth_element_fwd.hpp>
+#include <fcppt/mpl/list/object.hpp>
 #include <fcppt/record/element.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <metal.hpp>
-#include <fcppt/config/external_end.hpp>
 
 
 namespace libftl
@@ -27,7 +25,7 @@ struct depth_element
 		using
 		type
 		=
-		metal::list<
+		fcppt::mpl::list::object<
 			fcppt::record::element<
 				libftl::sprite::depth_role,
 				libftl::sprite::depth

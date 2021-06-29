@@ -18,11 +18,6 @@ find_package(
 	REQUIRED
 )
 
-find_package(
-	Metal
-	REQUIRED
-)
-
 set(
 	FCPPT_UTILS_CLANG_TIDY_ADDITIONAL_CHECKS
 	"-fuchsia-default-arguments-calls"

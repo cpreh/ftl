@@ -401,14 +401,12 @@ function(
 	target_link_libraries(
 		${LIBFTL_LIB_NAME}
 		INTERFACE
-		Metal
 		sgeimagecolor_interface
 		sgerenderer_interface
 		sgesprite_interface
 		fcppt_core_interface
 		fcppt_options_interface
 		PRIVATE
-		Metal
 		${XercesC_LIBRARIES}
 		${sgeimagecolor_TARGET}
 		${sgeimage2d_TARGET}

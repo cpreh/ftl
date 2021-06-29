@@ -14,9 +14,7 @@
 #include <sge/sprite/config/texture_size_option.hpp>
 #include <sge/sprite/config/with_color_fwd.hpp>
 #include <sge/sprite/config/with_texture_fwd.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <metal.hpp>
-#include <fcppt/config/external_end.hpp>
+#include <fcppt/mpl/list/object.hpp>
 
 
 namespace libftl
@@ -35,7 +33,7 @@ sge::sprite::config::choices<
 	sge::sprite::config::normal_size<
 		sge::sprite::config::texture_size_option::maybe
 	>,
-	metal::list<
+	fcppt::mpl::list::object<
 		sge::sprite::config::with_color<
 			libftl::sprite::color_format
 		>,
