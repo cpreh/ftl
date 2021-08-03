@@ -10,109 +10,34 @@
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/optional/output.hpp>
 
-
 namespace libftl::ship::layout
 {
+fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::room const &);
 
-fcppt::io::ostream &
-operator<<(
-	fcppt::io::ostream &,
-	libftl::ship::layout::room const &
-);
-
-fcppt::io::ostream &
-operator<<(
-	fcppt::io::ostream &_stream,
-	libftl::ship::layout::room const &_room
-)
+fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::room const &_room)
 {
-	return
-		_stream
-		<<
-		FCPPT_TEXT("{id: ")
-		<<
-		_room.id_
-		<<
-		FCPPT_TEXT(", tile_rect: ")
-		<<
-		_room.rect_
-		<<
-		FCPPT_TEXT("}");
+  return _stream << FCPPT_TEXT("{id: ") << _room.id_ << FCPPT_TEXT(", tile_rect: ") << _room.rect_
+                 << FCPPT_TEXT("}");
 }
 
-fcppt::io::ostream &
-operator<<(
-	fcppt::io::ostream &,
-	libftl::ship::layout::door const &
-);
+fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::door const &);
 
-fcppt::io::ostream &
-operator<<(
-	fcppt::io::ostream &_stream,
-	libftl::ship::layout::door const &_door
-)
+fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::door const &_door)
 {
-	return
-		_stream
-		<<
-		FCPPT_TEXT("{pos: ")
-		<<
-		_door.pos_
-		<<
-		FCPPT_TEXT(", left_top_room: ")
-		<<
-		_door.left_top_room_
-		<<
-		FCPPT_TEXT(", bottom_right_room: ")
-		<<
-		_door.bottom_right_room_
-		<<
-		FCPPT_TEXT(", vertical: ")
-		<<
-		_door.vertical_
-		<<
-		FCPPT_TEXT("}");
+  return _stream << FCPPT_TEXT("{pos: ") << _door.pos_ << FCPPT_TEXT(", left_top_room: ")
+                 << _door.left_top_room_ << FCPPT_TEXT(", bottom_right_room: ")
+                 << _door.bottom_right_room_ << FCPPT_TEXT(", vertical: ") << _door.vertical_
+                 << FCPPT_TEXT("}");
 }
 
 }
 
-fcppt::io::ostream &
-libftl::ship::layout::operator<<(
-	fcppt::io::ostream &_stream,
-	libftl::ship::layout::object const &_layout
-)
+fcppt::io::ostream &libftl::ship::layout::operator<<(
+    fcppt::io::ostream &_stream, libftl::ship::layout::object const &_layout)
 {
-	return
-		_stream
-		<<
-		std::boolalpha
-		<<
-		FCPPT_TEXT("offset: ")
-		<<
-		_layout.offset_
-		<<
-		FCPPT_TEXT(", vertical: ")
-		<<
-		_layout.vertical_
-		<<
-		FCPPT_TEXT(", horizontal: ")
-		<<
-		_layout.horizontal_
-		<<
-		FCPPT_TEXT(", ellipse: ")
-		<<
-		_layout.ellipse_
-		<<
-		FCPPT_TEXT(", rooms: ")
-		<<
-		fcppt::container::output(
-			_layout.rooms_
-		)
-		<<
-		FCPPT_TEXT(", doors: ")
-		<<
-		fcppt::container::output(
-			_layout.doors_
-		);
-
+  return _stream << std::boolalpha << FCPPT_TEXT("offset: ") << _layout.offset_
+                 << FCPPT_TEXT(", vertical: ") << _layout.vertical_ << FCPPT_TEXT(", horizontal: ")
+                 << _layout.horizontal_ << FCPPT_TEXT(", ellipse: ") << _layout.ellipse_
+                 << FCPPT_TEXT(", rooms: ") << fcppt::container::output(_layout.rooms_)
+                 << FCPPT_TEXT(", doors: ") << fcppt::container::output(_layout.doors_);
 }

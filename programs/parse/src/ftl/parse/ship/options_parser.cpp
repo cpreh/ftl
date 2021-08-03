@@ -11,28 +11,11 @@
 #include <fcppt/options/make_base.hpp>
 #include <fcppt/options/optional_help_text.hpp>
 
-
-fcppt::options::base_unique_ptr<
-	ftl::parse::ship::arguments
->
-ftl::parse::ship::options_parser()
+fcppt::options::base_unique_ptr<ftl::parse::ship::arguments> ftl::parse::ship::options_parser()
 {
-	return
-		fcppt::options::make_base<
-			ftl::parse::ship::arguments
-		>(
-			fcppt::options::argument<
-				ftl::parse::path_label,
-				libftl::archive::path
-			>{
-				fcppt::options::long_name{
-					FCPPT_TEXT("ship-file")
-				},
-				fcppt::options::optional_help_text{
-					fcppt::options::help_text{
-						FCPPT_TEXT("Name of the ship .txt file")
-					}
-				}
-			}
-		);
+  return fcppt::options::make_base<ftl::parse::ship::arguments>(
+      fcppt::options::argument<ftl::parse::path_label, libftl::archive::path>{
+          fcppt::options::long_name{FCPPT_TEXT("ship-file")},
+          fcppt::options::optional_help_text{
+              fcppt::options::help_text{FCPPT_TEXT("Name of the ship .txt file")}}});
 }

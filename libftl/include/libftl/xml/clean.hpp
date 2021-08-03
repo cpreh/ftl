@@ -9,20 +9,12 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace xml
 {
-
 LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-	libftl::error,
-	std::string
->
-clean(
-	std::istream &
-);
+fcppt::either::object<libftl::error, std::string> clean(std::istream &);
 
 }
 }

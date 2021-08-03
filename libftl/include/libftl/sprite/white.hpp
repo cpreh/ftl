@@ -4,15 +4,12 @@
 #include <libftl/detail/symbol.hpp>
 #include <libftl/sprite/color.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
 LIBFTL_DETAIL_SYMBOL
-libftl::sprite::color
-white();
+libftl::sprite::color white();
 
 }
 }

@@ -4,18 +4,11 @@
 #include <libftl/sprite/choices.hpp>
 #include <sge/sprite/color_fwd.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
-using
-color
-=
-sge::sprite::color<
-	libftl::sprite::choices
->;
+using color = sge::sprite::color<libftl::sprite::choices>;
 
 }
 }

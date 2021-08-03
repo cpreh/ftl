@@ -10,56 +10,21 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
-fcppt::optional::reference<
-	libftl::xml::generated::blueprints::ship_blueprint const
->
+fcppt::optional::reference<libftl::xml::generated::blueprints::ship_blueprint const>
 libftl::blueprints::find_ship(
-	fcppt::reference<
-		libftl::blueprints::data const
-	> const _data,
-	std::string const &_name
-)
+    fcppt::reference<libftl::blueprints::data const> const _data, std::string const &_name)
 {
-	return
-		libftl::impl::blueprints::find(
-			fcppt::function<
-				::xsd::cxx::tree::sequence<
-					libftl::xml::generated::blueprints::ship_blueprint
-				> const & (
-					libftl::xml::generated::blueprints::blueprints_root const &
-				)
-			>{
-				[](
-					libftl::xml::generated::blueprints::blueprints_root const &_root
-				)
-				->
-				::xsd::cxx::tree::sequence<
-					libftl::xml::generated::blueprints::ship_blueprint
-				> const &
-				{
-					return
-						_root.shipBlueprint();
-				}
-			},
-			fcppt::function<
-				bool (
-					libftl::xml::generated::blueprints::ship_blueprint const &
-				)
-			>{
-				[
-					&_name
-				](
-					libftl::xml::generated::blueprints::ship_blueprint const &_blueprint
-				)
-				{
-					return
-						_blueprint.name1()
-						==
-						_name;
-				}
-			},
-			_data
-		);
-
+  return libftl::impl::blueprints::find(
+      fcppt::function<
+          ::xsd::cxx::tree::sequence<libftl::xml::generated::blueprints::ship_blueprint> const &(
+              libftl::xml::generated::blueprints::blueprints_root const &)>{
+          [](libftl::xml::generated::blueprints::blueprints_root const &_root)
+              -> ::xsd::cxx::tree::sequence<
+                  libftl::xml::generated::blueprints::ship_blueprint> const & {
+            return _root.shipBlueprint();
+          }},
+      fcppt::function<bool(libftl::xml::generated::blueprints::ship_blueprint const &)>{
+          [&_name](libftl::xml::generated::blueprints::ship_blueprint const &_blueprint)
+          { return _blueprint.name1() == _name; }},
+      _data);
 }

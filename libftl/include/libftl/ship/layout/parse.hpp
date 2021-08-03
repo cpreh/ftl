@@ -9,22 +9,14 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace layout
 {
-
 LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-	libftl::error,
-	libftl::ship::layout::object
->
-parse(
-	std::istream &
-);
+fcppt::either::object<libftl::error, libftl::ship::layout::object> parse(std::istream &);
 
 }
 }

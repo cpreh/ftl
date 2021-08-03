@@ -9,49 +9,34 @@
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
-
 class resources
 {
-	FCPPT_NONCOPYABLE(
-		resources
-	);
+  FCPPT_NONCOPYABLE(resources);
+
 public:
-	resources(
-		fcppt::unique_ptr<
-			libftl::xml::generated::ship::ship_root
-		> &&,
-		libftl::ship::images::object &&,
-		libftl::ship::layout::object &&
-	);
+  resources(
+      fcppt::unique_ptr<libftl::xml::generated::ship::ship_root> &&,
+      libftl::ship::images::object &&,
+      libftl::ship::layout::object &&);
 
-	LIBFTL_DETAIL_SYMBOL
-	resources(
-		resources &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  resources(resources &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	resources &
-	operator=(
-		resources &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  resources &operator=(resources &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	~resources();
+  LIBFTL_DETAIL_SYMBOL
+  ~resources();
 
-	fcppt::unique_ptr<
-		libftl::xml::generated::ship::ship_root
-	> ship_root_;
+  fcppt::unique_ptr<libftl::xml::generated::ship::ship_root> ship_root_;
 
-	libftl::ship::images::object images_;
+  libftl::ship::images::object images_;
 
-	libftl::ship::layout::object layout_;
+  libftl::ship::layout::object layout_;
 };
 
 }

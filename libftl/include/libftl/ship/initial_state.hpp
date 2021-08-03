@@ -12,22 +12,15 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
-
 LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-	libftl::error,
-	libftl::ship::state
->
-initial_state(
-	libftl::xml::generated::blueprints::ship_blueprint const &,
-	libftl::ship::layout::object const &,
-	libftl::sprite::images const &
-);
+fcppt::either::object<libftl::error, libftl::ship::state> initial_state(
+    libftl::xml::generated::blueprints::ship_blueprint const &,
+    libftl::ship::layout::object const &,
+    libftl::sprite::images const &);
 
 }
 }

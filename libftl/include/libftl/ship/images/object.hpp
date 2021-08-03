@@ -11,93 +11,57 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace images
 {
-
 struct object
 {
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		sge::texture::const_part_shared_ptr,
-		base
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(sge::texture::const_part_shared_ptr, base);
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		sge::texture::const_part_shared_ptr,
-		shield
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(sge::texture::const_part_shared_ptr, shield);
 
-	struct offset_image
-	{
-		offset_image(
-			libftl::xml::generated::ship::offset const &,
-			sge::texture::const_part_shared_ptr &&
-		);
+  struct offset_image
+  {
+    offset_image(
+        libftl::xml::generated::ship::offset const &, sge::texture::const_part_shared_ptr &&);
 
-		libftl::xml::generated::ship::offset offset_;
+    libftl::xml::generated::ship::offset offset_;
 
-		sge::texture::const_part_shared_ptr image_;
-	};
+    sge::texture::const_part_shared_ptr image_;
+  };
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		offset_image,
-		floor
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(offset_image, floor);
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		offset_image,
-		cloak
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(offset_image, cloak);
 
-	struct gib_image
-	{
-		gib_image(
-			libftl::xml::generated::ship::gib const &,
-			sge::texture::const_part_shared_ptr &&
-		);
+  struct gib_image
+  {
+    gib_image(libftl::xml::generated::ship::gib const &, sge::texture::const_part_shared_ptr &&);
 
-		libftl::xml::generated::ship::gib gib_;
+    libftl::xml::generated::ship::gib gib_;
 
-		sge::texture::const_part_shared_ptr image_;
-	};
+    sge::texture::const_part_shared_ptr image_;
+  };
 
-	object(
-		base &&,
-		fcppt::optional::object<
-			shield
-		> &&,
-		fcppt::optional::object<
-			floor
-		> &&,
-		fcppt::optional::object<
-			cloak
-		> &&,
-		std::vector<
-			gib_image
-		> &&
-	);
+  object(
+      base &&,
+      fcppt::optional::object<shield> &&,
+      fcppt::optional::object<floor> &&,
+      fcppt::optional::object<cloak> &&,
+      std::vector<gib_image> &&);
 
-	base base_;
+  base base_;
 
-	fcppt::optional::object<
-		shield
-	> shield_;
+  fcppt::optional::object<shield> shield_;
 
-	fcppt::optional::object<
-		floor
-	> floor_;
+  fcppt::optional::object<floor> floor_;
 
-	fcppt::optional::object<
-		cloak
-	> cloak_;
+  fcppt::optional::object<cloak> cloak_;
 
-	std::vector<
-		gib_image
-	> gibs_;
+  std::vector<gib_image> gibs_;
 };
 
 }

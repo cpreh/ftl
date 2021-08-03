@@ -6,21 +6,15 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <fcppt/either/error.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace xml
 {
-
-fcppt::either::error<
-	libftl::error
->
-main( // NOLINT(bugprone-exception-escape)
-	libftl::archive::base &, // NOLINT(google-runtime-references)
-	ftl::parse::xml::arguments const &
-);
+fcppt::either::error<libftl::error> main( // NOLINT(bugprone-exception-escape)
+    libftl::archive::base &, // NOLINT(google-runtime-references)
+    ftl::parse::xml::arguments const &);
 
 }
 }

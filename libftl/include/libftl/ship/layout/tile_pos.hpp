@@ -4,5 +4,4 @@
 #include <libftl/ship/layout/tile_pos_fwd.hpp>
 #include <fcppt/math/vector/static.hpp>
 
-
 #endif

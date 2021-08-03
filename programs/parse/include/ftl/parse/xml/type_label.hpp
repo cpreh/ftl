@@ -3,17 +3,13 @@
 
 #include <fcppt/record/make_label.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace xml
 {
-
-FCPPT_RECORD_MAKE_LABEL(
-	type_label
-);
+FCPPT_RECORD_MAKE_LABEL(type_label);
 
 }
 }

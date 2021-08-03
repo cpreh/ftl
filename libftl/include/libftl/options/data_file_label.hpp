@@ -3,15 +3,11 @@
 
 #include <fcppt/record/make_label.hpp>
 
-
 namespace libftl
 {
 namespace options
 {
-
-FCPPT_RECORD_MAKE_LABEL(
-	data_file_label
-);
+FCPPT_RECORD_MAKE_LABEL(data_file_label);
 
 }
 }

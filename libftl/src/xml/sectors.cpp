@@ -6,22 +6,9 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-
-fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::sectors::sectors_root
-	>
->
-libftl::xml::sectors(
-	std::istream &_input
-)
+fcppt::either::
+    object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::sectors::sectors_root>>
+    libftl::xml::sectors(std::istream &_input)
 {
-	return
-		libftl::impl::xml::read(
-			_input,
-			LIBFTL_IMPL_XML_MAKE_LOAD_FUNCTION(
-				sectors
-			)
-		);
+  return libftl::impl::xml::read(_input, LIBFTL_IMPL_XML_MAKE_LOAD_FUNCTION(sectors));
 }

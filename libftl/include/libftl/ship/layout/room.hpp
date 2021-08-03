@@ -5,33 +5,22 @@
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace layout
 {
-
 struct room
 {
-	room(
-		libftl::ship::layout::room_id const _id,
-		libftl::ship::layout::tile_rect const _rect
-	)
-	:
-		id_{
-			_id
-		},
-		rect_{
-			_rect
-		}
-	{
-	}
+  room(libftl::ship::layout::room_id const _id, libftl::ship::layout::tile_rect const _rect)
+      : id_{_id}, rect_{_rect}
+  {
+  }
 
-	libftl::ship::layout::room_id id_;
+  libftl::ship::layout::room_id id_;
 
-	libftl::ship::layout::tile_rect rect_;
+  libftl::ship::layout::tile_rect rect_;
 };
 
 }

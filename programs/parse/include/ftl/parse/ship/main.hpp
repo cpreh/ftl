@@ -6,21 +6,15 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <fcppt/either/error.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace ship
 {
-
-fcppt::either::error<
-	libftl::error
->
-main(
-	libftl::archive::base &, // NOLINT(google-runtime-references)
-	ftl::parse::ship::arguments const &
-);
+fcppt::either::error<libftl::error> main(
+    libftl::archive::base &, // NOLINT(google-runtime-references)
+    ftl::parse::ship::arguments const &);
 
 }
 }

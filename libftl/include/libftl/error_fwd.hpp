@@ -4,14 +4,9 @@
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/string.hpp>
 
-
 namespace libftl
 {
-
-FCPPT_MAKE_STRONG_TYPEDEF(
-	fcppt::string,
-	error
-);
+FCPPT_MAKE_STRONG_TYPEDEF(fcppt::string, error);
 
 }
 

@@ -6,21 +6,9 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-
 libftl::room::state::state(
-	fcppt::optional::object<
-		libftl::room::system
-	> &&_system,
-	libftl::ship::layout::room const _layout
-)
-:
-	system_{
-		std::move(
-			_system
-		)
-	},
-	layout_{
-		_layout
-	}
+    fcppt::optional::object<libftl::room::system> &&_system,
+    libftl::ship::layout::room const _layout)
+    : system_{std::move(_system)}, layout_{_layout}
 {
 }

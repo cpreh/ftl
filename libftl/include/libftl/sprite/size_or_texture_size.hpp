@@ -4,5 +4,4 @@
 #include <libftl/sprite/size_or_texture_size_fwd.hpp>
 #include <sge/sprite/types/size_or_texture_size.hpp>
 
-
 #endif

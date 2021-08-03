@@ -12,25 +12,11 @@
 #include <istream>
 #include <fcppt/config/external_end.hpp>
 
-
-fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::ship::ship_root
-	>
->
+fcppt::either::object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::ship::ship_root>>
 libftl::ship::layout::load_xml(
-	libftl::archive::base &_archive,
-	libftl::ship::layout::name const &_name
-)
+    libftl::archive::base &_archive, libftl::ship::layout::name const &_name)
 {
-	return
-		fcppt::either::bind(
-			_archive.open(libftl::archive::path{"data"} / (_name.get() + ".xml")),
-			[](fcppt::unique_ptr<std::istream> &&_stream)
-			{
-				return
-					libftl::xml::ship(*_stream);
-			}
-		);
+  return fcppt::either::bind(
+      _archive.open(libftl::archive::path{"data"} / (_name.get() + ".xml")),
+      [](fcppt::unique_ptr<std::istream> &&_stream) { return libftl::xml::ship(*_stream); });
 }

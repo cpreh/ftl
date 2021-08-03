@@ -10,22 +10,15 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace xml
 {
-
 LIBFTL_DETAIL_SYMBOL
 fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::achievements::achievements_root
-	>
->
-achievements(
-	std::istream &
-);
+    libftl::error,
+    fcppt::unique_ptr<libftl::xml::generated::achievements::achievements_root>>
+achievements(std::istream &);
 
 }
 }

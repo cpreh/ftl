@@ -3,16 +3,11 @@
 
 #include <sge/image/color/rgba8_format.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
-using
-color_format
-=
-sge::image::color::rgba8_format;
+using color_format = sge::image::color::rgba8_format;
 
 }
 }

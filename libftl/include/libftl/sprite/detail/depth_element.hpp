@@ -7,31 +7,20 @@
 #include <fcppt/mpl/list/object.hpp>
 #include <fcppt/record/element.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
 namespace detail
 {
-
 struct depth_element
 {
-	template<
-		typename TypeChoices
-	>
-	struct apply
-	{
-		using
-		type
-		=
-		fcppt::mpl::list::object<
-			fcppt::record::element<
-				libftl::sprite::depth_role,
-				libftl::sprite::depth
-			>
-		>;
-	};
+  template <typename TypeChoices>
+  struct apply
+  {
+    using type = fcppt::mpl::list::object<
+        fcppt::record::element<libftl::sprite::depth_role, libftl::sprite::depth>>;
+  };
 };
 
 }

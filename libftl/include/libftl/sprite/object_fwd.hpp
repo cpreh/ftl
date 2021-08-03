@@ -4,18 +4,11 @@
 #include <libftl/sprite/choices_fwd.hpp>
 #include <sge/sprite/object_fwd.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
-using
-object
-=
-sge::sprite::object<
-	libftl::sprite::choices
->;
+using object = sge::sprite::object<libftl::sprite::choices>;
 
 }
 }

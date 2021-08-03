@@ -6,5 +6,4 @@
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>
 
-
 #endif

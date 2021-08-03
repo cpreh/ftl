@@ -8,21 +8,13 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace xml
 {
-
-fcppt::either::object<
-	libftl::error,
-	libftl::impl::xml::document
->
-parse(
-	std::istream &
-);
+fcppt::either::object<libftl::error, libftl::impl::xml::document> parse(std::istream &);
 
 }
 }

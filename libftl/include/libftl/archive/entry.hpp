@@ -5,31 +5,20 @@
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
 
-
 namespace libftl
 {
 namespace archive
 {
-
 struct entry
 {
-	entry(
-		libftl::archive::offset const _offset,
-		libftl::archive::length const _length
-	)
-	:
-		offset_{
-			_offset
-		},
-		length_{
-			_length
-		}
-	{
-	}
+  entry(libftl::archive::offset const _offset, libftl::archive::length const _length)
+      : offset_{_offset}, length_{_length}
+  {
+  }
 
-	libftl::archive::offset offset_;
+  libftl::archive::offset offset_;
 
-	libftl::archive::length length_;
+  libftl::archive::length length_;
 };
 
 }

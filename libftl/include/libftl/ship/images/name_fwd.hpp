@@ -6,18 +6,13 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace images
 {
-
-FCPPT_MAKE_STRONG_TYPEDEF(
-	std::string,
-	name
-);
+FCPPT_MAKE_STRONG_TYPEDEF(std::string, name);
 
 }
 }

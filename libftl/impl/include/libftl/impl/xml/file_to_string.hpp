@@ -6,18 +6,13 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace xml
 {
-
-std::string
-file_to_string(
-	std::istream &
-);
+std::string file_to_string(std::istream &);
 
 }
 }

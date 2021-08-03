@@ -27,94 +27,54 @@
 #include <string_view>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace fcppt::enum_
 {
-
-template<>
-struct to_string_impl<
-	ftl::parse::xml::type
->
+template <>
+struct to_string_impl<ftl::parse::xml::type>
 {
-	static std::string_view get(ftl::parse::xml::type const _type)
-	{
-#define TO_STRING_CASE(name) FCPPT_ENUM_TO_STRING_CASE(ftl::parse::xml::type,name)
-		switch(_type)
-		{
-			TO_STRING_CASE(achievements);
-			TO_STRING_CASE(animations);
-			TO_STRING_CASE(blueprints);
-			TO_STRING_CASE(events);
-			TO_STRING_CASE(sectors);
-			TO_STRING_CASE(ship);
-		}
+  static std::string_view get(ftl::parse::xml::type const _type)
+  {
+#define TO_STRING_CASE(name) FCPPT_ENUM_TO_STRING_CASE(ftl::parse::xml::type, name)
+    switch (_type)
+    {
+      TO_STRING_CASE(achievements);
+      TO_STRING_CASE(animations);
+      TO_STRING_CASE(blueprints);
+      TO_STRING_CASE(events);
+      TO_STRING_CASE(sectors);
+      TO_STRING_CASE(ship);
+    }
 #undef TO_STRING_CASE
-		FCPPT_ASSERT_UNREACHABLE;
-	}
+    FCPPT_ASSERT_UNREACHABLE;
+  }
 };
 
 }
 
 namespace ftl::parse::xml
 {
-
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
-fcppt::io::istream &
-operator>>(
-	fcppt::io::istream &_stream,
-	ftl::parse::xml::type &_name
-)
+fcppt::io::istream &operator>>(fcppt::io::istream &_stream, ftl::parse::xml::type &_name)
 {
-	return
-		fcppt::enum_::input(
-			_stream,
-			_name
-		);
+  return fcppt::enum_::input(_stream, _name);
 }
 
 FCPPT_PP_POP_WARNING
 
 }
 
-fcppt::options::base_unique_ptr<
-	ftl::parse::xml::arguments
->
-ftl::parse::xml::options_parser()
+fcppt::options::base_unique_ptr<ftl::parse::xml::arguments> ftl::parse::xml::options_parser()
 {
-	return
-		fcppt::options::make_base<
-			ftl::parse::xml::arguments
-		>(
-			fcppt::options::apply(
-				fcppt::options::argument<
-					ftl::parse::xml::type_label,
-					ftl::parse::xml::type
-				>{
-					fcppt::options::long_name{
-						FCPPT_TEXT("type")
-					},
-					fcppt::options::optional_help_text{
-						fcppt::options::help_text{
-							FCPPT_TEXT("Type of the xml file to parse")
-						}
-					}
-				},
-				fcppt::options::argument<
-					ftl::parse::path_label,
-					libftl::archive::path
-				>{
-					fcppt::options::long_name{
-						FCPPT_TEXT("xml-file")
-					},
-					fcppt::options::optional_help_text{
-						fcppt::options::help_text{
-							FCPPT_TEXT("Path to the .xml file")
-						}
-					}
-				}
-			)
-		);
+  return fcppt::options::make_base<ftl::parse::xml::arguments>(fcppt::options::apply(
+      fcppt::options::argument<ftl::parse::xml::type_label, ftl::parse::xml::type>{
+          fcppt::options::long_name{FCPPT_TEXT("type")},
+          fcppt::options::optional_help_text{
+              fcppt::options::help_text{FCPPT_TEXT("Type of the xml file to parse")}}},
+      fcppt::options::argument<ftl::parse::path_label, libftl::archive::path>{
+          fcppt::options::long_name{FCPPT_TEXT("xml-file")},
+          fcppt::options::optional_help_text{
+              fcppt::options::help_text{FCPPT_TEXT("Path to the .xml file")}}}));
 }

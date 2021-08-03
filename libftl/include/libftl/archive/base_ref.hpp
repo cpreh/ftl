@@ -4,18 +4,11 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <fcppt/reference_impl.hpp>
 
-
 namespace libftl
 {
 namespace archive
 {
-
-using
-base_ref
-=
-fcppt::reference<
-	libftl::archive::base
->;
+using base_ref = fcppt::reference<libftl::archive::base>;
 
 }
 }

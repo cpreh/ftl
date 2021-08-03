@@ -25,178 +25,62 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace xml
 {
-
-template<
-	typename Result
->
-fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		Result
-	>
->
-read(
-	std::istream &_stream,
-	libftl::impl::xml::load_function<
-		Result
-	> const &_function
-)
+template <typename Result>
+fcppt::either::object<libftl::error, fcppt::unique_ptr<Result>>
+read(std::istream &_stream, libftl::impl::xml::load_function<Result> const &_function)
 {
-	return
-		fcppt::either::bind(
-			libftl::xml::clean(
-				_stream
-			),
-			[
-				&_function
-			](
-				std::string &&_input
-			)
-			{
-				using
-				result_type
-				=
-				fcppt::either::object<
-					libftl::error,
-					fcppt::unique_ptr<
-						Result
-					>
-				>;
+  return fcppt::either::bind(
+      libftl::xml::clean(_stream),
+      [&_function](std::string &&_input)
+      {
+        using result_type = fcppt::either::object<libftl::error, fcppt::unique_ptr<Result>>;
 
-FCPPT_PP_PUSH_WARNING
-FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
-				auto const make_error(
-					[](
-						fcppt::string &&_value
-					)
-					->
-					result_type
-					{
-						return
-							result_type{
-								libftl::error{
-									FCPPT_TEXT("Failed to read XML document: ")
-									+
-									std::move(
-										_value
-									)
-								}
-							};
-					}
-				);
-FCPPT_PP_POP_WARNING
+        FCPPT_PP_PUSH_WARNING
+        FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
+        auto const make_error(
+            [](fcppt::string &&_value) -> result_type
+            {
+              return result_type{
+                  libftl::error{FCPPT_TEXT("Failed to read XML document: ") + std::move(_value)}};
+            });
+        FCPPT_PP_POP_WARNING
 
-				try
-				{
-					std::istringstream stream{
-						_input
-					};
+        try
+        {
+          std::istringstream stream{_input};
 
-					return
-						result_type{
-							FCPPT_ASSERT_OPTIONAL_ERROR(
-								fcppt::unique_ptr_from_std(
-									_function(
-										stream
-									)
-								)
-							)
-						};
-				}
-				catch(
-					xsd::cxx::tree::expected_element<
-						char
-					> const &_error
-				)
-				{
-					return
-						make_error(
-							FCPPT_TEXT("Expected element ")
-							+
-							fcppt::from_std_string(
-								_error.name()
-							)
-							+
-							FCPPT_TEXT(" in namespace ")
-							+
-							fcppt::from_std_string(
-								_error.namespace_()
-							)
-							+
-							FCPPT_TEXT(": ")
-							+
-							fcppt::from_std_string(
-								fcppt::output_to_std_string(
-									_error
-								)
-							)
-						);
-
-				}
-				catch(
-					xsd::cxx::tree::expected_attribute<
-						char
-					> const &_error
-				)
-				{
-					return
-						make_error(
-							FCPPT_TEXT("Expected attribute ")
-							+
-							fcppt::from_std_string(
-								_error.name()
-							)
-							+
-							FCPPT_TEXT(" in namespace ")
-							+
-							fcppt::from_std_string(
-								_error.namespace_()
-							)
-							+
-							FCPPT_TEXT(": ")
-							+
-							fcppt::from_std_string(
-								fcppt::output_to_std_string(
-									_error
-								)
-							)
-						);
-				}
-				catch(
-					xsd::cxx::tree::exception<
-						char
-					> const &_error
-				)
-				{
-					return
-						make_error(
-							fcppt::from_std_string(
-								fcppt::output_to_std_string(
-									_error
-								)
-							)
-						);
-				}
-				catch(
-					xsd::cxx::exception const &_error
-				)
-				{
-					return
-						make_error(
-							fcppt::from_std_string(
-								_error.what()
-							)
-						);
-				}
-			}
-		);
+          return result_type{
+              FCPPT_ASSERT_OPTIONAL_ERROR(fcppt::unique_ptr_from_std(_function(stream)))};
+        }
+        catch (xsd::cxx::tree::expected_element<char> const &_error)
+        {
+          return make_error(
+              FCPPT_TEXT("Expected element ") + fcppt::from_std_string(_error.name()) +
+              FCPPT_TEXT(" in namespace ") + fcppt::from_std_string(_error.namespace_()) +
+              FCPPT_TEXT(": ") + fcppt::from_std_string(fcppt::output_to_std_string(_error)));
+        }
+        catch (xsd::cxx::tree::expected_attribute<char> const &_error)
+        {
+          return make_error(
+              FCPPT_TEXT("Expected attribute ") + fcppt::from_std_string(_error.name()) +
+              FCPPT_TEXT(" in namespace ") + fcppt::from_std_string(_error.namespace_()) +
+              FCPPT_TEXT(": ") + fcppt::from_std_string(fcppt::output_to_std_string(_error)));
+        }
+        catch (xsd::cxx::tree::exception<char> const &_error)
+        {
+          return make_error(fcppt::from_std_string(fcppt::output_to_std_string(_error)));
+        }
+        catch (xsd::cxx::exception const &_error)
+        {
+          return make_error(fcppt::from_std_string(_error.what()));
+        }
+      });
 }
 
 }

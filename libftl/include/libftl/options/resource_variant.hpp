@@ -8,5 +8,4 @@
 #include <fcppt/options/right.hpp>
 #include <fcppt/variant/object.hpp>
 
-
 #endif

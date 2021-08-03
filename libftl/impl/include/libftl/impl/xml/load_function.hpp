@@ -7,27 +7,14 @@
 #include <memory>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace xml
 {
-
-template<
-	typename Result
->
-using
-load_function
-=
-fcppt::function<
-	std::unique_ptr<
-		Result
-	>(
-		std::istream &
-	)
->;
+template <typename Result>
+using load_function = fcppt::function<std::unique_ptr<Result>(std::istream &)>;
 
 }
 }

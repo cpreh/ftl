@@ -7,19 +7,11 @@
 #include <unordered_map>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace archive
 {
-
-using
-index
-=
-std::unordered_map<
-	std::string,
-	libftl::archive::entry
->;
+using index = std::unordered_map<std::string, libftl::archive::entry>;
 
 }
 }

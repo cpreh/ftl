@@ -12,43 +12,26 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace archive
 {
-
-class filesystem
-:
-	public libftl::archive::base
+class filesystem : public libftl::archive::base
 {
-	FCPPT_NONMOVABLE(
-		filesystem
-	);
+  FCPPT_NONMOVABLE(filesystem);
+
 public:
-	explicit
-	filesystem(
-		std::filesystem::path &&
-	);
+  explicit filesystem(std::filesystem::path &&);
 
-	~filesystem()
-	override;
+  ~filesystem() override;
 
-	[[nodiscard]]
-	fcppt::either::object<
-		libftl::error,
-		fcppt::unique_ptr<
-			std::istream
-		>
-	>
-	open(
-		libftl::archive::path const &
-	)
-	override;
+  [[nodiscard]] fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
+  open(libftl::archive::path const &) override;
+
 private:
-	std::filesystem::path const directory_;
+  std::filesystem::path const directory_;
 };
 
 }

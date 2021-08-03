@@ -6,21 +6,12 @@
 #include <fcppt/record/element_fwd.hpp>
 #include <fcppt/record/object_fwd.hpp>
 
-
 namespace libftl
 {
 namespace options
 {
-
-using
-resource_record
-=
-fcppt::record::object<
-	fcppt::record::element<
-		libftl::options::resource_label,
-		libftl::options::resource_variant
-	>
->;
+using resource_record = fcppt::record::object<
+    fcppt::record::element<libftl::options::resource_label, libftl::options::resource_variant>>;
 
 }
 }

@@ -11,27 +11,18 @@
 #include <fcppt/reference_fwd.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace images
 {
-
 LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-	libftl::error,
-	libftl::ship::images::object
->
-load(
-	libftl::sprite::images const &,
-	libftl::xml::generated::blueprints::ship_blueprint const &,
-	fcppt::reference<
-		libftl::xml::generated::ship::ship_root const
-	>,
-	libftl::ship::images::name const &
-);
+fcppt::either::object<libftl::error, libftl::ship::images::object> load(
+    libftl::sprite::images const &,
+    libftl::xml::generated::blueprints::ship_blueprint const &,
+    fcppt::reference<libftl::xml::generated::ship::ship_root const>,
+    libftl::ship::images::name const &);
 
 }
 }

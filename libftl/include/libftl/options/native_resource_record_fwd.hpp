@@ -9,25 +9,13 @@
 #include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace options
 {
-
-using
-native_resource_record
-=
-fcppt::record::object<
-	fcppt::record::element<
-		libftl::options::data_file_label,
-		std::filesystem::path
-	>,
-	fcppt::record::element<
-		libftl::options::resource_file_label,
-		std::filesystem::path
-	>
->;
+using native_resource_record = fcppt::record::object<
+    fcppt::record::element<libftl::options::data_file_label, std::filesystem::path>,
+    fcppt::record::element<libftl::options::resource_file_label, std::filesystem::path>>;
 
 }
 }

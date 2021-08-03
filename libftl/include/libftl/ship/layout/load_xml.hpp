@@ -9,25 +9,19 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace layout
 {
-
 LIBFTL_DETAIL_SYMBOL
 fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::ship::ship_root
-	>
->
+    libftl::error,
+    fcppt::unique_ptr<libftl::xml::generated::ship::ship_root>>
 load_xml(
-	libftl::archive::base &, // NOLINT(google-runtime-references)
-	libftl::ship::layout::name const &
-);
+    libftl::archive::base &, // NOLINT(google-runtime-references)
+    libftl::ship::layout::name const &);
 
 }
 }

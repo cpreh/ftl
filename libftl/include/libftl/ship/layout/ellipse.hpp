@@ -5,5 +5,4 @@
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/math/box/rect.hpp>
 
-
 #endif

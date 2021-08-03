@@ -16,68 +16,44 @@
 #include <unordered_map>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
 class images
 {
-	FCPPT_NONCOPYABLE(
-		images
-	);
+  FCPPT_NONCOPYABLE(images);
+
 public:
-	LIBFTL_DETAIL_SYMBOL
-	images(
-		sge::renderer::device::core_ref,
-		sge::image2d::system_ref,
-		libftl::archive::base_ref
-	);
+  LIBFTL_DETAIL_SYMBOL
+  images(sge::renderer::device::core_ref, sge::image2d::system_ref, libftl::archive::base_ref);
 
-	LIBFTL_DETAIL_SYMBOL
-	images(
-		images &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  images(images &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	images &
-	operator=(
-		images &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  images &operator=(images &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	~images();
+  LIBFTL_DETAIL_SYMBOL
+  ~images();
 
-	LIBFTL_DETAIL_SYMBOL
-	sge::texture::const_part_shared_ptr
-	opaque() const;
+  LIBFTL_DETAIL_SYMBOL
+  sge::texture::const_part_shared_ptr opaque() const;
 
-	LIBFTL_DETAIL_SYMBOL
-	fcppt::either::object<
-		libftl::error,
-		sge::texture::const_part_shared_ptr
-	>
-	load(
-		libftl::archive::path const &
-	) const;
+  LIBFTL_DETAIL_SYMBOL
+  fcppt::either::object<libftl::error, sge::texture::const_part_shared_ptr>
+  load(libftl::archive::path const &) const;
+
 private:
-	sge::renderer::device::core_ref renderer_device_;
+  sge::renderer::device::core_ref renderer_device_;
 
-	sge::image2d::system_ref image_system_;
+  sge::image2d::system_ref image_system_;
 
-	libftl::archive::base_ref archive_;
+  libftl::archive::base_ref archive_;
 
-	sge::texture::const_part_shared_ptr opaque_;
+  sge::texture::const_part_shared_ptr opaque_;
 
-	mutable
-	std::unordered_map<
-		std::string,
-		sge::texture::const_part_shared_ptr
-	>
-	impl_;
+  mutable std::unordered_map<std::string, sge::texture::const_part_shared_ptr> impl_;
 };
 
 }

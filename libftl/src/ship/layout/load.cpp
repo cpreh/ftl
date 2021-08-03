@@ -12,23 +12,11 @@
 #include <istream>
 #include <fcppt/config/external_end.hpp>
 
-
-fcppt::either::object<
-	libftl::error,
-	libftl::ship::layout::object
->
-libftl::ship::layout::load(
-	libftl::archive::base &_archive,
-	libftl::ship::layout::name const &_name
-)
+fcppt::either::object<libftl::error, libftl::ship::layout::object>
+libftl::ship::layout::load(libftl::archive::base &_archive, libftl::ship::layout::name const &_name)
 {
-	return
-		fcppt::either::bind(
-			_archive.open(libftl::archive::path{"data"} / (_name.get() + ".txt")),
-			[](fcppt::unique_ptr<std::istream> &&_stream)
-			{
-				return
-					libftl::ship::layout::parse(*_stream);
-			}
-		);
+  return fcppt::either::bind(
+      _archive.open(libftl::archive::path{"data"} / (_name.get() + ".txt")),
+      [](fcppt::unique_ptr<std::istream> &&_stream)
+      { return libftl::ship::layout::parse(*_stream); });
 }

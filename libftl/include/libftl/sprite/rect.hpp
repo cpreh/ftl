@@ -4,5 +4,4 @@
 #include <libftl/sprite/rect_fwd.hpp>
 #include <sge/sprite/types/rect.hpp>
 
-
 #endif

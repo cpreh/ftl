@@ -10,70 +10,41 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace blueprints
 {
-
 class data
 {
-	FCPPT_NONCOPYABLE(
-		data
-	);
+  FCPPT_NONCOPYABLE(data);
+
 public:
-	using
-	blueprint_vector
-	=
-	std::vector<
-		fcppt::unique_ptr<
-			libftl::xml::generated::blueprints::blueprints_root
-		>
-	>;
+  using blueprint_vector =
+      std::vector<fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>>;
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		blueprint_vector,
-		normal_blueprints
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, normal_blueprints);
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		blueprint_vector,
-		dlc_blueprints
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints);
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		blueprint_vector,
-		dlc_blueprints_overwrites
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints_overwrites);
 
-	LIBFTL_DETAIL_SYMBOL
-	data(
-		normal_blueprints &&,
-		dlc_blueprints &&,
-		dlc_blueprints_overwrites &&
-	);
+  LIBFTL_DETAIL_SYMBOL
+  data(normal_blueprints &&, dlc_blueprints &&, dlc_blueprints_overwrites &&);
 
-	LIBFTL_DETAIL_SYMBOL
-	data(
-		data &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  data(data &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	data &
-	operator=(
-		data &&
-	)
-	noexcept;
+  LIBFTL_DETAIL_SYMBOL
+  data &operator=(data &&) noexcept;
 
-	LIBFTL_DETAIL_SYMBOL
-	~data();
+  LIBFTL_DETAIL_SYMBOL
+  ~data();
 
-	normal_blueprints normal_blueprints_;
+  normal_blueprints normal_blueprints_;
 
-	dlc_blueprints dlc_blueprints_;
+  dlc_blueprints dlc_blueprints_;
 
-	dlc_blueprints_overwrites dlc_blueprints_overwrites_;
+  dlc_blueprints_overwrites dlc_blueprints_overwrites_;
 };
 
 }

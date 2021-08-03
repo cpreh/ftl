@@ -10,22 +10,14 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace xml
 {
-
 LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::sectors::sectors_root
-	>
->
-sectors(
-	std::istream &
-);
+fcppt::either::
+    object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::sectors::sectors_root>>
+    sectors(std::istream &);
 
 }
 }

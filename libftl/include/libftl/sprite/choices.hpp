@@ -12,5 +12,4 @@
 #include <sge/sprite/config/with_color.hpp>
 #include <sge/sprite/config/with_texture.hpp>
 
-
 #endif

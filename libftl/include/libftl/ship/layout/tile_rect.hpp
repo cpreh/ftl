@@ -4,5 +4,4 @@
 #include <libftl/ship/layout/tile_rect_fwd.hpp>
 #include <fcppt/math/box/rect.hpp>
 
-
 #endif

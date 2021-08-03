@@ -34,167 +34,54 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-
-fcppt::either::error<
-	libftl::error
->
-ftl::parse::xml::main( // NOLINT(bugprone-exception-escape)
-	libftl::archive::base &_archive,
-	ftl::parse::xml::arguments const &_args
-)
+fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-exception-escape)
+    libftl::archive::base &_archive,
+    ftl::parse::xml::arguments const &_args)
 {
-	using
-	result_type
-	=
-	fcppt::variant::object<
-		fcppt::unique_ptr<
-			libftl::xml::generated::achievements::achievements_root
-		>,
-		fcppt::unique_ptr<
-			libftl::xml::generated::animations::animations_root
-		>,
-		fcppt::unique_ptr<
-			libftl::xml::generated::blueprints::blueprints_root
-		>,
-		fcppt::unique_ptr<
-			libftl::xml::generated::events::events_root
-		>,
-		fcppt::unique_ptr<
-			libftl::xml::generated::sectors::sectors_root
-		>,
-		fcppt::unique_ptr<
-			libftl::xml::generated::ship::ship_root
-		>
-	>;
+  using result_type = fcppt::variant::object<
+      fcppt::unique_ptr<libftl::xml::generated::achievements::achievements_root>,
+      fcppt::unique_ptr<libftl::xml::generated::animations::animations_root>,
+      fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>,
+      fcppt::unique_ptr<libftl::xml::generated::events::events_root>,
+      fcppt::unique_ptr<libftl::xml::generated::sectors::sectors_root>,
+      fcppt::unique_ptr<libftl::xml::generated::ship::ship_root>>;
 
-	auto const load_xml(
-		[
-			&_args
-		](
-			fcppt::unique_ptr<
-				std::istream
-			> &&_stream
-		)
-		->
-		fcppt::either::object<
-			libftl::error,
-			result_type
-		>
-		{
-			auto const wrap_result(
-				[](
-					auto &&_result
-				)
-				{
-					return
-						result_type{
-							std::forward<
-								decltype(
-									_result
-								)
-							>(
-								_result
-							)
-						};
-				}
-			);
+  auto const load_xml(
+      [&_args](fcppt::unique_ptr<std::istream> &&_stream)
+          -> fcppt::either::object<libftl::error, result_type>
+      {
+        auto const wrap_result([](auto &&_result)
+                               { return result_type{std::forward<decltype(_result)>(_result)}; });
 
-			switch(
-				fcppt::record::get<
-					ftl::parse::xml::type_label
-				>(
-					_args
-				)
-			)
-			{
-			case ftl::parse::xml::type::achievements:
-				return
-					fcppt::either::map(
-						libftl::xml::achievements(
-							*_stream
-						),
-						wrap_result
-					);
-			case ftl::parse::xml::type::animations:
-				return
-					fcppt::either::map(
-						libftl::xml::animations(
-							*_stream
-						),
-						wrap_result
-					);
-			case ftl::parse::xml::type::blueprints:
-				return
-					fcppt::either::map(
-						libftl::xml::blueprints(
-							*_stream
-						),
-						wrap_result
-					);
-			case ftl::parse::xml::type::events:
-				return
-					fcppt::either::map(
-						libftl::xml::events(
-							*_stream
-						),
-						wrap_result
-					);
-			case ftl::parse::xml::type::sectors:
-				return
-					fcppt::either::map(
-						libftl::xml::sectors(
-							*_stream
-						),
-						wrap_result
-					);
-			case ftl::parse::xml::type::ship:
-				return
-					fcppt::either::map(
-						libftl::xml::ship(
-							*_stream
-						),
-						wrap_result
-					);
-			}
+        switch (fcppt::record::get<ftl::parse::xml::type_label>(_args))
+        {
+        case ftl::parse::xml::type::achievements:
+          return fcppt::either::map(libftl::xml::achievements(*_stream), wrap_result);
+        case ftl::parse::xml::type::animations:
+          return fcppt::either::map(libftl::xml::animations(*_stream), wrap_result);
+        case ftl::parse::xml::type::blueprints:
+          return fcppt::either::map(libftl::xml::blueprints(*_stream), wrap_result);
+        case ftl::parse::xml::type::events:
+          return fcppt::either::map(libftl::xml::events(*_stream), wrap_result);
+        case ftl::parse::xml::type::sectors:
+          return fcppt::either::map(libftl::xml::sectors(*_stream), wrap_result);
+        case ftl::parse::xml::type::ship:
+          return fcppt::either::map(libftl::xml::ship(*_stream), wrap_result);
+        }
 
-			FCPPT_ASSERT_UNREACHABLE;
-		}
-	);
+        FCPPT_ASSERT_UNREACHABLE;
+      });
 
-	return
-		fcppt::either::map(
-			fcppt::either::bind(
-				_archive.open(
-					fcppt::record::get<
-						ftl::parse::path_label
-					>(
-						_args
-					)
-				),
-				load_xml
-			),
-			[](
-				result_type const &_result
-			)
-			{
-				fcppt::variant::apply(
-					[](
-						auto const &_element
-					)
-					{
-						fcppt::io::cout()
-							<<
-							FCPPT_TEXT("SUCCESS:\n")
-							<<
-							*_element
-							<<
-							FCPPT_TEXT('\n');
-					},
-					_result
-				);
+  return fcppt::either::map(
+      fcppt::either::bind(
+          _archive.open(fcppt::record::get<ftl::parse::path_label>(_args)), load_xml),
+      [](result_type const &_result)
+      {
+        fcppt::variant::apply(
+            [](auto const &_element)
+            { fcppt::io::cout() << FCPPT_TEXT("SUCCESS:\n") << *_element << FCPPT_TEXT('\n'); },
+            _result);
 
-				return
-					fcppt::either::no_error{};
-			}
-		);
+        return fcppt::either::no_error{};
+      });
 }

@@ -4,18 +4,13 @@
 #include <ftl/parse/xml/arguments.hpp>
 #include <fcppt/options/base_unique_ptr.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace xml
 {
-
-fcppt::options::base_unique_ptr<
-	ftl::parse::xml::arguments
->
-options_parser();
+fcppt::options::base_unique_ptr<ftl::parse::xml::arguments> options_parser();
 
 }
 }

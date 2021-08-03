@@ -31,119 +31,47 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
-void
-libftl::sprite::draw(
-	sge::renderer::device::ffp &_renderer_device,
-	sge::renderer::context::ffp &_renderer_context,
-	std::vector<
-		libftl::sprite::object
-	> const &_sprites
-)
+void libftl::sprite::draw(
+    sge::renderer::device::ffp &_renderer_device,
+    sge::renderer::context::ffp &_renderer_context,
+    std::vector<libftl::sprite::object> const &_sprites)
 {
-	sge::sprite::buffers::with_declaration<
-		sge::sprite::buffers::single<
-			libftl::sprite::choices
-		>
-	>
-	sprite_buffers{
-		fcppt::reference_to_base<
-			sge::renderer::device::core
-		>(
-			fcppt::make_ref(
-				_renderer_device
-			)
-		),
-		sge::sprite::buffers::option::static_
-	};
+  sge::sprite::buffers::with_declaration<sge::sprite::buffers::single<libftl::sprite::choices>>
+      sprite_buffers{
+          fcppt::reference_to_base<sge::renderer::device::core>(fcppt::make_ref(_renderer_device)),
+          sge::sprite::buffers::option::static_};
 
-	using
-	state_choices
-	=
-	sge::sprite::state::all_choices;
+  using state_choices = sge::sprite::state::all_choices;
 
-	sge::sprite::state::object<
-		state_choices
-	>
-	sprite_states{
-		fcppt::make_ref(
-			_renderer_device
-		),
-		sge::sprite::state::parameters<
-			state_choices
-		>{}
-	};
+  sge::sprite::state::object<state_choices> sprite_states{
+      fcppt::make_ref(_renderer_device), sge::sprite::state::parameters<state_choices>{}};
 
-	using
-	sprite_options
-	=
-	sge::sprite::process::options<
-		sge::sprite::process::geometry_options::update
-	>;
+  using sprite_options =
+      sge::sprite::process::options<sge::sprite::process::geometry_options::update>;
 
-	using
-	sprite_depth_array
-	=
-	fcppt::enum_::array<
-		libftl::sprite::depth,
-		std::vector<
-			libftl::sprite::object
-		>
-	>;
+  using sprite_depth_array =
+      fcppt::enum_::array<libftl::sprite::depth, std::vector<libftl::sprite::object>>;
 
-	sprite_depth_array const sprite_levels{
-		fcppt::algorithm::fold(
-			_sprites,
-			fcppt::enum_::array_init<
-				sprite_depth_array
-			>(
-				[](libftl::sprite::depth)
-				{
-					return
-						std::vector<libftl::sprite::object>{};
-				}
-			),
-			[](libftl::sprite::object const &_sprite, sprite_depth_array &&_sprite_levels)
-			{
-				_sprite_levels[
-					_sprite.get<
-						libftl::sprite::depth_role
-					>()
-				].push_back(
-					_sprite
-				);
+  sprite_depth_array const sprite_levels{fcppt::algorithm::fold(
+      _sprites,
+      fcppt::enum_::array_init<sprite_depth_array>(
+          [](libftl::sprite::depth) { return std::vector<libftl::sprite::object>{}; }),
+      [](libftl::sprite::object const &_sprite, sprite_depth_array &&_sprite_levels)
+      {
+        _sprite_levels[_sprite.get<libftl::sprite::depth_role>()].push_back(_sprite);
 
-				return
-					std::move(_sprite_levels);
-			}
-		)
-	};
+        return std::move(_sprite_levels);
+      })};
 
-	for(
-		libftl::sprite::depth const depth
-		:
-		fcppt::enum_::make_range<
-			libftl::sprite::depth
-		>()
-	)
-	{
-		sge::sprite::process::with_options<
-			sprite_options
-		>(
-			_renderer_context,
-			sge::sprite::geometry::make_random_access_range(
-				sprite_levels[depth]
-			),
-			sprite_buffers,
-			sge::sprite::compare::nothing{},
-			sprite_states,
-			sge::sprite::state::default_options<
-				state_choices
-			>().fixed_projection(
-				sge::sprite::projection_dim{
-					libftl::sprite::resolution()
-				}
-			)
-		);
-	}
+  for (libftl::sprite::depth const depth : fcppt::enum_::make_range<libftl::sprite::depth>())
+  {
+    sge::sprite::process::with_options<sprite_options>(
+        _renderer_context,
+        sge::sprite::geometry::make_random_access_range(sprite_levels[depth]),
+        sprite_buffers,
+        sge::sprite::compare::nothing{},
+        sprite_states,
+        sge::sprite::state::default_options<state_choices>().fixed_projection(
+            sge::sprite::projection_dim{libftl::sprite::resolution()}));
+  }
 }

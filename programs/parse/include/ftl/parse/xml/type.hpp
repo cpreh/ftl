@@ -3,23 +3,21 @@
 
 #include <ftl/parse/xml/type_fwd.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace xml
 {
-
 enum class type
 {
-	achievements,
-	animations,
-	blueprints,
-	events,
-	sectors,
-	ship,
-	fcppt_maximum = ship
+  achievements,
+  animations,
+  blueprints,
+  events,
+  sectors,
+  ship,
+  fcppt_maximum = ship
 };
 
 }

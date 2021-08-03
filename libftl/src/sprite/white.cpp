@@ -4,14 +4,8 @@
 #include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
 
-
-libftl::sprite::color
-libftl::sprite::white()
+libftl::sprite::color libftl::sprite::white()
 {
-	return
-			sge::image::color::convert<
-				libftl::sprite::color_format
-			>(
-				sge::image::color::predef::white()
-			);
+  return sge::image::color::convert<libftl::sprite::color_format>(
+      sge::image::color::predef::white());
 }

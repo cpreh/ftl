@@ -8,25 +8,16 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
-
 struct state
 {
-	LIBFTL_DETAIL_SYMBOL
-	explicit
-	state(
-		std::vector<
-			libftl::room::state
-		> &&
-	);
+  LIBFTL_DETAIL_SYMBOL
+  explicit state(std::vector<libftl::room::state> &&);
 
-	std::vector<
-		libftl::room::state
-	> rooms_;
+  std::vector<libftl::room::state> rooms_;
 };
 
 }

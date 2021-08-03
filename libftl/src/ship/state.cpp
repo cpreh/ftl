@@ -5,17 +5,4 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
-libftl::ship::state::state(
-	std::vector<
-		libftl::room::state
-	> &&_rooms
-)
-:
-	rooms_{
-		std::move(
-			_rooms
-		)
-	}
-{
-}
+libftl::ship::state::state(std::vector<libftl::room::state> &&_rooms) : rooms_{std::move(_rooms)} {}

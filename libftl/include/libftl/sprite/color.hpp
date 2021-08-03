@@ -4,5 +4,4 @@
 #include <libftl/sprite/color_fwd.hpp>
 #include <sge/sprite/color.hpp>
 
-
 #endif

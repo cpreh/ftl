@@ -4,18 +4,7 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
-std::string
-libftl::impl::xml::remove_comments(
-	std::string const &_input
-)
+std::string libftl::impl::xml::remove_comments(std::string const &_input)
 {
-	return
-		std::regex_replace(
-			_input,
-			std::regex{
-				"<!--[^]*?-->"
-			},
-			std::string{}
-		);
+  return std::regex_replace(_input, std::regex{"<!--[^]*?-->"}, std::string{});
 }

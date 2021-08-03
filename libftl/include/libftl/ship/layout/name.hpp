@@ -4,5 +4,4 @@
 #include <libftl/ship/layout/name_fwd.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 
-
 #endif

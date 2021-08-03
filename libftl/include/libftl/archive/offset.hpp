@@ -7,16 +7,11 @@
 #include <ios>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace archive
 {
-
-FCPPT_MAKE_STRONG_TYPEDEF(
-	std::streamsize,
-	offset
-);
+FCPPT_MAKE_STRONG_TYPEDEF(std::streamsize, offset);
 
 }
 }

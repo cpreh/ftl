@@ -9,21 +9,15 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
 LIBFTL_DETAIL_SYMBOL
-void
-draw(
-	sge::renderer::device::ffp &, // NOLINT(google-runtime-references)
-	sge::renderer::context::ffp &, // NOLINT(google-runtime-references)
-	std::vector<
-		libftl::sprite::object
-	> const &
-);
+void draw(
+    sge::renderer::device::ffp &, // NOLINT(google-runtime-references)
+    sge::renderer::context::ffp &, // NOLINT(google-runtime-references)
+    std::vector<libftl::sprite::object> const &);
 
 }
 }

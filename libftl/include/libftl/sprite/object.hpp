@@ -5,5 +5,4 @@
 #include <libftl/sprite/object_fwd.hpp>
 #include <sge/sprite/object.hpp>
 
-
 #endif

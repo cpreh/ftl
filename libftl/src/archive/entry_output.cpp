@@ -4,21 +4,9 @@
 #include <fcppt/text.hpp>
 #include <fcppt/io/ostream.hpp>
 
-
 fcppt::io::ostream &
-libftl::archive::operator<<(
-	fcppt::io::ostream &_stream,
-	libftl::archive::entry const &_entry
-)
+libftl::archive::operator<<(fcppt::io::ostream &_stream, libftl::archive::entry const &_entry)
 {
-	return
-		_stream
-		<<
-		FCPPT_TEXT("offset: ")
-		<<
-		_entry.offset_
-		<<
-		FCPPT_TEXT(", length: ")
-		<<
-		_entry.length_;
+  return _stream << FCPPT_TEXT("offset: ") << _entry.offset_ << FCPPT_TEXT(", length: ")
+                 << _entry.length_;
 }

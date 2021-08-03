@@ -7,27 +7,18 @@
 #include <libftl/ship/layout/room.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
-
 namespace libftl
 {
 namespace room
 {
-
 struct state
 {
-	LIBFTL_DETAIL_SYMBOL
-	state(
-		fcppt::optional::object<
-			libftl::room::system
-		> &&,
-		libftl::ship::layout::room
-	);
+  LIBFTL_DETAIL_SYMBOL
+  state(fcppt::optional::object<libftl::room::system> &&, libftl::ship::layout::room);
 
-	fcppt::optional::object<
-		libftl::room::system
-	> system_;
+  fcppt::optional::object<libftl::room::system> system_;
 
-	libftl::ship::layout::room layout_;
+  libftl::ship::layout::room layout_;
 };
 
 }

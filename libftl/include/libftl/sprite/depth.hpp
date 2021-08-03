@@ -3,22 +3,20 @@
 
 #include <libftl/sprite/depth_fwd.hpp>
 
-
 namespace libftl
 {
 namespace sprite
 {
-
 enum class depth
 {
-	background,
-	base,
-	floor,
-	tile_background,
-	tile,
-	crew,
-	something,
-	fcppt_maximum = something
+  background,
+  base,
+  floor,
+  tile_background,
+  tile,
+  crew,
+  something,
+  fcppt_maximum = something
 };
 
 }

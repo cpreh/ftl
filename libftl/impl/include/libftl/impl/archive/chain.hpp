@@ -12,45 +12,28 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace archive
 {
-
-class chain
-:
-	public libftl::archive::base
+class chain : public libftl::archive::base
 {
-	FCPPT_NONMOVABLE(
-		chain
-	);
+  FCPPT_NONMOVABLE(chain);
+
 public:
-	chain(
-		libftl::archive::base_unique_ptr &&,
-		libftl::archive::base_unique_ptr &&
-	);
+  chain(libftl::archive::base_unique_ptr &&, libftl::archive::base_unique_ptr &&);
 
-	~chain()
-	override;
+  ~chain() override;
 
-	[[nodiscard]]
-	fcppt::either::object<
-		libftl::error,
-		fcppt::unique_ptr<
-			std::istream
-		>
-	>
-	open(
-		libftl::archive::path const &
-	)
-	override;
+  [[nodiscard]] fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
+  open(libftl::archive::path const &) override;
+
 private:
-	libftl::archive::base_unique_ptr const archive1_;
+  libftl::archive::base_unique_ptr const archive1_;
 
-	libftl::archive::base_unique_ptr const archive2_;
+  libftl::archive::base_unique_ptr const archive2_;
 };
 
 }

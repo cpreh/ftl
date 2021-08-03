@@ -5,5 +5,4 @@
 #include <libftl/options/resource_record.hpp>
 #include <fcppt/options/base_impl.hpp>
 
-
 #endif

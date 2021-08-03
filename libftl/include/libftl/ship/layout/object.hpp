@@ -17,76 +17,47 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace ship
 {
 namespace layout
 {
-
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_GCC_WARNING(-Wnull-dereference)
 
 struct object
 {
-	using
-	offset_vector
-	=
-	fcppt::math::vector::static_<
-		fcppt::optional::object<
-			unsigned
-		>,
-		2
-	>;
+  using offset_vector = fcppt::math::vector::static_<fcppt::optional::object<unsigned>, 2>;
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		int,
-		vertical
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(int, vertical);
 
-	FCPPT_MAKE_STRONG_TYPEDEF(
-		fcppt::optional::object<
-			int
-		>,
-		horizontal
-	);
+  FCPPT_MAKE_STRONG_TYPEDEF(fcppt::optional::object<int>, horizontal);
 
-	using
-	room_list
-	=
-	std::vector<
-		libftl::ship::layout::room
-	>;
+  using room_list = std::vector<libftl::ship::layout::room>;
 
-	using
-	door_list
-	=
-	std::vector<
-		libftl::ship::layout::door
-	>;
+  using door_list = std::vector<libftl::ship::layout::door>;
 
-	LIBFTL_DETAIL_SYMBOL
-	object(
-		offset_vector,
-		vertical,
-		horizontal,
-		libftl::ship::layout::ellipse,
-		room_list &&,
-		door_list &&
-	);
+  LIBFTL_DETAIL_SYMBOL
+  object(
+      offset_vector,
+      vertical,
+      horizontal,
+      libftl::ship::layout::ellipse,
+      room_list &&,
+      door_list &&);
 
-	offset_vector offset_;
+  offset_vector offset_;
 
-	vertical vertical_;
+  vertical vertical_;
 
-	horizontal horizontal_;
+  horizontal horizontal_;
 
-	libftl::ship::layout::ellipse ellipse_;
+  libftl::ship::layout::ellipse ellipse_;
 
-	room_list rooms_;
+  room_list rooms_;
 
-	door_list doors_;
+  door_list doors_;
 };
 
 FCPPT_PP_POP_WARNING

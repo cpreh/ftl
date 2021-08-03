@@ -6,22 +6,8 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-
-fcppt::either::object<
-	libftl::error,
-	fcppt::unique_ptr<
-		libftl::xml::generated::events::events_root
-	>
->
-libftl::xml::events(
-	std::istream &_input
-)
+fcppt::either::object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::events::events_root>>
+libftl::xml::events(std::istream &_input)
 {
-	return
-		libftl::impl::xml::read(
-			_input,
-			LIBFTL_IMPL_XML_MAKE_LOAD_FUNCTION(
-				events
-			)
-		);
+  return libftl::impl::xml::read(_input, LIBFTL_IMPL_XML_MAKE_LOAD_FUNCTION(events));
 }

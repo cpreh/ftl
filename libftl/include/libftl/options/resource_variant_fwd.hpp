@@ -7,23 +7,13 @@
 #include <fcppt/options/right_fwd.hpp>
 #include <fcppt/variant/object_fwd.hpp>
 
-
 namespace libftl
 {
 namespace options
 {
-
-using
-resource_variant
-=
-fcppt::variant::object<
-	fcppt::options::left<
-		libftl::options::native_resource_record
-	>,
-	fcppt::options::right<
-		libftl::options::unpacked_resource_record
-	>
->;
+using resource_variant = fcppt::variant::object<
+    fcppt::options::left<libftl::options::native_resource_record>,
+    fcppt::options::right<libftl::options::unpacked_resource_record>>;
 
 }
 }

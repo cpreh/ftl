@@ -6,19 +6,13 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace impl
 {
 namespace xml
 {
-
-std::ostream &
-operator<<(
-	std::ostream &,
-	libftl::impl::xml::document const &
-);
+std::ostream &operator<<(std::ostream &, libftl::impl::xml::document const &);
 
 }
 }

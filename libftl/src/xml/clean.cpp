@@ -11,33 +11,16 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-
-fcppt::either::object<
-	libftl::error,
-	std::string
->
-libftl::xml::clean(
-	std::istream &_stream
-)
+fcppt::either::object<libftl::error, std::string> libftl::xml::clean(std::istream &_stream)
 {
-	return
-		fcppt::either::map(
-			libftl::impl::xml::parse(
-				_stream
-			),
-			[](
-				libftl::impl::xml::document const &_document
-			)
-			{
-				std::ostringstream stream{};
+  return fcppt::either::map(
+      libftl::impl::xml::parse(_stream),
+      [](libftl::impl::xml::document const &_document)
+      {
+        std::ostringstream stream{};
 
-				libftl::impl::xml::output(
-					stream,
-					_document
-				);
+        libftl::impl::xml::output(stream, _document);
 
-				return
-					stream.str();
-			}
-		);
+        return stream.str();
+      });
 }

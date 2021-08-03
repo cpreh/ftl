@@ -50,301 +50,116 @@
 #include <iostream>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace
 {
+FCPPT_RECORD_MAKE_LABEL(ship_label);
 
-FCPPT_RECORD_MAKE_LABEL(
-	ship_label
-);
+FCPPT_RECORD_MAKE_LABEL(xml_label);
 
-FCPPT_RECORD_MAKE_LABEL(
-	xml_label
-);
+using ship_command_arguments =
+    fcppt::record::object<fcppt::record::element<ship_label, ftl::parse::ship::arguments>>;
 
-using
-ship_command_arguments
-=
-fcppt::record::object<
-	fcppt::record::element<
-		ship_label,
-		ftl::parse::ship::arguments
-	>
->;
+using xml_command_arguments =
+    fcppt::record::object<fcppt::record::element<xml_label, ftl::parse::xml::arguments>>;
 
-using
-xml_command_arguments
-=
-fcppt::record::object<
-	fcppt::record::element<
-		xml_label,
-		ftl::parse::xml::arguments
-	>
->;
+using arguments = fcppt::record::object<
+    fcppt::record::element<fcppt::options::options_label, libftl::options::resource_record>,
+    fcppt::record::element<
+        fcppt::options::sub_command_label,
+        fcppt::variant::object<ship_command_arguments, xml_command_arguments>>>;
 
-using
-arguments
-=
-fcppt::record::object<
-	fcppt::record::element<
-		fcppt::options::options_label,
-		libftl::options::resource_record
-	>,
-	fcppt::record::element<
-		fcppt::options::sub_command_label,
-		fcppt::variant::object<
-			ship_command_arguments,
-			xml_command_arguments
-		>
-	>
->;
-
-bool
-main_program(
-	arguments const &_args
-)
+bool main_program(arguments const &_args)
 {
-	return
-		fcppt::either::match(
-			fcppt::either::bind(
-				libftl::options::open_archive(
-					fcppt::record::get<
-						libftl::options::resource_label
-					>(
-						fcppt::record::get<
-							fcppt::options::options_label
-						>(
-							_args
-						)
-					)
-				),
-				[
-					&_args
-				](
-					libftl::archive::base_unique_ptr &&_archive
-				)
-				{
-					return
-						fcppt::variant::match(
-							fcppt::record::get<
-								fcppt::options::sub_command_label
-							>(
-								_args
-							),
-							[
-								&_archive
-							](
-								ship_command_arguments const &_ship_args
-							)
-							{
-								return
-									ftl::parse::ship::main(
-										*_archive,
-										fcppt::record::get<
-											ship_label
-										>(
-											_ship_args
-										)
-									);
-							},
-							[
-								&_archive
-							](
-								xml_command_arguments const &_xml_args
-							)
-							{
-								return
-									ftl::parse::xml::main(
-										*_archive,
-										fcppt::record::get<
-											xml_label
-										>(
-											_xml_args
-										)
-									);
-							}
-						);
-				}
-			),
-			[](
-				libftl::error const &_error
-			)
-			{
-				fcppt::io::cerr()
-					<<
-					_error
-					<<
-					FCPPT_TEXT('\n');
+  return fcppt::either::match(
+      fcppt::either::bind(
+          libftl::options::open_archive(fcppt::record::get<libftl::options::resource_label>(
+              fcppt::record::get<fcppt::options::options_label>(_args))),
+          [&_args](libftl::archive::base_unique_ptr &&_archive)
+          {
+            return fcppt::variant::match(
+                fcppt::record::get<fcppt::options::sub_command_label>(_args),
+                [&_archive](ship_command_arguments const &_ship_args) {
+                  return ftl::parse::ship::main(
+                      *_archive, fcppt::record::get<ship_label>(_ship_args));
+                },
+                [&_archive](xml_command_arguments const &_xml_args) {
+                  return ftl::parse::xml::main(*_archive, fcppt::record::get<xml_label>(_xml_args));
+                });
+          }),
+      [](libftl::error const &_error)
+      {
+        fcppt::io::cerr() << _error << FCPPT_TEXT('\n');
 
-				return
-					false;
-			},
-			[](
-				fcppt::either::no_error const &
-			)
-			{
-				return
-					true;
-			}
-		);
+        return false;
+      },
+      [](fcppt::either::no_error const &) { return true; });
 }
 
 }
-
 
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
-int
-FCPPT_MAIN(
-	int argc,
-	fcppt::args_char **argv
-)
+int FCPPT_MAIN(int argc, fcppt::args_char **argv)
 try
 {
-	auto const ship_command{
-		fcppt::options::make_sub_command<
-			ship_label
-		>(
-			FCPPT_TEXT("ship"),
-			ftl::parse::ship::options_parser(),
-			fcppt::options::optional_help_text{
-				fcppt::options::help_text{
-					FCPPT_TEXT("Parse a ship layout file")
-				}
-			}
-		)
-	};
+  auto const ship_command{fcppt::options::make_sub_command<ship_label>(
+      FCPPT_TEXT("ship"),
+      ftl::parse::ship::options_parser(),
+      fcppt::options::optional_help_text{
+          fcppt::options::help_text{FCPPT_TEXT("Parse a ship layout file")}})};
 
-	auto const xml_command{
-		fcppt::options::make_sub_command<
-			xml_label
-		>(
-			FCPPT_TEXT("xml"),
-			ftl::parse::xml::options_parser(),
-			fcppt::options::optional_help_text{
-				fcppt::options::help_text{
-					FCPPT_TEXT("Parse an xml file")
-				}
-			}
-		)
-	};
+  auto const xml_command{fcppt::options::make_sub_command<xml_label>(
+      FCPPT_TEXT("xml"),
+      ftl::parse::xml::options_parser(),
+      fcppt::options::optional_help_text{
+          fcppt::options::help_text{FCPPT_TEXT("Parse an xml file")}})};
 
-	auto const parser{
-		fcppt::options::make_commands(
-			libftl::options::create_resource_parser(),
-			fcppt::make_cref(
-				ship_command
-			),
-			fcppt::make_cref(
-				xml_command
-			)
-		)
-	};
+  auto const parser{fcppt::options::make_commands(
+      libftl::options::create_resource_parser(),
+      fcppt::make_cref(ship_command),
+      fcppt::make_cref(xml_command))};
 
-	using
-	parser_type
-	=
-	decltype(
-		parser
-	);
+  using parser_type = decltype(parser);
 
-	return
-		fcppt::variant::match(
-			fcppt::options::parse_help(
-				fcppt::options::default_help_switch(),
-				parser,
-				fcppt::args_from_second(
-					argc,
-					argv
-				)
-			),
-			[](
-				fcppt::options::result<
-					fcppt::options::result_of<
-						parser_type
-					>
-				> const &_result
-			)
-			{
-				return
-					fcppt::either::match(
-						_result,
-						[](
-							fcppt::options::error const &_error
-						)
-						{
-							fcppt::io::cerr()
-								<<
-								_error
-								<<
-								FCPPT_TEXT('\n');
+  return fcppt::variant::match(
+             fcppt::options::parse_help(
+                 fcppt::options::default_help_switch(),
+                 parser,
+                 fcppt::args_from_second(argc, argv)),
+             [](fcppt::options::result<fcppt::options::result_of<parser_type>> const &_result)
+             {
+               return fcppt::either::match(
+                   _result,
+                   [](fcppt::options::error const &_error)
+                   {
+                     fcppt::io::cerr() << _error << FCPPT_TEXT('\n');
 
-							return
-								false;
-						},
-						[](
-							fcppt::options::result_of<
-								parser_type
-							> const &_args
-						)
-						{
-							return
-								main_program(
-									fcppt::record::permute<
-										arguments
-									>(
-										_args
-									)
-								);
-						}
-					);
-			},
-			[](
-				fcppt::options::help_text const &_help_text
-			)
-			{
-				fcppt::io::cout()
-					<<
-					_help_text
-					<<
-					FCPPT_TEXT('\n');
+                     return false;
+                   },
+                   [](fcppt::options::result_of<parser_type> const &_args)
+                   { return main_program(fcppt::record::permute<arguments>(_args)); });
+             },
+             [](fcppt::options::help_text const &_help_text)
+             {
+               fcppt::io::cout() << _help_text << FCPPT_TEXT('\n');
 
-				return
-					true;
-			}
-		)
-		?
-			EXIT_SUCCESS
-		:
-			EXIT_FAILURE
-		;
+               return true;
+             })
+             ? EXIT_SUCCESS
+             : EXIT_FAILURE;
 }
-catch(
-	fcppt::exception const &_error
-)
+catch (fcppt::exception const &_error)
 {
-	fcppt::io::cerr()
-		<<
-		_error.string()
-		<<
-		FCPPT_TEXT('\n');
+  fcppt::io::cerr() << _error.string() << FCPPT_TEXT('\n');
 
-	return
-		EXIT_FAILURE;
+  return EXIT_FAILURE;
 }
-catch(
-	std::exception const &_error
-)
+catch (std::exception const &_error)
 {
-	std::cerr
-		<<
-		_error.what()
-		<<
-		'\n';
+  std::cerr << _error.what() << '\n';
 
-	return
-		EXIT_FAILURE;
+  return EXIT_FAILURE;
 }
 
 FCPPT_PP_POP_WARNING

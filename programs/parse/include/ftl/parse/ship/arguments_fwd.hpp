@@ -6,23 +6,14 @@
 #include <fcppt/record/element_fwd.hpp>
 #include <fcppt/record/object_fwd.hpp>
 
-
 namespace ftl
 {
 namespace parse
 {
 namespace ship
 {
-
-using
-arguments
-=
-fcppt::record::object<
-	fcppt::record::element<
-		ftl::parse::path_label,
-		libftl::archive::path
-	>
->;
+using arguments =
+    fcppt::record::object<fcppt::record::element<ftl::parse::path_label, libftl::archive::path>>;
 
 }
 }

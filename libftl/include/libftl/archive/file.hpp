@@ -8,38 +8,22 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace libftl
 {
 namespace archive
 {
-
 struct file
 {
-	using
-	istream_ref
-	=
-	fcppt::reference<
-		std::istream
-	>;
+  using istream_ref = fcppt::reference<std::istream>;
 
-	file(
-		istream_ref const _stream,
-		libftl::archive::entry const _entry
-	)
-	:
-		stream_{
-			_stream
-		},
-		entry_{
-			_entry
-		}
-	{
-	}
+  file(istream_ref const _stream, libftl::archive::entry const _entry)
+      : stream_{_stream}, entry_{_entry}
+  {
+  }
 
-	istream_ref stream_;
+  istream_ref stream_;
 
-	libftl::archive::entry entry_;
+  libftl::archive::entry entry_;
 };
 
 }
