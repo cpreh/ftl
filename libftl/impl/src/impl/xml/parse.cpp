@@ -3,6 +3,7 @@
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/file_to_string.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/inner_node_content.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/parse.hpp>
@@ -34,7 +35,6 @@
 #include <fcppt/parse/operators/sequence.hpp>
 #include <fcppt/parse/skipper/space.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <string>
@@ -106,7 +106,7 @@ private:
 
   base_type<libftl::impl::xml::inner_node> inner_node_;
 
-  base_type<fcppt::variant::object<libftl::impl::xml::node_vector, std::string>> node_content_;
+  base_type<libftl::impl::xml::inner_node_content> node_content_;
 
   base_type<libftl::impl::xml::node> node_;
 

@@ -155,8 +155,10 @@ set(
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
 	libftl/impl/include/libftl/impl/xml/file_to_string.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
+	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
+	libftl/impl/include/libftl/impl/xml/make_inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/node.hpp
 	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
@@ -165,6 +167,8 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/include/libftl/impl/xml/typed/content.hpp
+	libftl/impl/include/libftl/impl/xml/typed/parse.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp
 	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
 	libftl/impl/src/impl/archive/chain.cpp
@@ -347,10 +351,13 @@ function(
 	add_libftl_library
 	VARIANT
 )
-	if(
-		${VARIANT} STREQUAL "STATIC"
-	)
+	if(${VARIANT} STREQUAL "STATIC")
 		fcppt_utils_static_link_name(
+			libftl
+			LIBFTL_LIB_NAME
+		)
+	elseif(${VARIANT} STREQUAL "INTERFACE")
+		fcppt_utils_interface_link_name(
 			libftl
 			LIBFTL_LIB_NAME
 		)
@@ -370,34 +377,62 @@ function(
 #		${LIBFTL_PARSER_FILES}
 #	)
 
-	add_library(
-		${LIBFTL_LIB_NAME}
-		${VARIANT}
-		${LIBFTL_PARSER_FILES}
-		${LIBFTL_FILES_ABS}
-	)
+	if(${VARIANT} STREQUAL "INTERFACE")
+		add_library(
+			${LIBFTL_LIB_NAME}
+			${VARIANT}
+		)
+	else()
+		add_library(
+			${LIBFTL_LIB_NAME}
+			${VARIANT}
+			${LIBFTL_PARSER_FILES}
+			${LIBFTL_FILES_ABS}
+		)
+	endif()
 
-	fcppt_utils_set_target_compiler_flags(
-		${LIBFTL_LIB_NAME}
-	)
+	if(NOT ${VARIANT} STREQUAL "INTERFACE")
+		fcppt_utils_set_target_compiler_flags(
+			${LIBFTL_LIB_NAME}
+		)
+	endif()
 
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
-		PUBLIC
+		INTERFACE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
-		PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/impl/include
 	)
+
+	if(NOT ${VARIANT} STREQUAL "INTERFACE")
+		target_include_directories(
+			${LIBFTL_LIB_NAME}
+			PRIVATE
+			${CMAKE_CURRENT_SOURCE_DIR}/include
+			${CMAKE_CURRENT_SOURCE_DIR}/impl/include
+		)
+	endif()
 
 	target_include_directories(
 		${LIBFTL_LIB_NAME}
 		SYSTEM
-		PUBLIC
+		INTERFACE
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
 		${XSD_INCLUDE_DIRS}
 		${XercesC_INCLUDE_DIRS}
 		${GENERATED_XSD_INCLUDE_DIR}
 	)
+
+	if(NOT ${VARIANT} STREQUAL "INTERFACE")
+		target_include_directories(
+			${LIBFTL_LIB_NAME}
+			SYSTEM
+			PRIVATE
+			${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
+			${XSD_INCLUDE_DIRS}
+			${XercesC_INCLUDE_DIRS}
+			${GENERATED_XSD_INCLUDE_DIR}
+		)
+	endif()
 
 	fcppt_utils_interface_static_link(
 		${LIBFTL_LIB_NAME}
@@ -413,27 +448,42 @@ function(
 		sgesprite_interface
 		fcppt_core_interface
 		fcppt_options_interface
-		PRIVATE
-		${XercesC_LIBRARIES}
-		${sgeimagecolor_TARGET}
-		${sgeimage2d_TARGET}
-		${sgemedia_TARGET}
-		${sgeparse_TARGET}
-		${sgerenderer_TARGET}
-		${sgesprite_TARGET}
-		${sgetexture_TARGET}
-		${alda_TARGET}
-		${fcppt_core_TARGET}
-		${fcppt_options_TARGET}
-		fcppt_parse_interface
 	)
+
+	if(NOT ${VARIANT} STREQUAL "INTERFACE")
+		target_link_libraries(
+			${LIBFTL_LIB_NAME}
+			PRIVATE
+			${XercesC_LIBRARIES}
+			${sgeimagecolor_TARGET}
+			${sgeimage2d_TARGET}
+			${sgemedia_TARGET}
+			${sgeparse_TARGET}
+			${sgerenderer_TARGET}
+			${sgesprite_TARGET}
+			${sgetexture_TARGET}
+			${alda_TARGET}
+			${fcppt_core_TARGET}
+			${fcppt_options_TARGET}
+			fcppt_parse_interface
+		)
+	endif()
 
 	target_compile_definitions(
 		${LIBFTL_LIB_NAME}
-		PUBLIC
+		INTERFACE
 		XSD_CXX11
 		_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
 	)
+
+	if(NOT ${VARIANT} STREQUAL "INTERFACE")
+		target_compile_definitions(
+			${LIBFTL_LIB_NAME}
+			PRIVATE
+			XSD_CXX11
+			_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
+		)
+	endif()
 
 	add_dependencies(
 		${LIBFTL_LIB_NAME}
@@ -445,18 +495,35 @@ function(
 	)
 endfunction()
 
-if(
-	ENABLE_SHARED
-)
+if(ENABLE_SHARED)
 	add_libftl_library(
 		"SHARED"
 	)
 endif()
 
-if(
-	ENABLE_STATIC
-)
+if(ENABLE_STATIC)
 	add_libftl_library(
 		"STATIC"
 	)
 endif()
+
+add_libftl_library(
+	"INTERFACE"
+)
+
+add_library(
+	libftl_impl_interface
+	INTERFACE
+)
+
+target_include_directories(
+	libftl_impl_interface
+	INTERFACE
+	${CMAKE_CURRENT_SOURCE_DIR}/impl/include
+)
+
+target_link_libraries(
+	libftl_impl_interface
+	INTERFACE
+	libftl_interface
+)

@@ -42,3 +42,26 @@ add_subdirectory(
 add_subdirectory(
 	programs
 )
+
+option(
+	ENABLE_TEST
+	"Build the tests"
+	ON
+)
+
+if(
+	ENABLE_TEST
+)
+	find_package(
+		Catch2
+		REQUIRED
+	)
+
+	fcppt_utils_setup_tests()
+
+	enable_testing()
+
+	add_subdirectory(
+		test
+	)
+endif()
