@@ -8,16 +8,10 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace impl
-{
-namespace xml
+namespace libftl::impl::xml
 {
 fcppt::either::object<libftl::error, libftl::impl::xml::document> parse(std::istream &);
 
-}
-}
 }
 
 #endif

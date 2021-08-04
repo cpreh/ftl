@@ -1,5 +1,9 @@
+#include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/document_output.hpp>
+#include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/node.hpp>
+#include <libftl/impl/xml/node_vector.hpp>
 #include <fcppt/recursive_output.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/optional/output.hpp>
@@ -12,18 +16,18 @@
 namespace libftl::impl::xml
 {
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::document::node const &_node)
+operator<<(std::ostream &_stream, libftl::impl::xml::node const &_node)
 {
   return _stream << "<('" << _node.opening_tag_ << "' "
                  << fcppt::container::output(_node.attributes_) << _node.content_ << ")>";
 }
 
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::document::inner_node const &_node)
+operator<<(std::ostream &_stream, libftl::impl::xml::inner_node const &_node)
 {
   fcppt::variant::match(
       _node.content_,
-      [&_stream](libftl::impl::xml::document::node_vector const &_value)
+      [&_stream](libftl::impl::xml::node_vector const &_value)
       { _stream << fcppt::container::output(_value); },
       [&_stream](std::string const &_value) { _stream << '"' << _value << '"'; });
 
@@ -31,7 +35,7 @@ operator<<(std::ostream &_stream, libftl::impl::xml::document::inner_node const 
 }
 
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::document::attribute const &_attribute)
+operator<<(std::ostream &_stream, libftl::impl::xml::attribute const &_attribute)
 {
   return _stream << _attribute.name_ << "=\"" << _attribute.value_ << '"';
 }

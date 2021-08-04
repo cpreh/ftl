@@ -148,12 +148,19 @@ set(
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/blueprints/find.hpp
 	libftl/impl/include/libftl/impl/room/draw.hpp
+	libftl/impl/include/libftl/impl/xml/attribute.hpp
+	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
 	libftl/impl/include/libftl/impl/xml/file_to_string.hpp
+	libftl/impl/include/libftl/impl/xml/inner_node.hpp
+	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
+	libftl/impl/include/libftl/impl/xml/node.hpp
+	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/node_vector.hpp
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp

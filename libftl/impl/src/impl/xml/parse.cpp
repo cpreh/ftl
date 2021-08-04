@@ -1,6 +1,10 @@
 #include <libftl/error.hpp>
+#include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/file_to_string.hpp>
+#include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/node.hpp>
+#include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/remove_comments.hpp>
 #include <fcppt/from_std_string.hpp>
@@ -35,6 +39,7 @@
 #include <iosfwd>
 #include <string>
 #include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace
@@ -53,12 +58,12 @@ public:
             fcppt::parse::literal{'"'}))},
         string_{grammar::make_base(fcppt::parse::make_lexeme(*~fcppt::parse::char_set{'<'}))},
         inner_node_{
-            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document::inner_node>(
+            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::inner_node>(
                 fcppt::make_cref(this->node_content_) >> fcppt::parse::string{"</"} >>
                 +~fcppt::parse::char_set{'>'} >> fcppt::parse::literal{'>'}))},
         node_content_{grammar::make_base(
             fcppt::make_cref(this->node_vector_) | fcppt::make_cref(this->string_))},
-        node_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document::node>(
+        node_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::node>(
             fcppt::parse::literal{'<'} >> !fcppt::parse::literal{'/'} >>
             fcppt::parse::make_lexeme(+~fcppt::parse::char_set{' ', '/', '>'}) >>
             fcppt::make_cref(this->attribute_vector_) >>
@@ -67,18 +72,18 @@ public:
                     -(fcppt::parse::literal{'>'} >> fcppt::make_cref(this->inner_node_)),
                 [](fcppt::variant::object<
                     fcppt::unit,
-                    fcppt::optional::object<libftl::impl::xml::document::inner_node>> &&_value)
+                    fcppt::optional::object<libftl::impl::xml::inner_node>> &&_value)
                 {
                   return fcppt::variant::match(
                       std::move(_value),
                       [](fcppt::unit) {
-                        return fcppt::optional::object<libftl::impl::xml::document::inner_node>();
+                        return fcppt::optional::object<libftl::impl::xml::inner_node>();
                       },
-                      [](fcppt::optional::object<libftl::impl::xml::document::inner_node> &&_inner)
+                      [](fcppt::optional::object<libftl::impl::xml::inner_node> &&_inner)
                       { return std::move(_inner); });
                 })))},
         attribute_{
-            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document::attribute>(
+            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::attribute>(
                 (+~fcppt::parse::char_set{'>', '='} >> fcppt::parse::literal{'='}) >>
                 fcppt::make_cref(this->quoted_string_)))},
         attribute_vector_{grammar::make_base(*fcppt::make_cref(this->attribute_))},
@@ -99,17 +104,17 @@ private:
 
   base_type<std::string> string_;
 
-  base_type<libftl::impl::xml::document::inner_node> inner_node_;
+  base_type<libftl::impl::xml::inner_node> inner_node_;
 
-  base_type<libftl::impl::xml::document::node_content> node_content_;
+  base_type<fcppt::variant::object<libftl::impl::xml::node_vector, std::string>> node_content_;
 
-  base_type<libftl::impl::xml::document::node> node_;
+  base_type<libftl::impl::xml::node> node_;
 
-  base_type<libftl::impl::xml::document::attribute> attribute_;
+  base_type<libftl::impl::xml::attribute> attribute_;
 
-  base_type<libftl::impl::xml::document::attribute_vector> attribute_vector_;
+  base_type<std::vector<libftl::impl::xml::attribute>> attribute_vector_;
 
-  base_type<libftl::impl::xml::document::node_vector> node_vector_;
+  base_type<libftl::impl::xml::node_vector> node_vector_;
 
   base_type<libftl::impl::xml::document::version> version_;
 
