@@ -19,6 +19,7 @@
 #include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_convert.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
+#include <fcppt/parse/make_recursive.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>
 #include <fcppt/parse/operators/complement.hpp>
@@ -81,7 +82,7 @@ public:
                 (+~fcppt::parse::char_set{'>', '='} >> fcppt::parse::literal{'='}) >>
                 fcppt::make_cref(this->quoted_string_)))},
         attribute_vector_{grammar::make_base(*fcppt::make_cref(this->attribute_))},
-        node_vector_{grammar::make_base(+fcppt::make_cref(this->node_))},
+        node_vector_{grammar::make_base(+fcppt::parse::make_recursive(fcppt::make_cref(this->node_)))},
         version_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document::version>(
             fcppt::parse::string{"<?xml"} >> fcppt::parse::string{"version="} >>
             fcppt::make_cref(this->quoted_string_) >> fcppt::parse::string{"encoding="} >>

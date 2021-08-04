@@ -1,6 +1,7 @@
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/output.hpp>
 #include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/recursive.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/algorithm/loop.hpp>
 #include <fcppt/optional/maybe.hpp>
@@ -33,8 +34,8 @@ void inner_node_output(
       {
         fcppt::algorithm::loop(
             _value,
-            [&_stream](libftl::impl::xml::document::node const &_node)
-            { node_output(_stream, _node); });
+            [&_stream](fcppt::recursive<libftl::impl::xml::document::node> const &_node)
+            { node_output(_stream, _node.get()); });
       },
       [&_stream](std::string const &_value) { _stream << _value; });
 
@@ -78,7 +79,8 @@ void libftl::impl::xml::output(std::ostream &_stream, libftl::impl::xml::documen
 
   fcppt::algorithm::loop(
       _document.nodes_,
-      [&_stream](libftl::impl::xml::document::node const &_node) { node_output(_stream, _node); });
+      [&_stream](fcppt::recursive<libftl::impl::xml::document::node> const &_node)
+      { node_output(_stream, _node.get()); });
 
   _stream << "</root>";
 }

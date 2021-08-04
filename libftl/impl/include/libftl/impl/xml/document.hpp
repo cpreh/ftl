@@ -2,6 +2,7 @@
 #define LIBFTL_IMPL_XML_DOCUMENT_HPP_INCLUDED
 
 #include <libftl/impl/xml/document_fwd.hpp>
+#include <fcppt/recursive.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -19,7 +20,7 @@ struct document
 {
   struct node;
 
-  using node_vector = std::vector<node>;
+  using node_vector = std::vector<fcppt::recursive<node>>;
 
   using node_content = fcppt::variant::object<node_vector, std::string>;
 

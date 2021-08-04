@@ -1,5 +1,6 @@
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/document_output.hpp>
+#include <fcppt/recursive_output.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/optional/output.hpp>
 #include <fcppt/variant/match.hpp>
