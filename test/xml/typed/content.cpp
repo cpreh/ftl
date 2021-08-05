@@ -1,5 +1,5 @@
+#include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/inner_node_content.hpp>
-#include <libftl/impl/xml/make_inner_node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
 #include <libftl/impl/xml/typed/parse.hpp>
@@ -13,10 +13,15 @@
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <string>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 TEST_CASE("xml::typed::content", "[xml]")
 {
+  auto const make_inner_node{
+      [](libftl::impl::xml::inner_node_content &&_inner) -> libftl::impl::xml::inner_node
+      { return libftl::impl::xml::inner_node(std::move(_inner), std::string{}); }};
+
   libftl::impl::xml::typed::content<int> const parser{};
 
   CHECK(libftl::impl::xml::typed::parse(
@@ -25,20 +30,19 @@ TEST_CASE("xml::typed::content", "[xml]")
 
   CHECK(libftl::impl::xml::typed::parse(
             parser,
-            fcppt::optional::make(libftl::impl::xml::make_inner_node(
-                libftl::impl::xml::inner_node_content{std::string{}})))
+            fcppt::optional::make(
+                make_inner_node(libftl::impl::xml::inner_node_content{std::string{}})))
             .has_failure());
 
   CHECK(libftl::impl::xml::typed::parse(
             parser,
-            fcppt::optional::make(libftl::impl::xml::make_inner_node(
+            fcppt::optional::make(make_inner_node(
                 libftl::impl::xml::inner_node_content{libftl::impl::xml::node_vector{}})))
             .has_failure());
 
   CHECK(
       libftl::impl::xml::typed::parse(
           parser,
-          fcppt::optional::make(libftl::impl::xml::make_inner_node(
-              libftl::impl::xml::inner_node_content{std::string{"123"}}))) ==
-      fcppt::either::make_success<libftl::error>(123));
+          fcppt::optional::make(make_inner_node(libftl::impl::xml::inner_node_content{
+              std::string{"123"}}))) == fcppt::either::make_success<libftl::error>(123));
 }

@@ -158,7 +158,6 @@ set(
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
-	libftl/impl/include/libftl/impl/xml/make_inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/node.hpp
 	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
