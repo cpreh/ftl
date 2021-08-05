@@ -14,7 +14,7 @@
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/optional/maybe.hpp>
-#include <fcppt/optional/object_impl.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>

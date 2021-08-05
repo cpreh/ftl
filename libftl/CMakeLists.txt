@@ -167,6 +167,8 @@ set(
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
+	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/parse.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp
 	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
