@@ -6,6 +6,7 @@
 #include <libftl/xml/generated/blueprints.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/make_cref.hpp>
+#include <fcppt/reference_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/algorithm/find_by_opt.hpp>
 #include <fcppt/algorithm/find_if_opt.hpp>
@@ -35,7 +36,7 @@ fcppt::optional::reference<Type const> find(
   FCPPT_PP_PUSH_WARNING
   FCPPT_PP_DISABLE_GCC_WARNING(-Wattributes)
 
-  return fcppt::algorithm::find_by_opt(
+  return fcppt::algorithm::find_by_opt<fcppt::reference<Type const>>(
       fcppt::array::make(
           // TODO(philipp): Add option to enable DLC or not
           fcppt::make_cref(_data.get().dlc_blueprints_overwrites_.get()),
@@ -45,7 +46,7 @@ fcppt::optional::reference<Type const> find(
           fcppt::reference<std::vector<
               fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>> const> const
               _root_list) -> fcppt::optional::reference<Type const> {
-        return fcppt::algorithm::find_by_opt(
+        return fcppt::algorithm::find_by_opt<fcppt::reference<Type const>>(
             _root_list.get(),
             [&_get_elements, &_compare_element](
                 fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root> const &_root)

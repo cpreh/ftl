@@ -89,7 +89,8 @@ fcppt::either::object<alda::raw::stream::error, libftl::archive::index>
 make_index(std::istream &_stream, alda::raw::element_type<offset_binding> const &_offsets)
 {
   return fcppt::either::map(
-      fcppt::either::sequence<std::vector<index_pair>>(
+      fcppt::either::sequence<
+          fcppt::either::object<alda::raw::stream::error, std::vector<index_pair>>>(
           fcppt::algorithm::map_optional<
               std::vector<fcppt::either::object<alda::raw::stream::error, index_pair>>>(
               _offsets,

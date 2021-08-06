@@ -97,7 +97,9 @@ fcppt::either::object<libftl::error, std::vector<libftl::room::system>> load_all
 #define LOAD_IMPL(name) load_system(_images, _systems.name(), libftl::room::type::name)
 
   return fcppt::either::map(
-      fcppt::either::sequence<std::vector<fcppt::optional::object<libftl::room::system>>>(
+      fcppt::either::sequence<fcppt::either::object<
+          libftl::error,
+          std::vector<fcppt::optional::object<libftl::room::system>>>>(
           std::vector<
               fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::system>>>{
               LOAD_IMPL(pilot),
