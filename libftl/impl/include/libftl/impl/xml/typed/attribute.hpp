@@ -18,6 +18,7 @@
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/maybe.hpp>
+#include <fcppt/optional/nothing.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
@@ -56,27 +57,27 @@ public:
         {
           if constexpr(is_optional)
           {
-		    FCPPT_USE(this);
+            FCPPT_USE(this);
             return fcppt::tuple::make(
-                libftl::impl::xml::typed::attribute_used{false},
+                libftl::impl::xml::typed::attribute_used{fcppt::optional::nothing{}},
                 fcppt::either::make_success<libftl::error>(result_type{}));
           }
           else
           {
             return fcppt::tuple::make(
-                libftl::impl::xml::typed::attribute_used{false},
+                libftl::impl::xml::typed::attribute_used{fcppt::optional::nothing{}},
                 fcppt::either::make_failure<result_type>(libftl::error{
                     fcppt::string{FCPPT_TEXT("Missing attribute ")} +
                     fcppt::from_std_string(this->name_) + FCPPT_TEXT(".")}));
           }
         },
-        [](fcppt::reference<std::string const> const _mapped)
+        [this](fcppt::reference<std::string const> const _mapped)
             -> fcppt::tuple::object<
                 libftl::impl::xml::typed::attribute_used,
                 fcppt::either::object<libftl::error, result_type>>
         {
           return fcppt::tuple::make(
-              libftl::impl::xml::typed::attribute_used{true},
+              libftl::impl::xml::typed::attribute_used{fcppt::optional::make(this->name_)},
               fcppt::optional::maybe(
                   fcppt::extract_from_string<Type>(_mapped.get()),
                   [&_mapped]

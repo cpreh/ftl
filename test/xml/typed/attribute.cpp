@@ -12,6 +12,7 @@
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/comparison.hpp>
 #include <fcppt/optional/make.hpp>
+#include <fcppt/optional/nothing.hpp>
 #include <fcppt/tuple/comparison.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
@@ -29,7 +30,7 @@ TEST_CASE("xml::typed::attribute", "[xml]")
           std::make_pair(std::string{"attrib1"}, std::string{"12"}),
           std::make_pair(std::string{"attrib2"}, std::string{"test"})}) ==
       fcppt::tuple::make(
-          libftl::impl::xml::typed::attribute_used{true},
+          libftl::impl::xml::typed::attribute_used{fcppt::optional::make(std::string{"attrib1"})},
           fcppt::either::make_success<libftl::error>(12)));
 
   {
@@ -37,7 +38,7 @@ TEST_CASE("xml::typed::attribute", "[xml]")
       required_int.parse(libftl::impl::xml::typed::attribute_map{
           std::make_pair(std::string{"attrib2"}, std::string{"test"})})};
 
-    CHECK_FALSE(fcppt::tuple::get<0>(result).get());
+    CHECK_FALSE(fcppt::tuple::get<0>(result).get().has_value());
 
     CHECK(fcppt::tuple::get<1>(result).has_failure());
   }
@@ -47,7 +48,7 @@ TEST_CASE("xml::typed::attribute", "[xml]")
       required_int.parse(libftl::impl::xml::typed::attribute_map{
           std::make_pair(std::string{"attrib1"}, std::string{"test"})})};
 
-    CHECK(fcppt::tuple::get<0>(result).get());
+    CHECK(fcppt::tuple::get<0>(result).get().has_value());
 
     CHECK(fcppt::tuple::get<1>(result).has_failure());
   }
@@ -60,14 +61,14 @@ TEST_CASE("xml::typed::attribute", "[xml]")
           std::make_pair(std::string{"attrib1"}, std::string{"12"}),
           std::make_pair(std::string{"attrib2"}, std::string{"test"})}) ==
       fcppt::tuple::make(
-          libftl::impl::xml::typed::attribute_used{true},
+          libftl::impl::xml::typed::attribute_used{fcppt::optional::make(std::string{"attrib1"})},
           fcppt::either::make_success<libftl::error>(fcppt::optional::make(12))));
 
   CHECK(
       optional_int.parse(libftl::impl::xml::typed::attribute_map{
           std::make_pair(std::string{"attrib2"}, std::string{"test"})}) ==
       fcppt::tuple::make(
-          libftl::impl::xml::typed::attribute_used{false},
+          libftl::impl::xml::typed::attribute_used{fcppt::optional::nothing{}},
           fcppt::either::make_success<libftl::error>(fcppt::optional::object<int>{})));
 
   {
@@ -75,7 +76,7 @@ TEST_CASE("xml::typed::attribute", "[xml]")
       optional_int.parse(libftl::impl::xml::typed::attribute_map{
           std::make_pair(std::string{"attrib1"}, std::string{"test"})})};
 
-    CHECK(fcppt::tuple::get<0>(result).get());
+    CHECK(fcppt::tuple::get<0>(result).get() == fcppt::optional::make(std::string{"attrib1"}));
 
     CHECK(fcppt::tuple::get<1>(result).has_failure());
   }
