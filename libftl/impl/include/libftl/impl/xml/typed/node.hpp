@@ -3,8 +3,8 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/typed/parse.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <fcppt/deref.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -18,7 +18,6 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-/*
 namespace libftl::impl::xml::typed
 {
 template <typename Attributes, typename Content>
@@ -35,22 +34,22 @@ public:
   }
 
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
-  parse(libftl::impl::xml::node const &_node)
+  parse(libftl::impl::xml::node const &_node) const
   {
     if (_node.opening_tag_ != this->name_)
     {
-      return fcppt::either::make_failure<result_type>(
+      return fcppt::either::make_failure<result_type>(libftl::error{
           fcppt::string{FCPPT_TEXT("Mismatched tags, expected ")} +
           fcppt::from_std_string(this->name_) + FCPPT_TEXT(", got ") +
-          fcppt::from_std_string(_node.opening_tag) + FCPPT_TEXT("."));
+          fcppt::from_std_string(_node.opening_tag_) + FCPPT_TEXT(".")});
     }
 
     return fcppt::either::bind(
-        libftl::impl::xml::typed::parse(this->attributes_, _node.attributes_),
-        [](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
+        fcppt::deref(this->attributes_).parse(_node.attributes_),
+        [this, &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
         {
           return fcppt::either::map(
-              libftl::impl::xml::typed::parse(this->content_, _node.content_),
+              fcppt::deref(this->content_).parse(_node.content_),
               [&_attributes_result](
                   libftl::impl::xml::typed::result_type<Content> &&_content_result) {
                 return result_type{std::move(_attributes_result), std::move(_content_result)};
@@ -63,6 +62,9 @@ private:
   Attributes attributes_;
   Content content_;
 };
-}*/
+
+template <typename Attributes, typename Content>
+node(Attributes &&, Content &&) -> node<Attributes, Content>;
+}
 
 #endif
