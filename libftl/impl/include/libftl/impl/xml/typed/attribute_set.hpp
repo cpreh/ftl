@@ -1,5 +1,5 @@
-#ifndef LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_LIST_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_LIST_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_SET_HPP_INCLUDED
+#define LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_SET_HPP_INCLUDED
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
@@ -48,7 +48,7 @@ namespace libftl::impl::xml::typed
 {
 
 template<typename Parsers>
-class attribute_list
+class attribute_set
 {
 public:
   static_assert(fcppt::record::is_object<Parsers>::value);
@@ -59,13 +59,13 @@ public:
           fcppt::mpl::lambda<libftl::impl::xml::typed::result_type>,
           fcppt::mpl::lambda<fcppt::record::element_to_type>>>;
 
-  explicit attribute_list(Parsers &&_parsers) : parsers_{std::move(_parsers)} {}
+  explicit attribute_set(Parsers &&_parsers) : parsers_{std::move(_parsers)} {}
 
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
   parse(std::vector<libftl::impl::xml::attribute> const &_attributes) const
   {
     return fcppt::either::bind(
-        attribute_list::make_attribute_map(_attributes),
+        attribute_set::make_attribute_map(_attributes),
         [this](libftl::impl::xml::typed::attribute_map const &_attribute_map)
         { return this->run_parsers(_attribute_map); });
   }
@@ -148,7 +148,7 @@ private:
 
   Parsers parsers_;
 };
-template<typename Parsers> attribute_list(Parsers &&) -> attribute_list<Parsers>;
+template<typename Parsers> attribute_set(Parsers &&) -> attribute_set<Parsers>;
 }
 
 #endif

@@ -16,7 +16,7 @@ add_ftl_test(
 )
 
 add_ftl_test(
-	xml/typed/attribute_list
+	xml/typed/attribute_set
 	LINK_LIBS
 		libftl_impl_interface
 		fcppt_catch_interface

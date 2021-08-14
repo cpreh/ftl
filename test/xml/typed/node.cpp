@@ -1,7 +1,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/typed/attribute_list.hpp>
+#include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
@@ -29,7 +29,7 @@ TEST_CASE("xml::typed::node", "[xml]")
 {
   auto const parser{libftl::impl::xml::typed::node{
       std::string{"test"},
-      libftl::impl::xml::typed::attribute_list{fcppt::record::make()},
+      libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
       libftl::impl::xml::typed::empty{}}};
 
   CHECK(parser
