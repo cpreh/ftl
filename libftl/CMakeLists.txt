@@ -167,12 +167,12 @@ set(
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute_map.hpp
+	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute_used.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
+	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp

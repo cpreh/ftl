@@ -8,14 +8,6 @@ function(
 endfunction()
 
 add_ftl_test(
-	xml/typed/attribute
-	LINK_LIBS
-		libftl_impl_interface
-		fcppt_catch_interface
-		fcppt_core_interface
-)
-
-add_ftl_test(
 	xml/typed/attribute_set
 	LINK_LIBS
 		libftl_impl_interface
