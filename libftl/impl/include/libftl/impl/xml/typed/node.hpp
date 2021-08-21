@@ -57,6 +57,7 @@ public:
         });
   }
 
+  [[nodiscard]] std::string const &name() const { return this->name_; }
 private:
   std::string name_;
   Attributes attributes_;

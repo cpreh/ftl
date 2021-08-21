@@ -168,12 +168,13 @@ set(
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute_required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
+	libftl/impl/include/libftl/impl/xml/typed/required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp
 	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
