@@ -5,9 +5,7 @@
 
 namespace libftl::impl::xml::typed
 {
-template <
-    typename Type,
-    libftl::impl::xml::typed::required Required = libftl::impl::xml::typed::required::yes>
+template <typename Type, libftl::impl::xml::typed::required Required>
 class attribute;
 }
 

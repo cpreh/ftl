@@ -19,6 +19,8 @@ struct attribute
   std::string name_;
 
   std::string value_;
+
+  [[nodiscard]] std::string const &name() const { return this->name_; }
 };
 }
 

@@ -2,12 +2,15 @@
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
+#include <libftl/impl/xml/typed/required.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
 #include <fcppt/catch/either.hpp>
+#include <fcppt/catch/optional.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/record/make_label.hpp>
@@ -22,7 +25,8 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
   FCPPT_RECORD_MAKE_LABEL(attrib1);
 
   libftl::impl::xml::typed::attribute_set const attributes{fcppt::record::make(
-      attrib1{} = libftl::impl::xml::typed::attribute<int>{std::string{"attrib1"}})};
+      attrib1{} = libftl::impl::xml::typed::attribute<int, libftl::impl::xml::typed::required::yes>{
+          std::string{"attrib1"}})};
 
   CHECK(attributes.parse(std::vector<libftl::impl::xml::attribute>{}).has_failure());
 
@@ -50,8 +54,12 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
   FCPPT_RECORD_MAKE_LABEL(attrib2);
 
   libftl::impl::xml::typed::attribute_set const attributes2{fcppt::record::make(
-      attrib1{} = libftl::impl::xml::typed::attribute<int>{std::string{"attrib1"}},
-	  attrib2{} = libftl::impl::xml::typed::attribute<unsigned>{std::string{"attrib2"}})};
+      attrib1{} =
+          libftl::impl::xml::typed::attribute<int, libftl::impl::xml::typed::required::yes>{
+              std::string{"attrib1"}},
+      attrib2{} =
+          libftl::impl::xml::typed::attribute<unsigned, libftl::impl::xml::typed::required::yes>{
+              std::string{"attrib2"}})};
 
   CHECK(
       attributes2.parse(std::vector<libftl::impl::xml::attribute>{
@@ -59,4 +67,13 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
           libftl::impl::xml::attribute{"attrib2", "20"}}) ==
       fcppt::either::make_success<libftl::error>(
           fcppt::record::make(attrib1{} = 10, attrib2{} = 20U)));
+
+  libftl::impl::xml::typed::attribute_set const attributes3{fcppt::record::make(
+      attrib1{} = libftl::impl::xml::typed::attribute<int, libftl::impl::xml::typed::required::no>{
+          std::string{"attrib1"}})};
+
+  CHECK(
+      attributes3.parse(std::vector<libftl::impl::xml::attribute>{}) ==
+      fcppt::either::make_success<libftl::error>(
+          fcppt::record::make(attrib1{} = fcppt::optional::object<int>{})));
 }
