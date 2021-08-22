@@ -24,14 +24,11 @@ template <libftl::impl::xml::typed::required Required, typename Attributes, type
 class node_member
 {
 public:
-  using inner_result_type = fcppt::tuple::object<
+  using result_type = fcppt::tuple::object<
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 
   static constexpr bool const is_optional = (Required == libftl::impl::xml::typed::required::no);
-
-  using result_type = std::
-      conditional_t<is_optional, fcppt::optional::object<inner_result_type>, inner_result_type>;
 
   node_member(std::string &&_name, Attributes &&_attributes, Content &&_content)
       : name_{std::move(_name)}, attributes_{std::move(_attributes)}, content_{std::move(_content)}

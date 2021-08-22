@@ -25,11 +25,11 @@ template <
 class attribute
 {
 public:
-  explicit attribute(std::string &&_name) : name_{std::move(_name)} {}
-
   static constexpr bool const is_optional = (Required == libftl::impl::xml::typed::required::no);
 
   using result_type = Type;
+
+  explicit attribute(std::string &&_name) : name_{std::move(_name)} {}
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
 

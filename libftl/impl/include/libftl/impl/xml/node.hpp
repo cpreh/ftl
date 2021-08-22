@@ -30,6 +30,8 @@ struct node
   std::vector<libftl::impl::xml::attribute> attributes_;
 
   fcppt::optional::object<libftl::impl::xml::inner_node> content_;
+
+  [[nodiscard]] std::string const &name() const { return this->opening_tag_; }
 };
 
 }

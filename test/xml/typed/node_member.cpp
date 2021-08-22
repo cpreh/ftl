@@ -34,13 +34,6 @@ TEST_CASE("xml::typed::node_member", "[xml]")
       libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
       libftl::impl::xml::typed::empty{})};
 
-  CHECK(parser
-            .parse(libftl::impl::xml::node{
-                std::string{"x"},
-                std::vector<libftl::impl::xml::attribute>{},
-                fcppt::optional::nothing{}})
-            .has_failure());
-
   CHECK(
       parser.parse(libftl::impl::xml::node{
           std::string{"test"},
