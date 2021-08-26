@@ -118,7 +118,6 @@ endfunction()
 
 set(
 	PARSER_NAMES
-	achievements
 	animations
 	blueprints
 	events

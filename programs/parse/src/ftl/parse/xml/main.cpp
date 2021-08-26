@@ -12,7 +12,6 @@
 #include <libftl/xml/events.hpp>
 #include <libftl/xml/sectors.hpp>
 #include <libftl/xml/ship.hpp>
-#include <libftl/xml/generated/achievements.hpp>
 #include <libftl/xml/generated/animations.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <libftl/xml/generated/events.hpp>
