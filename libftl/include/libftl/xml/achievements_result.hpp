@@ -6,6 +6,7 @@
 #include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/multi_difficulty.hpp>
 #include <libftl/xml/labels/name.hpp>
+#include <libftl/xml/labels/ship.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>
@@ -29,6 +30,9 @@ using achievements_result = std::vector<fcppt::tuple::object<
         fcppt::record::element<
             libftl::xml::labels::img,
             fcppt::tuple::object<fcppt::record::object<>, std::string>>,
+        fcppt::record::element<
+            libftl::xml::labels::ship,
+            fcppt::optional::object<fcppt::tuple::object<fcppt::record::object<>, std::string>>>,
         fcppt::record::element<
             libftl::xml::labels::multi_difficulty,
             fcppt::optional::object<fcppt::tuple::object<fcppt::record::object<>, unsigned>>>>>>;

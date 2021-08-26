@@ -47,6 +47,10 @@ libftl::xml::achievements(std::istream &_input)
               std::string{"img"},
               typed::attribute_set{fcppt::record::make()},
               typed::content<std::string>{}),
+          labels::ship{} = typed::make_node_member<typed::required::no>(
+              std::string{"ship"},
+              typed::attribute_set{fcppt::record::make()},
+              typed::content<std::string>{}),
           labels::multi_difficulty{} = typed::make_node_member<typed::required::no>(
               std::string{"multiDifficulty"},
               typed::attribute_set{fcppt::record::make()},
