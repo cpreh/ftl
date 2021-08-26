@@ -21,6 +21,8 @@ struct attribute
   std::string value_;
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
+
+  [[nodiscard]] attribute const *operator->() const { return this; }
 };
 }
 

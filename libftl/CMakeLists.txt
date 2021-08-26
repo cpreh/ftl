@@ -172,6 +172,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/basic_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
+	libftl/impl/include/libftl/impl/xml/typed/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
@@ -180,6 +181,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_set.hpp
+	libftl/impl/include/libftl/impl/xml/typed/parses.hpp
 	libftl/impl/include/libftl/impl/xml/typed/required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp
@@ -296,10 +298,16 @@ set(
 	libftl/include/libftl/sprite/type_choices_fwd.hpp
 	libftl/include/libftl/sprite/white.hpp
 	libftl/include/libftl/xml/achievements.hpp
+	libftl/include/libftl/xml/achievements_result.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/clean.hpp
 	libftl/include/libftl/xml/events.hpp
+	libftl/include/libftl/xml/labels/desc.hpp
+	libftl/include/libftl/xml/labels/id.hpp
+	libftl/include/libftl/xml/labels/img.hpp
+	libftl/include/libftl/xml/labels/multi_difficulty.hpp
+	libftl/include/libftl/xml/labels/name.hpp
 	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/base.cpp

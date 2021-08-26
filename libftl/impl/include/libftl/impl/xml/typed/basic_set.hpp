@@ -94,13 +94,15 @@ private:
               std::move(_map),
               [&_arg](map &&_inner_map)
               {
-                if (_inner_map.contains(_arg.name()))
+                std::string const &name{fcppt::deref(_arg).name()};
+
+                if (_inner_map.contains(name))
                 {
                   return fcppt::either::make_failure<map>(libftl::error{
-                      fcppt::from_std_string(_arg.name()) +
+                      fcppt::from_std_string(name) +
                       FCPPT_TEXT(" specified multiple times.")});
                 }
-                _inner_map.insert(std::make_pair(_arg.name(), fcppt::make_cref(_arg)));
+                _inner_map.insert(std::make_pair(name, fcppt::make_cref(_arg)));
                 return fcppt::either::make_success<libftl::error>(_inner_map);
               });
         });
@@ -178,7 +180,8 @@ private:
         {
           _used->insert(name);
           return fcppt::either::bind(
-              fcppt::deref(fcppt::record::get<Label>(this->parsers_)).parse(_mapped.get().get()),
+              fcppt::deref(fcppt::record::get<Label>(this->parsers_))
+                  .parse(fcppt::deref(_mapped.get().get())),
               [](libftl::impl::xml::typed::result_type<parser> &&_result)
               {
                 if constexpr (is_optional)

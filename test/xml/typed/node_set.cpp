@@ -1,11 +1,13 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
+#include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <fcppt/make_recursive.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
 #include <fcppt/unit_comparison.hpp>
 #include <fcppt/unit.hpp>
@@ -15,6 +17,7 @@
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
 #include <fcppt/catch/tuple.hpp>
+#include <fcppt/container/make.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/nothing.hpp>
@@ -42,15 +45,14 @@ TEST_CASE("xml::typed::node_set", "[xml]")
           libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
           libftl::impl::xml::typed::empty{}))};
 
-  CHECK(parser
-            .parse(std::vector<libftl::impl::xml::node>{})
-            .has_failure());
+  CHECK(parser.parse(libftl::impl::xml::node_vector{}).has_failure());
 
   CHECK(
-      parser.parse(std::vector<libftl::impl::xml::node>{libftl::impl::xml::node{
-          std::string{"node1"},
-          std::vector<libftl::impl::xml::attribute>{},
-          fcppt::optional::nothing{}}}) ==
+      parser.parse(fcppt::container::make<libftl::impl::xml::node_vector>(
+          fcppt::make_recursive(libftl::impl::xml::node{
+              std::string{"node1"},
+              std::vector<libftl::impl::xml::attribute>{},
+              fcppt::optional::nothing{}}))) ==
       fcppt::either::make_success<libftl::error>(
           fcppt::record::make(node1{} = fcppt::tuple::make(fcppt::record::make(), fcppt::unit()))));
 
@@ -61,7 +63,7 @@ TEST_CASE("xml::typed::node_set", "[xml]")
           libftl::impl::xml::typed::empty{}))};
 
   CHECK(
-      parser2.parse(std::vector<libftl::impl::xml::node>{}) ==
+      parser2.parse(libftl::impl::xml::node_vector{}) ==
       fcppt::either::make_success<libftl::error>(fcppt::record::make(
           node1{} = fcppt::optional::object<
               fcppt::tuple::object<fcppt::record::object<>, fcppt::unit>>{})));

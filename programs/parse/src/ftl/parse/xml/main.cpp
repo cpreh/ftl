@@ -6,6 +6,7 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
 #include <libftl/xml/achievements.hpp>
+#include <libftl/xml/achievements_result.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/events.hpp>
@@ -17,6 +18,9 @@
 #include <libftl/xml/generated/events.hpp>
 #include <libftl/xml/generated/sectors.hpp>
 #include <libftl/xml/generated/ship.hpp>
+#include <fcppt/output.hpp>
+#include <fcppt/output_range.hpp>
+#include <fcppt/overload.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/assert/unreachable.hpp>
@@ -26,7 +30,10 @@
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/io/cout.hpp>
+#include <fcppt/optional/output.hpp>
 #include <fcppt/record/get.hpp>
+#include <fcppt/record/output.hpp>
+#include <fcppt/tuple/output.hpp>
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -39,7 +46,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
     ftl::parse::xml::arguments const &_args)
 {
   using result_type = fcppt::variant::object<
-      fcppt::unique_ptr<libftl::xml::generated::achievements::achievements_root>,
+      libftl::xml::achievements_result,
       fcppt::unique_ptr<libftl::xml::generated::animations::animations_root>,
       fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>,
       fcppt::unique_ptr<libftl::xml::generated::events::events_root>,
@@ -77,11 +84,14 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
           _archive.open(fcppt::record::get<ftl::parse::path_label>(_args)), load_xml),
       [](result_type const &_result)
       {
+        fcppt::io::cout() << FCPPT_TEXT("SUCCESS:\n");
         fcppt::variant::apply(
-            [](auto const &_element)
-            { fcppt::io::cout() << FCPPT_TEXT("SUCCESS:\n") << *_element << FCPPT_TEXT('\n'); },
+            fcppt::overload(
+                [](auto const &_element) { fcppt::io::cout() << *_element; },
+                [](libftl::xml::achievements_result const &_achievements)
+                { fcppt::output(fcppt::io::cout(), _achievements); }),
             _result);
-
+        fcppt::io::cout() << FCPPT_TEXT('\n');
         return fcppt::either::no_error{};
       });
 }

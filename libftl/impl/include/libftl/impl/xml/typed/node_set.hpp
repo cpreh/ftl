@@ -3,10 +3,13 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
+#include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/basic_set.hpp>
 #include <libftl/impl/xml/typed/is_node_member.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <fcppt/deref_recursive.hpp>
 #include <fcppt/deref_type.hpp>
+#include <fcppt/recursive.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/mpl/bind.hpp>
 #include <fcppt/mpl/lambda.hpp>
@@ -18,7 +21,6 @@
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>
 #include <utility>
-#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed
@@ -39,13 +41,14 @@ public:
                         fcppt::mpl::lambda<std::remove_cvref_t>,
                         fcppt::mpl::lambda<fcppt::deref_type>>>>::value);
 
-  using impl = libftl::impl::xml::typed::basic_set<Parsers,libftl::impl::xml::node>;
+  using impl =
+      libftl::impl::xml::typed::basic_set<Parsers, fcppt::recursive<libftl::impl::xml::node>>;
   using result_type = libftl::impl::xml::typed::result_type<impl>;
 
   explicit node_set(Parsers &&_parsers) : impl_{std::move(_parsers)} {}
 
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
-  parse(std::vector<libftl::impl::xml::node> const &_nodes) const
+  parse(libftl::impl::xml::node_vector const &_nodes) const
   {
     return this->impl_.parse(_nodes);
   }
