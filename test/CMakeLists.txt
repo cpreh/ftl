@@ -48,6 +48,14 @@ add_ftl_test(
 )
 
 add_ftl_test(
+	xml/typed/node_list
+	LINK_LIBS
+		libftl_impl_interface
+		fcppt_catch_interface
+		fcppt_core_interface
+)
+
+add_ftl_test(
 	xml/typed/node_member
 	LINK_LIBS
 		libftl_impl_interface

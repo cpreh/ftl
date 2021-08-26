@@ -176,6 +176,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_set.hpp
