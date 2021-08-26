@@ -19,6 +19,7 @@
 #include <libftl/xml/generated/ship.hpp>
 #include <fcppt/output.hpp>
 #include <fcppt/output_range.hpp>
+#include <fcppt/output_string.hpp>
 #include <fcppt/overload.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
