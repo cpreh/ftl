@@ -12,6 +12,7 @@
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/make_failure.hpp>
+#include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
@@ -19,6 +20,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <typeinfo>
+#include <type_traits>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed
@@ -53,16 +55,23 @@ struct content
               },
               [](std::string const &_content)
               {
-                return fcppt::either::from_optional(
-                    fcppt::extract_from_string<Result>(_content),
-                    [&_content]
-                    {
-                      return libftl::error{
-                          fcppt::string{FCPPT_TEXT("Failed to convert \"")} +
-                          fcppt::from_std_string(_content) + FCPPT_TEXT(" to type ") +
-                          fcppt::from_std_string(fcppt::type_name_from_info(typeid(Result))) +
-                          FCPPT_TEXT(".")};
-                    });
+                if constexpr (std::is_same_v<Result, std::string>)
+                {
+                  return fcppt::either::make_success<libftl::error>(_content);
+                }
+                else
+                {
+                  return fcppt::either::from_optional(
+                      fcppt::extract_from_string<Result>(_content),
+                      [&_content]
+                      {
+                        return libftl::error{
+                            fcppt::string{FCPPT_TEXT("Failed to convert \"")} +
+                            fcppt::from_std_string(_content) + FCPPT_TEXT(" to type ") +
+                            fcppt::from_std_string(fcppt::type_name_from_info(typeid(Result))) +
+                            FCPPT_TEXT(".")};
+                      });
+                }
               });
         });
   }
