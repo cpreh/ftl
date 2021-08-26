@@ -8,8 +8,8 @@
 #include <fcppt/args_from_second.hpp>
 #include <fcppt/error_code_to_string.hpp>
 #include <fcppt/exception.hpp>
-#include <fcppt/from_std_string.hpp>
 #include <fcppt/main.hpp>
+#include <fcppt/output_pair.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
@@ -26,7 +26,6 @@
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/io/cerr.hpp>
 #include <fcppt/io/cout.hpp>
-#include <fcppt/io/ostream.hpp>
 #include <fcppt/io/write_chars.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/options/apply.hpp>
@@ -70,18 +69,6 @@
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
-
-// FIXME
-namespace std
-{
-fcppt::io::ostream &
-operator<<(fcppt::io::ostream &_stream, libftl::archive::index::value_type const &_pair)
-{
-  return _stream << FCPPT_TEXT('(') << fcppt::from_std_string(_pair.first) << FCPPT_TEXT(", ")
-                 << _pair.second << FCPPT_TEXT(')');
-}
-
-}
 
 namespace
 {
