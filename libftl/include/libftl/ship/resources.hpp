@@ -5,9 +5,8 @@
 #include <libftl/ship/resources_fwd.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/ship/layout/object.hpp>
-#include <libftl/xml/generated/ship_fwd.hpp>
+#include <libftl/xml/ship/result.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/unique_ptr_impl.hpp>
 
 namespace libftl
 {
@@ -19,7 +18,7 @@ class resources
 
 public:
   resources(
-      fcppt::unique_ptr<libftl::xml::generated::ship::ship_root> &&,
+      libftl::xml::ship::result &&,
       libftl::ship::images::object &&,
       libftl::ship::layout::object &&);
 
@@ -32,7 +31,7 @@ public:
   LIBFTL_DETAIL_SYMBOL
   ~resources();
 
-  fcppt::unique_ptr<libftl::xml::generated::ship::ship_root> ship_root_;
+  libftl::xml::ship::result ship_;
 
   libftl::ship::images::object images_;
 

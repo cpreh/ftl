@@ -4,6 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
+#include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/recursive.hpp>
@@ -18,6 +19,7 @@
 namespace libftl::impl::xml::typed
 {
 template <typename Parser>
+requires libftl::impl::xml::typed::parses<Parser,libftl::impl::xml::node>
 class node_list
 {
 public:

@@ -2,7 +2,8 @@
 #define LIBFTL_SHIP_IMAGES_OBJECT_HPP_INCLUDED
 
 #include <libftl/ship/images/object_fwd.hpp>
-#include <libftl/xml/generated/ship.hpp>
+#include <libftl/xml/ship/gib.hpp>
+#include <libftl/xml/ship/offset.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
@@ -11,11 +12,7 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace images
+namespace libftl::ship::images
 {
 struct object
 {
@@ -25,10 +22,9 @@ struct object
 
   struct offset_image
   {
-    offset_image(
-        libftl::xml::generated::ship::offset const &, sge::texture::const_part_shared_ptr &&);
+    offset_image(libftl::xml::ship::offset, sge::texture::const_part_shared_ptr &&);
 
-    libftl::xml::generated::ship::offset offset_;
+    libftl::xml::ship::offset offset_;
 
     sge::texture::const_part_shared_ptr image_;
   };
@@ -39,9 +35,9 @@ struct object
 
   struct gib_image
   {
-    gib_image(libftl::xml::generated::ship::gib const &, sge::texture::const_part_shared_ptr &&);
+    gib_image(libftl::xml::ship::gib, sge::texture::const_part_shared_ptr &&);
 
-    libftl::xml::generated::ship::gib gib_;
+    libftl::xml::ship::gib gib_;
 
     sge::texture::const_part_shared_ptr image_;
   };
@@ -64,8 +60,6 @@ struct object
   std::vector<gib_image> gibs_;
 };
 
-}
-}
 }
 
 #endif

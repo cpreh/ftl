@@ -21,6 +21,7 @@
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 

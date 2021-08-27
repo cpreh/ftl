@@ -15,6 +15,10 @@ struct node
   {
   }
 
+  using attributes_type = Attributes;
+
+  using content_type = Content;
+
   Attributes attributes_;
 
   Content content_;

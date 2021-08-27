@@ -12,7 +12,7 @@
 #include <libftl/ship/layout/name.hpp>
 #include <libftl/sprite/images_fwd.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
-#include <libftl/xml/generated/ship.hpp>
+#include <libftl/xml/ship/result.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
@@ -50,20 +50,20 @@ fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load
         return fcppt::either::bind(
             libftl::ship::layout::load_xml(_archive, layout_name),
             [&_archive, &_blueprint, &_images, &layout_name](
-                fcppt::unique_ptr<libftl::xml::generated::ship::ship_root> &&_ship_root)
+                libftl::xml::ship::result &&_ship)
             {
               libftl::ship::images::name const image_name{_blueprint.get().img()};
 
               return fcppt::either::apply(
-                  [&_ship_root](
+                  [&_ship](
                       libftl::ship::images::object &&_ship_images,
                       libftl::ship::layout::object &&_layout)
                   {
                     return libftl::ship::resources{
-                        std::move(_ship_root), std::move(_ship_images), std::move(_layout)};
+                        std::move(_ship), std::move(_ship_images), std::move(_layout)};
                   },
                   libftl::ship::images::load(
-                      _images, _blueprint.get(), fcppt::make_cref(*_ship_root), image_name),
+                      _images, _blueprint.get(), fcppt::make_cref(_ship), image_name),
                   libftl::ship::layout::load(_archive, layout_name));
             });
       });

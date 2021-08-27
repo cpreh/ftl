@@ -1,5 +1,6 @@
 #include <libftl/ship/images/object.hpp>
-#include <libftl/xml/generated/ship.hpp>
+#include <libftl/xml/ship/gib.hpp>
+#include <libftl/xml/ship/offset.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -8,15 +9,15 @@
 #include <fcppt/config/external_end.hpp>
 
 libftl::ship::images::object::offset_image::offset_image(
-    libftl::xml::generated::ship::offset const &_offset,
+    libftl::xml::ship::offset _offset,
     sge::texture::const_part_shared_ptr &&_image)
-    : offset_{_offset}, image_{std::move(_image)}
+    : offset_{std::move(_offset)}, image_{std::move(_image)}
 {
 }
 
 libftl::ship::images::object::gib_image::gib_image(
-    libftl::xml::generated::ship::gib const &_gib, sge::texture::const_part_shared_ptr &&_image)
-    : gib_{_gib}, image_{std::move(_image)}
+    libftl::xml::ship::gib _gib, sge::texture::const_part_shared_ptr &&_image)
+    : gib_{std::move(_gib)}, image_{std::move(_image)}
 {
 }
 

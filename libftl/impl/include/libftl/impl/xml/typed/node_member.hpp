@@ -2,8 +2,10 @@
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_HPP_INCLUDED
 
 #include <libftl/xml/node.hpp>
+#include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_fwd.hpp>
+#include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <libftl/error.hpp>
@@ -21,6 +23,7 @@
 namespace libftl::impl::xml::typed
 {
 template <libftl::impl::xml::typed::required Required, typename Attributes, typename Content>
+requires libftl::impl::xml::typed::parses<Content,fcppt::optional::object<libftl::impl::xml::inner_node>>
 class node_member
 {
 public:

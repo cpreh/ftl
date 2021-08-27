@@ -11,7 +11,6 @@ concept parses = requires(Parser const &_parser, Arg const &_arg)
   fcppt::deref(_parser).parse(_arg);
 };
 
-
 }
 
 #endif

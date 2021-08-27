@@ -122,7 +122,6 @@ set(
 	blueprints
 	events
 	sectors
-	ship
 )
 
 foreach(
@@ -302,16 +301,51 @@ set(
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/clean.hpp
 	libftl/include/libftl/xml/events.hpp
+	libftl/include/libftl/xml/labels/angular.hpp
+	libftl/include/libftl/xml/labels/cloak.hpp
 	libftl/include/libftl/xml/labels/desc.hpp
+	libftl/include/libftl/xml/labels/direction.hpp
+	libftl/include/libftl/xml/labels/explosion.hpp
+	libftl/include/libftl/xml/labels/floor.hpp
+	libftl/include/libftl/xml/labels/gib.hpp
+	libftl/include/libftl/xml/labels/gib1.hpp
+	libftl/include/libftl/xml/labels/gib2.hpp
+	libftl/include/libftl/xml/labels/gib3.hpp
+	libftl/include/libftl/xml/labels/gib4.hpp
+	libftl/include/libftl/xml/labels/gib5.hpp
+	libftl/include/libftl/xml/labels/gib6.hpp
+	libftl/include/libftl/xml/labels/glow_offset.hpp
+	libftl/include/libftl/xml/labels/h.hpp
 	libftl/include/libftl/xml/labels/id.hpp
 	libftl/include/libftl/xml/labels/img.hpp
+	libftl/include/libftl/xml/labels/max.hpp
+	libftl/include/libftl/xml/labels/min.hpp
+	libftl/include/libftl/xml/labels/mirror.hpp
 	libftl/include/libftl/xml/labels/multi_difficulty.hpp
 	libftl/include/libftl/xml/labels/name.hpp
+	libftl/include/libftl/xml/labels/offsets.hpp
+	libftl/include/libftl/xml/labels/rotate.hpp
 	libftl/include/libftl/xml/labels/ship.hpp
+	libftl/include/libftl/xml/labels/slide.hpp
+	libftl/include/libftl/xml/labels/velocity.hpp
+	libftl/include/libftl/xml/labels/w.hpp
+	libftl/include/libftl/xml/labels/weapon_mounts.hpp
+	libftl/include/libftl/xml/labels/x.hpp
+	libftl/include/libftl/xml/labels/y.hpp
 	libftl/include/libftl/xml/node.hpp
 	libftl/include/libftl/xml/node_output.hpp
 	libftl/include/libftl/xml/sectors.hpp
-	libftl/include/libftl/xml/ship.hpp
+	libftl/include/libftl/xml/ship/explosion.hpp
+	libftl/include/libftl/xml/ship/gib.hpp
+	libftl/include/libftl/xml/ship/img.hpp
+	libftl/include/libftl/xml/ship/load.hpp
+	libftl/include/libftl/xml/ship/offset.hpp
+	libftl/include/libftl/xml/ship/offsets.hpp
+	libftl/include/libftl/xml/ship/result.hpp
+	libftl/include/libftl/xml/ship/slide.hpp
+	libftl/include/libftl/xml/ship/slide_input.hpp
+	libftl/include/libftl/xml/ship/slide_output.hpp
+	libftl/include/libftl/xml/ship/slide_to_string.hpp
 	libftl/src/archive/base.cpp
 	libftl/src/archive/chain.cpp
 	libftl/src/archive/entry_output.cpp
@@ -349,7 +383,8 @@ set(
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
 	libftl/src/xml/sectors.cpp
-	libftl/src/xml/ship.cpp
+	libftl/src/xml/ship/load.cpp
+	libftl/src/xml/ship/slide_to_string.cpp
 )
 
 set(

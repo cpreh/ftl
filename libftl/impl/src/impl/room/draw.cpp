@@ -11,7 +11,11 @@
 #include <libftl/sprite/rect.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
 #include <libftl/sprite/white.hpp>
-#include <libftl/xml/generated/ship.hpp>
+#include <libftl/xml/ship/img.hpp>
+#include <libftl/xml/ship/result.hpp>
+#include <libftl/xml/labels/img.hpp>
+#include <libftl/xml/labels/x.hpp>
+#include <libftl/xml/labels/y.hpp>
 #include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/sprite/roles/color.hpp>
@@ -29,6 +33,7 @@
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/at.hpp>
 #include <fcppt/math/vector/map.hpp>
+#include <fcppt/record/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
@@ -90,18 +95,22 @@ libftl::sprite::rect foreground_rect(
 
 std::vector<libftl::sprite::object> room_tiles(
     libftl::sprite::images const &_images,
-    libftl::xml::generated::ship::ship_root const &_ship_root,
+    libftl::xml::ship::result const &_ship,
     libftl::ship::layout::tile_rect const &_tiles)
 {
   return fcppt::algorithm::map_concat<std::vector<libftl::sprite::object>>(
       fcppt::container::grid::make_pos_range_start_end(
           fcppt::container::grid::make_min(_tiles.pos()),
           fcppt::container::grid::make_sup(_tiles.max())),
-      [&_images, &_ship_root, _tiles](libftl::ship::layout::tile_pos const &_pos)
+      [&_images, &_ship, _tiles](libftl::ship::layout::tile_pos const &_pos)
       {
+        libftl::xml::ship::img const &img{fcppt::record::get<libftl::xml::labels::img>(_ship)};
+
         libftl::sprite::object::vector const offset{
-            fcppt::cast::size<libftl::sprite::object::unit>(_ship_root.img().x()),
-            fcppt::cast::size<libftl::sprite::object::unit>(_ship_root.img().y())};
+            fcppt::cast::size<libftl::sprite::object::unit>(
+                fcppt::record::get<libftl::xml::labels::x>(img.attributes_)),
+            fcppt::cast::size<libftl::sprite::object::unit>(
+                fcppt::record::get<libftl::xml::labels::y>(img.attributes_))};
 
         libftl::sprite::rect const foreground{foreground_rect(_pos, _tiles)};
 
@@ -123,21 +132,21 @@ std::vector<libftl::sprite::object> room_tiles(
 
 std::vector<libftl::sprite::object> draw_tiles(
     libftl::sprite::images const &_images,
-    libftl::xml::generated::ship::ship_root const &_ship_root,
+    libftl::xml::ship::result const &_ship,
     libftl::ship::layout::object const &_layout)
 {
   return fcppt::algorithm::map_concat<std::vector<libftl::sprite::object>>(
       _layout.rooms_,
-      [&_images, _ship_root](libftl::ship::layout::room const &_room)
-      { return room_tiles(_images, _ship_root, _room.rect_); });
+      [&_images, _ship](libftl::ship::layout::room const &_room)
+      { return room_tiles(_images, _ship, _room.rect_); });
 }
 
 }
 
 std::vector<libftl::sprite::object> libftl::impl::room::draw(
     libftl::sprite::images const &_images,
-    libftl::xml::generated::ship::ship_root const &_ship_root,
+    libftl::xml::ship::result const &_ship,
     libftl::ship::layout::object const &_layout)
 {
-  return draw_tiles(_images, _ship_root, _layout);
+  return draw_tiles(_images, _ship, _layout);
 }
