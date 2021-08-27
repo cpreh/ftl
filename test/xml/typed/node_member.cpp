@@ -5,6 +5,8 @@
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/node.hpp>
+#include <libftl/xml/node_output.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
 #include <fcppt/unit_comparison.hpp>
 #include <fcppt/unit.hpp>
@@ -12,14 +14,12 @@
 #include <fcppt/catch/either.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
-#include <fcppt/catch/tuple.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/nothing.hpp>
 #include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
-#include <fcppt/tuple/comparison.hpp>
-#include <fcppt/tuple/make.hpp>
+#include <fcppt/record/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <string>
@@ -40,5 +40,5 @@ TEST_CASE("xml::typed::node_member", "[xml]")
           std::vector<libftl::impl::xml::attribute>{},
           fcppt::optional::nothing{}}) ==
       fcppt::either::make_success<libftl::error>(
-          fcppt::tuple::make(fcppt::record::make(), fcppt::unit{})));
+          libftl::xml::node{fcppt::record::make(), fcppt::unit{}}));
 }

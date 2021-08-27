@@ -308,6 +308,8 @@ set(
 	libftl/include/libftl/xml/labels/multi_difficulty.hpp
 	libftl/include/libftl/xml/labels/name.hpp
 	libftl/include/libftl/xml/labels/ship.hpp
+	libftl/include/libftl/xml/node.hpp
+	libftl/include/libftl/xml/node_output.hpp
 	libftl/include/libftl/xml/sectors.hpp
 	libftl/include/libftl/xml/ship.hpp
 	libftl/src/archive/base.cpp

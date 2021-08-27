@@ -1,6 +1,7 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_HPP_INCLUDED
 
+#include <libftl/xml/node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_fwd.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
@@ -11,7 +12,6 @@
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/optional/object.hpp>
-#include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <type_traits>
@@ -24,7 +24,7 @@ template <libftl::impl::xml::typed::required Required, typename Attributes, type
 class node_member
 {
 public:
-  using result_type = fcppt::tuple::object<
+  using result_type = libftl::xml::node<
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 

@@ -2,6 +2,7 @@
 #define LIBFTL_IMPL_XML_TYPED_NODE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
+#include <libftl/xml/node.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
@@ -15,7 +16,6 @@
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/optional/object.hpp>
-#include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
@@ -28,7 +28,7 @@ requires libftl::impl::xml::typed::parses<Content,fcppt::optional::object<libftl
 class node
 {
 public:
-  using result_type = fcppt::tuple::object<
+  using result_type = libftl::xml::node<
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 

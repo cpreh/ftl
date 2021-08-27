@@ -10,6 +10,7 @@
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/events.hpp>
+#include <libftl/xml/node_output.hpp>
 #include <libftl/xml/sectors.hpp>
 #include <libftl/xml/ship.hpp>
 #include <libftl/xml/generated/animations.hpp>
@@ -33,7 +34,6 @@
 #include <fcppt/optional/output.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/output.hpp>
-#include <fcppt/tuple/output.hpp>
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>

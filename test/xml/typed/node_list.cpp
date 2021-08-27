@@ -6,6 +6,8 @@
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
+#include <libftl/xml/node.hpp>
+#include <libftl/xml/node_output.hpp>
 #include <fcppt/make_recursive.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
 #include <fcppt/unit_comparison.hpp>
@@ -14,7 +16,6 @@
 #include <fcppt/catch/either.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
-#include <fcppt/catch/tuple.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -22,9 +23,7 @@
 #include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/record/object.hpp>
-#include <fcppt/tuple/comparison.hpp>
-#include <fcppt/tuple/make.hpp>
-#include <fcppt/tuple/object.hpp>
+#include <fcppt/record/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <string>
@@ -38,7 +37,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
       libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
       libftl::impl::xml::typed::empty{}}};
 
-  using result_vector = std::vector<fcppt::tuple::object<fcppt::record::object<>, fcppt::unit>>;
+  using result_vector = std::vector<libftl::xml::node<fcppt::record::object<>, fcppt::unit>>;
 
   CHECK(
       parser.parse(libftl::impl::xml::node_vector{}) ==
@@ -51,7 +50,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
       fcppt::either::make_success<libftl::error>(
-          result_vector{fcppt::tuple::make(fcppt::record::make(), fcppt::unit{})}));
+          result_vector{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}));
 
   CHECK(parser
             .parse(fcppt::container::make<libftl::impl::xml::node_vector>(
@@ -72,6 +71,6 @@ TEST_CASE("xml::typed::node_list", "[xml]")
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
       fcppt::either::make_success<libftl::error>(result_vector{
-          fcppt::tuple::make(fcppt::record::make(), fcppt::unit{}),
-          fcppt::tuple::make(fcppt::record::make(), fcppt::unit{})}));
+          libftl::xml::node{fcppt::record::make(), fcppt::unit{}},
+          libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}));
 }

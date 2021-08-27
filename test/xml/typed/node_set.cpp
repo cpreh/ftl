@@ -16,7 +16,6 @@
 #include <fcppt/catch/optional.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
-#include <fcppt/catch/tuple.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -26,9 +25,6 @@
 #include <fcppt/record/make.hpp>
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/record/object.hpp>
-#include <fcppt/tuple/comparison.hpp>
-#include <fcppt/tuple/make.hpp>
-#include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <string>
@@ -54,7 +50,7 @@ TEST_CASE("xml::typed::node_set", "[xml]")
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
       fcppt::either::make_success<libftl::error>(
-          fcppt::record::make(node1{} = fcppt::tuple::make(fcppt::record::make(), fcppt::unit()))));
+          fcppt::record::make(node1{} = libftl::xml::node{fcppt::record::make(), fcppt::unit()})));
 
   libftl::impl::xml::typed::node_set const parser2{fcppt::record::make(
       node1{} = libftl::impl::xml::typed::make_node_member<libftl::impl::xml::typed::required::no>(
@@ -66,5 +62,5 @@ TEST_CASE("xml::typed::node_set", "[xml]")
       parser2.parse(libftl::impl::xml::node_vector{}) ==
       fcppt::either::make_success<libftl::error>(fcppt::record::make(
           node1{} = fcppt::optional::object<
-              fcppt::tuple::object<fcppt::record::object<>, fcppt::unit>>{})));
+              libftl::xml::node<fcppt::record::object<>, fcppt::unit>>{})));
 }
