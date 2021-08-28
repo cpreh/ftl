@@ -91,9 +91,9 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
             fcppt::overload(
                 [](auto const &_element) { fcppt::io::cout() << *_element; },
                 [](libftl::xml::achievements::result const &_achievements)
-                { fcppt::output(fcppt::io::cout(), _achievements); },
+                { fcppt::io::cout() << fcppt::output(_achievements); },
                 [](libftl::xml::ship::result const &_ship)
-                { fcppt::output(fcppt::io::cout(), _ship); }),
+                { fcppt::io::cout() << fcppt::output(_ship); }),
             _result);
         fcppt::io::cout() << FCPPT_TEXT('\n');
         return fcppt::either::no_error{};
