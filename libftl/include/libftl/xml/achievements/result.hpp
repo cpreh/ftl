@@ -16,9 +16,9 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl::xml
+namespace libftl::xml::achievements
 {
-using achievements_result = std::vector<libftl::xml::node<
+using result = std::vector<libftl::xml::node<
     fcppt::record::object<fcppt::record::element<libftl::xml::labels::id, std::string>>,
     fcppt::record::object<
         fcppt::record::element<

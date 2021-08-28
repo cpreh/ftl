@@ -164,15 +164,18 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
+	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/basic_set.hpp
+	libftl/impl/include/libftl/impl/xml/typed/construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
 	libftl/impl/include/libftl/impl/xml/typed/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
+	libftl/impl/include/libftl/impl/xml/typed/make_construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
@@ -295,8 +298,8 @@ set(
 	libftl/include/libftl/sprite/type_choices.hpp
 	libftl/include/libftl/sprite/type_choices_fwd.hpp
 	libftl/include/libftl/sprite/white.hpp
-	libftl/include/libftl/xml/achievements.hpp
-	libftl/include/libftl/xml/achievements_result.hpp
+	libftl/include/libftl/xml/achievements/load.hpp
+	libftl/include/libftl/xml/achievements/result.hpp
 	libftl/include/libftl/xml/animations.hpp
 	libftl/include/libftl/xml/blueprints.hpp
 	libftl/include/libftl/xml/clean.hpp
@@ -377,7 +380,7 @@ set(
 	libftl/src/sprite/images.cpp
 	libftl/src/sprite/resolution.cpp
 	libftl/src/sprite/white.cpp
-	libftl/src/xml/achievements.cpp
+	libftl/src/xml/achievements/load.cpp
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints.cpp
 	libftl/src/xml/clean.cpp

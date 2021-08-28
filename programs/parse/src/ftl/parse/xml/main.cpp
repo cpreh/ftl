@@ -5,8 +5,8 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
-#include <libftl/xml/achievements.hpp>
-#include <libftl/xml/achievements_result.hpp>
+#include <libftl/xml/achievements/load.hpp>
+#include <libftl/xml/achievements/result.hpp>
 #include <libftl/xml/animations.hpp>
 #include <libftl/xml/blueprints.hpp>
 #include <libftl/xml/events.hpp>
@@ -48,7 +48,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
     ftl::parse::xml::arguments const &_args)
 {
   using result_type = fcppt::variant::object<
-      libftl::xml::achievements_result,
+      libftl::xml::achievements::result,
       fcppt::unique_ptr<libftl::xml::generated::animations::animations_root>,
       fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>,
       fcppt::unique_ptr<libftl::xml::generated::events::events_root>,
@@ -65,7 +65,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         switch (fcppt::record::get<ftl::parse::xml::type_label>(_args))
         {
         case ftl::parse::xml::type::achievements:
-          return fcppt::either::map(libftl::xml::achievements(*_stream), wrap_result);
+          return fcppt::either::map(libftl::xml::achievements::load(*_stream), wrap_result);
         case ftl::parse::xml::type::animations:
           return fcppt::either::map(libftl::xml::animations(*_stream), wrap_result);
         case ftl::parse::xml::type::blueprints:
@@ -90,7 +90,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         fcppt::variant::apply(
             fcppt::overload(
                 [](auto const &_element) { fcppt::io::cout() << *_element; },
-                [](libftl::xml::achievements_result const &_achievements)
+                [](libftl::xml::achievements::result const &_achievements)
                 { fcppt::output(fcppt::io::cout(), _achievements); },
                 [](libftl::xml::ship::result const &_ship)
                 { fcppt::output(fcppt::io::cout(), _ship); }),
