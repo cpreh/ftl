@@ -183,6 +183,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/parses.hpp
+	libftl/impl/include/libftl/impl/xml/typed/partition.hpp
 	libftl/impl/include/libftl/impl/xml/typed/required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
 	libftl/impl/include/libftl/impl/xsd/require_one.hpp
