@@ -15,6 +15,9 @@ fcppt::enum_::to_string_impl<libftl::xml::ship::slide>::get(libftl::xml::ship::s
   {
     SLIDE_CASE(left);
     SLIDE_CASE(right);
+    SLIDE_CASE(up);
+    SLIDE_CASE(down);
+    SLIDE_CASE(no);
   }
   FCPPT_ASSERT_UNREACHABLE;
 }

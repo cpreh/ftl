@@ -7,7 +7,10 @@ enum class slide
 {
   left,
   right,
-  fcppt_maximum = right
+  up,
+  down,
+  no,
+  fcppt_maximum = no
 };
 }
 

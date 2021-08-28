@@ -102,7 +102,7 @@ libftl::xml::ship::load(std::istream &_input)
               labels::w{} = typed::attribute<unsigned, required::yes>{"w"},
               labels::h{} = typed::attribute<unsigned, required::yes>{"h"})},
           typed::empty{}),
-      labels::glow_offset{} = typed::make_node_member<required::yes>(
+      labels::glow_offset{} = typed::make_node_member<required::no>(
           "glowOffset",
           typed::attribute_set{fcppt::record::make(
               labels::x{} = typed::attribute<int, required::yes>{"x"},
@@ -132,7 +132,7 @@ libftl::xml::ship::load(std::istream &_input)
               typed::attribute_set{fcppt::record::make(
                   labels::x{} = typed::attribute<int, required::yes>{"x"},
                   labels::y{} = typed::attribute<int, required::yes>{"y"},
-                  labels::rotate{} = typed::attribute<bool, required::yes>{"false"},
+                  labels::rotate{} = typed::attribute<bool, required::yes>{"rotate"},
                   labels::mirror{} = typed::attribute<bool, required::yes>{"mirror"},
                   labels::gib{} = typed::attribute<unsigned, required::yes>{"gib"},
                   labels::slide{} =

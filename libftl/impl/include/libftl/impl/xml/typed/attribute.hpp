@@ -4,7 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/typed/attribute_fwd.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
-#include <fcppt/extract_from_string.hpp>
+#include <fcppt/extract_from_string_fmt.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
@@ -12,6 +12,7 @@
 #include <fcppt/either/object.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <ios>
 #include <string>
 #include <typeinfo>
 #include <utility>
@@ -37,14 +38,14 @@ public:
   parse(libftl::impl::xml::attribute const &_attribute) const
   {
     return fcppt::either::from_optional(
-        fcppt::extract_from_string<Type>(_attribute.value_),
+        fcppt::extract_from_string_fmt<Type>(_attribute.value_, std::ios_base::boolalpha),
         [&_attribute]
         {
           return libftl::error{
-              fcppt::string{FCPPT_TEXT("Failed to convert ")} +
-              fcppt::from_std_string(_attribute.name()) + FCPPT_TEXT(" to type ") +
-              fcppt::from_std_string(fcppt::type_name_from_info(typeid(Type))) +
-              FCPPT_TEXT(".")};
+              fcppt::string{FCPPT_TEXT("Failed to convert attribute ")} +
+              fcppt::from_std_string(_attribute.name()) + FCPPT_TEXT(" with value ") +
+              _attribute.value_ + FCPPT_TEXT(" to type ") +
+              fcppt::from_std_string(fcppt::type_name_from_info(typeid(Type))) + FCPPT_TEXT(".")};
         });
   }
 private:

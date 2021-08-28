@@ -31,11 +31,11 @@ using result = fcppt::record::object<
     fcppt::record::element<libftl::xml::labels::img, libftl::xml::ship::img>,
     fcppt::record::element<
         libftl::xml::labels::glow_offset,
-        libftl::xml::node<
+        fcppt::optional::object<libftl::xml::node<
             fcppt::record::object<
                 fcppt::record::element<libftl::xml::labels::x, int>,
                 fcppt::record::element<libftl::xml::labels::y, int>>,
-            fcppt::unit>>,
+            fcppt::unit>>>,
     fcppt::record::
         element<libftl::xml::labels::offsets, fcppt::optional::object<libftl::xml::ship::offsets>>,
     fcppt::record::element<
