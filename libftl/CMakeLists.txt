@@ -156,6 +156,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/load_function.hpp
+	libftl/impl/include/libftl/impl/xml/location_to_string.hpp
 	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/node.hpp
 	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
@@ -510,6 +511,7 @@ function(
 		sgesprite_interface
 		fcppt_core_interface
 		fcppt_options_interface
+		fcppt_parse_interface
 	)
 
 	if(NOT ${VARIANT} STREQUAL "INTERFACE")

@@ -25,6 +25,7 @@
 #include <fcppt/parse/make_convert.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
 #include <fcppt/parse/make_recursive.hpp>
+#include <fcppt/parse/make_with_location.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>
 #include <fcppt/parse/operators/complement.hpp>
@@ -57,10 +58,9 @@ public:
             fcppt::parse::literal{'"'} >> *~fcppt::parse::char_set{'"'} >>
             fcppt::parse::literal{'"'}))},
         string_{grammar::make_base(fcppt::parse::make_lexeme(*~fcppt::parse::char_set{'<'}))},
-        inner_node_{
-            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::inner_node>(
-                fcppt::make_cref(this->node_content_) >> fcppt::parse::string{"</"} >>
-                +~fcppt::parse::char_set{'>'} >> fcppt::parse::literal{'>'}))},
+        inner_node_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::inner_node>(
+            fcppt::make_cref(this->node_content_) >> fcppt::parse::string{"</"} >>
+            +~fcppt::parse::char_set{'>'} >> fcppt::parse::literal{'>'}))},
         node_content_{grammar::make_base(
             fcppt::make_cref(this->node_vector_) | fcppt::make_cref(this->string_))},
         node_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::node>(
@@ -82,12 +82,13 @@ public:
                       [](fcppt::optional::object<libftl::impl::xml::inner_node> &&_inner)
                       { return std::move(_inner); });
                 })))},
-        attribute_{
-            grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::attribute>(
+        attribute_{grammar::make_base(
+            fcppt::parse::as_struct<libftl::impl::xml::attribute>(fcppt::parse::make_with_location(
                 (+~fcppt::parse::char_set{'>', '='} >> fcppt::parse::literal{'='}) >>
-                fcppt::make_cref(this->quoted_string_)))},
+                fcppt::make_cref(this->quoted_string_))))},
         attribute_vector_{grammar::make_base(*fcppt::make_cref(this->attribute_))},
-        node_vector_{grammar::make_base(+fcppt::parse::make_recursive(fcppt::make_cref(this->node_)))},
+        node_vector_{
+            grammar::make_base(+fcppt::parse::make_recursive(fcppt::make_cref(this->node_)))},
         version_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document::version>(
             fcppt::parse::string{"<?xml"} >> fcppt::parse::string{"version="} >>
             fcppt::make_cref(this->quoted_string_) >> fcppt::parse::string{"encoding="} >>

@@ -2,6 +2,7 @@
 #define LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
+#include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/typed/attribute_fwd.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <fcppt/extract_from_string_fmt.hpp>
@@ -42,6 +43,7 @@ public:
         [&_attribute]
         {
           return libftl::error{
+              libftl::impl::xml::location_to_string(_attribute.location_) +
               fcppt::string{FCPPT_TEXT("Failed to convert attribute ")} +
               fcppt::from_std_string(_attribute.name()) + FCPPT_TEXT(" with value ") +
               _attribute.value_ + FCPPT_TEXT(" to type ") +
