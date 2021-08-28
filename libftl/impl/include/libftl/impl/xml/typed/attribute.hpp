@@ -46,7 +46,7 @@ public:
               libftl::impl::xml::location_to_string(_attribute.location_) +
               fcppt::string{FCPPT_TEXT("Failed to convert attribute ")} +
               fcppt::from_std_string(_attribute.name()) + FCPPT_TEXT(" with value ") +
-              _attribute.value_ + FCPPT_TEXT(" to type ") +
+              fcppt::from_std_string(_attribute.value_) + FCPPT_TEXT(" to type ") +
               fcppt::from_std_string(fcppt::type_name_from_info(typeid(Type))) + FCPPT_TEXT(".")};
         });
   }

@@ -22,10 +22,10 @@ struct attribute
   }
 
   attribute(
-      fcppt::optional::object<fcppt::parse::location> &&_location,
+      fcppt::optional::object<fcppt::parse::location> const _location,
       std::string &&_name,
       std::string &&_value)
-      : location_{std::move(_location)}, name_{std::move(_name)}, value_{std::move(_value)}
+      : location_{_location}, name_{std::move(_name)}, value_{std::move(_value)}
   {
   }
 
