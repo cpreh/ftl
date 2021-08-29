@@ -4,6 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
@@ -44,6 +45,7 @@ public:
     if (_node.opening_tag_ != this->name_)
     {
       return fcppt::either::make_failure<result_type>(libftl::error{
+          libftl::impl::xml::location_to_string(_node.location_) +
           fcppt::string{FCPPT_TEXT("Mismatched tags, expected ")} +
           fcppt::from_std_string(this->name_) + FCPPT_TEXT(", got ") +
           fcppt::from_std_string(_node.opening_tag_) + FCPPT_TEXT(".")});

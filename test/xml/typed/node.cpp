@@ -34,6 +34,7 @@ TEST_CASE("xml::typed::node", "[xml]")
 
   CHECK(parser
             .parse(libftl::impl::xml::node{
+                fcppt::optional::nothing{},
                 std::string{"x"},
                 std::vector<libftl::impl::xml::attribute>{},
                 fcppt::optional::nothing{}})
@@ -41,6 +42,7 @@ TEST_CASE("xml::typed::node", "[xml]")
 
   CHECK(
       parser.parse(libftl::impl::xml::node{
+          fcppt::optional::nothing{},
           std::string{"test"},
           std::vector<libftl::impl::xml::attribute>{},
           fcppt::optional::nothing{}}) ==

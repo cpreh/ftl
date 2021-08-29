@@ -46,6 +46,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
   CHECK(
       parser.parse(fcppt::container::make<libftl::impl::xml::node_vector>(
           fcppt::make_recursive(libftl::impl::xml::node{
+              fcppt::optional::nothing{},
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
@@ -55,6 +56,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
   CHECK(parser
             .parse(fcppt::container::make<libftl::impl::xml::node_vector>(
                 fcppt::make_recursive(libftl::impl::xml::node{
+                    fcppt::optional::nothing{},
                     std::string{"node2"},
                     std::vector<libftl::impl::xml::attribute>{},
                     fcppt::optional::nothing{}})))
@@ -63,10 +65,12 @@ TEST_CASE("xml::typed::node_list", "[xml]")
   CHECK(
       parser.parse(fcppt::container::make<libftl::impl::xml::node_vector>(
           fcppt::make_recursive(libftl::impl::xml::node{
+              fcppt::optional::nothing{},
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}),
           fcppt::make_recursive(libftl::impl::xml::node{
+              fcppt::optional::nothing{},
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==

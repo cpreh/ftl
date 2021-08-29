@@ -16,14 +16,18 @@ namespace libftl::impl::xml
 struct node
 {
   node(
+      fcppt::optional::object<fcppt::parse::location> const _location,
       std::string &&_opening_tag,
       std::vector<libftl::impl::xml::attribute> &&_attributes,
       fcppt::optional::object<libftl::impl::xml::inner_node> &&_content)
-      : opening_tag_{std::move(_opening_tag)},
+      : location_{_location},
+        opening_tag_{std::move(_opening_tag)},
         attributes_{std::move(_attributes)},
         content_{std::move(_content)}
   {
   }
+
+  fcppt::optional::object<fcppt::parse::location> location_;
 
   std::string opening_tag_;
 

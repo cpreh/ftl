@@ -74,25 +74,25 @@ public:
             +~fcppt::parse::char_set{'>'} >> fcppt::parse::literal{'>'}))},
         node_content_{grammar::make_base(
             fcppt::make_cref(this->node_vector_) | fcppt::make_cref(this->string_))},
-        node_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::node>(
-            fcppt::parse::literal{'<'} >> !fcppt::parse::literal{'/'} >>
-            fcppt::parse::make_lexeme(+~fcppt::parse::char_set{' ', '/', '>'}) >>
-            fcppt::make_cref(this->attribute_vector_) >>
-            fcppt::parse::make_convert(
-                fcppt::parse::string{"/>"} |
-                    -(fcppt::parse::literal{'>'} >> fcppt::make_cref(this->inner_node_)),
-                [](fcppt::variant::object<
-                    fcppt::unit,
-                    fcppt::optional::object<libftl::impl::xml::inner_node>> &&_value)
-                {
-                  return fcppt::variant::match(
-                      std::move(_value),
-                      [](fcppt::unit) {
-                        return fcppt::optional::object<libftl::impl::xml::inner_node>();
-                      },
-                      [](fcppt::optional::object<libftl::impl::xml::inner_node> &&_inner)
-                      { return std::move(_inner); });
-                })))},
+        node_{grammar::make_base(
+            fcppt::parse::as_struct<libftl::impl::xml::node>(fcppt::parse::make_with_location(
+                fcppt::parse::literal{'<'} >> !fcppt::parse::literal{'/'} >>
+                fcppt::parse::make_lexeme(+~fcppt::parse::char_set{' ', '/', '>'}) >>
+                fcppt::make_cref(this->attribute_vector_) >>
+                fcppt::parse::make_convert(
+                    fcppt::parse::string{"/>"} |
+                        -(fcppt::parse::literal{'>'} >> fcppt::make_cref(this->inner_node_)),
+                    [](fcppt::variant::object<
+                        fcppt::unit,
+                        fcppt::optional::object<libftl::impl::xml::inner_node>> &&_value)
+                    {
+                      return fcppt::variant::match(
+                          std::move(_value),
+                          [](fcppt::unit)
+                          { return fcppt::optional::object<libftl::impl::xml::inner_node>(); },
+                          [](fcppt::optional::object<libftl::impl::xml::inner_node> &&_inner)
+                          { return std::move(_inner); });
+                    }))))},
         attribute_{grammar::make_base(
             fcppt::parse::as_struct<libftl::impl::xml::attribute>(fcppt::parse::make_with_location(
                 (+~fcppt::parse::char_set{'>', '='} >> fcppt::parse::literal{'='}) >>
