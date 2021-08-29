@@ -151,7 +151,6 @@ set(
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
-	libftl/impl/include/libftl/impl/xml/file_to_string.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
@@ -164,7 +163,6 @@ set(
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
-	libftl/impl/include/libftl/impl/xml/remove_comments.hpp
 	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
@@ -194,10 +192,8 @@ set(
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/room/draw.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
-	libftl/impl/src/impl/xml/file_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
-	libftl/impl/src/impl/xml/remove_comments.cpp
 	libftl/include/libftl/archive/base.hpp
 	libftl/include/libftl/archive/base_fwd.hpp
 	libftl/include/libftl/archive/base_ref.hpp

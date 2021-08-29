@@ -1,13 +1,11 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/document.hpp>
-#include <libftl/impl/xml/file_to_string.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/inner_node_content.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/parse.hpp>
-#include <libftl/impl/xml/remove_comments.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
@@ -20,7 +18,7 @@
 #include <fcppt/parse/char_set.hpp>
 #include <fcppt/parse/error.hpp>
 #include <fcppt/parse/grammar.hpp>
-#include <fcppt/parse/grammar_parse_string.hpp>
+#include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_convert.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
@@ -34,7 +32,11 @@
 #include <fcppt/parse/operators/repetition.hpp>
 #include <fcppt/parse/operators/repetition_plus.hpp>
 #include <fcppt/parse/operators/sequence.hpp>
-#include <fcppt/parse/skipper/space.hpp>
+#include <fcppt/parse/skipper/char_set.hpp>
+#include <fcppt/parse/skipper/comment.hpp>
+#include <fcppt/parse/skipper/string.hpp>
+#include <fcppt/parse/skipper/operators/alternative.hpp>
+#include <fcppt/parse/skipper/operators/repetition.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
@@ -45,15 +47,24 @@
 
 namespace
 {
+
+auto make_skipper()
+{
+  return *(
+      fcppt::parse::skipper::comment{
+          fcppt::parse::skipper::string{"<!--"}, fcppt::parse::skipper::string{"-->"}} |
+      fcppt::parse::skipper::char_set{' ', '\n', '\r', '\t'});
+}
+
 class grammar final
     : public fcppt::parse::
-          grammar<libftl::impl::xml::document, char, decltype(fcppt::parse::skipper::space())>
+          grammar<libftl::impl::xml::document, char, decltype(make_skipper())>
 {
   FCPPT_NONMOVABLE(grammar);
 
 public:
   grammar()
-      : grammar::grammar_base{fcppt::make_cref(this->document_), fcppt::parse::skipper::space()},
+      : grammar::grammar_base{fcppt::make_cref(this->document_), make_skipper()},
         quoted_string_{grammar::make_base(fcppt::parse::make_lexeme(
             fcppt::parse::literal{'"'} >> *~fcppt::parse::char_set{'"'} >>
             fcppt::parse::literal{'"'}))},
@@ -122,23 +133,16 @@ private:
   base_type<libftl::impl::xml::document> document_;
 };
 
-fcppt::either::object<libftl::error, libftl::impl::xml::document>
-parse_string(std::string const &_input)
-{
-  return fcppt::either::map_failure(
-      fcppt::parse::grammar_parse_string(std::string{_input}, grammar{}),
-      [](fcppt::parse::error<char> &&_error)
-      {
-        return libftl::error{
-            FCPPT_TEXT("Parsing failed: ") + fcppt::from_std_string(std::move(_error.get()))};
-      });
-}
-
 }
 
 fcppt::either::object<libftl::error, libftl::impl::xml::document>
 libftl::impl::xml::parse(std::istream &_stream)
 {
-  return parse_string(
-      libftl::impl::xml::remove_comments(libftl::impl::xml::file_to_string(_stream)));
+  return fcppt::either::map_failure(
+      fcppt::parse::grammar_parse_stream(_stream, grammar{}),
+      [](fcppt::parse::error<char> &&_error)
+      {
+        return libftl::error{
+            FCPPT_TEXT("Parsing failed: ") + fcppt::from_std_string(std::move(_error.get()))};
+      });
 }
