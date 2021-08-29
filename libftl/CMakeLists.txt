@@ -192,6 +192,7 @@ set(
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/room/draw.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
+	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
 	libftl/include/libftl/archive/base.hpp
