@@ -7,6 +7,7 @@
 #include <fcppt/catch/strong_typedef.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/optional/nothing.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <string>
@@ -17,10 +18,10 @@ TEST_CASE("xml::typed::attribute", "[xml]")
   libftl::impl::xml::typed::attribute<int, libftl::impl::xml::typed::required::yes> const attribute{
       std::string{"test"}};
 
-  CHECK(attribute.parse(libftl::impl::xml::attribute{std::string{"test"}, std::string{"x"}})
+  CHECK(attribute.parse(libftl::impl::xml::attribute{fcppt::optional::nothing{}, "test", "x"})
             .has_failure());
 
   CHECK(
-      attribute.parse(libftl::impl::xml::attribute{std::string{"test"}, std::string{"10"}}) ==
+      attribute.parse(libftl::impl::xml::attribute{fcppt::optional::nothing{}, "test", "10"}) ==
       fcppt::either::make_success<libftl::error>(10));
 }

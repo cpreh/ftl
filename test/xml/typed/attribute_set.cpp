@@ -10,6 +10,7 @@
 #include <fcppt/catch/strong_typedef.hpp>
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/optional/nothing.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
@@ -30,25 +31,25 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
 
   CHECK(attributes.parse(std::vector<libftl::impl::xml::attribute>{}).has_failure());
 
-  CHECK(
-      attributes
-          .parse(std::vector<libftl::impl::xml::attribute>{libftl::impl::xml::attribute{"a1", "v1"}})
-          .has_failure());
+  CHECK(attributes
+            .parse(std::vector<libftl::impl::xml::attribute>{
+                libftl::impl::xml::attribute{fcppt::optional::nothing{}, "a1", "v1"}})
+            .has_failure());
 
-  CHECK(
-      attributes
-          .parse(std::vector<libftl::impl::xml::attribute>{libftl::impl::xml::attribute{"attrib1", "y"}})
-          .has_failure());
+  CHECK(attributes
+            .parse(std::vector<libftl::impl::xml::attribute>{
+                libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "y"}})
+            .has_failure());
 
   CHECK(
       attributes.parse(std::vector<libftl::impl::xml::attribute>{
-          libftl::impl::xml::attribute{"attrib1", "10"}}) ==
+          libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "10"}}) ==
       fcppt::either::make_success<libftl::error>(fcppt::record::make(attrib1{} = 10)));
 
   CHECK(attributes
             .parse(std::vector<libftl::impl::xml::attribute>{
-                libftl::impl::xml::attribute{"attrib1", "10"},
-                libftl::impl::xml::attribute{"attrib2", "v2"}})
+                libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "10"},
+                libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib2", "v2"}})
             .has_failure());
 
   FCPPT_RECORD_MAKE_LABEL(attrib2);
@@ -63,8 +64,8 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
 
   CHECK(
       attributes2.parse(std::vector<libftl::impl::xml::attribute>{
-          libftl::impl::xml::attribute{"attrib1", "10"},
-          libftl::impl::xml::attribute{"attrib2", "20"}}) ==
+          libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "10"},
+          libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib2", "20"}}) ==
       fcppt::either::make_success<libftl::error>(
           fcppt::record::make(attrib1{} = 10, attrib2{} = 20U)));
 

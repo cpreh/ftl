@@ -3,7 +3,6 @@
 
 #include <libftl/impl/xml/attribute_fwd.hpp>
 #include <fcppt/parse/location.hpp>
-#include <fcppt/optional/nothing.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
@@ -14,13 +13,6 @@ namespace libftl::impl::xml
 {
 struct attribute
 {
-  attribute(
-      std::string &&_name,
-      std::string &&_value)
-      : attribute(fcppt::optional::nothing{},std::move(_name),std::move(_value))
-  {
-  }
-
   attribute(
       fcppt::optional::object<fcppt::parse::location> const _location,
       std::string &&_name,

@@ -24,7 +24,8 @@
 namespace libftl::impl::xml::typed
 {
 template <typename Attributes, typename Content>
-requires libftl::impl::xml::typed::parses<Content,fcppt::optional::object<libftl::impl::xml::inner_node>>
+requires libftl::impl::xml::typed::
+    parses<Content, fcppt::optional::object<libftl::impl::xml::inner_node>>
 class node
 {
 public:
@@ -62,6 +63,7 @@ public:
   }
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
+
 private:
   std::string name_;
   Attributes attributes_;
