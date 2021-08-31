@@ -2,8 +2,8 @@
 #define LIBFTL_IMPL_XML_ATTRIBUTE_HPP_INCLUDED
 
 #include <libftl/impl/xml/attribute_fwd.hpp>
-#include <fcppt/parse/location.hpp>
 #include <fcppt/optional/object.hpp>
+#include <fcppt/parse/location.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>

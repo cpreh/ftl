@@ -1,11 +1,4 @@
 #include <libftl/error.hpp>
-#include <libftl/xml/achievements/load.hpp>
-#include <libftl/xml/achievements/result.hpp>
-#include <libftl/xml/labels/desc.hpp>
-#include <libftl/xml/labels/id.hpp>
-#include <libftl/xml/labels/img.hpp>
-#include <libftl/xml/labels/multi_difficulty.hpp>
-#include <libftl/xml/labels/name.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
@@ -17,6 +10,13 @@
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/achievements/load.hpp>
+#include <libftl/xml/achievements/result.hpp>
+#include <libftl/xml/labels/desc.hpp>
+#include <libftl/xml/labels/id.hpp>
+#include <libftl/xml/labels/img.hpp>
+#include <libftl/xml/labels/multi_difficulty.hpp>
+#include <libftl/xml/labels/name.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>

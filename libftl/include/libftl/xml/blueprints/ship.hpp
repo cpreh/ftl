@@ -11,13 +11,13 @@
 #include <libftl/xml/labels/clonebay.hpp>
 #include <libftl/xml/labels/count.hpp>
 #include <libftl/xml/labels/doors.hpp>
-#include <libftl/xml/labels/drones.hpp>
 #include <libftl/xml/labels/drone_list.hpp>
 #include <libftl/xml/labels/drone_slots.hpp>
+#include <libftl/xml/labels/drones.hpp>
 #include <libftl/xml/labels/engines.hpp>
-#include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/hacking.hpp>
 #include <libftl/xml/labels/health.hpp>
+#include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/layout.hpp>
 #include <libftl/xml/labels/max_power.hpp>
 #include <libftl/xml/labels/medbay.hpp>

@@ -1,14 +1,14 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_HPP_INCLUDED
 
-#include <libftl/xml/node.hpp>
+#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_fwd.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
-#include <libftl/error.hpp>
+#include <libftl/xml/node.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/map.hpp>

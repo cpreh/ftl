@@ -2,8 +2,8 @@
 #define LIBFTL_IMPL_XML_TYPED_BASE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <fcppt/either/object.hpp>
 #include <fcppt/nonmovable.hpp>
+#include <fcppt/either/object.hpp>
 
 namespace libftl::impl::xml::typed
 {

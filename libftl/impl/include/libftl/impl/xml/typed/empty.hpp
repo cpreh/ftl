@@ -3,12 +3,12 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
+#include <fcppt/string.hpp>
+#include <fcppt/text.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
 

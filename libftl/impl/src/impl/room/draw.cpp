@@ -11,11 +11,11 @@
 #include <libftl/sprite/rect.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
 #include <libftl/sprite/white.hpp>
-#include <libftl/xml/ship/img.hpp>
-#include <libftl/xml/ship/result.hpp>
 #include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/x.hpp>
 #include <libftl/xml/labels/y.hpp>
+#include <libftl/xml/ship/img.hpp>
+#include <libftl/xml/ship/result.hpp>
 #include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/sprite/roles/color.hpp>

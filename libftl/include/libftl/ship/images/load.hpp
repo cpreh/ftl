@@ -6,8 +6,8 @@
 #include <libftl/ship/images/name_fwd.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images_fwd.hpp>
-#include <libftl/xml/ship/result.hpp>
 #include <libftl/xml/generated/blueprints_fwd.hpp>
+#include <libftl/xml/ship/result.hpp>
 #include <fcppt/reference_fwd.hpp>
 #include <fcppt/either/object_impl.hpp>
 

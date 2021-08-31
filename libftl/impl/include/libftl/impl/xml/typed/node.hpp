@@ -2,12 +2,12 @@
 #define LIBFTL_IMPL_XML_TYPED_NODE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/xml/node.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/node.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>

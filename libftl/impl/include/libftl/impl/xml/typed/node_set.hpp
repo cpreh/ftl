@@ -15,8 +15,8 @@
 #include <fcppt/mpl/lambda.hpp>
 #include <fcppt/mpl/list/all_of.hpp>
 #include <fcppt/mpl/list/map.hpp>
-#include <fcppt/record/element_vector.hpp>
 #include <fcppt/record/element_to_type.hpp>
+#include <fcppt/record/element_vector.hpp>
 #include <fcppt/record/is_object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>

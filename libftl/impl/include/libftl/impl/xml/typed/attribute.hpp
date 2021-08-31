@@ -9,9 +9,9 @@
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/object.hpp>
-#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <string>

@@ -6,8 +6,8 @@
 #include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
-#include <fcppt/either/object.hpp>
 #include <fcppt/nonmovable.hpp>
+#include <fcppt/either/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <utility>
 #include <fcppt/config/external_end.hpp>

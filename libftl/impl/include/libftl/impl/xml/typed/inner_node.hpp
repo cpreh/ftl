@@ -6,11 +6,11 @@
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
-#include <fcppt/either/make_failure.hpp>
-#include <fcppt/either/object.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/either/make_failure.hpp>
+#include <fcppt/either/object.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/variant/match.hpp>

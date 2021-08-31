@@ -19,8 +19,8 @@
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
-#include <typeinfo>
 #include <type_traits>
+#include <typeinfo>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed

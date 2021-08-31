@@ -1,13 +1,13 @@
 #ifndef LIBFTL_XML_BLUEPRINTS_ITEM_HPP_INCLUDED
 #define LIBFTL_XML_BLUEPRINTS_ITEM_HPP_INCLUDED
 
+#include <libftl/xml/node.hpp>
 #include <libftl/xml/labels/cost.hpp>
 #include <libftl/xml/labels/desc.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <libftl/xml/labels/rarity.hpp>
 #include <libftl/xml/labels/title.hpp>
 #include <libftl/xml/labels/type.hpp>
-#include <libftl/xml/node.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>
 #include <fcppt/config/external_begin.hpp>

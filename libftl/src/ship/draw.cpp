@@ -7,13 +7,13 @@
 #include <libftl/sprite/object.hpp>
 #include <libftl/sprite/size_or_texture_size.hpp>
 #include <libftl/sprite/white.hpp>
-#include <libftl/xml/ship/img.hpp>
-#include <libftl/xml/ship/offset.hpp>
-#include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/h.hpp>
+#include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/w.hpp>
 #include <libftl/xml/labels/x.hpp>
 #include <libftl/xml/labels/y.hpp>
+#include <libftl/xml/ship/img.hpp>
+#include <libftl/xml/ship/offset.hpp>
 #include <sge/sprite/roles/color.hpp>
 #include <sge/sprite/roles/pos.hpp>
 #include <sge/sprite/roles/size_or_texture_size.hpp>
