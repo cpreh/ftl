@@ -29,7 +29,7 @@ public:
 
   using arg_type = libftl::impl::xml::typed::arg_type<Impl>;
 
-  [[nodiscard]] virtual fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
   parse(arg_type const &_arg) const override
   {
     return fcppt::deref(this->impl_).parse(_arg);
