@@ -44,12 +44,16 @@ using crew = libftl::xml::node<
             libftl::xml::node<fcppt::record::object<>, unsigned>>,
         fcppt::record::element<
             libftl::xml::labels::power_list,
-            std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>,
+            libftl::xml::node<
+                fcppt::record::object<>,
+                std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>>,
         fcppt::record::element<
             libftl::xml::labels::color_list,
-            fcppt::optional::object<std::vector<libftl::xml::node<
+            fcppt::optional::object<libftl::xml::node<
                 fcppt::record::object<>,
-                std::vector<libftl::xml::blueprints::color>>>>>>>;
+                std::vector<libftl::xml::node<
+                    fcppt::record::object<>,
+                    std::vector<libftl::xml::blueprints::color>>>>>>>>;
 }
 
 #endif

@@ -149,6 +149,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/aug_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/crew_parser.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -186,6 +187,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_set.hpp
+	libftl/impl/include/libftl/impl/xml/typed/optional_inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/parses.hpp
 	libftl/impl/include/libftl/impl/xml/typed/partition.hpp
 	libftl/impl/include/libftl/impl/xml/typed/required.hpp
@@ -197,6 +199,7 @@ set(
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/room/draw.cpp
 	libftl/impl/src/impl/xml/blueprints/aug_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/crew_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
