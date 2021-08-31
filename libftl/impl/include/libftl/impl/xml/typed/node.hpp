@@ -34,6 +34,8 @@ public:
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 
+  using arg_type = libftl::impl::xml::node;
+
   node(std::string &&_name, Attributes &&_attributes, Content &&_content)
       : name_{std::move(_name)}, attributes_{std::move(_attributes)}, content_{std::move(_content)}
   {

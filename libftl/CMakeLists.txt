@@ -148,6 +148,7 @@ set(
 	libftl/impl/include/libftl/impl/room/draw.hpp
 	libftl/impl/include/libftl/impl/xml/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/aug_parser.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -164,17 +165,21 @@ set(
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
+	libftl/impl/include/libftl/impl/xml/typed/arg_type.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
+	libftl/impl/include/libftl/impl/xml/typed/base.hpp
 	libftl/impl/include/libftl/impl/xml/typed/basic_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
+	libftl/impl/include/libftl/impl/xml/typed/derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
 	libftl/impl/include/libftl/impl/xml/typed/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_construct.hpp
+	libftl/impl/include/libftl/impl/xml/typed/make_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
@@ -191,6 +196,7 @@ set(
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/room/draw.cpp
+	libftl/impl/src/impl/xml/blueprints/aug_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
@@ -300,15 +306,50 @@ set(
 	libftl/include/libftl/xml/achievements/load.hpp
 	libftl/include/libftl/xml/achievements/result.hpp
 	libftl/include/libftl/xml/animations.hpp
-	libftl/include/libftl/xml/blueprints.hpp
+	libftl/include/libftl/xml/blueprints/aug.hpp
+	libftl/include/libftl/xml/blueprints/color.hpp
+	libftl/include/libftl/xml/blueprints/crew.hpp
+	libftl/include/libftl/xml/blueprints/direction.hpp
+	libftl/include/libftl/xml/blueprints/drone.hpp
+	libftl/include/libftl/xml/blueprints/item.hpp
+	libftl/include/libftl/xml/blueprints/list.hpp
+	libftl/include/libftl/xml/blueprints/load.hpp
+	libftl/include/libftl/xml/blueprints/ship.hpp
+	libftl/include/libftl/xml/blueprints/system.hpp
+	libftl/include/libftl/xml/blueprints/system_element.hpp
+	libftl/include/libftl/xml/blueprints/weapon.hpp
 	libftl/include/libftl/xml/clean.hpp
 	libftl/include/libftl/xml/events.hpp
+	libftl/include/libftl/xml/labels/a.hpp
+	libftl/include/libftl/xml/labels/amount.hpp
 	libftl/include/libftl/xml/labels/angular.hpp
+	libftl/include/libftl/xml/labels/b.hpp
+	libftl/include/libftl/xml/labels/battery.hpp
+	libftl/include/libftl/xml/labels/boarding_ai.hpp
+	libftl/include/libftl/xml/labels/bp.hpp
+	libftl/include/libftl/xml/labels/breach_chance.hpp
+	libftl/include/libftl/xml/labels/class.hpp
 	libftl/include/libftl/xml/labels/cloak.hpp
+	libftl/include/libftl/xml/labels/cloaking.hpp
+	libftl/include/libftl/xml/labels/clonebay.hpp
+	libftl/include/libftl/xml/labels/color_list.hpp
+	libftl/include/libftl/xml/labels/cooldown.hpp
+	libftl/include/libftl/xml/labels/cost.hpp
+	libftl/include/libftl/xml/labels/count.hpp
+	libftl/include/libftl/xml/labels/damage.hpp
 	libftl/include/libftl/xml/labels/desc.hpp
 	libftl/include/libftl/xml/labels/direction.hpp
+	libftl/include/libftl/xml/labels/dodge.hpp
+	libftl/include/libftl/xml/labels/doors.hpp
+	libftl/include/libftl/xml/labels/drone_image.hpp
+	libftl/include/libftl/xml/labels/drone_list.hpp
+	libftl/include/libftl/xml/labels/drone_slots.hpp
+	libftl/include/libftl/xml/labels/drones.hpp
+	libftl/include/libftl/xml/labels/engines.hpp
 	libftl/include/libftl/xml/labels/explosion.hpp
+	libftl/include/libftl/xml/labels/fire_chance.hpp
 	libftl/include/libftl/xml/labels/floor.hpp
+	libftl/include/libftl/xml/labels/g.hpp
 	libftl/include/libftl/xml/labels/gib.hpp
 	libftl/include/libftl/xml/labels/gib1.hpp
 	libftl/include/libftl/xml/labels/gib2.hpp
@@ -318,20 +359,68 @@ set(
 	libftl/include/libftl/xml/labels/gib6.hpp
 	libftl/include/libftl/xml/labels/glow_offset.hpp
 	libftl/include/libftl/xml/labels/h.hpp
+	libftl/include/libftl/xml/labels/hacking.hpp
+	libftl/include/libftl/xml/labels/health.hpp
+	libftl/include/libftl/xml/labels/hit_shield_sounds.hpp
+	libftl/include/libftl/xml/labels/hit_ship_sounds.hpp
+	libftl/include/libftl/xml/labels/icon_image.hpp
 	libftl/include/libftl/xml/labels/id.hpp
+	libftl/include/libftl/xml/labels/image.hpp
 	libftl/include/libftl/xml/labels/img.hpp
+	libftl/include/libftl/xml/labels/ion.hpp
+	libftl/include/libftl/xml/labels/launch_sounds.hpp
+	libftl/include/libftl/xml/labels/layout.hpp
+	libftl/include/libftl/xml/labels/length.hpp
+	libftl/include/libftl/xml/labels/locked.hpp
 	libftl/include/libftl/xml/labels/max.hpp
+	libftl/include/libftl/xml/labels/max_power.hpp
+	libftl/include/libftl/xml/labels/medbay.hpp
 	libftl/include/libftl/xml/labels/min.hpp
+	libftl/include/libftl/xml/labels/mind.hpp
 	libftl/include/libftl/xml/labels/mirror.hpp
+	libftl/include/libftl/xml/labels/miss_sounds.hpp
+	libftl/include/libftl/xml/labels/missiles.hpp
 	libftl/include/libftl/xml/labels/multi_difficulty.hpp
 	libftl/include/libftl/xml/labels/name.hpp
+	libftl/include/libftl/xml/labels/number.hpp
 	libftl/include/libftl/xml/labels/offsets.hpp
+	libftl/include/libftl/xml/labels/oxygen.hpp
+	libftl/include/libftl/xml/labels/pilot.hpp
+	libftl/include/libftl/xml/labels/power.hpp
+	libftl/include/libftl/xml/labels/power_list.hpp
+	libftl/include/libftl/xml/labels/r.hpp
+	libftl/include/libftl/xml/labels/rarity.hpp
+	libftl/include/libftl/xml/labels/room.hpp
 	libftl/include/libftl/xml/labels/rotate.hpp
+	libftl/include/libftl/xml/labels/sensors.hpp
+	libftl/include/libftl/xml/labels/shields.hpp
 	libftl/include/libftl/xml/labels/ship.hpp
+	libftl/include/libftl/xml/labels/short.hpp
+	libftl/include/libftl/xml/labels/shots.hpp
 	libftl/include/libftl/xml/labels/slide.hpp
+	libftl/include/libftl/xml/labels/slot.hpp
+	libftl/include/libftl/xml/labels/sp.hpp
+	libftl/include/libftl/xml/labels/speed.hpp
+	libftl/include/libftl/xml/labels/stackable.hpp
+	libftl/include/libftl/xml/labels/start.hpp
+	libftl/include/libftl/xml/labels/start_power.hpp
+	libftl/include/libftl/xml/labels/stun_chance.hpp
+	libftl/include/libftl/xml/labels/system_list.hpp
+	libftl/include/libftl/xml/labels/teleporter.hpp
+	libftl/include/libftl/xml/labels/tip.hpp
+	libftl/include/libftl/xml/labels/title.hpp
+	libftl/include/libftl/xml/labels/tooltip.hpp
+	libftl/include/libftl/xml/labels/type.hpp
+	libftl/include/libftl/xml/labels/upgrade_cost.hpp
+	libftl/include/libftl/xml/labels/value.hpp
 	libftl/include/libftl/xml/labels/velocity.hpp
 	libftl/include/libftl/xml/labels/w.hpp
+	libftl/include/libftl/xml/labels/weapon_art.hpp
+	libftl/include/libftl/xml/labels/weapon_blueprint.hpp
+	libftl/include/libftl/xml/labels/weapon_list.hpp
 	libftl/include/libftl/xml/labels/weapon_mounts.hpp
+	libftl/include/libftl/xml/labels/weapon_slots.hpp
+	libftl/include/libftl/xml/labels/weapons.hpp
 	libftl/include/libftl/xml/labels/x.hpp
 	libftl/include/libftl/xml/labels/y.hpp
 	libftl/include/libftl/xml/node.hpp
@@ -381,7 +470,7 @@ set(
 	libftl/src/sprite/white.cpp
 	libftl/src/xml/achievements/load.cpp
 	libftl/src/xml/animations.cpp
-	libftl/src/xml/blueprints.cpp
+	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
 	libftl/src/xml/sectors.cpp

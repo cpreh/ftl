@@ -3,7 +3,7 @@
 #include <libftl/archive/path.hpp>
 #include <libftl/blueprints/data.hpp>
 #include <libftl/blueprints/load.hpp>
-#include <libftl/xml/blueprints.hpp>
+#include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/generated/blueprints.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/text.hpp>
@@ -31,7 +31,7 @@ libftl::blueprints::load(libftl::archive::base &_archive)
             fcppt::either::bind(
                 _archive.open(libftl::archive::path{"data"} / std::string{_file}),
                 [](fcppt::unique_ptr<std::istream> &&_stream)
-                { return libftl::xml::blueprints(*_stream); }),
+                { return libftl::xml::blueprints::load(*_stream); }),
             [&_file](libftl::error &&_error)
             {
               return libftl::error{
