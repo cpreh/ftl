@@ -11,7 +11,9 @@
 #include <fcppt/text.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
+#include <fcppt/optional/make.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/variant/match.hpp>
@@ -27,7 +29,7 @@ requires libftl::impl::xml::typed::parses<Parser,libftl::impl::xml::node_vector>
 class optional_inner_node
 {
 public:
-  using result_type = libftl::impl::xml::typed::result_type<fcppt::optional::object<Parser>>;
+  using result_type = fcppt::optional::object<libftl::impl::xml::typed::result_type<Parser>>;
 
   explicit optional_inner_node(Parser &&_parser) : parser_{std::move(_parser)} {}
 
@@ -36,16 +38,18 @@ public:
   {
     return fcppt::optional::maybe(
         _node,
-        []
-        {
-          return fcppt::either::make_success<libftl::error>(result_type{});
-        },
+        [] { return fcppt::either::make_success<libftl::error>(result_type{}); },
         [this](libftl::impl::xml::inner_node const &_inner_node)
         {
           return fcppt::variant::match(
               _inner_node.content_,
               [this](libftl::impl::xml::node_vector const &_nodes)
-              { return fcppt::deref(this->parser_).parse(_nodes); },
+              {
+                return fcppt::either::map(
+                    fcppt::deref(this->parser_).parse(_nodes),
+                    [](libftl::impl::xml::typed::result_type<Parser> &&_result)
+                    { return fcppt::optional::make(std::move(_result)); });
+              },
               [](std::string const &_value)
               {
                 return fcppt::either::make_failure<result_type>(libftl::error{fcppt::string{

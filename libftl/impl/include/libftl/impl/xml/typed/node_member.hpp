@@ -31,6 +31,8 @@ public:
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 
+  using arg_type = libftl::impl::xml::node;
+
   static constexpr bool const is_optional = (Required == libftl::impl::xml::typed::required::no);
 
   node_member(std::string &&_name, Attributes &&_attributes, Content &&_content)

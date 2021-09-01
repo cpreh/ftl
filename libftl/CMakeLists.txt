@@ -150,6 +150,12 @@ set(
 	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/aug_parser.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/crew_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/drone_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/item_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/list_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/ship_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/system_element_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/system_parser.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -200,6 +206,12 @@ set(
 	libftl/impl/src/impl/room/draw.cpp
 	libftl/impl/src/impl/xml/blueprints/aug_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/crew_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/drone_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/item_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/list_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/ship_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/system_element_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/system_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
@@ -313,6 +325,8 @@ set(
 	libftl/include/libftl/xml/blueprints/color.hpp
 	libftl/include/libftl/xml/blueprints/crew.hpp
 	libftl/include/libftl/xml/blueprints/direction.hpp
+	libftl/include/libftl/xml/blueprints/direction_input.hpp
+	libftl/include/libftl/xml/blueprints/direction_to_string.hpp
 	libftl/include/libftl/xml/blueprints/drone.hpp
 	libftl/include/libftl/xml/blueprints/item.hpp
 	libftl/include/libftl/xml/blueprints/list.hpp
@@ -473,6 +487,7 @@ set(
 	libftl/src/sprite/white.cpp
 	libftl/src/xml/achievements/load.cpp
 	libftl/src/xml/animations.cpp
+	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp

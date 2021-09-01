@@ -63,48 +63,49 @@ using ship = libftl::xml::node<
                 fcppt::record::object<
                     fcppt::record::element<
                         libftl::xml::labels::pilot,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::doors,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::sensors,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::medbay,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::oxygen,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::shields,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::engines,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::weapons,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::drones,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::teleporter,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::cloaking,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::clonebay,
-                        libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::battery,
-                        libftl::xml::blueprints::system_element>,
-                    fcppt::record::
-                        element<libftl::xml::labels::mind, libftl::xml::blueprints::system_element>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
+                    fcppt::record::element<
+                        libftl::xml::labels::mind,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>,
                     fcppt::record::element<
                         libftl::xml::labels::hacking,
-                        libftl::xml::blueprints::system_element>>>>,
+                        fcppt::optional::object<libftl::xml::blueprints::system_element>>>>>,
         fcppt::record::element<
             libftl::xml::labels::weapon_slots,
             libftl::xml::node<fcppt::record::object<>, unsigned>>,
@@ -114,9 +115,9 @@ using ship = libftl::xml::node<
         fcppt::record::element<
             libftl::xml::labels::weapon_list,
             libftl::xml::node<
-                fcppt::record::object<fcppt::record::object<
+                fcppt::record::object<
                     fcppt::record::element<libftl::xml::labels::count, unsigned>,
-                    fcppt::record::element<libftl::xml::labels::missiles, unsigned>>>,
+                    fcppt::record::element<libftl::xml::labels::missiles, unsigned>>,
                 fcppt::optional::object<std::vector<libftl::xml::node<
                     fcppt::record::object<
                         fcppt::record::element<libftl::xml::labels::name, std::string>>,
@@ -124,9 +125,9 @@ using ship = libftl::xml::node<
         fcppt::record::element<
             libftl::xml::labels::drone_list,
             libftl::xml::node<
-                fcppt::record::object<fcppt::record::object<
+                fcppt::record::object<
                     fcppt::record::element<libftl::xml::labels::count, unsigned>,
-                    fcppt::record::element<libftl::xml::labels::drones, unsigned>>>,
+                    fcppt::record::element<libftl::xml::labels::drones, unsigned>>,
                 fcppt::optional::object<std::vector<libftl::xml::node<
                     fcppt::record::object<
                         fcppt::record::element<libftl::xml::labels::name, std::string>>,
@@ -145,7 +146,9 @@ using ship = libftl::xml::node<
                 fcppt::unit>>,
         fcppt::record::element<
             libftl::xml::labels::boarding_ai,
-            libftl::xml::node<fcppt::record::object<>, fcppt::optional::object<std::string>>>>>;
+            fcppt::optional::object<libftl::xml::node<
+                fcppt::record::object<>,
+                fcppt::optional::object<std::string>>>>>>;
 }
 
 #endif
