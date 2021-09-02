@@ -5,6 +5,7 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/is_node_member.hpp>
+#include <libftl/impl/xml/typed/is_node_member_base.hpp>
 #include <libftl/impl/xml/typed/is_node_member_list.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
@@ -70,7 +71,8 @@ public:
   template <typename Type>
   using is_valid_member = std::disjunction<
       libftl::impl::xml::typed::is_node_member<Type>,
-      libftl::impl::xml::typed::is_node_member_list<Type>>;
+      libftl::impl::xml::typed::is_node_member_list<Type>,
+      libftl::impl::xml::typed::is_node_member_base<Type>>;
 
   static_assert(fcppt::mpl::list::all_of<
                 fcppt::mpl::list::map<
@@ -173,7 +175,7 @@ private:
     using parser_result = make_result_type<parser>;
     constexpr bool const is_optional = make_is_optional<parser>;
 
-    std::string const &name{fcppt::record::get<Label>(this->parsers_).name()};
+    std::string const &name{fcppt::deref(fcppt::record::get<Label>(this->parsers_)).name()};
 
     return fcppt::optional::maybe(
         fcppt::container::find_opt_mapped(_args, name),

@@ -45,6 +45,7 @@ public:
 
   using arg_type = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
 
+  static constexpr libftl::impl::xml::typed::required const is_required = Required;
   static constexpr bool const is_optional = (Required == libftl::impl::xml::typed::required::no);
 
   node_member(std::string &&_name, Attributes &&_attributes, Content &&_content)

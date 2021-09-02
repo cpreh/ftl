@@ -146,9 +146,7 @@ using ship = libftl::xml::node<
                 fcppt::unit>>,
         fcppt::record::element<
             libftl::xml::labels::boarding_ai,
-            fcppt::optional::object<libftl::xml::node<
-                fcppt::record::object<>,
-                fcppt::optional::object<std::string>>>>>>;
+            fcppt::optional::object<libftl::xml::node<fcppt::record::object<>, std::string>>>>>;
 }
 
 #endif

@@ -184,13 +184,18 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
+	libftl/impl/include/libftl/impl/xml/typed/is_node_member_base.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member_list.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
+	libftl/impl/include/libftl/impl/xml/typed/make_node_member_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node_member_base.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node_member_base_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/typed/node_member_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_list.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_member_list_fwd.hpp
