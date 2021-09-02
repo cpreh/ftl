@@ -13,21 +13,14 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
+namespace libftl::ship
 {
-namespace ship
-{
-LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-    libftl::error,
-    libftl::ship::resources>
+[[nodiscard]] LIBFTL_DETAIL_SYMBOL fcppt::either::object<libftl::error, libftl::ship::resources>
 load(
-    libftl::archive::base &, // NOLINT(google-runtime-references)
+    libftl::archive::base const &,
     fcppt::reference<libftl::blueprints::data const>,
     libftl::sprite::images const &,
     std::string const &);
-
-}
 }
 
 #endif

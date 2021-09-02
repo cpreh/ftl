@@ -14,7 +14,7 @@
 
 fcppt::either::object<libftl::error, libftl::xml::ship::result>
 libftl::ship::layout::load_xml(
-    libftl::archive::base &_archive, libftl::ship::layout::name const &_name)
+    libftl::archive::base const &_archive, libftl::ship::layout::name const &_name)
 {
   return fcppt::either::bind(
       _archive.open(libftl::archive::path{"data"} / (_name.get() + ".xml")),

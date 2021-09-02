@@ -27,7 +27,7 @@
 #include <fcppt/config/external_end.hpp>
 
 fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load(
-    libftl::archive::base &_archive,
+    libftl::archive::base const &_archive,
     fcppt::reference<libftl::blueprints::data const> const _blueprints,
     libftl::sprite::images const &_images,
     std::string const &_name)

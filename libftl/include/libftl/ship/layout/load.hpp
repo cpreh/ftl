@@ -8,22 +8,11 @@
 #include <libftl/ship/layout/object.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-namespace libftl
+namespace libftl::ship::layout
 {
-namespace ship
-{
-namespace layout
-{
-LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-    libftl::error,
-    libftl::ship::layout::object>
-load(
-    libftl::archive::base &, // NOLINT(google-runtime-references)
-    libftl::ship::layout::name const &);
-
-}
-}
+[[nodiscard]] LIBFTL_DETAIL_SYMBOL
+    fcppt::either::object<libftl::error, libftl::ship::layout::object>
+    load(libftl::archive::base const &, libftl::ship::layout::name const &);
 }
 
 #endif

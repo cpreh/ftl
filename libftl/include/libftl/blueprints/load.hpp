@@ -7,18 +7,10 @@
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/either/object_impl.hpp>
 
-namespace libftl
+namespace libftl::blueprints
 {
-namespace blueprints
-{
-LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<
-    libftl::error,
-    libftl::blueprints::data>
-load(libftl::archive::base & // NOLINT(google-runtime-references)
-); // NOLINT(google-runtime-references)
-
-}
+[[nodiscard]] LIBFTL_DETAIL_SYMBOL fcppt::either::object<libftl::error, libftl::blueprints::data>
+load(libftl::archive::base const &);
 }
 
 #endif

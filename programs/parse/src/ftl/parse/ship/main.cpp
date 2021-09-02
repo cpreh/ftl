@@ -19,7 +19,7 @@
 #include <fcppt/config/external_end.hpp>
 
 fcppt::either::error<libftl::error> ftl::parse::ship::main(
-    libftl::archive::base &_archive, ftl::parse::ship::arguments const &_arguments)
+    libftl::archive::base const &_archive, ftl::parse::ship::arguments const &_arguments)
 {
   return fcppt::either::map(
       fcppt::either::bind(

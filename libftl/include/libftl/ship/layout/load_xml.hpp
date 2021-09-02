@@ -14,7 +14,7 @@ namespace libftl::ship::layout
     libftl::error,
     libftl::xml::ship::result>
 load_xml(
-    libftl::archive::base &, // NOLINT(google-runtime-references)
+    libftl::archive::base const &,
     libftl::ship::layout::name const &);
 }
 

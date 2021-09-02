@@ -20,7 +20,7 @@
 #include <fcppt/config/external_end.hpp>
 
 fcppt::either::object<libftl::error, libftl::blueprints::data>
-libftl::blueprints::load(libftl::archive::base &_archive)
+libftl::blueprints::load(libftl::archive::base const &_archive)
 {
   auto const load_blueprint(
       [&_archive](std::string const &_file)

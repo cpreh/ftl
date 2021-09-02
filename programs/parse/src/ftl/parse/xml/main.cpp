@@ -44,7 +44,7 @@
 #include <fcppt/config/external_end.hpp>
 
 fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-exception-escape)
-    libftl::archive::base &_archive,
+    libftl::archive::base const &_archive,
     ftl::parse::xml::arguments const &_args)
 {
   using result_type = fcppt::variant::object<
