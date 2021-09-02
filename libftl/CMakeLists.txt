@@ -156,6 +156,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/blueprints/ship_parser.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/system_element_parser.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/system_parser.hpp
+	libftl/impl/include/libftl/impl/xml/blueprints/weapon_parser.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -219,6 +220,7 @@ set(
 	libftl/impl/src/impl/xml/blueprints/ship_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/system_element_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/system_parser.cpp
+	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
@@ -338,7 +340,10 @@ set(
 	libftl/include/libftl/xml/blueprints/item.hpp
 	libftl/include/libftl/xml/blueprints/list.hpp
 	libftl/include/libftl/xml/blueprints/load.hpp
+	libftl/include/libftl/xml/blueprints/load_2.hpp
+	libftl/include/libftl/xml/blueprints/result.hpp
 	libftl/include/libftl/xml/blueprints/ship.hpp
+	libftl/include/libftl/xml/blueprints/sound_list.hpp
 	libftl/include/libftl/xml/blueprints/system.hpp
 	libftl/include/libftl/xml/blueprints/system_element.hpp
 	libftl/include/libftl/xml/blueprints/weapon.hpp

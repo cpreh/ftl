@@ -2,6 +2,7 @@
 #define LIBFTL_XML_BLUEPRINTS_WEAPON_HPP_INCLUDED
 
 #include <libftl/xml/node.hpp>
+#include <libftl/xml/blueprints/sound_list.hpp>
 #include <libftl/xml/labels/bp.hpp>
 #include <libftl/xml/labels/breach_chance.hpp>
 #include <libftl/xml/labels/cooldown.hpp>
@@ -35,7 +36,6 @@
 #include <fcppt/record/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
-#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::xml::blueprints
@@ -101,18 +101,17 @@ using weapon = libftl::xml::node<
         fcppt::record::element<
             libftl::xml::labels::image,
             libftl::xml::node<fcppt::record::object<>, std::string>>,
-        fcppt::record::element<
-            libftl::xml::labels::launch_sounds,
-            std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>,
+        fcppt::record::
+            element<libftl::xml::labels::launch_sounds, libftl::xml::blueprints::sound_list>,
         fcppt::record::element<
             libftl::xml::labels::hit_ship_sounds,
-            fcppt::optional::object<std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>>,
+            fcppt::optional::object<libftl::xml::blueprints::sound_list>>,
         fcppt::record::element<
             libftl::xml::labels::hit_shield_sounds,
-            fcppt::optional::object<std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>>,
+            fcppt::optional::object<libftl::xml::blueprints::sound_list>>,
         fcppt::record::element<
             libftl::xml::labels::miss_sounds,
-            fcppt::optional::object<std::vector<libftl::xml::node<fcppt::record::object<>, std::string>>>>,
+            fcppt::optional::object<libftl::xml::blueprints::sound_list>>,
         fcppt::record::element<
             libftl::xml::labels::weapon_art,
             libftl::xml::node<fcppt::record::object<>, std::string>>,
