@@ -501,6 +501,7 @@ set(
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
+	libftl/src/xml/blueprints/load_2.cpp
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
 	libftl/src/xml/sectors.cpp
