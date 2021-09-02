@@ -29,7 +29,7 @@ public:
   ~native() override;
 
   [[nodiscard]] fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-  open(libftl::archive::path const &) override;
+  open(libftl::archive::path const &) const override;
 
 private:
   std::filesystem::path const file_path_;

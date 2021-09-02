@@ -28,7 +28,7 @@ libftl::impl::archive::filesystem::filesystem(std::filesystem::path &&_path)
 libftl::impl::archive::filesystem::~filesystem() = default;
 
 fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-libftl::impl::archive::filesystem::open(libftl::archive::path const &_path)
+libftl::impl::archive::filesystem::open(libftl::archive::path const &_path) const
 {
   std::filesystem::path const full_path{
       std::filesystem::path{this->directory_} /

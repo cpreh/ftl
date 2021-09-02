@@ -23,7 +23,7 @@ libftl::impl::archive::chain::chain(
 libftl::impl::archive::chain::~chain() = default;
 
 fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-libftl::impl::archive::chain::open(libftl::archive::path const &_path)
+libftl::impl::archive::chain::open(libftl::archive::path const &_path) const
 {
   return fcppt::either::match(
       this->archive1_->open(_path),

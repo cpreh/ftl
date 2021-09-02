@@ -146,7 +146,7 @@ libftl::impl::archive::native::native(
 libftl::impl::archive::native::~native() = default;
 
 fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-libftl::impl::archive::native::open(libftl::archive::path const &_path)
+libftl::impl::archive::native::open(libftl::archive::path const &_path) const
 {
   return fcppt::either::bind(
       fcppt::either::from_optional(

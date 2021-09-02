@@ -28,7 +28,7 @@ public:
   virtual ~base();
 
   [[nodiscard]] virtual fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-  open(libftl::archive::path const &) = 0;
+  open(libftl::archive::path const &) const = 0;
 };
 
 }

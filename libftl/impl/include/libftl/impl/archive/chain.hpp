@@ -28,7 +28,7 @@ public:
   ~chain() override;
 
   [[nodiscard]] fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-  open(libftl::archive::path const &) override;
+  open(libftl::archive::path const &) const override;
 
 private:
   libftl::archive::base_unique_ptr const archive1_;
