@@ -5,6 +5,7 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/is_node_member.hpp>
+#include <libftl/impl/xml/typed/is_node_member_list.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/deref_type.hpp>
@@ -66,12 +67,17 @@ class node_set
 public:
   static_assert(fcppt::record::is_object<Parsers>::value);
 
+  template <typename Type>
+  using is_valid_member = std::disjunction<
+      libftl::impl::xml::typed::is_node_member<Type>,
+      libftl::impl::xml::typed::is_node_member_list<Type>>;
+
   static_assert(fcppt::mpl::list::all_of<
                 fcppt::mpl::list::map<
                     fcppt::record::element_vector<Parsers>,
                     fcppt::mpl::lambda<fcppt::record::element_to_type>>,
                 fcppt::mpl::bind<
-                    fcppt::mpl::lambda<libftl::impl::xml::typed::is_node_member>,
+                    fcppt::mpl::lambda<node_set::is_valid_member>,
                     fcppt::mpl::bind<
                         fcppt::mpl::lambda<std::remove_cvref_t>,
                         fcppt::mpl::lambda<fcppt::deref_type>>>>::value);

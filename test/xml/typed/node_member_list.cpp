@@ -3,7 +3,7 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
-#include <libftl/impl/xml/typed/make_node_member.hpp>
+#include <libftl/impl/xml/typed/node_member_list.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp>
@@ -19,8 +19,8 @@
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/nothing.hpp>
-#include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
+#include <fcppt/record/object.hpp>
 #include <fcppt/record/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
@@ -30,11 +30,10 @@
 
 TEST_CASE("xml::typed::node_member", "[xml]")
 {
-  auto const parser{libftl::impl::xml::typed::make_node_member<
-      libftl::impl::xml::typed::required::yes>(
+  auto const parser{libftl::impl::xml::typed::node_member_list{
       std::string{"test"},
       libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-      libftl::impl::xml::typed::empty{})};
+      libftl::impl::xml::typed::empty{}}};
 
   libftl::impl::xml::node const node{
       fcppt::optional::nothing{},
@@ -44,10 +43,12 @@ TEST_CASE("xml::typed::node_member", "[xml]")
 
   using arg_type = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
 
-  CHECK(parser.parse(arg_type{}).has_failure());
+  using result_type = std::vector<libftl::xml::node<fcppt::record::object<>,fcppt::unit>>;
+
+  CHECK(parser.parse(arg_type{}) == fcppt::either::make_success<libftl::error>(result_type{}));
 
   CHECK(
       parser.parse(arg_type{fcppt::make_cref(node)}) ==
       fcppt::either::make_success<libftl::error>(
-          libftl::xml::node{fcppt::record::make(), fcppt::unit{}}));
+          result_type{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}));
 }

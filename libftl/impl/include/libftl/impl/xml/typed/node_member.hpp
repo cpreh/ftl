@@ -10,12 +10,14 @@
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <libftl/xml/node.hpp>
 #include <fcppt/deref.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/reference.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/uncons.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
+#include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/iterator/range.hpp>
@@ -61,7 +63,8 @@ public:
             [this]
             {
               return libftl::error{
-                  fcppt::string{FCPPT_TEXT("Missing node ")} + this->name_ + FCPPT_TEXT(".")};
+                  fcppt::string{FCPPT_TEXT("Missing node ")} + fcppt::from_std_string(this->name_) +
+                  FCPPT_TEXT(".")};
             }),
         [this](fcppt::tuple::object<
                fcppt::reference<fcppt::reference<libftl::impl::xml::node const> const>,
@@ -74,7 +77,7 @@ public:
                      ? fcppt::either::bind(
                            fcppt::deref(this->attributes_).parse(node.attributes_),
                            [this, &node](libftl::impl::xml::typed::result_type<Attributes>
-                                               &&_attributes_result)
+                                             &&_attributes_result)
                            {
                              return fcppt::either::map(
                                  fcppt::deref(this->content_).parse(node.content_),
@@ -86,11 +89,10 @@ public:
                                  });
                            })
                      : fcppt::either::make_failure<result_type>(libftl::error{
-                           fcppt::string{FCPPT_TEXT("Excess nodes ")} + this->name_ +
-                           FCPPT_TEXT(".")});
+                           fcppt::string{FCPPT_TEXT("Excess nodes ")} +
+                           fcppt::from_std_string(this->name_) + FCPPT_TEXT(".")});
         });
   }
-
 private:
   std::string name_;
   Attributes attributes_;
