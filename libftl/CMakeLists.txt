@@ -177,7 +177,6 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/basic_set.hpp
 	libftl/impl/include/libftl/impl/xml/typed/construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/derived.hpp
