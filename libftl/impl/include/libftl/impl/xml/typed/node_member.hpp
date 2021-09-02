@@ -10,14 +10,24 @@
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <libftl/xml/node.hpp>
 #include <fcppt/deref.hpp>
+#include <fcppt/reference.hpp>
+#include <fcppt/string.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/container/uncons.hpp>
 #include <fcppt/either/bind.hpp>
+#include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
+#include <fcppt/iterator/range.hpp>
 #include <fcppt/optional/object.hpp>
+#include <fcppt/range/empty.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <type_traits>
 #include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed
@@ -31,7 +41,7 @@ public:
       libftl::impl::xml::typed::result_type<Attributes>,
       libftl::impl::xml::typed::result_type<Content>>;
 
-  using arg_type = libftl::impl::xml::node;
+  using arg_type = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
 
   static constexpr bool const is_optional = (Required == libftl::impl::xml::typed::required::no);
 
@@ -43,20 +53,44 @@ public:
   [[nodiscard]] std::string const &name() const { return this->name_; }
 
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
-  parse(libftl::impl::xml::node const &_node) const
+  parse(std::vector<fcppt::reference<libftl::impl::xml::node const>> const &_nodes) const
   {
     return fcppt::either::bind(
-        fcppt::deref(this->attributes_).parse(_node.attributes_),
-        [this, &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
+        fcppt::either::from_optional(
+            fcppt::container::uncons(_nodes),
+            [this]
+            {
+              return libftl::error{
+                  fcppt::string{FCPPT_TEXT("Missing node ")} + this->name_ + FCPPT_TEXT(".")};
+            }),
+        [this](fcppt::tuple::object<
+               fcppt::reference<fcppt::reference<libftl::impl::xml::node const> const>,
+               fcppt::iterator::range<std::vector<
+                   fcppt::reference<libftl::impl::xml::node const>>::const_iterator>> const &_split)
         {
-          return fcppt::either::map(
-              fcppt::deref(this->content_).parse(_node.content_),
-              [&_attributes_result](
-                  libftl::impl::xml::typed::result_type<Content> &&_content_result) {
-                return result_type{std::move(_attributes_result), std::move(_content_result)};
-              });
+          libftl::impl::xml::node const &node{fcppt::tuple::get<0U>(_split).get().get()};
+
+          return fcppt::range::empty(fcppt::tuple::get<1U>(_split))
+                     ? fcppt::either::bind(
+                           fcppt::deref(this->attributes_).parse(node.attributes_),
+                           [this, &node](libftl::impl::xml::typed::result_type<Attributes>
+                                               &&_attributes_result)
+                           {
+                             return fcppt::either::map(
+                                 fcppt::deref(this->content_).parse(node.content_),
+                                 [&_attributes_result](
+                                     libftl::impl::xml::typed::result_type<Content>
+                                         &&_content_result) {
+                                   return result_type{
+                                       std::move(_attributes_result), std::move(_content_result)};
+                                 });
+                           })
+                     : fcppt::either::make_failure<result_type>(libftl::error{
+                           fcppt::string{FCPPT_TEXT("Excess nodes ")} + this->name_ +
+                           FCPPT_TEXT(".")});
         });
   }
+
 private:
   std::string name_;
   Attributes attributes_;

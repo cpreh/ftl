@@ -21,15 +21,18 @@
 #include <libftl/xml/labels/room.hpp>
 #include <libftl/xml/labels/slot.hpp>
 #include <libftl/xml/labels/start.hpp>
-#include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/reference.hpp>
+#include <fcppt/unique_ptr.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::unique_ptr<libftl::impl::xml::typed::
-                      base<libftl::xml::blueprints::system_element, libftl::impl::xml::node>>
+fcppt::unique_ptr<libftl::impl::xml::typed::base<
+    libftl::xml::blueprints::system_element,
+    std::vector<fcppt::reference<libftl::impl::xml::node const>>>>
 libftl::impl::xml::blueprints::system_element_parser(std::string &&_name)
 {
   namespace typed = libftl::impl::xml::typed;
