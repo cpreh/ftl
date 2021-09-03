@@ -119,7 +119,6 @@ endfunction()
 set(
 	PARSER_NAMES
 	events
-	sectors
 )
 
 foreach(
@@ -173,6 +172,8 @@ set(
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
 	libftl/impl/include/libftl/impl/xml/read.hpp
+	libftl/impl/include/libftl/impl/xml/sectors/sector_description_parser.hpp
+	libftl/impl/include/libftl/impl/xml/sectors/sector_type_parser.hpp
 	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
 	libftl/impl/include/libftl/impl/xml/typed/arg_type.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
@@ -227,6 +228,8 @@ set(
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
+	libftl/impl/src/impl/xml/sectors/sector_description_parser.cpp
+	libftl/impl/src/impl/xml/sectors/sector_type_parser.cpp
 	libftl/include/libftl/archive/base.hpp
 	libftl/include/libftl/archive/base_fwd.hpp
 	libftl/include/libftl/archive/base_ref.hpp
@@ -385,6 +388,7 @@ set(
 	libftl/include/libftl/xml/labels/drone_slots.hpp
 	libftl/include/libftl/xml/labels/drones.hpp
 	libftl/include/libftl/xml/labels/engines.hpp
+	libftl/include/libftl/xml/labels/event_list.hpp
 	libftl/include/libftl/xml/labels/explosion.hpp
 	libftl/include/libftl/xml/labels/fh.hpp
 	libftl/include/libftl/xml/labels/fire_chance.hpp
@@ -419,6 +423,7 @@ set(
 	libftl/include/libftl/xml/labels/max_power.hpp
 	libftl/include/libftl/xml/labels/medbay.hpp
 	libftl/include/libftl/xml/labels/min.hpp
+	libftl/include/libftl/xml/labels/min_sector.hpp
 	libftl/include/libftl/xml/labels/mind.hpp
 	libftl/include/libftl/xml/labels/mirror.hpp
 	libftl/include/libftl/xml/labels/miss_sounds.hpp
@@ -426,6 +431,7 @@ set(
 	libftl/include/libftl/xml/labels/mount_point.hpp
 	libftl/include/libftl/xml/labels/multi_difficulty.hpp
 	libftl/include/libftl/xml/labels/name.hpp
+	libftl/include/libftl/xml/labels/name_list.hpp
 	libftl/include/libftl/xml/labels/number.hpp
 	libftl/include/libftl/xml/labels/offsets.hpp
 	libftl/include/libftl/xml/labels/oxygen.hpp
@@ -434,6 +440,7 @@ set(
 	libftl/include/libftl/xml/labels/power_list.hpp
 	libftl/include/libftl/xml/labels/r.hpp
 	libftl/include/libftl/xml/labels/rarity.hpp
+	libftl/include/libftl/xml/labels/rarity_list.hpp
 	libftl/include/libftl/xml/labels/room.hpp
 	libftl/include/libftl/xml/labels/rotate.hpp
 	libftl/include/libftl/xml/labels/sensors.hpp
@@ -449,6 +456,7 @@ set(
 	libftl/include/libftl/xml/labels/speed.hpp
 	libftl/include/libftl/xml/labels/stackable.hpp
 	libftl/include/libftl/xml/labels/start.hpp
+	libftl/include/libftl/xml/labels/start_event.hpp
 	libftl/include/libftl/xml/labels/start_power.hpp
 	libftl/include/libftl/xml/labels/stun_chance.hpp
 	libftl/include/libftl/xml/labels/system_list.hpp
@@ -457,7 +465,9 @@ set(
 	libftl/include/libftl/xml/labels/tip.hpp
 	libftl/include/libftl/xml/labels/title.hpp
 	libftl/include/libftl/xml/labels/tooltip.hpp
+	libftl/include/libftl/xml/labels/track_list.hpp
 	libftl/include/libftl/xml/labels/type.hpp
+	libftl/include/libftl/xml/labels/unique.hpp
 	libftl/include/libftl/xml/labels/upgrade_cost.hpp
 	libftl/include/libftl/xml/labels/value.hpp
 	libftl/include/libftl/xml/labels/velocity.hpp
@@ -473,6 +483,9 @@ set(
 	libftl/include/libftl/xml/node.hpp
 	libftl/include/libftl/xml/node_output.hpp
 	libftl/include/libftl/xml/sectors/load.hpp
+	libftl/include/libftl/xml/sectors/result.hpp
+	libftl/include/libftl/xml/sectors/sector_description.hpp
+	libftl/include/libftl/xml/sectors/sector_type.hpp
 	libftl/include/libftl/xml/ship/explosion.hpp
 	libftl/include/libftl/xml/ship/gib.hpp
 	libftl/include/libftl/xml/ship/img.hpp
