@@ -118,7 +118,6 @@ endfunction()
 
 set(
 	PARSER_NAMES
-	animations
 	events
 	sectors
 )
@@ -145,6 +144,9 @@ set(
 	libftl/impl/include/libftl/impl/archive/native.hpp
 	libftl/impl/include/libftl/impl/blueprints/find.hpp
 	libftl/impl/include/libftl/impl/room/draw.hpp
+	libftl/impl/include/libftl/impl/xml/animations/anim_parser.hpp
+	libftl/impl/include/libftl/impl/xml/animations/anim_sheet_parser.hpp
+	libftl/impl/include/libftl/impl/xml/animations/weapon_anim_parser.hpp
 	libftl/impl/include/libftl/impl/xml/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/aug_parser.hpp
@@ -209,6 +211,9 @@ set(
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
 	libftl/impl/src/impl/room/draw.cpp
+	libftl/impl/src/impl/xml/animations/anim_parser.cpp
+	libftl/impl/src/impl/xml/animations/anim_sheet_parser.cpp
+	libftl/impl/src/impl/xml/animations/weapon_anim_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/aug_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/crew_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/drone_parser.cpp
@@ -326,7 +331,11 @@ set(
 	libftl/include/libftl/sprite/white.hpp
 	libftl/include/libftl/xml/achievements/load.hpp
 	libftl/include/libftl/xml/achievements/result.hpp
+	libftl/include/libftl/xml/animations/anim.hpp
+	libftl/include/libftl/xml/animations/anim_sheet.hpp
 	libftl/include/libftl/xml/animations/load.hpp
+	libftl/include/libftl/xml/animations/result.hpp
+	libftl/include/libftl/xml/animations/weapon_anim.hpp
 	libftl/include/libftl/xml/blueprints/aug.hpp
 	libftl/include/libftl/xml/blueprints/color.hpp
 	libftl/include/libftl/xml/blueprints/crew.hpp
@@ -355,6 +364,8 @@ set(
 	libftl/include/libftl/xml/labels/boarding_ai.hpp
 	libftl/include/libftl/xml/labels/bp.hpp
 	libftl/include/libftl/xml/labels/breach_chance.hpp
+	libftl/include/libftl/xml/labels/charge_image.hpp
+	libftl/include/libftl/xml/labels/charged_frame.hpp
 	libftl/include/libftl/xml/labels/class.hpp
 	libftl/include/libftl/xml/labels/cloak.hpp
 	libftl/include/libftl/xml/labels/cloak_image.hpp
@@ -375,8 +386,12 @@ set(
 	libftl/include/libftl/xml/labels/drones.hpp
 	libftl/include/libftl/xml/labels/engines.hpp
 	libftl/include/libftl/xml/labels/explosion.hpp
+	libftl/include/libftl/xml/labels/fh.hpp
 	libftl/include/libftl/xml/labels/fire_chance.hpp
+	libftl/include/libftl/xml/labels/fire_frame.hpp
+	libftl/include/libftl/xml/labels/fire_point.hpp
 	libftl/include/libftl/xml/labels/floor.hpp
+	libftl/include/libftl/xml/labels/fw.hpp
 	libftl/include/libftl/xml/labels/g.hpp
 	libftl/include/libftl/xml/labels/gib.hpp
 	libftl/include/libftl/xml/labels/gib1.hpp
@@ -408,6 +423,7 @@ set(
 	libftl/include/libftl/xml/labels/mirror.hpp
 	libftl/include/libftl/xml/labels/miss_sounds.hpp
 	libftl/include/libftl/xml/labels/missiles.hpp
+	libftl/include/libftl/xml/labels/mount_point.hpp
 	libftl/include/libftl/xml/labels/multi_difficulty.hpp
 	libftl/include/libftl/xml/labels/name.hpp
 	libftl/include/libftl/xml/labels/number.hpp
@@ -421,6 +437,7 @@ set(
 	libftl/include/libftl/xml/labels/room.hpp
 	libftl/include/libftl/xml/labels/rotate.hpp
 	libftl/include/libftl/xml/labels/sensors.hpp
+	libftl/include/libftl/xml/labels/sheet.hpp
 	libftl/include/libftl/xml/labels/shield_image.hpp
 	libftl/include/libftl/xml/labels/shields.hpp
 	libftl/include/libftl/xml/labels/ship.hpp
@@ -436,6 +453,7 @@ set(
 	libftl/include/libftl/xml/labels/stun_chance.hpp
 	libftl/include/libftl/xml/labels/system_list.hpp
 	libftl/include/libftl/xml/labels/teleporter.hpp
+	libftl/include/libftl/xml/labels/time.hpp
 	libftl/include/libftl/xml/labels/tip.hpp
 	libftl/include/libftl/xml/labels/title.hpp
 	libftl/include/libftl/xml/labels/tooltip.hpp

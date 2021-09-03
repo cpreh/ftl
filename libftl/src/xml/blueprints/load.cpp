@@ -27,7 +27,7 @@ libftl::xml::blueprints::load(std::istream &_input)
   namespace blueprints = libftl::impl::xml::blueprints;
   namespace typed = libftl::impl::xml::typed;
 
-  auto const parser{typed::partition{typed::node_list{typed::alternative(
+  auto const parser{typed::partition{typed::node_list{typed::alternative{
       blueprints::aug_parser(),
       blueprints::crew_parser(),
       blueprints::drone_parser(),
@@ -35,7 +35,7 @@ libftl::xml::blueprints::load(std::istream &_input)
       blueprints::list_parser(),
       blueprints::ship_parser(),
       blueprints::system_parser(),
-      blueprints::weapon_parser())}}};
+      blueprints::weapon_parser()}}}};
 
   return fcppt::either::bind(
       libftl::impl::xml::parse(_input),

@@ -11,10 +11,10 @@
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
 #include <libftl/xml/animations/load.hpp>
+#include <libftl/xml/animations/result.hpp>
 #include <libftl/xml/blueprints/direction_output.hpp>
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <libftl/xml/generated/animations.hpp>
 #include <libftl/xml/generated/events.hpp>
 #include <libftl/xml/generated/sectors.hpp>
 #include <libftl/xml/ship/load.hpp>
@@ -51,7 +51,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
 {
   using result_type = fcppt::variant::object<
       libftl::xml::achievements::result,
-      fcppt::unique_ptr<libftl::xml::generated::animations::animations_root>,
+      libftl::xml::animations::result,
       libftl::xml::blueprints::result,
       fcppt::unique_ptr<libftl::xml::generated::events::events_root>,
       fcppt::unique_ptr<libftl::xml::generated::sectors::sectors_root>,
@@ -94,6 +94,8 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
                 [](auto const &_element) { fcppt::io::cout() << *_element; },
                 [](libftl::xml::achievements::result const &_achievements)
                 { fcppt::io::cout() << fcppt::output(_achievements); },
+                [](libftl::xml::animations::result const &_animations)
+                { fcppt::io::cout() << fcppt::output(_animations); },
                 [](libftl::xml::blueprints::result const &_blueprints)
                 { fcppt::io::cout() << fcppt::output(_blueprints); },
                 [](libftl::xml::ship::result const &_ship)
