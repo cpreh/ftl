@@ -12,6 +12,7 @@
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/blueprints/color_channel.hpp>
 #include <libftl/xml/blueprints/crew.hpp>
 #include <libftl/xml/labels/bp.hpp>
 #include <libftl/xml/labels/color_list.hpp>
@@ -25,7 +26,6 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <cstdint>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
@@ -36,6 +36,7 @@ libftl::impl::xml::blueprints::crew_parser()
   namespace typed = libftl::impl::xml::typed;
   namespace labels = libftl::xml::labels;
   using typed::required;
+  using libftl::xml::blueprints::color_channel;
 
   return typed::make_derived(typed::node{
       "crewBlueprint",
@@ -70,9 +71,9 @@ libftl::impl::xml::blueprints::crew_parser()
                   typed::inner_node{typed::node_list{typed::node{
                       "color",
                       typed::attribute_set{fcppt::record::make(
-                          labels::r{} = typed::attribute<std::uint8_t, required::yes>{"r"},
-                          labels::g{} = typed::attribute<std::uint8_t, required::yes>{"g"},
-                          labels::b{} = typed::attribute<std::uint8_t, required::yes>{"b"},
+                          labels::r{} = typed::attribute<color_channel, required::yes>{"r"},
+                          labels::g{} = typed::attribute<color_channel, required::yes>{"g"},
+                          labels::b{} = typed::attribute<color_channel, required::yes>{"b"},
                           labels::a{} = typed::attribute<double, required::yes>{"a"})},
                       typed::empty{}}}}}}}))}}});
 }

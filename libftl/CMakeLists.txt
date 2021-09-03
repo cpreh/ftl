@@ -341,6 +341,7 @@ set(
 	libftl/include/libftl/xml/animations/weapon_anim.hpp
 	libftl/include/libftl/xml/blueprints/aug.hpp
 	libftl/include/libftl/xml/blueprints/color.hpp
+	libftl/include/libftl/xml/blueprints/color_channel.hpp
 	libftl/include/libftl/xml/blueprints/crew.hpp
 	libftl/include/libftl/xml/blueprints/direction.hpp
 	libftl/include/libftl/xml/blueprints/direction_input.hpp
