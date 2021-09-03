@@ -1,13 +1,13 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/parse.hpp>
-#include <libftl/xml/sectors/load.hpp>
-#include <libftl/xml/sectors/result.hpp>
 #include <libftl/impl/xml/sectors/sector_description_parser.hpp>
 #include <libftl/impl/xml/sectors/sector_type_parser.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
+#include <libftl/xml/sectors/load.hpp>
+#include <libftl/xml/sectors/result.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>

@@ -1,8 +1,8 @@
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/blueprints/find_ship.hpp>
 #include <libftl/impl/blueprints/find.hpp>
-#include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/blueprints/result.hpp>
+#include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/reference_impl.hpp>

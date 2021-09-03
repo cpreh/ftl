@@ -26,8 +26,8 @@
 #include <libftl/xml/labels/room.hpp>
 #include <libftl/xml/labels/sensors.hpp>
 #include <libftl/xml/labels/shields.hpp>
-#include <libftl/xml/labels/system_list.hpp>
 #include <libftl/xml/labels/start.hpp>
+#include <libftl/xml/labels/system_list.hpp>
 #include <libftl/xml/labels/teleporter.hpp>
 #include <libftl/xml/labels/weapons.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>

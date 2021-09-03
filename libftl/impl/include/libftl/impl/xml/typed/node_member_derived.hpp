@@ -13,9 +13,9 @@
 #include <fcppt/either/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
-#include <vector>
 #include <type_traits>
 #include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed

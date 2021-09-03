@@ -1,6 +1,7 @@
 #ifndef LIBFTL_XML_BLUEPRINTS_SHIP_SYSTEM_LIST_HPP_INCLUDED
 #define LIBFTL_XML_BLUEPRINTS_SHIP_SYSTEM_LIST_HPP_INCLUDED
 
+#include <libftl/xml/node.hpp>
 #include <libftl/xml/blueprints/system_element.hpp>
 #include <libftl/xml/labels/battery.hpp>
 #include <libftl/xml/labels/cloaking.hpp>
@@ -17,7 +18,6 @@
 #include <libftl/xml/labels/shields.hpp>
 #include <libftl/xml/labels/teleporter.hpp>
 #include <libftl/xml/labels/weapons.hpp>
-#include <libftl/xml/node.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>

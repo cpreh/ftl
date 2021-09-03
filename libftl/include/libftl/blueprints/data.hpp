@@ -1,8 +1,8 @@
 #ifndef LIBFTL_BLUEPRINTS_DATA_HPP_INCLUDED
 #define LIBFTL_BLUEPRINTS_DATA_HPP_INCLUDED
 
-#include <libftl/detail/symbol.hpp>
 #include <libftl/blueprints/data_fwd.hpp>
+#include <libftl/detail/symbol.hpp>
 #include <libftl/xml/blueprints/result.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>

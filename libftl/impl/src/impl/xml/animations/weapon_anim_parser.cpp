@@ -12,11 +12,11 @@
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/animations/weapon_anim.hpp>
-#include <libftl/xml/labels/charged_frame.hpp>
 #include <libftl/xml/labels/charge_image.hpp>
+#include <libftl/xml/labels/charged_frame.hpp>
+#include <libftl/xml/labels/desc.hpp>
 #include <libftl/xml/labels/fire_frame.hpp>
 #include <libftl/xml/labels/fire_point.hpp>
-#include <libftl/xml/labels/desc.hpp>
 #include <libftl/xml/labels/length.hpp>
 #include <libftl/xml/labels/mount_point.hpp>
 #include <libftl/xml/labels/name.hpp>

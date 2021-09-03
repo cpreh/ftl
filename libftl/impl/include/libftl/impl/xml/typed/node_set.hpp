@@ -22,8 +22,8 @@
 #include <fcppt/algorithm/fold.hpp>
 #include <fcppt/algorithm/loop_break_record.hpp>
 #include <fcppt/algorithm/map_record.hpp>
-#include <fcppt/container/get_or_insert.hpp>
 #include <fcppt/container/find_opt_mapped.hpp>
+#include <fcppt/container/get_or_insert.hpp>
 #include <fcppt/container/key_set.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/container/set_difference.hpp>

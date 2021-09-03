@@ -1,14 +1,14 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/parse.hpp>
-#include <libftl/xml/animations/load.hpp>
-#include <libftl/xml/animations/result.hpp>
 #include <libftl/impl/xml/animations/anim_parser.hpp>
 #include <libftl/impl/xml/animations/anim_sheet_parser.hpp>
 #include <libftl/impl/xml/animations/weapon_anim_parser.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
+#include <libftl/xml/animations/load.hpp>
+#include <libftl/xml/animations/result.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>

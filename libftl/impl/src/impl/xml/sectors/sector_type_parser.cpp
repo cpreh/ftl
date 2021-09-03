@@ -11,8 +11,8 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <libftl/xml/sectors/sector_type.hpp>
-#include <fcppt/record/make.hpp>
 #include <fcppt/unique_ptr.hpp>
+#include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <fcppt/config/external_end.hpp>

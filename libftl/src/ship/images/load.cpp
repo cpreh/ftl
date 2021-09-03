@@ -39,8 +39,8 @@
 #include <fcppt/optional/bind.hpp>
 #include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make.hpp>
-#include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/map.hpp>
+#include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/optional/to_container.hpp>
 #include <fcppt/record/get.hpp>
