@@ -1,5 +1,5 @@
-#ifndef LIBFTL_XML_ANIMATIONS_HPP_INCLUDED
-#define LIBFTL_XML_ANIMATIONS_HPP_INCLUDED
+#ifndef LIBFTL_XML_ANIMATIONS_LOAD_HPP_INCLUDED
+#define LIBFTL_XML_ANIMATIONS_LOAD_HPP_INCLUDED
 
 #include <libftl/error.hpp>
 #include <libftl/detail/symbol.hpp>
@@ -10,16 +10,14 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
+namespace libftl::xml::animations
 {
-namespace xml
-{
+[[nodiscard]]
 LIBFTL_DETAIL_SYMBOL
 fcppt::either::
     object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::animations::animations_root>>
-    animations(std::istream &);
+    load(std::istream &);
 
-}
 }
 
 #endif

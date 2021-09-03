@@ -326,7 +326,7 @@ set(
 	libftl/include/libftl/sprite/white.hpp
 	libftl/include/libftl/xml/achievements/load.hpp
 	libftl/include/libftl/xml/achievements/result.hpp
-	libftl/include/libftl/xml/animations.hpp
+	libftl/include/libftl/xml/animations/load.hpp
 	libftl/include/libftl/xml/blueprints/aug.hpp
 	libftl/include/libftl/xml/blueprints/color.hpp
 	libftl/include/libftl/xml/blueprints/crew.hpp
@@ -498,7 +498,7 @@ set(
 	libftl/src/sprite/resolution.cpp
 	libftl/src/sprite/white.cpp
 	libftl/src/xml/achievements/load.cpp
-	libftl/src/xml/animations.cpp
+	libftl/src/xml/animations/load.cpp
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
