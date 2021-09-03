@@ -7,7 +7,6 @@
 #include <libftl/archive/base.hpp>
 #include <libftl/xml/events.hpp>
 #include <libftl/xml/node_output.hpp>
-#include <libftl/xml/sectors.hpp>
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
 #include <libftl/xml/animations/load.hpp>
@@ -17,6 +16,7 @@
 #include <libftl/xml/blueprints/result.hpp>
 #include <libftl/xml/generated/events.hpp>
 #include <libftl/xml/generated/sectors.hpp>
+#include <libftl/xml/sectors/load.hpp>
 #include <libftl/xml/ship/load.hpp>
 #include <libftl/xml/ship/result.hpp>
 #include <libftl/xml/ship/slide_output.hpp>
@@ -75,7 +75,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         case ftl::parse::xml::type::events:
           return fcppt::either::map(libftl::xml::events(*_stream), wrap_result);
         case ftl::parse::xml::type::sectors:
-          return fcppt::either::map(libftl::xml::sectors(*_stream), wrap_result);
+          return fcppt::either::map(libftl::xml::sectors::load(*_stream), wrap_result);
         case ftl::parse::xml::type::ship:
           return fcppt::either::map(libftl::xml::ship::load(*_stream), wrap_result);
         }

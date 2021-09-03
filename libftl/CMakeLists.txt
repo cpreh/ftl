@@ -472,7 +472,7 @@ set(
 	libftl/include/libftl/xml/labels/y.hpp
 	libftl/include/libftl/xml/node.hpp
 	libftl/include/libftl/xml/node_output.hpp
-	libftl/include/libftl/xml/sectors.hpp
+	libftl/include/libftl/xml/sectors/load.hpp
 	libftl/include/libftl/xml/ship/explosion.hpp
 	libftl/include/libftl/xml/ship/gib.hpp
 	libftl/include/libftl/xml/ship/img.hpp
@@ -521,7 +521,7 @@ set(
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
-	libftl/src/xml/sectors.cpp
+	libftl/src/xml/sectors/load.cpp
 	libftl/src/xml/ship/load.cpp
 	libftl/src/xml/ship/slide_to_string.cpp
 )

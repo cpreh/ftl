@@ -1,5 +1,5 @@
-#ifndef LIBFTL_XML_SECTORS_HPP_INCLUDED
-#define LIBFTL_XML_SECTORS_HPP_INCLUDED
+#ifndef LIBFTL_XML_SECTORS_LOAD_HPP_INCLUDED
+#define LIBFTL_XML_SECTORS_LOAD_HPP_INCLUDED
 
 #include <libftl/error.hpp>
 #include <libftl/detail/symbol.hpp>
@@ -10,16 +10,13 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
+namespace libftl::xml::sectors
 {
-namespace xml
-{
+[[nodiscard]]
 LIBFTL_DETAIL_SYMBOL
 fcppt::either::
     object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::sectors::sectors_root>>
-    sectors(std::istream &);
-
-}
+    load(std::istream &);
 }
 
 #endif
