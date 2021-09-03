@@ -19,6 +19,7 @@
 #include <libftl/xml/labels/battery.hpp>
 #include <libftl/xml/labels/boarding_ai.hpp>
 #include <libftl/xml/labels/class.hpp>
+#include <libftl/xml/labels/cloak_image.hpp>
 #include <libftl/xml/labels/cloaking.hpp>
 #include <libftl/xml/labels/clonebay.hpp>
 #include <libftl/xml/labels/count.hpp>
@@ -39,6 +40,7 @@
 #include <libftl/xml/labels/oxygen.hpp>
 #include <libftl/xml/labels/pilot.hpp>
 #include <libftl/xml/labels/sensors.hpp>
+#include <libftl/xml/labels/shield_image.hpp>
 #include <libftl/xml/labels/shields.hpp>
 #include <libftl/xml/labels/system_list.hpp>
 #include <libftl/xml/labels/teleporter.hpp>
@@ -129,6 +131,14 @@ libftl::impl::xml::blueprints::ship_parser()
               typed::attribute_set{fcppt::record::make(
                   labels::amount{} = typed::attribute<unsigned, required::yes>{"amount"})},
               typed::empty{}),
+          labels::shield_image{} = typed::make_node_member<required::no>(
+              "shieldImage",
+              typed::attribute_set{fcppt::record::make()},
+              typed::content<std::string>{}),
+          labels::cloak_image{} = typed::make_node_member<required::no>(
+              "cloakImage",
+              typed::attribute_set{fcppt::record::make()},
+              typed::content<std::string>{}),
           labels::boarding_ai{} = typed::make_node_member<required::no>(
               "boardingAI",
               typed::attribute_set{fcppt::record::make()},

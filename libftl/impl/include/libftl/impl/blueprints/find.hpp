@@ -3,11 +3,10 @@
 
 #include <libftl/blueprints/data.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/blueprints/result.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
-#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/algorithm/find_by_opt.hpp>
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/array/make.hpp>
@@ -20,16 +19,12 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace impl
-{
-namespace blueprints
+namespace libftl::impl::blueprints
 {
 template <typename Type>
-fcppt::optional::reference<Type const> find(
-    fcppt::function<::xsd::cxx::tree::sequence<Type> const &(
-        libftl::xml::generated::blueprints::blueprints_root const &)> const _get_elements,
+[[nodiscard]] fcppt::optional::reference<Type const> find(
+    fcppt::function<std::vector<Type> const &(libftl::xml::blueprints::result const &)> const
+        _get_elements,
     fcppt::function<bool(Type const &)> const _compare_element,
     fcppt::reference<libftl::blueprints::data const> const _data)
 {
@@ -43,23 +38,18 @@ fcppt::optional::reference<Type const> find(
           fcppt::make_cref(_data.get().dlc_blueprints_.get()),
           fcppt::make_cref(_data.get().normal_blueprints_.get())),
       [&_get_elements, &_compare_element](
-          fcppt::reference<std::vector<
-              fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>> const> const
-              _root_list) -> fcppt::optional::reference<Type const> {
+          fcppt::reference<std::vector<libftl::xml::blueprints::result> const> const _root_list)
+          -> fcppt::optional::reference<Type const> {
         return fcppt::algorithm::find_by_opt<fcppt::reference<Type const>>(
             _root_list.get(),
-            [&_get_elements, &_compare_element](
-                fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root> const &_root)
+            [&_get_elements, &_compare_element](libftl::xml::blueprints::result const &_blueprints)
                 -> fcppt::optional::reference<Type const> {
               return fcppt::optional::deref(
-                  fcppt::algorithm::find_if_opt(_get_elements(*_root), _compare_element));
+                  fcppt::algorithm::find_if_opt(_get_elements(_blueprints), _compare_element));
             });
       });
 
   FCPPT_PP_POP_WARNING
-}
-
-}
 }
 }
 

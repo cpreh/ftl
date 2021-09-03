@@ -41,7 +41,7 @@ libftl::impl::xml::blueprints::system_element_parser(std::string &&_name)
       typed::attribute_set{fcppt::record::make(
           labels::power{} = typed::attribute<unsigned, required::yes>{"power"},
           labels::room{} = typed::attribute<unsigned, required::yes>{"room"},
-          labels::start{} = typed::attribute<bool, required::yes>{"start"},
+          labels::start{} = typed::attribute<bool, required::no>{"start"},
           labels::img{} = typed::attribute<std::string, required::no>{"img"},
           labels::max{} = typed::attribute<unsigned, required::no>{"max"})},
       typed::optional_inner_node{typed::node_set{fcppt::record::make(

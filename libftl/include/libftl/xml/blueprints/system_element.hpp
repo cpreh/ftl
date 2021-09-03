@@ -24,7 +24,7 @@ using system_element = libftl::xml::node<
     fcppt::record::object<
         fcppt::record::element<libftl::xml::labels::power, unsigned>,
         fcppt::record::element<libftl::xml::labels::room, unsigned>,
-        fcppt::record::element<libftl::xml::labels::start, bool>,
+        fcppt::record::element<libftl::xml::labels::start, fcppt::optional::object<bool>>,
         fcppt::record::element<libftl::xml::labels::img, fcppt::optional::object<std::string>>,
         fcppt::record::element<libftl::xml::labels::max, fcppt::optional::object<unsigned>>>,
     fcppt::optional::object<fcppt::record::object<fcppt::record::element<

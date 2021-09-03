@@ -119,7 +119,6 @@ endfunction()
 set(
 	PARSER_NAMES
 	animations
-	blueprints
 	events
 	sectors
 )
@@ -206,8 +205,6 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/partition.hpp
 	libftl/impl/include/libftl/impl/xml/typed/required.hpp
 	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
-	libftl/impl/include/libftl/impl/xsd/require_one.hpp
-	libftl/impl/include/libftl/impl/xsd/to_fcppt_optional.hpp
 	libftl/impl/src/impl/archive/chain.cpp
 	libftl/impl/src/impl/archive/filesystem.cpp
 	libftl/impl/src/impl/archive/native.cpp
@@ -335,14 +332,15 @@ set(
 	libftl/include/libftl/xml/blueprints/crew.hpp
 	libftl/include/libftl/xml/blueprints/direction.hpp
 	libftl/include/libftl/xml/blueprints/direction_input.hpp
+	libftl/include/libftl/xml/blueprints/direction_output.hpp
 	libftl/include/libftl/xml/blueprints/direction_to_string.hpp
 	libftl/include/libftl/xml/blueprints/drone.hpp
 	libftl/include/libftl/xml/blueprints/item.hpp
 	libftl/include/libftl/xml/blueprints/list.hpp
 	libftl/include/libftl/xml/blueprints/load.hpp
-	libftl/include/libftl/xml/blueprints/load_2.hpp
 	libftl/include/libftl/xml/blueprints/result.hpp
 	libftl/include/libftl/xml/blueprints/ship.hpp
+	libftl/include/libftl/xml/blueprints/ship_system_list.hpp
 	libftl/include/libftl/xml/blueprints/sound_list.hpp
 	libftl/include/libftl/xml/blueprints/system.hpp
 	libftl/include/libftl/xml/blueprints/system_element.hpp
@@ -359,6 +357,7 @@ set(
 	libftl/include/libftl/xml/labels/breach_chance.hpp
 	libftl/include/libftl/xml/labels/class.hpp
 	libftl/include/libftl/xml/labels/cloak.hpp
+	libftl/include/libftl/xml/labels/cloak_image.hpp
 	libftl/include/libftl/xml/labels/cloaking.hpp
 	libftl/include/libftl/xml/labels/clonebay.hpp
 	libftl/include/libftl/xml/labels/color_list.hpp
@@ -422,6 +421,7 @@ set(
 	libftl/include/libftl/xml/labels/room.hpp
 	libftl/include/libftl/xml/labels/rotate.hpp
 	libftl/include/libftl/xml/labels/sensors.hpp
+	libftl/include/libftl/xml/labels/shield_image.hpp
 	libftl/include/libftl/xml/labels/shields.hpp
 	libftl/include/libftl/xml/labels/ship.hpp
 	libftl/include/libftl/xml/labels/short.hpp
@@ -501,7 +501,6 @@ set(
 	libftl/src/xml/animations.cpp
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
-	libftl/src/xml/blueprints/load_2.cpp
 	libftl/src/xml/clean.cpp
 	libftl/src/xml/events.cpp
 	libftl/src/xml/sectors.cpp

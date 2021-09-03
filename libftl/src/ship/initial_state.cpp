@@ -1,7 +1,5 @@
 #include <libftl/error.hpp>
 #include <libftl/archive/path.hpp>
-#include <libftl/impl/xsd/require_one.hpp>
-#include <libftl/impl/xsd/to_fcppt_optional.hpp>
 #include <libftl/room/system.hpp>
 #include <libftl/room/type.hpp>
 #include <libftl/ship/initial_state.hpp>
@@ -9,30 +7,46 @@
 #include <libftl/ship/layout/object.hpp>
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/sprite/images.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/blueprints/ship.hpp>
+#include <libftl/xml/blueprints/ship_system_list.hpp>
+#include <libftl/xml/blueprints/system_element.hpp>
+#include <libftl/xml/labels/battery.hpp>
+#include <libftl/xml/labels/cloaking.hpp>
+#include <libftl/xml/labels/doors.hpp>
+#include <libftl/xml/labels/drones.hpp>
+#include <libftl/xml/labels/engines.hpp>
+#include <libftl/xml/labels/hacking.hpp>
+#include <libftl/xml/labels/img.hpp>
+#include <libftl/xml/labels/max.hpp>
+#include <libftl/xml/labels/medbay.hpp>
+#include <libftl/xml/labels/mind.hpp>
+#include <libftl/xml/labels/oxygen.hpp>
+#include <libftl/xml/labels/pilot.hpp>
+#include <libftl/xml/labels/power.hpp>
+#include <libftl/xml/labels/room.hpp>
+#include <libftl/xml/labels/sensors.hpp>
+#include <libftl/xml/labels/shields.hpp>
+#include <libftl/xml/labels/system_list.hpp>
+#include <libftl/xml/labels/start.hpp>
+#include <libftl/xml/labels/teleporter.hpp>
+#include <libftl/xml/labels/weapons.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/const.hpp>
-#include <fcppt/make_cref.hpp>
-#include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/algorithm/map.hpp>
-#include <fcppt/container/maybe_front.hpp>
 #include <fcppt/either/error.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
-#include <fcppt/either/monad.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/either/sequence.hpp>
-#include <fcppt/monad/chain.hpp>
-#include <fcppt/monad/return.hpp>
 #include <fcppt/optional/cat.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <xsd/cxx/tree/containers.hxx>
+#include <string>
 #include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -41,32 +55,32 @@ namespace
 {
 fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::system>> load_system(
     libftl::sprite::images const &_images,
-    ::xsd::cxx::tree::sequence<libftl::xml::generated::blueprints::system> const &_room_list,
+    fcppt::optional::object<libftl::xml::blueprints::system_element> const &_room,
     libftl::room::type const _room_type)
 {
   return fcppt::optional::maybe(
-      fcppt::container::maybe_front(_room_list),
+      _room,
       []
       {
         return fcppt::either::make_success<libftl::error>(
             fcppt::optional::object<libftl::room::system>{});
       },
       [&_images,
-       _room_type](fcppt::reference<libftl::xml::generated::blueprints::system const> const _system)
+       _room_type](libftl::xml::blueprints::system_element const &_system)
       {
         return fcppt::either::map(
             fcppt::optional::maybe(
-                libftl::impl::xsd::to_fcppt_optional(fcppt::make_cref(_system.get().img())),
+                _system.attributes_.get<libftl::xml::labels::img>(),
                 []
                 {
                   return fcppt::either::make_success<libftl::error>(
                       fcppt::optional::object<sge::texture::const_part_shared_ptr>{});
                 },
-                [&_images](fcppt::reference<xml_schema::string const> const _name)
+                [&_images](std::string const &_name)
                 {
                   return fcppt::either::map(
                       _images.load(
-                          libftl::archive::path{"ship"} / "interior" / (_name.get() + ".png")),
+                          libftl::archive::path{"ship"} / "interior" / (_name + ".png")),
                       [](sge::texture::const_part_shared_ptr const &_texture)
                       { return fcppt::optional::make(_texture); });
                 }),
@@ -76,25 +90,26 @@ fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::syste
               return fcppt::optional::make(libftl::room::system{
                   _room_type,
                   _texture,
-                  libftl::room::system::power{_system.get().power()},
+                  libftl::room::system::power{_system.attributes_.get<libftl::xml::labels::power>()},
                   fcppt::optional::map(
-                      libftl::impl::xsd::to_fcppt_optional(fcppt::make_cref(_system.get().max())),
-                      [](fcppt::reference<::xml_schema::unsigned_int const> const _max)
-                      { return libftl::room::system::max_power{_max.get()}; }),
-                  libftl::ship::layout::room_id{_system.get().room()},
+                      _system.attributes_.get<libftl::xml::labels::max>(),
+                      [](unsigned const _max)
+                      { return libftl::room::system::max_power{_max}; }),
+                  libftl::ship::layout::room_id{_system.attributes_.get<libftl::xml::labels::room>()},
                   fcppt::optional::map(
-                      libftl::impl::xsd::to_fcppt_optional(fcppt::make_cref(_system.get().start())),
-                      [](fcppt::reference<::xml_schema::boolean const> const _start)
-                      { return libftl::room::system::available{_start.get()}; })});
+                      _system.attributes_.get<libftl::xml::labels::start>(),
+                      [](bool const _start)
+                      { return libftl::room::system::available{_start}; })});
             });
       });
 }
 
 fcppt::either::object<libftl::error, std::vector<libftl::room::system>> load_all_systems(
-    libftl::xml::generated::blueprints::system_list const &_systems,
+    libftl::xml::blueprints::ship_system_list const &_systems,
     libftl::sprite::images const &_images)
 {
-#define LOAD_IMPL(name) load_system(_images, _systems.name(), libftl::room::type::name)
+ // TODO(philipp) turn this macro into a function
+#define LOAD_IMPL(name) load_system(_images, _systems.content_.get<libftl::xml::labels::name>(), libftl::room::type::name)
 
   return fcppt::either::map(
       fcppt::either::sequence<fcppt::either::object<
@@ -142,24 +157,20 @@ libftl::room::state make_room_state(
           [](auto const _iterator) { return *_iterator; }),
       _room};
 }
-
 }
 
 fcppt::either::object<libftl::error, libftl::ship::state> libftl::ship::initial_state(
-    libftl::xml::generated::blueprints::ship_blueprint const &_blueprint,
+    libftl::xml::blueprints::ship const &_blueprint,
     libftl::ship::layout::object const &_layout,
     libftl::sprite::images const &_images)
 {
-  return fcppt::monad::chain(
-      libftl::impl::xsd::require_one(FCPPT_TEXT("systemList"), _blueprint.systemList()),
-      [&_images](fcppt::reference<libftl::xml::generated::blueprints::system_list const> const
-                     _system_list) { return load_all_systems(_system_list.get(), _images); },
+  return fcppt::either::map(
+      load_all_systems(_blueprint.content_.get<libftl::xml::labels::system_list>(), _images),
       [&_layout](std::vector<libftl::room::system> const &_systems)
       {
-        return fcppt::monad::return_<fcppt::either::error<libftl::error>>(
-            libftl::ship::state{fcppt::algorithm::map<std::vector<libftl::room::state>>(
-                _layout.rooms_,
-                [&_systems](libftl::ship::layout::room const &_room)
-                { return make_room_state(_systems, _room); })});
+        return libftl::ship::state{fcppt::algorithm::map<std::vector<libftl::room::state>>(
+            _layout.rooms_,
+            [&_systems](libftl::ship::layout::room const &_room)
+            { return make_room_state(_systems, _room); })};
       });
 }

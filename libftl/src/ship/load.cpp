@@ -11,7 +11,9 @@
 #include <libftl/ship/layout/load_xml.hpp>
 #include <libftl/ship/layout/name.hpp>
 #include <libftl/sprite/images_fwd.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/blueprints/ship.hpp>
+#include <libftl/xml/labels/img.hpp>
+#include <libftl/xml/labels/layout.hpp>
 #include <libftl/xml/ship/result.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
@@ -41,18 +43,17 @@ fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load
                 FCPPT_TEXT("Ship \"") + fcppt::from_std_string(_name) +
                 FCPPT_TEXT("\" not found in any blueprint file.")};
           }),
-      [&_archive,
-       &_images](fcppt::reference<libftl::xml::generated::blueprints::ship_blueprint const> const
-                     _blueprint)
+      [&_archive, &_images](fcppt::reference<libftl::xml::blueprints::ship const> const _blueprint)
       {
-        libftl::ship::layout::name const layout_name{_blueprint.get().layout()};
+        libftl::ship::layout::name const layout_name{
+            _blueprint->attributes_.get<libftl::xml::labels::layout>()};
 
         return fcppt::either::bind(
             libftl::ship::layout::load_xml(_archive, layout_name),
-            [&_archive, &_blueprint, &_images, &layout_name](
-                libftl::xml::ship::result &&_ship)
+            [&_archive, &_blueprint, &_images, &layout_name](libftl::xml::ship::result &&_ship)
             {
-              libftl::ship::images::name const image_name{_blueprint.get().img()};
+              libftl::ship::images::name const image_name{
+                  _blueprint->attributes_.get<libftl::xml::labels::img>()};
 
               return fcppt::either::apply(
                   [&_ship](

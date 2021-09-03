@@ -6,21 +6,20 @@
 #include <libftl/ship/images/name_fwd.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images_fwd.hpp>
-#include <libftl/xml/generated/blueprints_fwd.hpp>
+#include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/ship/result.hpp>
 #include <fcppt/reference_fwd.hpp>
 #include <fcppt/either/object_impl.hpp>
 
 namespace libftl::ship::images
 {
-[[nodiscard]]
-LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<libftl::error, libftl::ship::images::object> load(
+[[nodiscard]] LIBFTL_DETAIL_SYMBOL
+fcppt::either::object<libftl::error, libftl::ship::images::object>
+load(
     libftl::sprite::images const &,
-    libftl::xml::generated::blueprints::ship_blueprint const &,
+    libftl::xml::blueprints::ship const &,
     fcppt::reference<libftl::xml::ship::result const>,
     libftl::ship::images::name const &);
-
 }
 
 #endif

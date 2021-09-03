@@ -4,8 +4,10 @@
 #include <libftl/ship/images/name.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/node.hpp>
+#include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/labels/cloak.hpp>
+#include <libftl/xml/labels/cloak_image.hpp>
 #include <libftl/xml/labels/explosion.hpp>
 #include <libftl/xml/labels/floor.hpp>
 #include <libftl/xml/labels/gib1.hpp>
@@ -15,6 +17,7 @@
 #include <libftl/xml/labels/gib5.hpp>
 #include <libftl/xml/labels/gib6.hpp>
 #include <libftl/xml/labels/offsets.hpp>
+#include <libftl/xml/labels/shield_image.hpp>
 #include <libftl/xml/ship/explosion.hpp>
 #include <libftl/xml/ship/gib.hpp>
 #include <libftl/xml/ship/offset.hpp>
@@ -27,7 +30,6 @@
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/join.hpp>
-#include <fcppt/container/maybe_front.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
@@ -37,11 +39,12 @@
 #include <fcppt/optional/bind.hpp>
 #include <fcppt/optional/from.hpp>
 #include <fcppt/optional/make.hpp>
-#include <fcppt/optional/map.hpp>
 #include <fcppt/optional/maybe.hpp>
+#include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/optional/to_container.hpp>
 #include <fcppt/record/get.hpp>
+#include <fcppt/record/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
@@ -77,21 +80,19 @@ load_base(libftl::sprite::images const &_images, libftl::ship::images::name cons
 }
 
 fcppt::either::object<libftl::error, fcppt::optional::object<libftl::ship::images::object::shield>>
-load_shield(
-    libftl::sprite::images const &_images,
-    libftl::xml::generated::blueprints::ship_blueprint const &_blueprint)
+load_shield(libftl::sprite::images const &_images, libftl::xml::blueprints::ship const &_blueprint)
 {
   return fcppt::optional::maybe(
-      fcppt::container::maybe_front(_blueprint.shieldImage()),
+      _blueprint.content_.get<libftl::xml::labels::shield_image>(),
       []
       {
         return fcppt::either::make_success<libftl::error>(
             fcppt::optional::object<libftl::ship::images::object::shield>{});
       },
-      [&_images](fcppt::reference<xml_schema::string const> const _shield)
+      [&_images](libftl::xml::node<fcppt::record::object<>, std::string> const &_shield)
       {
         return fcppt::either::map(
-            find_image(_images, std::string{_shield.get() + "_shields1.png"}),
+            find_image(_images, _shield.content_ + "_shields1.png"),
             [](sge::texture::const_part_shared_ptr &&_texture) {
               return fcppt::optional::make(
                   libftl::ship::images::object::shield{std::move(_texture)});
@@ -216,7 +217,7 @@ load_gibs(
 
 fcppt::either::object<libftl::error, libftl::ship::images::object> libftl::ship::images::load(
     libftl::sprite::images const &_images,
-    libftl::xml::generated::blueprints::ship_blueprint const &_blueprint,
+    libftl::xml::blueprints::ship const &_blueprint,
     fcppt::reference<libftl::xml::ship::result const> const _ship,
     libftl::ship::images::name const &_ship_name)
 {
@@ -255,9 +256,12 @@ fcppt::either::object<libftl::error, libftl::ship::images::object> libftl::ship:
               }},
           fcppt::optional::from(
               fcppt::optional::map(
-                  fcppt::container::maybe_front(_blueprint.cloakImage()),
-                  [](fcppt::reference<xml_schema::string const> const _cloak)
-                  { return std::string{_cloak.get()}; }),
+                _blueprint.content_.get<libftl::xml::labels::cloak_image>(),
+                [](libftl::xml::node<fcppt::record::object<>,std::string> const &_cloak)
+                {
+                  return _cloak.content_;
+                }
+              ),
               [&_ship_name] { return _ship_name.get(); }) +
               "_cloak.png"),
       load_gibs(

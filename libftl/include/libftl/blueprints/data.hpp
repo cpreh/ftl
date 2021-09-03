@@ -1,8 +1,9 @@
 #ifndef LIBFTL_BLUEPRINTS_DATA_HPP_INCLUDED
 #define LIBFTL_BLUEPRINTS_DATA_HPP_INCLUDED
 
+#include <libftl/detail/symbol.hpp>
 #include <libftl/blueprints/data_fwd.hpp>
-#include <libftl/xml/generated/blueprints.hpp>
+#include <libftl/xml/blueprints/result.hpp>
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
@@ -10,17 +11,14 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace blueprints
+namespace libftl::blueprints
 {
 class data
 {
   FCPPT_NONCOPYABLE(data);
 
 public:
-  using blueprint_vector =
-      std::vector<fcppt::unique_ptr<libftl::xml::generated::blueprints::blueprints_root>>;
+  using blueprint_vector = std::vector<libftl::xml::blueprints::result>;
 
   FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, normal_blueprints);
 
@@ -47,7 +45,6 @@ public:
   dlc_blueprints_overwrites dlc_blueprints_overwrites_;
 };
 
-}
 }
 
 #endif
