@@ -30,112 +30,6 @@ find_package(
 	texture
 )
 
-find_package(
-	XercesC
-	REQUIRED
-)
-
-find_package(
-	XSD
-	REQUIRED
-)
-
-set(
-	GENERATED_XSD_INCLUDE_DIR
-	${FCPPT_UTILS_PROJECT_BINARY_DIR}/xsd/include
-)
-
-function(
-	generate_xml_parser
-	PARSER_NAME
-)
-	set(
-		OUTPUT_DIR
-		${GENERATED_XSD_INCLUDE_DIR}/libftl/xml/generated
-	)
-
-	set(
-		PARSER_FILES
-		${OUTPUT_DIR}/${PARSER_NAME}.hpp
-		${OUTPUT_DIR}/${PARSER_NAME}_fwd.hpp
-		${OUTPUT_DIR}/${PARSER_NAME}.cxx
-	)
-
-	set(
-		XSD_FILE
-		${FCPPT_UTILS_PROJECT_SOURCE_DIR}/xsd/${PARSER_NAME}.xsd
-	)
-
-	add_custom_command(
-		OUTPUT
-		${PARSER_FILES}
-		COMMAND
-			${XSD_PROGRAM}
-			cxx-tree
-			--std
-			c++11
-			--namespace-map
-			=libftl::xml::generated::${PARSER_NAME}
-			--hxx-prologue
-			"#include <libftl/detail/symbol.hpp>"
-			--hxx-prologue
-			"#include <fcppt/config/external_begin.hpp>"
-			--hxx-epilogue
-			"#include <fcppt/config/external_end.hpp>"
-			--cxx-prologue
-			"#include <fcppt/config/external_begin.hpp>"
-			--cxx-epilogue
-			"#include <fcppt/config/external_end.hpp>"
-			--fwd-prologue
-			"#include <fcppt/config/external_begin.hpp>"
-			--fwd-epilogue
-			"#include <fcppt/config/external_end.hpp>"
-			--hxx-suffix
-			".hpp"
-			--fwd-suffix
-			"_fwd.hpp"
-			--generate-forward
-			--generate-ostream
-			--guard-prefix
-			LIBFTL_XML_GENERATED
-			--export-symbol
-			LIBFTL_DETAIL_SYMBOL
-			--output-dir
-			${OUTPUT_DIR}
-			${XSD_FILE}
-		DEPENDS
-		${XSD_FILE}
-		VERBATIM
-	)
-
-	set(
-		LIBFTL_PARSER_FILES
-		${LIBFTL_PARSER_FILES}
-		${PARSER_FILES}
-		PARENT_SCOPE
-	)
-endfunction()
-
-set(
-	PARSER_NAMES
-	events
-)
-
-foreach(
-	PARSER
-	${PARSER_NAMES}
-)
-	generate_xml_parser(
-		${PARSER}
-	)
-endforeach()
-
-add_custom_target(
-	xsdfiles
-	DEPENDS
-	${LIBFTL_PARSER_FILES}
-)
-
 set(
 	LIBFTL_FILES
 	libftl/impl/include/libftl/impl/archive/chain.hpp
@@ -164,15 +58,12 @@ set(
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/load_function.hpp
 	libftl/impl/include/libftl/impl/xml/location_to_string.hpp
-	libftl/impl/include/libftl/impl/xml/make_load_function.hpp
 	libftl/impl/include/libftl/impl/xml/node.hpp
 	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/node_vector.hpp
 	libftl/impl/include/libftl/impl/xml/output.hpp
 	libftl/impl/include/libftl/impl/xml/parse.hpp
-	libftl/impl/include/libftl/impl/xml/read.hpp
 	libftl/impl/include/libftl/impl/xml/sectors/sector_description_parser.hpp
 	libftl/impl/include/libftl/impl/xml/sectors/sector_type_parser.hpp
 	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
@@ -648,9 +539,6 @@ function(
 		SYSTEM
 		INTERFACE
 		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
-		${XSD_INCLUDE_DIRS}
-		${XercesC_INCLUDE_DIRS}
-		${GENERATED_XSD_INCLUDE_DIR}
 	)
 
 	if(NOT ${VARIANT} STREQUAL "INTERFACE")
@@ -659,9 +547,6 @@ function(
 			SYSTEM
 			PRIVATE
 			${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
-			${XSD_INCLUDE_DIRS}
-			${XercesC_INCLUDE_DIRS}
-			${GENERATED_XSD_INCLUDE_DIR}
 		)
 	endif()
 
@@ -686,7 +571,6 @@ function(
 		target_link_libraries(
 			${LIBFTL_LIB_NAME}
 			PRIVATE
-			${XercesC_LIBRARIES}
 			${sgeimagecolor_TARGET}
 			${sgeimage2d_TARGET}
 			${sgemedia_TARGET}
@@ -700,27 +584,6 @@ function(
 			fcppt_parse_interface
 		)
 	endif()
-
-	target_compile_definitions(
-		${LIBFTL_LIB_NAME}
-		INTERFACE
-		XSD_CXX11
-		_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
-	)
-
-	if(NOT ${VARIANT} STREQUAL "INTERFACE")
-		target_compile_definitions(
-			${LIBFTL_LIB_NAME}
-			PRIVATE
-			XSD_CXX11
-			_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
-		)
-	endif()
-
-	add_dependencies(
-		${LIBFTL_LIB_NAME}
-		xsdfiles
-	)
 
 	fcppt_utils_export_install_target(
 		${LIBFTL_LIB_NAME}

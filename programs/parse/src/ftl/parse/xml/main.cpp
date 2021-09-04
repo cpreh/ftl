@@ -5,7 +5,10 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
+#include <libftl/xml/events/event_members.hpp>
+#include <libftl/xml/events/event_members_output.hpp>
 #include <libftl/xml/events/load.hpp>
+#include <libftl/xml/events/result.hpp>
 #include <libftl/xml/node_output.hpp>
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
@@ -14,7 +17,6 @@
 #include <libftl/xml/blueprints/direction_output.hpp>
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <libftl/xml/generated/events.hpp>
 #include <libftl/xml/sectors/load.hpp>
 #include <libftl/xml/sectors/result.hpp>
 #include <libftl/xml/ship/load.hpp>
@@ -23,7 +25,7 @@
 #include <fcppt/output.hpp>
 #include <fcppt/output_range.hpp>
 #include <fcppt/output_string.hpp>
-#include <fcppt/overload.hpp>
+#include <fcppt/recursive_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/unit_output.hpp>
@@ -53,7 +55,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
       libftl::xml::achievements::result,
       libftl::xml::animations::result,
       libftl::xml::blueprints::result,
-      fcppt::unique_ptr<libftl::xml::generated::events::events_root>,
+      libftl::xml::events::result,
       libftl::xml::sectors::result,
       libftl::xml::ship::result>;
 
@@ -90,19 +92,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
       {
         fcppt::io::cout() << FCPPT_TEXT("SUCCESS:\n");
         fcppt::variant::apply(
-            fcppt::overload(
-                [](auto const &_element) { fcppt::io::cout() << *_element; },
-                [](libftl::xml::achievements::result const &_achievements)
-                { fcppt::io::cout() << fcppt::output(_achievements); },
-                [](libftl::xml::animations::result const &_animations)
-                { fcppt::io::cout() << fcppt::output(_animations); },
-                [](libftl::xml::blueprints::result const &_blueprints)
-                { fcppt::io::cout() << fcppt::output(_blueprints); },
-                [](libftl::xml::sectors::result const &_sectors)
-                { fcppt::io::cout() << fcppt::output(_sectors); },
-                [](libftl::xml::ship::result const &_ship)
-                { fcppt::io::cout() << fcppt::output(_ship); }),
-            _result);
+            [](auto const &_element) { fcppt::io::cout() << fcppt::output(_element); }, _result);
         fcppt::io::cout() << FCPPT_TEXT('\n');
         return fcppt::either::no_error{};
       });

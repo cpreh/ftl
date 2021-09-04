@@ -8,7 +8,6 @@
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <xsd/cxx/tree/containers.hxx>
 #include <string_view>
 #include <fcppt/config/external_end.hpp>
 
