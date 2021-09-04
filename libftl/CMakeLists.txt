@@ -160,6 +160,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
+	libftl/impl/include/libftl/impl/xml/events/event_parser.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
@@ -225,6 +226,7 @@ set(
 	libftl/impl/src/impl/xml/blueprints/system_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
+	libftl/impl/src/impl/xml/events/event_parser.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
@@ -359,21 +361,30 @@ set(
 	libftl/include/libftl/xml/blueprints/system_element.hpp
 	libftl/include/libftl/xml/blueprints/weapon.hpp
 	libftl/include/libftl/xml/clean.hpp
+	libftl/include/libftl/xml/events/boarders.hpp
+	libftl/include/libftl/xml/events/choice.hpp
+	libftl/include/libftl/xml/events/event.hpp
+	libftl/include/libftl/xml/events/event_members.hpp
+	libftl/include/libftl/xml/events/event_members_fwd.hpp
 	libftl/include/libftl/xml/events/load.hpp
+	libftl/include/libftl/xml/events/remove_crew.hpp
 	libftl/include/libftl/xml/labels/a.hpp
 	libftl/include/libftl/xml/labels/amount.hpp
 	libftl/include/libftl/xml/labels/angular.hpp
 	libftl/include/libftl/xml/labels/b.hpp
 	libftl/include/libftl/xml/labels/battery.hpp
+	libftl/include/libftl/xml/labels/boarders.hpp
 	libftl/include/libftl/xml/labels/boarding_ai.hpp
 	libftl/include/libftl/xml/labels/bp.hpp
 	libftl/include/libftl/xml/labels/breach_chance.hpp
 	libftl/include/libftl/xml/labels/charge_image.hpp
 	libftl/include/libftl/xml/labels/charged_frame.hpp
+	libftl/include/libftl/xml/labels/choice_list.hpp
 	libftl/include/libftl/xml/labels/class.hpp
 	libftl/include/libftl/xml/labels/cloak.hpp
 	libftl/include/libftl/xml/labels/cloak_image.hpp
 	libftl/include/libftl/xml/labels/cloaking.hpp
+	libftl/include/libftl/xml/labels/clone.hpp
 	libftl/include/libftl/xml/labels/clonebay.hpp
 	libftl/include/libftl/xml/labels/color_list.hpp
 	libftl/include/libftl/xml/labels/cooldown.hpp
@@ -389,6 +400,7 @@ set(
 	libftl/include/libftl/xml/labels/drone_slots.hpp
 	libftl/include/libftl/xml/labels/drones.hpp
 	libftl/include/libftl/xml/labels/engines.hpp
+	libftl/include/libftl/xml/labels/event.hpp
 	libftl/include/libftl/xml/labels/event_list.hpp
 	libftl/include/libftl/xml/labels/explosion.hpp
 	libftl/include/libftl/xml/labels/fh.hpp
@@ -409,6 +421,7 @@ set(
 	libftl/include/libftl/xml/labels/h.hpp
 	libftl/include/libftl/xml/labels/hacking.hpp
 	libftl/include/libftl/xml/labels/health.hpp
+	libftl/include/libftl/xml/labels/hidden.hpp
 	libftl/include/libftl/xml/labels/hit_shield_sounds.hpp
 	libftl/include/libftl/xml/labels/hit_ship_sounds.hpp
 	libftl/include/libftl/xml/labels/icon_image.hpp
@@ -419,7 +432,9 @@ set(
 	libftl/include/libftl/xml/labels/launch_sounds.hpp
 	libftl/include/libftl/xml/labels/layout.hpp
 	libftl/include/libftl/xml/labels/length.hpp
+	libftl/include/libftl/xml/labels/load.hpp
 	libftl/include/libftl/xml/labels/locked.hpp
+	libftl/include/libftl/xml/labels/lvl.hpp
 	libftl/include/libftl/xml/labels/max.hpp
 	libftl/include/libftl/xml/labels/max_power.hpp
 	libftl/include/libftl/xml/labels/medbay.hpp
@@ -442,6 +457,8 @@ set(
 	libftl/include/libftl/xml/labels/r.hpp
 	libftl/include/libftl/xml/labels/rarity.hpp
 	libftl/include/libftl/xml/labels/rarity_list.hpp
+	libftl/include/libftl/xml/labels/remove_crew.hpp
+	libftl/include/libftl/xml/labels/req.hpp
 	libftl/include/libftl/xml/labels/room.hpp
 	libftl/include/libftl/xml/labels/rotate.hpp
 	libftl/include/libftl/xml/labels/sensors.hpp
@@ -462,6 +479,7 @@ set(
 	libftl/include/libftl/xml/labels/stun_chance.hpp
 	libftl/include/libftl/xml/labels/system_list.hpp
 	libftl/include/libftl/xml/labels/teleporter.hpp
+	libftl/include/libftl/xml/labels/text.hpp
 	libftl/include/libftl/xml/labels/time.hpp
 	libftl/include/libftl/xml/labels/tip.hpp
 	libftl/include/libftl/xml/labels/title.hpp
@@ -534,6 +552,7 @@ set(
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
+	libftl/src/xml/events/event_members.cpp
 	libftl/src/xml/events/load.cpp
 	libftl/src/xml/sectors/load.cpp
 	libftl/src/xml/ship/load.cpp

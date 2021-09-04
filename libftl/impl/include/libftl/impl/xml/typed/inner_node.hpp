@@ -27,6 +27,7 @@ class inner_node
 {
 public:
   using result_type = libftl::impl::xml::typed::result_type<Parser>;
+  using arg_type = fcppt::optional::object<libftl::impl::xml::inner_node>;
 
   explicit inner_node(Parser &&_parser) : parser_{std::move(_parser)} {}
 
