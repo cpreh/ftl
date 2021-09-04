@@ -1,6 +1,6 @@
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/events/event_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
@@ -25,9 +25,9 @@
 #include <libftl/xml/labels/text.hpp>
 #include <fcppt/deref_reference.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
-#include <fcppt/nonmovable.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/nonmovable.hpp>
 #include <fcppt/recursive.hpp>
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>

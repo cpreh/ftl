@@ -5,10 +5,6 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
-#include <libftl/xml/events/event_members.hpp>
-#include <libftl/xml/events/event_members_output.hpp>
-#include <libftl/xml/events/load.hpp>
-#include <libftl/xml/events/result.hpp>
 #include <libftl/xml/node_output.hpp>
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
@@ -17,6 +13,10 @@
 #include <libftl/xml/blueprints/direction_output.hpp>
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
+#include <libftl/xml/events/event_members.hpp>
+#include <libftl/xml/events/event_members_output.hpp>
+#include <libftl/xml/events/load.hpp>
+#include <libftl/xml/events/result.hpp>
 #include <libftl/xml/sectors/load.hpp>
 #include <libftl/xml/sectors/result.hpp>
 #include <libftl/xml/ship/load.hpp>
