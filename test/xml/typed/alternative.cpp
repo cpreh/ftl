@@ -38,16 +38,14 @@ TEST_CASE("xml::typed::alternative", "[xml]")
   using result_type = fcppt::variant::object<left, right>;
 
   auto const parser{libftl::impl::xml::typed::alternative{
-      libftl::impl::xml::typed::make_construct<left, libftl::impl::xml::node>(
-          libftl::impl::xml::typed::node{
-              std::string{"test1"},
-              libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-              libftl::impl::xml::typed::empty{}}),
-      libftl::impl::xml::typed::make_construct<right, libftl::impl::xml::node>(
-          libftl::impl::xml::typed::node{
-              std::string{"test2"},
-              libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-              libftl::impl::xml::typed::empty{}})}};
+      libftl::impl::xml::typed::make_construct<left>(libftl::impl::xml::typed::node{
+          std::string{"test1"},
+          libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+          libftl::impl::xml::typed::empty{}}),
+      libftl::impl::xml::typed::make_construct<right>(libftl::impl::xml::typed::node{
+          std::string{"test2"},
+          libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+          libftl::impl::xml::typed::empty{}})}};
 
   CHECK(parser
             .parse(libftl::impl::xml::node{

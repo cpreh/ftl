@@ -63,8 +63,8 @@ public:
 
   event_impl()
       : event_{typed::make_derived(
-            typed::make_construct<fcppt::recursive<libftl::xml::events::event_members>, arg_type>(
-                typed::make_construct<libftl::xml::events::event_members, arg_type>(
+            typed::make_construct<fcppt::recursive<libftl::xml::events::event_members>>(
+                typed::make_construct<libftl::xml::events::event_members>(
                     typed::inner_node{typed::node_set{fcppt::record::make(
                         labels::text{} = typed::make_node_member<required::yes>(
                             "text",

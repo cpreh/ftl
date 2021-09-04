@@ -9,11 +9,11 @@
 
 namespace libftl::impl::xml::typed
 {
-template <typename Result, typename Arg, typename Parser>
-[[nodiscard]] inline libftl::impl::xml::typed::construct<Result, Arg, std::remove_cvref_t<Parser>>
+template <typename Result, typename Parser>
+[[nodiscard]] inline libftl::impl::xml::typed::construct<Result, std::remove_cvref_t<Parser>>
 make_construct(Parser &&_parser)
 {
-  return libftl::impl::xml::typed::construct<Result, Arg, std::remove_cvref_t<Parser>>{
+  return libftl::impl::xml::typed::construct<Result, std::remove_cvref_t<Parser>>{
       std::forward<Parser>(_parser)};
 }
 }
