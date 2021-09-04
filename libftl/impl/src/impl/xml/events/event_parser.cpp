@@ -11,6 +11,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_member_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
@@ -108,9 +109,10 @@ libftl::impl::xml::events::event_parser()
 {
   return typed::make_derived(typed::node{
       "event",
-      event_attributes(),
-      fcppt::unique_ptr_to_base<libftl::impl::xml::typed::base<
-          fcppt::recursive<libftl::xml::events::event_members>,
-          fcppt::optional::object<libftl::impl::xml::inner_node>>>(
-          fcppt::make_unique_ptr<event_impl>())});
+      typed::node_content{
+          event_attributes(),
+          fcppt::unique_ptr_to_base<libftl::impl::xml::typed::base<
+              fcppt::recursive<libftl::xml::events::event_members>,
+              fcppt::optional::object<libftl::impl::xml::inner_node>>>(
+              fcppt::make_unique_ptr<event_impl>())}});
 }

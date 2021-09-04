@@ -7,6 +7,7 @@
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/list.hpp>
@@ -27,8 +28,11 @@ libftl::impl::xml::blueprints::list_parser()
 
   return typed::make_derived(typed::node{
       "blueprintList",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_list{typed::node{
-          "name", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}}}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_list{typed::node{
+              "name",
+              typed::node_content{
+                  typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}}}}}}});
 }

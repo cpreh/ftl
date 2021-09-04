@@ -9,6 +9,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/animations/weapon_anim.hpp>
@@ -39,38 +40,43 @@ libftl::impl::xml::animations::weapon_anim_parser()
 
   return typed::make_derived(typed::node{
       "weaponAnim",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::sheet{} = typed::make_node_member<required::yes>(
-              "sheet", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc",
-              typed::attribute_set{fcppt::record::make(
-                  labels::length{} = typed::attribute<unsigned, required::yes>{"length"},
-                  labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
-                  labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
-              typed::empty{}),
-          labels::charged_frame{} = typed::make_node_member<required::yes>(
-              "chargedFrame",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<unsigned>{}),
-          labels::fire_frame{} = typed::make_node_member<required::yes>(
-              "fireFrame", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::fire_point{} = typed::make_node_member<required::yes>(
-              "firePoint",
-              typed::attribute_set{fcppt::record::make(
-                  labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
-                  labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
-              typed::empty{}),
-          labels::mount_point{} = typed::make_node_member<required::yes>(
-              "mountPoint",
-              typed::attribute_set{fcppt::record::make(
-                  labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
-                  labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
-              typed::empty{}),
-          labels::charge_image{} = typed::make_node_member<required::yes>(
-              "chargeImage",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<std::string>{}))}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::sheet{} = typed::make_node_member<required::yes>(
+                  "sheet",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make(
+                      labels::length{} = typed::attribute<unsigned, required::yes>{"length"},
+                      labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
+                      labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
+                  typed::empty{}),
+              labels::charged_frame{} = typed::make_node_member<required::yes>(
+                  "chargedFrame",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}),
+              labels::fire_frame{} = typed::make_node_member<required::yes>(
+                  "fireFrame",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}),
+              labels::fire_point{} = typed::make_node_member<required::yes>(
+                  "firePoint",
+                  typed::attribute_set{fcppt::record::make(
+                      labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
+                      labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
+                  typed::empty{}),
+              labels::mount_point{} = typed::make_node_member<required::yes>(
+                  "mountPoint",
+                  typed::attribute_set{fcppt::record::make(
+                      labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
+                      labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
+                  typed::empty{}),
+              labels::charge_image{} = typed::make_node_member<required::yes>(
+                  "chargeImage",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}))}}}});
 }

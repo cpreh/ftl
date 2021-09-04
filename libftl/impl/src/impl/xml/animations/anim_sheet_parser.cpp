@@ -6,6 +6,7 @@
 #include <libftl/impl/xml/typed/content.hpp>
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/animations/anim_sheet.hpp>
 #include <libftl/xml/labels/fh.hpp>
@@ -29,12 +30,12 @@ libftl::impl::xml::animations::anim_sheet_parser()
 
   return typed::make_derived(typed::node{
       "animSheet",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"},
-          labels::w{} = typed::attribute<unsigned, required::yes>{"w"},
-          labels::h{} = typed::attribute<unsigned, required::yes>{"h"},
-          labels::fw{} = typed::attribute<unsigned, required::yes>{"fw"},
-          labels::fh{} = typed::attribute<unsigned, required::yes>{"fh"}
-      )},
-      typed::content<std::string>{}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"},
+              labels::w{} = typed::attribute<unsigned, required::yes>{"w"},
+              labels::h{} = typed::attribute<unsigned, required::yes>{"h"},
+              labels::fw{} = typed::attribute<unsigned, required::yes>{"fw"},
+              labels::fh{} = typed::attribute<unsigned, required::yes>{"fh"})},
+          typed::content<std::string>{}}});
 }

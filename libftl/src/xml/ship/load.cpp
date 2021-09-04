@@ -8,6 +8,7 @@
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
@@ -129,15 +130,16 @@ libftl::xml::ship::load(std::istream &_input)
           typed::attribute_set{fcppt::record::make()},
           typed::inner_node{typed::node_list{typed::node{
               "mount",
-              typed::attribute_set{fcppt::record::make(
-                  labels::x{} = typed::attribute<int, required::yes>{"x"},
-                  labels::y{} = typed::attribute<int, required::yes>{"y"},
-                  labels::rotate{} = typed::attribute<bool, required::yes>{"rotate"},
-                  labels::mirror{} = typed::attribute<bool, required::yes>{"mirror"},
-                  labels::gib{} = typed::attribute<unsigned, required::yes>{"gib"},
-                  labels::slide{} =
-                      typed::attribute<libftl::xml::ship::slide, required::yes>{"slide"})},
-              typed::empty{}}}}),
+              typed::node_content{
+                  typed::attribute_set{fcppt::record::make(
+                      labels::x{} = typed::attribute<int, required::yes>{"x"},
+                      labels::y{} = typed::attribute<int, required::yes>{"y"},
+                      labels::rotate{} = typed::attribute<bool, required::yes>{"rotate"},
+                      labels::mirror{} = typed::attribute<bool, required::yes>{"mirror"},
+                      labels::gib{} = typed::attribute<unsigned, required::yes>{"gib"},
+                      labels::slide{} =
+                          typed::attribute<libftl::xml::ship::slide, required::yes>{"slide"})},
+                  typed::empty{}}}}}),
       labels::explosion{} = typed::make_node_member<required::yes>(
           "explosion",
           typed::attribute_set{fcppt::record::make()},

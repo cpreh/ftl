@@ -8,6 +8,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/drone.hpp>
@@ -43,43 +44,58 @@ libftl::impl::xml::blueprints::drone_parser()
 
   return typed::make_derived(typed::node{
       "droneBlueprint",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::type{} = typed::make_node_member<required::yes>(
-              "type", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::tip{} = typed::make_node_member<required::yes>(
-              "tip", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::title{} = typed::make_node_member<required::yes>(
-              "title", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::short_{} = typed::make_node_member<required::yes>(
-              "short", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::power{} = typed::make_node_member<required::yes>(
-              "power", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::cooldown{} = typed::make_node_member<required::yes>(
-              "cooldown", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::dodge{} = typed::make_node_member<required::yes>(
-              "dodge", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::speed{} = typed::make_node_member<required::yes>(
-              "speed", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::cost{} = typed::make_node_member<required::yes>(
-              "cost", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::bp{} = typed::make_node_member<required::yes>(
-              "bp", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::drone_image{} = typed::make_node_member<required::yes>(
-              "droneImage",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<std::string>{}),
-          labels::weapon_blueprint{} = typed::make_node_member<required::yes>(
-              "weaponBlueprint",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<std::string>{}),
-          labels::rarity{} = typed::make_node_member<required::yes>(
-              "rarity", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::icon_image{} = typed::make_node_member<required::no>(
-              "iconImage",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<std::string>{}))}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::type{} = typed::make_node_member<required::yes>(
+                  "type",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::tip{} = typed::make_node_member<required::yes>(
+                  "tip",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::title{} = typed::make_node_member<required::yes>(
+                  "title",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::short_{} = typed::make_node_member<required::yes>(
+                  "short",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::power{} = typed::make_node_member<required::yes>(
+                  "power", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::cooldown{} = typed::make_node_member<required::yes>(
+                  "cooldown",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}),
+              labels::dodge{} = typed::make_node_member<required::yes>(
+                  "dodge", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::speed{} = typed::make_node_member<required::yes>(
+                  "speed", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::cost{} = typed::make_node_member<required::yes>(
+                  "cost", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::bp{} = typed::make_node_member<required::yes>(
+                  "bp", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::drone_image{} = typed::make_node_member<required::yes>(
+                  "droneImage",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::weapon_blueprint{} = typed::make_node_member<required::yes>(
+                  "weaponBlueprint",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::rarity{} = typed::make_node_member<required::yes>(
+                  "rarity",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}),
+              labels::icon_image{} = typed::make_node_member<required::no>(
+                  "iconImage",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}))}}}});
 }

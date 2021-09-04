@@ -8,6 +8,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/item.hpp>
@@ -33,19 +34,26 @@ libftl::impl::xml::blueprints::item_parser()
 
   return typed::make_derived(typed::node{
       "itemBlueprint",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::type{} = typed::make_node_member<required::yes>(
-              "type", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::title{} = typed::make_node_member<required::yes>(
-              "title", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::cost{} = typed::make_node_member<required::yes>(
-              "cost", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::rarity{} = typed::make_node_member<required::yes>(
-              "rarity",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<unsigned>{}))}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::type{} = typed::make_node_member<required::yes>(
+                  "type",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::title{} = typed::make_node_member<required::yes>(
+                  "title",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::cost{} = typed::make_node_member<required::yes>(
+                  "cost", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::rarity{} = typed::make_node_member<required::yes>(
+                  "rarity",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}))}}}});
 }

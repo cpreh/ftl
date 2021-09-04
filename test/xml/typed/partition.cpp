@@ -7,6 +7,7 @@
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/make_construct.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
 #include <libftl/xml/node.hpp>
@@ -46,12 +47,14 @@ TEST_CASE("xml::typed::partition", "[xml]")
       libftl::impl::xml::typed::node_list{libftl::impl::xml::typed::alternative{
           libftl::impl::xml::typed::make_construct<left>(libftl::impl::xml::typed::node{
               std::string{"test1"},
-              libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-              libftl::impl::xml::typed::empty{}}),
+              libftl::impl::xml::typed::node_content{
+                  libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+                  libftl::impl::xml::typed::empty{}}}),
           libftl::impl::xml::typed::make_construct<right>(libftl::impl::xml::typed::node{
               std::string{"test2"},
-              libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-              libftl::impl::xml::typed::empty{}})}}}};
+              libftl::impl::xml::typed::node_content{
+                  libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+                  libftl::impl::xml::typed::empty{}}})}}}};
 
   CHECK(parser
             .parse(fcppt::container::make<libftl::impl::xml::node_vector>(

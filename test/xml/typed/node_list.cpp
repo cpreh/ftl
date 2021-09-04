@@ -5,6 +5,7 @@
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp>
@@ -34,8 +35,9 @@ TEST_CASE("xml::typed::node_list", "[xml]")
 {
   libftl::impl::xml::typed::node_list const parser{libftl::impl::xml::typed::node{
       std::string{"node1"},
-      libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-      libftl::impl::xml::typed::empty{}}};
+      libftl::impl::xml::typed::node_content{
+          libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+          libftl::impl::xml::typed::empty{}}}};
 
   using result_vector = std::vector<libftl::xml::node<fcppt::record::object<>, fcppt::unit>>;
 

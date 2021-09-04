@@ -9,6 +9,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/animations/anim.hpp>
@@ -35,18 +36,23 @@ libftl::impl::xml::animations::anim_parser()
 
   return typed::make_derived(typed::node{
       "anim",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::sheet{} = typed::make_node_member<required::yes>(
-              "sheet", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc",
-              typed::attribute_set{fcppt::record::make(
-                  labels::length{} = typed::attribute<unsigned, required::yes>{"length"},
-                  labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
-                  labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
-              typed::empty{}),
-          labels::time{} = typed::make_node_member<required::yes>(
-              "time", typed::attribute_set{fcppt::record::make()}, typed::content<double>{}))}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::sheet{} = typed::make_node_member<required::yes>(
+                  "sheet",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make(
+                      labels::length{} = typed::attribute<unsigned, required::yes>{"length"},
+                      labels::x{} = typed::attribute<unsigned, required::yes>{"x"},
+                      labels::y{} = typed::attribute<unsigned, required::yes>{"y"})},
+                  typed::empty{}),
+              labels::time{} = typed::make_node_member<required::yes>(
+                  "time",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<double>{}))}}}});
 }

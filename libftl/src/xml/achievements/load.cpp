@@ -7,6 +7,7 @@
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
@@ -34,21 +35,30 @@ libftl::xml::achievements::load(std::istream &_input)
 
   typed::node_list const parser{typed::node{
       "achievement",
-      typed::attribute_set{
-          fcppt::record::make(labels::id{} = typed::attribute<std::string, required::yes>{"id"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::name{} = typed::make_node_member<required::yes>(
-              "name", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::img{} = typed::make_node_member<required::yes>(
-              "img", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::ship{} = typed::make_node_member<required::no>(
-              "ship", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::multi_difficulty{} = typed::make_node_member<required::no>(
-              "multiDifficulty",
-              typed::attribute_set{fcppt::record::make()},
-              typed::content<unsigned>{}))}}}};
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::id{} = typed::attribute<std::string, required::yes>{"id"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::name{} = typed::make_node_member<required::yes>(
+                  "name",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::img{} = typed::make_node_member<required::yes>(
+                  "img",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::ship{} = typed::make_node_member<required::no>(
+                  "ship",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::multi_difficulty{} = typed::make_node_member<required::no>(
+                  "multiDifficulty",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<unsigned>{}))}}}}};
 
   return fcppt::either::bind(
       libftl::impl::xml::parse(_input),

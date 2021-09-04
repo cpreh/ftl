@@ -8,6 +8,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/aug.hpp>
@@ -35,21 +36,28 @@ libftl::impl::xml::blueprints::aug_parser()
 
   return typed::make_derived(typed::node{
       "augBlueprint",
-      typed::attribute_set{fcppt::record::make(
-          labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
-      typed::inner_node{typed::node_set{fcppt::record::make(
-          labels::title{} = typed::make_node_member<required::yes>(
-              "title", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::desc{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}),
-          labels::cost{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::bp{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::rarity{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
-          labels::stackable{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<bool>{}),
-          labels::value{} = typed::make_node_member<required::yes>(
-              "desc", typed::attribute_set{fcppt::record::make()}, typed::content<double>{}))}}});
+      typed::node_content{
+          typed::attribute_set{fcppt::record::make(
+              labels::name{} = typed::attribute<std::string, required::yes>{"name"})},
+          typed::inner_node{typed::node_set{fcppt::record::make(
+              labels::title{} = typed::make_node_member<required::yes>(
+                  "title",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::desc{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<std::string>{}),
+              labels::cost{} = typed::make_node_member<required::yes>(
+                  "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::bp{} = typed::make_node_member<required::yes>(
+                  "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::rarity{} = typed::make_node_member<required::yes>(
+                  "desc", typed::attribute_set{fcppt::record::make()}, typed::content<unsigned>{}),
+              labels::stackable{} = typed::make_node_member<required::yes>(
+                  "desc", typed::attribute_set{fcppt::record::make()}, typed::content<bool>{}),
+              labels::value{} = typed::make_node_member<required::yes>(
+                  "desc",
+                  typed::attribute_set{fcppt::record::make()},
+                  typed::content<double>{}))}}}});
 }
