@@ -14,9 +14,8 @@ struct is_node_member : std::false_type
 {
 };
 
-template <libftl::impl::xml::typed::required Required, typename Attributes, typename Content>
-struct is_node_member<libftl::impl::xml::typed::node_member<Required, Attributes, Content>>
-    : std::true_type
+template <libftl::impl::xml::typed::required Required, typename Parser>
+struct is_node_member<libftl::impl::xml::typed::node_member<Required, Parser>> : std::true_type
 {
 };
 }

@@ -85,6 +85,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/make_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_node_member_derived.hpp
+	libftl/impl/include/libftl/impl/xml/typed/make_node_member_impl.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_content.hpp
 	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
