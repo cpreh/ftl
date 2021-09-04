@@ -23,11 +23,10 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
-	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
 )
 
-target_compile_definitions(
+target_compile_options(
 	ftlarchive
 	PRIVATE
 	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}

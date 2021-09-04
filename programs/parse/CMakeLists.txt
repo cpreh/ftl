@@ -49,7 +49,6 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_options_TARGET}
 	${FCPPT_UTILS_MAIN_LINK_LIBS}
-	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 )
 
 target_include_directories(
@@ -58,7 +57,7 @@ target_include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_compile_definitions(
+target_compile_options(
 	ftlparse
 	PRIVATE
 	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}

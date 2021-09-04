@@ -61,10 +61,9 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${fcppt_options_TARGET}
-	${FCPPT_UTILS_FILESYSTEM_LIBRARIES}
 )
 
-target_compile_definitions(
+target_compile_options(
 	ftldraw
 	PRIVATE
 	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}
