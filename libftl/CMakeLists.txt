@@ -366,6 +366,7 @@ set(
 	libftl/include/libftl/xml/events/event.hpp
 	libftl/include/libftl/xml/events/event_members.hpp
 	libftl/include/libftl/xml/events/event_members_fwd.hpp
+	libftl/include/libftl/xml/events/event_members_output.hpp
 	libftl/include/libftl/xml/events/load.hpp
 	libftl/include/libftl/xml/events/remove_crew.hpp
 	libftl/include/libftl/xml/labels/a.hpp
