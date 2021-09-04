@@ -19,17 +19,17 @@
 
 namespace libftl::impl::xml::typed
 {
-template <typename Content>
-requires libftl::impl::xml::typed::parses<Content, libftl::impl::xml::node>
+template <typename Parser>
+requires libftl::impl::xml::typed::parses<Parser, libftl::impl::xml::node>
 class node
 {
 public:
-  using result_type = libftl::impl::xml::typed::result_type<Content>;
+  using result_type = libftl::impl::xml::typed::result_type<Parser>;
 
   using arg_type = libftl::impl::xml::node;
 
-  node(std::string &&_name, Content &&_content)
-      : name_{std::move(_name)}, content_{std::move(_content)}
+  node(std::string &&_name, Parser &&_parser)
+      : name_{std::move(_name)}, parser_{std::move(_parser)}
   {
   }
 
@@ -45,18 +45,18 @@ public:
           fcppt::from_std_string(_node.opening_tag_) + FCPPT_TEXT(".")});
     }
 
-    return fcppt::deref(this->content_).parse(_node);
+    return fcppt::deref(this->parser_).parse(_node);
   }
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
 
 private:
   std::string name_;
-  Content content_;
+  Parser parser_;
 };
 
-template <typename Content>
-node(std::string &&, Content &&) -> node<Content>;
+template <typename Parser>
+node(std::string &&, Parser &&) -> node<Parser>;
 }
 
 #endif

@@ -2,21 +2,16 @@
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_LIST_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_list_fwd.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
-#include <libftl/xml/node.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/reference.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/algorithm/map.hpp>
-#include <fcppt/either/bind.hpp>
-#include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/either/sequence.hpp>
-#include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
@@ -25,14 +20,12 @@
 
 namespace libftl::impl::xml::typed
 {
-template <typename Attributes, typename Content>
-requires libftl::impl::xml::typed::parses<Content,fcppt::optional::object<libftl::impl::xml::inner_node>>
+template <typename Parser>
+requires libftl::impl::xml::typed::parses<Parser, libftl::impl::xml::node>
 class node_member_list
 {
 public:
-  using inner_result = libftl::xml::node<
-      libftl::impl::xml::typed::result_type<Attributes>,
-      libftl::impl::xml::typed::result_type<Content>>;
+  using inner_result = libftl::impl::xml::typed::result_type<Parser>;
 
   using result_type = std::vector<inner_result>;
 
@@ -42,8 +35,8 @@ public:
       libftl::impl::xml::typed::required::no;
   static constexpr bool const is_optional = true;
 
-  node_member_list(std::string &&_name, Attributes &&_attributes, Content &&_content)
-      : name_{std::move(_name)}, attributes_{std::move(_attributes)}, content_{std::move(_content)}
+  node_member_list(std::string &&_name, Parser &&_parser)
+      : name_{std::move(_name)}, parser_{std::move(_parser)}
   {
   }
 
@@ -53,34 +46,18 @@ public:
   parse(std::vector<fcppt::reference<libftl::impl::xml::node const>> const &_nodes) const
   {
     return fcppt::either::sequence<fcppt::either::object<libftl::error, result_type>>(
-        fcppt::algorithm::map<std::vector<
-            fcppt::either::object<libftl::error, inner_result>>>(
+        fcppt::algorithm::map<std::vector<fcppt::either::object<libftl::error, inner_result>>>(
             _nodes,
             [this](fcppt::reference<libftl::impl::xml::node const> const _node)
-            {
-              return fcppt::either::bind(
-                  fcppt::deref(this->attributes_).parse(_node->attributes_),
-                  [this,
-                   &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
-                  {
-                    return fcppt::either::map(
-                        fcppt::deref(this->content_).parse(_node->content_),
-                        [&_attributes_result](
-                            libftl::impl::xml::typed::result_type<Content> &&_content_result) {
-                          return libftl::xml::node{
-                              std::move(_attributes_result), std::move(_content_result)};
-                        });
-                  });
-            }));
+            { return fcppt::deref(this->parser_).parse(_node.get()); }));
   }
 private:
   std::string name_;
-  Attributes attributes_;
-  Content content_;
+  Parser parser_;
 };
 
-template <typename Attributes, typename Content>
-node_member_list(Attributes &&, Content &&) -> node_member_list<Attributes, Content>;
+template <typename Parser>
+node_member_list(Parser &&) -> node_member_list<Parser>;
 }
 
 #endif

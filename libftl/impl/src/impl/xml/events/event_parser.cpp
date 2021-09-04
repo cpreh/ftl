@@ -63,16 +63,17 @@ public:
   using arg_type = fcppt::optional::object<libftl::impl::xml::inner_node>;
 
   event_impl()
-      : event_{typed::make_derived(
-            typed::make_construct<fcppt::recursive<libftl::xml::events::event_members>>(
-                typed::make_construct<libftl::xml::events::event_members>(
-                    typed::inner_node{typed::node_set{fcppt::record::make(
-                        labels::text{} = typed::make_node_member<required::yes>(
-                            "text",
-                            typed::attribute_set{fcppt::record::make()},
-                            typed::content<std::string>{}),
-                        labels::choice_list{} = typed::node_member_list{
-                            "choice",
+      : event_{typed::make_derived(typed::make_construct<
+                                   fcppt::recursive<libftl::xml::events::event_members>>(
+            typed::make_construct<libftl::xml::events::event_members>(
+                typed::inner_node{typed::node_set{fcppt::record::make(
+                    labels::text{} = typed::make_node_member<required::yes>(
+                        "text",
+                        typed::attribute_set{fcppt::record::make()},
+                        typed::content<std::string>{}),
+                    labels::choice_list{} = typed::node_member_list{
+                        "choice",
+                        typed::node_content{
                             typed::attribute_set{fcppt::record::make(
                                 labels::hidden{} = typed::attribute<bool, required::no>{"hidden"},
                                 labels::req{} = typed::attribute<std::string, required::no>{"req"},
@@ -85,7 +86,7 @@ public:
                                 labels::event{} = typed::make_node_member<required::yes>(
                                     "event",
                                     event_attributes(),
-                                    fcppt::make_cref(this->event_)))}}})}})))}
+                                    fcppt::make_cref(this->event_)))}}}})}})))}
   {
   }
 

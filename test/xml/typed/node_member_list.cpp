@@ -3,6 +3,7 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
+#include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_member_list.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/node.hpp>
@@ -32,8 +33,9 @@ TEST_CASE("xml::typed::node_member", "[xml]")
 {
   auto const parser{libftl::impl::xml::typed::node_member_list{
       std::string{"test"},
-      libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
-      libftl::impl::xml::typed::empty{}}};
+      libftl::impl::xml::typed::node_content{
+          libftl::impl::xml::typed::attribute_set{fcppt::record::make()},
+          libftl::impl::xml::typed::empty{}}}};
 
   libftl::impl::xml::node const node{
       fcppt::optional::nothing{},

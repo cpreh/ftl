@@ -81,9 +81,10 @@ libftl::impl::xml::sectors::sector_description_parser()
                   typed::content<std::string>{}),
               labels::event_list{} = typed::node_member_list{
                   "event",
-                  typed::attribute_set{fcppt::record::make(
-                      labels::name{} = typed::attribute<std::string, required::yes>{"name"},
-                      labels::min{} = typed::attribute<unsigned, required::yes>{"min"},
-                      labels::max{} = typed::attribute<unsigned, required::yes>{"max"})},
-                  typed::empty{}})}}}});
+                  typed::node_content{
+                      typed::attribute_set{fcppt::record::make(
+                          labels::name{} = typed::attribute<std::string, required::yes>{"name"},
+                          labels::min{} = typed::attribute<unsigned, required::yes>{"min"},
+                          labels::max{} = typed::attribute<unsigned, required::yes>{"max"})},
+                      typed::empty{}}})}}}});
 }
