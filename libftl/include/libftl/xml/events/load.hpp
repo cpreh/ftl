@@ -1,5 +1,5 @@
-#ifndef LIBFTL_XML_EVENTS_HPP_INCLUDED
-#define LIBFTL_XML_EVENTS_HPP_INCLUDED
+#ifndef LIBFTL_XML_EVENTS_LOAD_HPP_INCLUDED
+#define LIBFTL_XML_EVENTS_LOAD_HPP_INCLUDED
 
 #include <libftl/error.hpp>
 #include <libftl/detail/symbol.hpp>
@@ -10,15 +10,11 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
+namespace libftl::xml::events
 {
-namespace xml
-{
-LIBFTL_DETAIL_SYMBOL
-fcppt::either::object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::events::events_root>>
-events(std::istream &);
-
-}
+[[nodiscard]] LIBFTL_DETAIL_SYMBOL fcppt::either::
+    object<libftl::error, fcppt::unique_ptr<libftl::xml::generated::events::events_root>>
+    load(std::istream &);
 }
 
 #endif

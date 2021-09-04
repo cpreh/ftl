@@ -5,7 +5,7 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
-#include <libftl/xml/events.hpp>
+#include <libftl/xml/events/load.hpp>
 #include <libftl/xml/node_output.hpp>
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
@@ -73,7 +73,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         case ftl::parse::xml::type::blueprints:
           return fcppt::either::map(libftl::xml::blueprints::load(*_stream), wrap_result);
         case ftl::parse::xml::type::events:
-          return fcppt::either::map(libftl::xml::events(*_stream), wrap_result);
+          return fcppt::either::map(libftl::xml::events::load(*_stream), wrap_result);
         case ftl::parse::xml::type::sectors:
           return fcppt::either::map(libftl::xml::sectors::load(*_stream), wrap_result);
         case ftl::parse::xml::type::ship:

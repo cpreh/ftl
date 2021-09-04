@@ -359,7 +359,7 @@ set(
 	libftl/include/libftl/xml/blueprints/system_element.hpp
 	libftl/include/libftl/xml/blueprints/weapon.hpp
 	libftl/include/libftl/xml/clean.hpp
-	libftl/include/libftl/xml/events.hpp
+	libftl/include/libftl/xml/events/load.hpp
 	libftl/include/libftl/xml/labels/a.hpp
 	libftl/include/libftl/xml/labels/amount.hpp
 	libftl/include/libftl/xml/labels/angular.hpp
@@ -534,7 +534,7 @@ set(
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
-	libftl/src/xml/events.cpp
+	libftl/src/xml/events/load.cpp
 	libftl/src/xml/sectors/load.cpp
 	libftl/src/xml/ship/load.cpp
 	libftl/src/xml/ship/slide_to_string.cpp
