@@ -1,7 +1,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
-#include <libftl/impl/xml/events/event_parser.hpp>
 #include <libftl/impl/xml/events/event_list_parser.hpp>
+#include <libftl/impl/xml/events/event_parser.hpp>
 #include <libftl/impl/xml/events/text_list_parser.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>

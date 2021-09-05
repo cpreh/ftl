@@ -1,6 +1,6 @@
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/events/text_parser.hpp>
 #include <libftl/impl/xml/events/text_list_parser.hpp>
+#include <libftl/impl/xml/events/text_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/base.hpp>

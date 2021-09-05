@@ -3,12 +3,12 @@
 
 #include <libftl/detail/symbol.hpp>
 #include <libftl/xml/node.hpp>
-#include <libftl/xml/events/event_fwd.hpp>
 #include <libftl/xml/events/choice.hpp>
+#include <libftl/xml/events/event_fwd.hpp>
 #include <libftl/xml/labels/choice_list.hpp>
+#include <libftl/xml/labels/name.hpp>
 #include <libftl/xml/labels/text.hpp>
 #include <libftl/xml/labels/unique.hpp>
-#include <libftl/xml/labels/name.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>
