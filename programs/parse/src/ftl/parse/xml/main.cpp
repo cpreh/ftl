@@ -13,8 +13,8 @@
 #include <libftl/xml/blueprints/direction_output.hpp>
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <libftl/xml/events/event_members.hpp>
-#include <libftl/xml/events/event_members_output.hpp>
+#include <libftl/xml/events/event.hpp>
+#include <libftl/xml/events/event_output.hpp>
 #include <libftl/xml/events/load.hpp>
 #include <libftl/xml/events/result.hpp>
 #include <libftl/xml/sectors/load.hpp>

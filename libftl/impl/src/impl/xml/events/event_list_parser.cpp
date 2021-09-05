@@ -10,8 +10,8 @@
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/events/event.hpp>
 #include <libftl/xml/events/event_list.hpp>
-#include <libftl/xml/events/event_members.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
 #include <fcppt/unique_ptr.hpp>

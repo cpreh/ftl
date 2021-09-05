@@ -8,6 +8,7 @@
 #include <libftl/xml/labels/lvl.hpp>
 #include <libftl/xml/labels/req.hpp>
 #include <libftl/xml/labels/text.hpp>
+#include <fcppt/recursive.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/record/element.hpp>
 #include <fcppt/record/object.hpp>
@@ -26,7 +27,8 @@ using choice = libftl::xml::node<
         fcppt::record::element<
             libftl::xml::labels::text,
             libftl::xml::node<fcppt::record::object<>, std::string>>,
-        fcppt::record::element<libftl::xml::labels::event, libftl::xml::events::event>>>;
+        fcppt::record::
+            element<libftl::xml::labels::event, fcppt::recursive<libftl::xml::events::event>>>>;
 }
 
 #endif

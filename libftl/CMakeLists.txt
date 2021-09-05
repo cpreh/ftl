@@ -263,10 +263,9 @@ set(
 	libftl/include/libftl/xml/events/boarders.hpp
 	libftl/include/libftl/xml/events/choice.hpp
 	libftl/include/libftl/xml/events/event.hpp
+	libftl/include/libftl/xml/events/event_fwd.hpp
 	libftl/include/libftl/xml/events/event_list.hpp
-	libftl/include/libftl/xml/events/event_members.hpp
-	libftl/include/libftl/xml/events/event_members_fwd.hpp
-	libftl/include/libftl/xml/events/event_members_output.hpp
+	libftl/include/libftl/xml/events/event_output.hpp
 	libftl/include/libftl/xml/events/load.hpp
 	libftl/include/libftl/xml/events/remove_crew.hpp
 	libftl/include/libftl/xml/events/result.hpp
@@ -456,7 +455,7 @@ set(
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
 	libftl/src/xml/clean.cpp
-	libftl/src/xml/events/event_members.cpp
+	libftl/src/xml/events/event.cpp
 	libftl/src/xml/events/load.cpp
 	libftl/src/xml/sectors/load.cpp
 	libftl/src/xml/ship/load.cpp
