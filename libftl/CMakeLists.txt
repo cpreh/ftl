@@ -55,6 +55,8 @@ set(
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
 	libftl/impl/include/libftl/impl/xml/events/event_parser.hpp
+	libftl/impl/include/libftl/impl/xml/events/text_list_parser.hpp
+	libftl/impl/include/libftl/impl/xml/events/text_parser.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
@@ -120,6 +122,8 @@ set(
 	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/events/event_parser.cpp
+	libftl/impl/src/impl/xml/events/text_list_parser.cpp
+	libftl/impl/src/impl/xml/events/text_parser.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
@@ -257,12 +261,15 @@ set(
 	libftl/include/libftl/xml/events/boarders.hpp
 	libftl/include/libftl/xml/events/choice.hpp
 	libftl/include/libftl/xml/events/event.hpp
+	libftl/include/libftl/xml/events/event_list.hpp
 	libftl/include/libftl/xml/events/event_members.hpp
 	libftl/include/libftl/xml/events/event_members_fwd.hpp
 	libftl/include/libftl/xml/events/event_members_output.hpp
 	libftl/include/libftl/xml/events/load.hpp
 	libftl/include/libftl/xml/events/remove_crew.hpp
 	libftl/include/libftl/xml/events/result.hpp
+	libftl/include/libftl/xml/events/text.hpp
+	libftl/include/libftl/xml/events/text_list.hpp
 	libftl/include/libftl/xml/labels/a.hpp
 	libftl/include/libftl/xml/labels/amount.hpp
 	libftl/include/libftl/xml/labels/angular.hpp
