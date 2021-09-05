@@ -2,7 +2,7 @@
 #define LIBFTL_XML_EVENTS_CHOICE_HPP_INCLUDED
 
 #include <libftl/xml/node.hpp>
-#include <libftl/xml/events/event.hpp>
+#include <libftl/xml/events/event_fwd.hpp>
 #include <libftl/xml/labels/event.hpp>
 #include <libftl/xml/labels/hidden.hpp>
 #include <libftl/xml/labels/lvl.hpp>
