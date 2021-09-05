@@ -42,6 +42,7 @@
 #include <fcppt/tuple/output.hpp>
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object.hpp>
+#include <fcppt/variant/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <istream>
 #include <utility>
