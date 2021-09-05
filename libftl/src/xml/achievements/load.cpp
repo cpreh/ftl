@@ -1,6 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/document.hpp>
-#include <libftl/impl/xml/parse.hpp>
+#include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
@@ -18,7 +17,6 @@
 #include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/multi_difficulty.hpp>
 #include <libftl/xml/labels/name.hpp>
-#include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -60,10 +58,5 @@ libftl::xml::achievements::load(std::istream &_input)
                   typed::attribute_set{fcppt::record::make()},
                   typed::content<unsigned>{}))}}}}};
 
-  return fcppt::either::bind(
-      libftl::impl::xml::parse(_input),
-      [&parser](libftl::impl::xml::document const &_doc)
-          -> fcppt::either::object<libftl::error, libftl::xml::achievements::result> {
-        return parser.parse(_doc.nodes_);
-      });
+  return libftl::impl::xml::load(_input, parser);
 }

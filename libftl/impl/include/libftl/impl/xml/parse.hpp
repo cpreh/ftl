@@ -10,6 +10,7 @@
 
 namespace libftl::impl::xml
 {
+[[nodiscard]]
 fcppt::either::object<libftl::error, libftl::impl::xml::document> parse(std::istream &);
 
 }

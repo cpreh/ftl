@@ -1,6 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/document.hpp>
-#include <libftl/impl/xml/parse.hpp>
+#include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/animations/anim_parser.hpp>
 #include <libftl/impl/xml/animations/anim_sheet_parser.hpp>
 #include <libftl/impl/xml/animations/weapon_anim_parser.hpp>
@@ -10,7 +9,6 @@
 #include <libftl/xml/animations/load.hpp>
 #include <libftl/xml/animations/result.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
-#include <fcppt/either/bind.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
@@ -27,10 +25,5 @@ libftl::xml::animations::load(std::istream &_input)
       animations::anim_sheet_parser(),
       animations::weapon_anim_parser()}}}};
 
-  return fcppt::either::bind(
-      libftl::impl::xml::parse(_input),
-      [&parser](libftl::impl::xml::document const &_doc)
-          -> fcppt::either::object<libftl::error, libftl::xml::animations::result> {
-        return parser.parse(_doc.nodes_);
-      });
+  return libftl::impl::xml::load(_input, parser);
 }

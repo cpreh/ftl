@@ -23,6 +23,7 @@ class partition
 public:
   using result_type =
       fcppt::variant::partition_result<libftl::impl::xml::typed::result_type<Parser>>;
+  using arg_type = libftl::impl::xml::node_vector;
 
   explicit partition(Parser &&_parser) : parser_{std::move(_parser)} {}
 

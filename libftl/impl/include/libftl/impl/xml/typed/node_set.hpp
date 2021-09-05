@@ -99,6 +99,7 @@ public:
       fcppt::mpl::bind<
           fcppt::mpl::lambda<make_result_type>,
           fcppt::mpl::lambda<fcppt::record::element_to_type>>>;
+  using arg_type = libftl::impl::xml::node_vector;
 
   using arg_vector = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
   using map = std::unordered_map<std::string, arg_vector>;

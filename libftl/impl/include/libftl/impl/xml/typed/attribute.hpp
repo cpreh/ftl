@@ -2,6 +2,7 @@
 #define LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
+#include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/typed/attribute_fwd.hpp>
 #include <libftl/impl/xml/typed/required.hpp>

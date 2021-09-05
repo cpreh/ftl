@@ -24,6 +24,7 @@ class node_list
 {
 public:
   using result_type = std::vector<libftl::impl::xml::typed::result_type<Parser>>;
+  using arg_type = libftl::impl::xml::node_vector;
 
   explicit node_list(Parser &&_parser) : parser_{std::move(_parser)} {}
 
