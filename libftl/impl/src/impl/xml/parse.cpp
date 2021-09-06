@@ -1,5 +1,6 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
+#include <libftl/impl/xml/bom.hpp>
 #include <libftl/impl/xml/document.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/inner_node_content.hpp>
@@ -21,6 +22,7 @@
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/literal.hpp>
 #include <fcppt/parse/make_convert.hpp>
+#include <fcppt/parse/make_ignore.hpp>
 #include <fcppt/parse/make_lexeme.hpp>
 #include <fcppt/parse/make_recursive.hpp>
 #include <fcppt/parse/make_with_location.hpp>
@@ -48,7 +50,7 @@
 namespace
 {
 
-auto make_skipper()
+[[nodiscard]] auto make_skipper()
 {
   return *(
       fcppt::parse::skipper::comment{
@@ -105,6 +107,7 @@ public:
             fcppt::make_cref(this->quoted_string_) >> fcppt::parse::string{"encoding="} >>
             fcppt::make_cref(this->quoted_string_) >> fcppt::parse::string{"?>"}))},
         document_{grammar::make_base(fcppt::parse::as_struct<libftl::impl::xml::document>(
+            fcppt::parse::make_ignore(-fcppt::parse::string{libftl::impl::xml::bom()}) >>
             -fcppt::make_cref(this->version_) >> fcppt::make_cref(this->node_vector_)))}
   {
   }

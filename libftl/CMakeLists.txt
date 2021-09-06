@@ -51,6 +51,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/blueprints/system_element_parser.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/system_parser.hpp
 	libftl/impl/include/libftl/impl/xml/blueprints/weapon_parser.hpp
+	libftl/impl/include/libftl/impl/xml/bom.hpp
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
@@ -122,6 +123,7 @@ set(
 	libftl/impl/src/impl/xml/blueprints/system_element_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/system_parser.cpp
 	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
+	libftl/impl/src/impl/xml/bom.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
 	libftl/impl/src/impl/xml/events/event_list_parser.cpp
 	libftl/impl/src/impl/xml/events/event_parser.cpp
