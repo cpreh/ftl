@@ -61,6 +61,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
+	libftl/impl/include/libftl/impl/xml/load.hpp
 	libftl/impl/include/libftl/impl/xml/location_to_string.hpp
 	libftl/impl/include/libftl/impl/xml/node.hpp
 	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
@@ -259,7 +260,6 @@ set(
 	libftl/include/libftl/xml/blueprints/system.hpp
 	libftl/include/libftl/xml/blueprints/system_element.hpp
 	libftl/include/libftl/xml/blueprints/weapon.hpp
-	libftl/include/libftl/xml/clean.hpp
 	libftl/include/libftl/xml/events/boarders.hpp
 	libftl/include/libftl/xml/events/choice.hpp
 	libftl/include/libftl/xml/events/event.hpp
@@ -454,7 +454,6 @@ set(
 	libftl/src/xml/animations/load.cpp
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
-	libftl/src/xml/clean.cpp
 	libftl/src/xml/events/event.cpp
 	libftl/src/xml/events/load.cpp
 	libftl/src/xml/sectors/load.cpp
