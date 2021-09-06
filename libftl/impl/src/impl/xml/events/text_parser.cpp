@@ -30,9 +30,9 @@ libftl::impl::xml::events::text_parser()
       "text",
       typed::alternative{
           typed::node_content{
+              typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}},
+          typed::node_content{
               typed::attribute_set{fcppt::record::make(
                   labels::load{} = typed::attribute<std::string, required::yes>{"load"})},
-              typed::empty{}},
-          typed::node_content{
-              typed::attribute_set{fcppt::record::make()}, typed::content<std::string>{}}}});
+              typed::empty{}}}});
 }

@@ -14,10 +14,10 @@
 namespace libftl::xml::events
 {
 using text = fcppt::variant::object<
+    libftl::xml::node<fcppt::record::object<>, std::string>,
     libftl::xml::node<
         fcppt::record::object<fcppt::record::element<libftl::xml::labels::load, std::string>>,
-        fcppt::unit>,
-    libftl::xml::node<fcppt::record::object<>, std::string>>;
+        fcppt::unit>>;
 }
 
 #endif
