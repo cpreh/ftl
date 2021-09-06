@@ -3,6 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
+#include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/parses.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
@@ -10,6 +11,7 @@
 #include <fcppt/deref.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/map.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -39,7 +41,14 @@ public:
   parse(libftl::impl::xml::node const &_node) const
   {
     return fcppt::either::bind(
-        fcppt::deref(this->attributes_).parse(_node.attributes_),
+        // TODO(philipp): Only apply this if no location is present.
+        fcppt::either::map_failure(
+            fcppt::deref(this->attributes_).parse(_node.attributes_),
+            [&_node](libftl::error &&_error)
+            {
+              return libftl::error{
+                  libftl::impl::xml::location_to_string(_node.location_) + std::move(_error.get())};
+            }),
         [this, &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
         {
           return fcppt::either::map(
@@ -50,6 +59,7 @@ public:
               });
         });
   }
+
 private:
   Attributes attributes_;
   Content content_;

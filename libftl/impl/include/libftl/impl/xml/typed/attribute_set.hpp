@@ -187,7 +187,7 @@ private:
           else
           {
             return fcppt::either::make_failure<parser_result>(libftl::error{
-                fcppt::string{FCPPT_TEXT("Missing ")} + fcppt::from_std_string(name) +
+                fcppt::string{FCPPT_TEXT("Missing attribute ")} + fcppt::from_std_string(name) +
                 FCPPT_TEXT(".")});
           }
         },

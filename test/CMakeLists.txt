@@ -10,7 +10,7 @@ endfunction()
 add_ftl_test(
 	xml/typed/alternative
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -19,7 +19,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/attribute
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -28,7 +28,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/attribute_set
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -53,7 +53,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/node
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -62,7 +62,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/node_list
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -71,6 +71,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/node_member
 	LINK_LIBS
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -79,6 +80,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/node_member_list
 	LINK_LIBS
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -87,6 +89,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/node_set
 	LINK_LIBS
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -95,7 +98,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/partition
 	LINK_LIBS
-        ${libftl_TARGET}
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
