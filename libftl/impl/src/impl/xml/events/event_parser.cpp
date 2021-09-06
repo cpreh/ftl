@@ -1,10 +1,12 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/events/event_parser.hpp>
+#include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
+#include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_construct.hpp>
 #include <libftl/impl/xml/typed/make_derived.hpp>
@@ -19,6 +21,7 @@
 #include <libftl/xml/labels/choice_list.hpp>
 #include <libftl/xml/labels/event.hpp>
 #include <libftl/xml/labels/hidden.hpp>
+#include <libftl/xml/labels/load.hpp>
 #include <libftl/xml/labels/lvl.hpp>
 #include <libftl/xml/labels/req.hpp>
 #include <libftl/xml/labels/text.hpp>
@@ -54,7 +57,9 @@ public:
 
   event_impl()
       : event_{typed::make_derived(typed::make_construct<
-                                   libftl::xml::events::event>(typed::node_content{
+                                   libftl::xml::events::event>(
+        typed::alternative{
+          typed::node_content{
             typed::attribute_set{fcppt::record::make(
                 labels::name{} = typed::attribute<std::string, required::yes>{"name"},
                 labels::unique{} = typed::attribute<bool, required::no>{"unique"})},
@@ -78,7 +83,12 @@ public:
                             labels::event{} = typed::make_node_member_impl<required::yes>(
                                 "event",
                                 typed::make_construct<fcppt::recursive<libftl::xml::events::event>>(
-                                    fcppt::make_cref(this->event_))))}}}})}}}))}
+                                    fcppt::make_cref(this->event_))))}}}})}}},
+          typed::node_content{
+              typed::attribute_set{fcppt::record::make(
+                labels::load{} = typed::attribute<std::string, required::yes>{"load"}
+              )},
+              typed::empty{}}}))}
   {
   }
 

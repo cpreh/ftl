@@ -35,6 +35,7 @@ class alternative
 {
 public:
   using result_type = fcppt::variant::object<libftl::impl::xml::typed::result_type<Parsers>...>;
+  using arg_type = libftl::impl::xml::node;
 
   explicit alternative(Parsers &&..._parsers) : parsers_{std::move(_parsers)...} {}
 

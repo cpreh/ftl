@@ -152,7 +152,7 @@ private:
               [&unused_keys]
               {
                 return libftl::error{
-                    fcppt::string{FCPPT_TEXT("Unparsed ")} +
+                    fcppt::string{FCPPT_TEXT("Unparsed attributes ")} +
                     fcppt::from_std_string(
                         fcppt::output_to_std_string(fcppt::container::output(unused_keys))) +
                     FCPPT_TEXT(".")};

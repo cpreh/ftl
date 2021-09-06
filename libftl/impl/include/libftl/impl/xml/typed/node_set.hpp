@@ -155,7 +155,7 @@ private:
               [&unused_keys]
               {
                 return libftl::error{
-                    fcppt::string{FCPPT_TEXT("Unparsed ")} +
+                    fcppt::string{FCPPT_TEXT("Unparsed nodes ")} +
                     fcppt::from_std_string(
                         fcppt::output_to_std_string(fcppt::container::output(unused_keys))) +
                     FCPPT_TEXT(".")};
@@ -190,7 +190,7 @@ private:
           else
           {
             return fcppt::either::make_failure<parser_result>(libftl::error{
-                fcppt::string{FCPPT_TEXT("Missing ")} + fcppt::from_std_string(name) +
+                fcppt::string{FCPPT_TEXT("Missing node ")} + fcppt::from_std_string(name) +
                 FCPPT_TEXT(".")});
           }
         },
