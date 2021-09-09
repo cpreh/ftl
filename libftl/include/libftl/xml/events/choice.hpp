@@ -3,6 +3,7 @@
 
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/events/event_fwd.hpp>
+#include <libftl/xml/events/text.hpp>
 #include <libftl/xml/labels/event.hpp>
 #include <libftl/xml/labels/hidden.hpp>
 #include <libftl/xml/labels/lvl.hpp>
@@ -24,9 +25,7 @@ using choice = libftl::xml::node<
         fcppt::record::element<libftl::xml::labels::req, fcppt::optional::object<std::string>>,
         fcppt::record::element<libftl::xml::labels::lvl, fcppt::optional::object<unsigned>>>,
     fcppt::record::object<
-        fcppt::record::element<
-            libftl::xml::labels::text,
-            libftl::xml::node<fcppt::record::object<>, std::string>>,
+        fcppt::record::element<libftl::xml::labels::text, libftl::xml::events::text>,
         fcppt::record::
             element<libftl::xml::labels::event, fcppt::recursive<libftl::xml::events::event>>>>;
 }
