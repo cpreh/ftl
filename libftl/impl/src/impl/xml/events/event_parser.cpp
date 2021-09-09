@@ -24,6 +24,7 @@
 #include <libftl/xml/labels/load.hpp>
 #include <libftl/xml/labels/lvl.hpp>
 #include <libftl/xml/labels/req.hpp>
+#include <libftl/xml/labels/store.hpp>
 #include <libftl/xml/labels/text.hpp>
 #include <fcppt/deref_reference.hpp>
 #include <fcppt/deref_unique_ptr.hpp>
@@ -51,46 +52,50 @@ class event_impl
 {
   FCPPT_NONMOVABLE(event_impl);
 
+  auto choice_list() const
+  {
+    return typed::node_member_list{
+        "choice",
+        typed::node_content{
+            typed::attribute_set{fcppt::record::make(
+                labels::hidden{} = typed::attribute<bool, required::no>{"hidden"},
+                labels::req{} = typed::attribute<std::string, required::no>{"req"},
+                labels::lvl{} = typed::attribute<unsigned, required::no>{"lvl"})},
+            typed::inner_node{typed::node_set{fcppt::record::make(
+                labels::text{} = typed::make_node_member<required::yes>(
+                    "text",
+                    typed::attribute_set{fcppt::record::make()},
+                    typed::content<std::string>{}),
+                labels::event{} = typed::make_node_member_impl<required::yes>(
+                    "event",
+                    typed::make_construct<fcppt::recursive<libftl::xml::events::event>>(
+                        fcppt::make_cref(this->event_))))}}}};
+  }
 public:
   using result_type = libftl::xml::events::event;
   using arg_type = libftl::impl::xml::node;
 
   event_impl()
       : event_{typed::make_derived(typed::make_construct<
-                                   libftl::xml::events::event>(
-        typed::alternative{
-          typed::node_content{
-            typed::attribute_set{fcppt::record::make(
-                labels::name{} = typed::attribute<std::string, required::yes>{"name"},
-                labels::unique{} = typed::attribute<bool, required::no>{"unique"})},
-            typed::inner_node{typed::node_set{fcppt::record::make(
-                labels::text{} = typed::make_node_member<required::yes>(
-                    "text",
-                    typed::attribute_set{fcppt::record::make()},
-                    typed::content<std::string>{}),
-                labels::choice_list{} = typed::node_member_list{
-                    "choice",
-                    typed::node_content{
-                        typed::attribute_set{fcppt::record::make(
-                            labels::hidden{} = typed::attribute<bool, required::no>{"hidden"},
-                            labels::req{} = typed::attribute<std::string, required::no>{"req"},
-                            labels::lvl{} = typed::attribute<unsigned, required::no>{"lvl"})},
-                        typed::inner_node{typed::node_set{fcppt::record::make(
-                            labels::text{} = typed::make_node_member<required::yes>(
-                                "text",
-                                typed::attribute_set{fcppt::record::make()},
-                                typed::content<std::string>{}),
-                            labels::event{} = typed::make_node_member_impl<required::yes>(
-                                "event",
-                                typed::make_construct<fcppt::recursive<libftl::xml::events::event>>(
-                                    fcppt::make_cref(this->event_))))}}}})}}},
-          typed::node_content{
-              typed::attribute_set{fcppt::record::make(
-                labels::load{} = typed::attribute<std::string, required::yes>{"load"}
-              )},
-              typed::empty{}}}))}
+                                   libftl::xml::events::event>(typed::alternative{
+            typed::node_content{
+                typed::attribute_set{fcppt::record::make(
+                    labels::name{} = typed::attribute<std::string, required::yes>{"name"},
+                    labels::unique{} = typed::attribute<bool, required::no>{"unique"})},
+                typed::inner_node{typed::node_set{fcppt::record::make(
+                    labels::text{} = typed::make_node_member<required::yes>(
+                        "text",
+                        typed::attribute_set{fcppt::record::make()},
+                        typed::content<std::string>{}),
+                    labels::choice_list{} = this->choice_list(),
+                    labels::store{} = typed::make_node_member<required::no>(
+                        "store", typed::attribute_set{fcppt::record::make()}, typed::empty{}))}}},
+            typed::node_content{
+                typed::attribute_set{fcppt::record::make(
+                    labels::load{} = typed::attribute<std::string, required::yes>{"load"})},
+                typed::empty{}}}))}
   {
-  }
+}
 
   ~event_impl() override = default;
 
@@ -99,7 +104,6 @@ public:
   {
     return this->event_->parse(_node);
   }
-
 private:
   fcppt::unique_ptr<libftl::impl::xml::typed::base<result_type, arg_type>> const event_;
 };

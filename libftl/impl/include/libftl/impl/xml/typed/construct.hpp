@@ -16,7 +16,8 @@
 namespace libftl::impl::xml::typed
 {
 template<typename Result, typename Parser>
-requires (std::is_constructible_v<Result,libftl::impl::xml::typed::result_type<Parser>>)
+// TODO(philipp): This leads to a terrible error message.
+//requires (std::is_constructible_v<Result,libftl::impl::xml::typed::result_type<Parser>>)
 class construct
 {
 public:

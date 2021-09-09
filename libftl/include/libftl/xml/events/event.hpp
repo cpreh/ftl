@@ -8,6 +8,7 @@
 #include <libftl/xml/labels/choice_list.hpp>
 #include <libftl/xml/labels/load.hpp>
 #include <libftl/xml/labels/name.hpp>
+#include <libftl/xml/labels/store.hpp>
 #include <libftl/xml/labels/text.hpp>
 #include <libftl/xml/labels/unique.hpp>
 #include <fcppt/unit.hpp>
@@ -35,7 +36,11 @@ struct event
                   libftl::xml::node<fcppt::record::object<>, std::string>>,
               fcppt::record::element<
                   libftl::xml::labels::choice_list,
-                  fcppt::optional::object<std::vector<libftl::xml::events::choice>>>>>,
+                  fcppt::optional::object<std::vector<libftl::xml::events::choice>>>,
+              fcppt::record::element<
+                  libftl::xml::labels::store,
+                  fcppt::optional::object<
+                      libftl::xml::node<fcppt::record::object<>, fcppt::unit>>>>>,
       libftl::xml::node<
           fcppt::record::object<fcppt::record::element<libftl::xml::labels::load, std::string>>,
           fcppt::unit>>;

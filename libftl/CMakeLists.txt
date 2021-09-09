@@ -381,6 +381,7 @@ set(
 	libftl/include/libftl/xml/labels/start.hpp
 	libftl/include/libftl/xml/labels/start_event.hpp
 	libftl/include/libftl/xml/labels/start_power.hpp
+	libftl/include/libftl/xml/labels/store.hpp
 	libftl/include/libftl/xml/labels/stun_chance.hpp
 	libftl/include/libftl/xml/labels/system_list.hpp
 	libftl/include/libftl/xml/labels/teleporter.hpp
