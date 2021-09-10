@@ -20,9 +20,11 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/events/event.hpp>
 #include <libftl/xml/events/event_content.hpp>
+#include <libftl/xml/labels/auto_reward.hpp>
 #include <libftl/xml/labels/choice_list.hpp>
 #include <libftl/xml/labels/event.hpp>
 #include <libftl/xml/labels/hidden.hpp>
+#include <libftl/xml/labels/level.hpp>
 #include <libftl/xml/labels/load.hpp>
 #include <libftl/xml/labels/lvl.hpp>
 #include <libftl/xml/labels/req.hpp>
@@ -83,6 +85,11 @@ public:
             labels::text{} = typed::make_node_member_impl<required::yes>(
                 "text", libftl::impl::xml::events::text_parser_impl()),
             labels::choice_list{} = this->choice_list(),
+            labels::auto_reward{} = typed::make_node_member<required::no>(
+                "autoReward",
+                typed::attribute_set{fcppt::record::make(
+                    labels::level{} = typed::attribute<std::string, required::yes>{"level"})},
+                typed::content<std::string>{}),
             labels::store{} = typed::make_node_member<required::no>(
                 "store", typed::attribute_set{fcppt::record::make()}, typed::empty{}))}})}
   {

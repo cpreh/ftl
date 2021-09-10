@@ -278,6 +278,7 @@ set(
 	libftl/include/libftl/xml/blueprints/system.hpp
 	libftl/include/libftl/xml/blueprints/system_element.hpp
 	libftl/include/libftl/xml/blueprints/weapon.hpp
+	libftl/include/libftl/xml/events/auto_reward.hpp
 	libftl/include/libftl/xml/events/boarders.hpp
 	libftl/include/libftl/xml/events/choice.hpp
 	libftl/include/libftl/xml/events/event.hpp
@@ -294,6 +295,7 @@ set(
 	libftl/include/libftl/xml/labels/a.hpp
 	libftl/include/libftl/xml/labels/amount.hpp
 	libftl/include/libftl/xml/labels/angular.hpp
+	libftl/include/libftl/xml/labels/auto_reward.hpp
 	libftl/include/libftl/xml/labels/b.hpp
 	libftl/include/libftl/xml/labels/battery.hpp
 	libftl/include/libftl/xml/labels/boarders.hpp
@@ -355,6 +357,7 @@ set(
 	libftl/include/libftl/xml/labels/launch_sounds.hpp
 	libftl/include/libftl/xml/labels/layout.hpp
 	libftl/include/libftl/xml/labels/length.hpp
+	libftl/include/libftl/xml/labels/level.hpp
 	libftl/include/libftl/xml/labels/load.hpp
 	libftl/include/libftl/xml/labels/locked.hpp
 	libftl/include/libftl/xml/labels/lvl.hpp
