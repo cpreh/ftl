@@ -55,11 +55,14 @@ set(
 	libftl/impl/include/libftl/impl/xml/document.hpp
 	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/document_output.hpp
+	libftl/impl/include/libftl/impl/xml/events/event_content_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/event_list_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/event_parser.hpp
+	libftl/impl/include/libftl/impl/xml/events/event_parser_impl.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_list_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_parser_impl.hpp
+	libftl/impl/include/libftl/impl/xml/events/top_event_parser.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
 	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
@@ -126,11 +129,13 @@ set(
 	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
 	libftl/impl/src/impl/xml/bom.cpp
 	libftl/impl/src/impl/xml/document_output.cpp
+	libftl/impl/src/impl/xml/events/event_content_parser.cpp
 	libftl/impl/src/impl/xml/events/event_list_parser.cpp
 	libftl/impl/src/impl/xml/events/event_parser.cpp
 	libftl/impl/src/impl/xml/events/text_list_parser.cpp
 	libftl/impl/src/impl/xml/events/text_parser.cpp
 	libftl/impl/src/impl/xml/events/text_parser_impl.cpp
+	libftl/impl/src/impl/xml/events/top_event_parser.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp
