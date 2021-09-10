@@ -40,24 +40,27 @@ public:
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
   parse(libftl::impl::xml::node const &_node) const
   {
-    return fcppt::either::bind(
+    return
         // TODO(philipp): Only apply this if no location is present.
         fcppt::either::map_failure(
-            fcppt::deref(this->attributes_).parse(_node.attributes_),
+            fcppt::either::bind(
+                fcppt::deref(this->attributes_).parse(_node.attributes_),
+                [this,
+                 &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
+                {
+                  return fcppt::either::map(
+                      fcppt::deref(this->content_).parse(_node.content_),
+                      [&_attributes_result](
+                          libftl::impl::xml::typed::result_type<Content> &&_content_result) {
+                        return result_type{
+                            std::move(_attributes_result), std::move(_content_result)};
+                      });
+                }),
             [&_node](libftl::error &&_error)
             {
               return libftl::error{
                   libftl::impl::xml::location_to_string(_node.location_) + std::move(_error.get())};
-            }),
-        [this, &_node](libftl::impl::xml::typed::result_type<Attributes> &&_attributes_result)
-        {
-          return fcppt::either::map(
-              fcppt::deref(this->content_).parse(_node.content_),
-              [&_attributes_result](
-                  libftl::impl::xml::typed::result_type<Content> &&_content_result) {
-                return result_type{std::move(_attributes_result), std::move(_content_result)};
-              });
-        });
+            });
   }
 
 private:
