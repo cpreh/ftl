@@ -1,13 +1,13 @@
-#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/sectors/sector_description_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
-#include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
 #include <libftl/impl/xml/typed/empty.hpp>
 #include <libftl/impl/xml/typed/inner_node.hpp>
-#include <libftl/impl/xml/typed/make_derived.hpp>
+#include <libftl/impl/xml/typed/make_named_node_derived.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
+#include <libftl/impl/xml/typed/named_node.hpp>
+#include <libftl/impl/xml/typed/named_node_base.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
@@ -32,15 +32,15 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::unique_ptr<libftl::impl::xml::typed::
-                      base<libftl::xml::sectors::sector_description, libftl::impl::xml::node>>
+fcppt::unique_ptr<
+    libftl::impl::xml::typed::named_node_base<libftl::xml::sectors::sector_description>>
 libftl::impl::xml::sectors::sector_description_parser()
 {
   namespace typed = libftl::impl::xml::typed;
   namespace labels = libftl::xml::labels;
   using typed::required;
 
-  return typed::make_derived(typed::node{
+  return typed::make_named_node_derived(typed::named_node{
       "sectorDescription",
       typed::node_content{
           typed::attribute_set{fcppt::record::make(

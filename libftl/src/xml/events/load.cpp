@@ -3,7 +3,7 @@
 #include <libftl/impl/xml/events/event_list_parser.hpp>
 #include <libftl/impl/xml/events/top_event_parser.hpp>
 #include <libftl/impl/xml/events/text_list_parser.hpp>
-#include <libftl/impl/xml/typed/alternative.hpp>
+#include <libftl/impl/xml/typed/named_alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
 #include <libftl/xml/events/event.hpp>
@@ -21,10 +21,8 @@ libftl::xml::events::load(std::istream &_input)
   namespace events = libftl::impl::xml::events;
   namespace typed = libftl::impl::xml::typed;
 
-  auto const parser{typed::partition{typed::node_list{typed::alternative{
-      events::top_event_parser(),
-      events::event_list_parser(),
-      events::text_list_parser()}}}};
+  auto const parser{typed::partition{typed::node_list{typed::named_alternative{
+      events::top_event_parser(), events::event_list_parser(), events::text_list_parser()}}}};
 
   return libftl::impl::xml::load(_input, parser);
 }

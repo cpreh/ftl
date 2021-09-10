@@ -2,7 +2,7 @@
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/sectors/sector_description_parser.hpp>
 #include <libftl/impl/xml/sectors/sector_type_parser.hpp>
-#include <libftl/impl/xml/typed/alternative.hpp>
+#include <libftl/impl/xml/typed/named_alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
 #include <libftl/xml/sectors/load.hpp>
@@ -19,7 +19,7 @@ libftl::xml::sectors::load(std::istream &_input)
   namespace sectors = libftl::impl::xml::sectors;
   namespace typed = libftl::impl::xml::typed;
 
-  auto const parser{typed::partition{typed::node_list{typed::alternative{
+  auto const parser{typed::partition{typed::node_list{typed::named_alternative{
       sectors::sector_description_parser(),
       sectors::sector_type_parser()}}}};
 
