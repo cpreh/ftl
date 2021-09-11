@@ -2,8 +2,8 @@
 #define LIBFTL_IMPL_XML_TYPED_NAMED_ALTERNATIVE_HPP_INCLUDED
 
 #include <libftl/error.hpp>
-#include <libftl/impl/xml/node_fwd.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
+#include <libftl/impl/xml/node_fwd.hpp>
 #include <libftl/impl/xml/typed/is_named_node.hpp>
 #include <libftl/impl/xml/typed/is_named_node_base.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>

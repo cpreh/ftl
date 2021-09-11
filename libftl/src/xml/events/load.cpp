@@ -1,8 +1,8 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/events/event_list_parser.hpp>
-#include <libftl/impl/xml/events/top_event_parser.hpp>
 #include <libftl/impl/xml/events/text_list_parser.hpp>
+#include <libftl/impl/xml/events/top_event_parser.hpp>
 #include <libftl/impl/xml/typed/named_alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
