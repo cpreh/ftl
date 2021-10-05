@@ -6,7 +6,7 @@
 #include <libftl/room/type.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
-#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
@@ -14,11 +14,11 @@ namespace libftl::room
 {
 struct system
 {
-  FCPPT_MAKE_STRONG_TYPEDEF(unsigned, power);
+  FCPPT_DECLARE_STRONG_TYPEDEF(unsigned, power);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(unsigned, max_power);
+  FCPPT_DECLARE_STRONG_TYPEDEF(unsigned, max_power);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(bool, available);
+  FCPPT_DECLARE_STRONG_TYPEDEF(bool, available);
 
   LIBFTL_DETAIL_SYMBOL
   system(

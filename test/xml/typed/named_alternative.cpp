@@ -34,8 +34,8 @@
 TEST_CASE("xml::typed::named_alternative", "[xml]")
 {
   using inner_result = libftl::xml::node<fcppt::record::object<>,fcppt::unit>;
-  FCPPT_MAKE_STRONG_TYPEDEF(inner_result, left);
-  FCPPT_MAKE_STRONG_TYPEDEF(inner_result, right);
+  FCPPT_DECLARE_STRONG_TYPEDEF(inner_result, left);
+  FCPPT_DECLARE_STRONG_TYPEDEF(inner_result, right);
   using result_type = fcppt::variant::object<left, right>;
 
   auto const parser{libftl::impl::xml::typed::named_alternative{

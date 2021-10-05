@@ -4,7 +4,7 @@
 #include <libftl/ship/layout/door_fwd.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_pos.hpp>
-#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
@@ -14,11 +14,11 @@ struct door
 {
   using optional_room_id = fcppt::optional::object<room_id>;
 
-  FCPPT_MAKE_STRONG_TYPEDEF(bool, vertical);
+  FCPPT_DECLARE_STRONG_TYPEDEF(bool, vertical);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(optional_room_id, left_top_room);
+  FCPPT_DECLARE_STRONG_TYPEDEF(optional_room_id, left_top_room);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(optional_room_id, bottom_right_room);
+  FCPPT_DECLARE_STRONG_TYPEDEF(optional_room_id, bottom_right_room);
 
   door(
       libftl::ship::layout::tile_pos const _pos,

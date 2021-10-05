@@ -6,7 +6,7 @@
 #include <libftl/ship/layout/ellipse.hpp>
 #include <libftl/ship/layout/object_fwd.hpp>
 #include <libftl/ship/layout/room.hpp>
-#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/math/vector/static.hpp>
 #include <fcppt/optional/object.hpp>
@@ -26,9 +26,9 @@ struct object
 {
   using offset_vector = fcppt::math::vector::static_<fcppt::optional::object<unsigned>, 2>;
 
-  FCPPT_MAKE_STRONG_TYPEDEF(int, vertical);
+  FCPPT_DECLARE_STRONG_TYPEDEF(int, vertical);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(fcppt::optional::object<int>, horizontal);
+  FCPPT_DECLARE_STRONG_TYPEDEF(fcppt::optional::object<int>, horizontal);
 
   using room_list = std::vector<libftl::ship::layout::room>;
 

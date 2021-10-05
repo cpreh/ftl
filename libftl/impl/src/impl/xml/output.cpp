@@ -4,7 +4,7 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/output.hpp>
-#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/recursive.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/algorithm/loop.hpp>
@@ -17,7 +17,7 @@
 
 namespace
 {
-FCPPT_MAKE_STRONG_TYPEDEF(std::string, opening_tag);
+FCPPT_DECLARE_STRONG_TYPEDEF(std::string, opening_tag);
 
 void node_output(std::ostream &, libftl::impl::xml::node const &);
 

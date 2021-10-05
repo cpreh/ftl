@@ -4,7 +4,7 @@
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <fcppt/make_strong_typedef.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -20,11 +20,11 @@ class data
 public:
   using blueprint_vector = std::vector<libftl::xml::blueprints::result>;
 
-  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, normal_blueprints);
+  FCPPT_DECLARE_STRONG_TYPEDEF(blueprint_vector, normal_blueprints);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints);
+  FCPPT_DECLARE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints);
 
-  FCPPT_MAKE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints_overwrites);
+  FCPPT_DECLARE_STRONG_TYPEDEF(blueprint_vector, dlc_blueprints_overwrites);
 
   LIBFTL_DETAIL_SYMBOL
   data(normal_blueprints &&, dlc_blueprints &&, dlc_blueprints_overwrites &&);

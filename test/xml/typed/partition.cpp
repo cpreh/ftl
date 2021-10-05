@@ -40,8 +40,8 @@
 TEST_CASE("xml::typed::partition", "[xml]")
 {
   using inner_result = libftl::xml::node<fcppt::record::object<>,fcppt::unit>;
-  FCPPT_MAKE_STRONG_TYPEDEF(inner_result, left);
-  FCPPT_MAKE_STRONG_TYPEDEF(inner_result, right);
+  FCPPT_DECLARE_STRONG_TYPEDEF(inner_result, left);
+  FCPPT_DECLARE_STRONG_TYPEDEF(inner_result, right);
 
   auto const parser{libftl::impl::xml::typed::partition{
       libftl::impl::xml::typed::node_list{libftl::impl::xml::typed::alternative{
