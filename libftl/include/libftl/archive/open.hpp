@@ -9,15 +9,12 @@
 #include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 LIBFTL_DETAIL_SYMBOL
 fcppt::either::object<libftl::error, libftl::archive::base_unique_ptr>
 open(std::filesystem::path &&);
 
-}
 }
 
 #endif

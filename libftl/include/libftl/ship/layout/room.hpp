@@ -5,11 +5,7 @@
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 struct room
 {
@@ -23,8 +19,6 @@ struct room
   libftl::ship::layout::tile_rect rect_;
 };
 
-}
-}
 }
 
 #endif

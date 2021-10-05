@@ -3,9 +3,7 @@
 
 #include <libftl/sprite/depth_fwd.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 enum class depth
 {
@@ -19,7 +17,6 @@ enum class depth
   fcppt_maximum = something
 };
 
-}
 }
 
 #endif

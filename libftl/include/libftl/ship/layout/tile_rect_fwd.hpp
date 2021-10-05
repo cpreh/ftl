@@ -4,16 +4,10 @@
 #include <libftl/ship/layout/tile_coordinate.hpp>
 #include <fcppt/math/box/rect_fwd.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 using tile_rect = fcppt::math::box::rect<libftl::ship::layout::tile_coordinate>;
 
-}
-}
 }
 
 #endif

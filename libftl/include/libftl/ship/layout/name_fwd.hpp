@@ -6,16 +6,10 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 FCPPT_MAKE_STRONG_TYPEDEF(std::string, name);
 
-}
-}
 }
 
 #endif

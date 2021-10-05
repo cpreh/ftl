@@ -16,9 +16,7 @@
 #include <unordered_map>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 class images
 {
@@ -56,7 +54,6 @@ private:
   mutable std::unordered_map<std::string, sge::texture::const_part_shared_ptr> impl_;
 };
 
-}
 }
 
 #endif

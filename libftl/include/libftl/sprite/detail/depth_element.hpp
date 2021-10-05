@@ -7,11 +7,7 @@
 #include <fcppt/mpl/list/object.hpp>
 #include <fcppt/record/element.hpp>
 
-namespace libftl
-{
-namespace sprite
-{
-namespace detail
+namespace libftl::sprite::detail
 {
 struct depth_element
 {
@@ -23,8 +19,6 @@ struct depth_element
   };
 };
 
-}
-}
 }
 
 #endif

@@ -17,11 +17,7 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_GCC_WARNING(-Wnull-dereference)
@@ -62,8 +58,6 @@ struct object
 
 FCPPT_PP_POP_WARNING
 
-}
-}
 }
 
 #endif

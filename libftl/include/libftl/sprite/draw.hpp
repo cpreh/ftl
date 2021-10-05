@@ -9,9 +9,7 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 LIBFTL_DETAIL_SYMBOL
 void draw(
@@ -19,7 +17,6 @@ void draw(
     sge::renderer::context::ffp &, // NOLINT(google-runtime-references)
     std::vector<libftl::sprite::object> const &);
 
-}
 }
 
 #endif

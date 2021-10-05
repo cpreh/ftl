@@ -5,14 +5,11 @@
 #include <sge/sprite/config/type_choices_fwd.hpp>
 #include <sge/sprite/config/unit_type_fwd.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 using type_choices = sge::sprite::config::
     type_choices<sge::sprite::config::unit_type<int>, sge::sprite::config::float_type<float>>;
 
-}
 }
 
 #endif

@@ -13,11 +13,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace impl
-{
-namespace archive
+namespace libftl::impl::archive
 {
 class native : public libftl::archive::base
 {
@@ -37,8 +33,6 @@ private:
   libftl::archive::index const index_;
 };
 
-}
-}
 }
 
 #endif

@@ -9,9 +9,7 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 class path
 {
@@ -43,7 +41,6 @@ libftl::archive::path operator/(libftl::archive::path &&, std::string &&);
 LIBFTL_DETAIL_SYMBOL
 fcppt::io::istream &operator>>(fcppt::io::istream &, libftl::archive::path &);
 
-}
 }
 
 #endif

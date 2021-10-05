@@ -7,14 +7,11 @@
 #include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 LIBFTL_DETAIL_SYMBOL
 libftl::archive::base_unique_ptr filesystem(std::filesystem::path &&);
 
-}
 }
 
 #endif

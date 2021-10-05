@@ -7,9 +7,7 @@
 #include <libftl/ship/layout/room.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
-namespace libftl
-{
-namespace room
+namespace libftl::room
 {
 struct state
 {
@@ -21,7 +19,6 @@ struct state
   libftl::ship::layout::room layout_;
 };
 
-}
 }
 
 #endif

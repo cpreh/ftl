@@ -4,13 +4,10 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <fcppt/reference_impl.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 using base_ref = fcppt::reference<libftl::archive::base>;
 
-}
 }
 
 #endif

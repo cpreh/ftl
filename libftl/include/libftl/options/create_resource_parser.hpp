@@ -5,14 +5,11 @@
 #include <libftl/options/resource_parser.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 
-namespace libftl
-{
-namespace options
+namespace libftl::options
 {
 LIBFTL_DETAIL_SYMBOL
 fcppt::unique_ptr<libftl::options::resource_parser> create_resource_parser();
 
-}
 }
 
 #endif

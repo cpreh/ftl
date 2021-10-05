@@ -16,9 +16,7 @@
 #include <sge/sprite/config/with_texture_fwd.hpp>
 #include <fcppt/mpl/list/object.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 using choices = sge::sprite::config::choices<
     libftl::sprite::type_choices,
@@ -32,7 +30,6 @@ using choices = sge::sprite::config::choices<
             sge::sprite::config::texture_ownership::shared>,
         libftl::sprite::detail::depth_element>>;
 
-}
 }
 
 #endif

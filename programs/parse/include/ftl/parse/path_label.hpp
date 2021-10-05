@@ -3,13 +3,10 @@
 
 #include <fcppt/record/make_label.hpp>
 
-namespace ftl
-{
-namespace parse
+namespace ftl::parse
 {
 FCPPT_RECORD_MAKE_LABEL(path_label);
 
-}
 }
 
 #endif

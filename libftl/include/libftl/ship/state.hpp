@@ -8,9 +8,7 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace ship
+namespace libftl::ship
 {
 struct state
 {
@@ -20,7 +18,6 @@ struct state
   std::vector<libftl::room::state> rooms_;
 };
 
-}
 }
 
 #endif

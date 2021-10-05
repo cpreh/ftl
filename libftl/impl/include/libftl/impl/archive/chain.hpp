@@ -12,11 +12,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace impl
-{
-namespace archive
+namespace libftl::impl::archive
 {
 class chain : public libftl::archive::base
 {
@@ -36,8 +32,6 @@ private:
   libftl::archive::base_unique_ptr const archive2_;
 };
 
-}
-}
 }
 
 #endif

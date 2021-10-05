@@ -8,18 +8,12 @@
 #include <fcppt/record/element_fwd.hpp>
 #include <fcppt/record/object_fwd.hpp>
 
-namespace ftl
-{
-namespace parse
-{
-namespace xml
+namespace ftl::parse::xml
 {
 using arguments = fcppt::record::object<
     fcppt::record::element<ftl::parse::xml::type_label, ftl::parse::xml::type>,
     fcppt::record::element<ftl::parse::path_label, libftl::archive::path>>;
 
-}
-}
 }
 
 #endif

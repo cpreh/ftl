@@ -12,9 +12,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 class base
 {
@@ -31,7 +29,6 @@ public:
   open(libftl::archive::path const &) const = 0;
 };
 
-}
 }
 
 #endif

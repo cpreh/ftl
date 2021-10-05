@@ -3,13 +3,10 @@
 
 #include <fcppt/record/make_label.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 FCPPT_RECORD_MAKE_LABEL(depth_role);
 
-}
 }
 
 #endif

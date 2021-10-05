@@ -3,11 +3,7 @@
 
 #include <ftl/parse/xml/type_fwd.hpp>
 
-namespace ftl
-{
-namespace parse
-{
-namespace xml
+namespace ftl::parse::xml
 {
 enum class type
 {
@@ -20,8 +16,6 @@ enum class type
   fcppt_maximum = ship
 };
 
-}
-}
 }
 
 #endif

@@ -10,9 +10,7 @@
 #include <fcppt/strong_typedef_impl.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
-namespace libftl
-{
-namespace room
+namespace libftl::room
 {
 struct system
 {
@@ -44,7 +42,6 @@ struct system
   fcppt::optional::object<available> available_;
 };
 
-}
 }
 
 #endif

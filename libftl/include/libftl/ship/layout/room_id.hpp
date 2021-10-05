@@ -4,16 +4,10 @@
 #include <fcppt/make_strong_typedef.hpp>
 #include <fcppt/strong_typedef.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 FCPPT_MAKE_STRONG_TYPEDEF(unsigned, room_id);
 
-}
-}
 }
 
 #endif

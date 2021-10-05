@@ -3,9 +3,7 @@
 
 #include <libftl/room/type_fwd.hpp>
 
-namespace libftl
-{
-namespace room
+namespace libftl::room
 {
 enum class type
 {
@@ -27,7 +25,6 @@ enum class type
   artillery
 };
 
-}
 }
 
 #endif

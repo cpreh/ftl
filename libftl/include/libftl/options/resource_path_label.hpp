@@ -3,13 +3,10 @@
 
 #include <fcppt/record/make_label.hpp>
 
-namespace libftl
-{
-namespace options
+namespace libftl::options
 {
 FCPPT_RECORD_MAKE_LABEL(resource_path_label);
 
-}
 }
 
 #endif

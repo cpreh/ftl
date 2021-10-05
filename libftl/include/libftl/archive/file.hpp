@@ -8,9 +8,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 struct file
 {
@@ -26,7 +24,6 @@ struct file
   libftl::archive::entry entry_;
 };
 
-}
 }
 
 #endif

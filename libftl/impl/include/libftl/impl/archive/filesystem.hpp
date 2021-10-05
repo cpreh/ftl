@@ -12,11 +12,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace impl
-{
-namespace archive
+namespace libftl::impl::archive
 {
 class filesystem : public libftl::archive::base
 {
@@ -34,8 +30,6 @@ private:
   std::filesystem::path const directory_;
 };
 
-}
-}
 }
 
 #endif

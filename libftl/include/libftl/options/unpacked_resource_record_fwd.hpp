@@ -8,14 +8,11 @@
 #include <filesystem>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace options
+namespace libftl::options
 {
 using unpacked_resource_record = fcppt::record::object<
     fcppt::record::element<libftl::options::resource_path_label, std::filesystem::path>>;
 
-}
 }
 
 #endif

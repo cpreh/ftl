@@ -8,11 +8,7 @@
 #include <fcppt/strong_typedef.hpp>
 #include <fcppt/optional/object_impl.hpp>
 
-namespace libftl
-{
-namespace ship
-{
-namespace layout
+namespace libftl::ship::layout
 {
 struct door
 {
@@ -45,8 +41,6 @@ struct door
   vertical vertical_;
 };
 
-}
-}
 }
 
 #endif

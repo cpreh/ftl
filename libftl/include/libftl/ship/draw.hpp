@@ -9,15 +9,12 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-namespace libftl
-{
-namespace ship
+namespace libftl::ship
 {
 LIBFTL_DETAIL_SYMBOL
 std::vector<libftl::sprite::object>
 draw(libftl::sprite::images const &, libftl::ship::resources const &);
 
-}
 }
 
 #endif

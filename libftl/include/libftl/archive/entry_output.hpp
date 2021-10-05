@@ -5,14 +5,11 @@
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/io/ostream_fwd.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 LIBFTL_DETAIL_SYMBOL
 fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::archive::entry const &);
 
-}
 }
 
 #endif

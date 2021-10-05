@@ -8,9 +8,7 @@
 #include <libftl/xml/ship/result.hpp>
 #include <fcppt/noncopyable.hpp>
 
-namespace libftl
-{
-namespace ship
+namespace libftl::ship
 {
 class resources
 {
@@ -38,7 +36,6 @@ public:
   libftl::ship::layout::object layout_;
 };
 
-}
 }
 
 #endif

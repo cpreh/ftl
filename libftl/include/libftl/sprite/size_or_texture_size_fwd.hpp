@@ -4,13 +4,10 @@
 #include <libftl/sprite/type_choices.hpp>
 #include <sge/sprite/types/size_or_texture_size_fwd.hpp>
 
-namespace libftl
-{
-namespace sprite
+namespace libftl::sprite
 {
 using size_or_texture_size = sge::sprite::types::size_or_texture_size<libftl::sprite::type_choices>;
 
-}
 }
 
 #endif

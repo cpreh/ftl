@@ -5,9 +5,7 @@
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
 
-namespace libftl
-{
-namespace archive
+namespace libftl::archive
 {
 struct entry
 {
@@ -21,7 +19,6 @@ struct entry
   libftl::archive::length length_;
 };
 
-}
 }
 
 #endif
