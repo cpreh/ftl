@@ -4,7 +4,9 @@
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
+#include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/either.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/catch/optional.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
@@ -20,6 +22,8 @@
 #include <string>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("xml::typed::attribute_set", "[xml]")
 {
@@ -78,3 +82,5 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
       fcppt::either::make_success<libftl::error>(
           fcppt::record::make(attrib1{} = fcppt::optional::object<int>{})));
 }
+
+FCPPT_CATCH_END

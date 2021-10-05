@@ -8,10 +8,12 @@
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp>
 #include <fcppt/strong_typedef_comparison.hpp>
-#include <fcppt/unit_comparison.hpp>
 #include <fcppt/unit.hpp>
+#include <fcppt/unit_comparison.hpp>
 #include <fcppt/unit_output.hpp>
+#include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/either.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/catch/record.hpp>
 #include <fcppt/catch/strong_typedef.hpp>
 #include <fcppt/either/comparison.hpp>
@@ -25,6 +27,8 @@
 #include <string>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("xml::typed::node", "[xml]")
 {
@@ -51,3 +55,5 @@ TEST_CASE("xml::typed::node", "[xml]")
       fcppt::either::make_success<libftl::error>(
           libftl::xml::node{fcppt::record::make(), fcppt::unit{}}));
 }
+
+FCPPT_CATCH_END
