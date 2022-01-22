@@ -77,6 +77,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/sectors/sector_type_parser.hpp
 	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
 	libftl/impl/include/libftl/impl/xml/typed/arg_type.hpp
+	libftl/impl/include/libftl/impl/xml/typed/as_struct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
 	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
@@ -92,6 +93,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member_base.hpp
 	libftl/impl/include/libftl/impl/xml/typed/is_node_member_list.hpp
+	libftl/impl/include/libftl/impl/xml/typed/make_as_struct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_construct.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_derived.hpp
 	libftl/impl/include/libftl/impl/xml/typed/make_named_node_derived.hpp
@@ -272,6 +274,7 @@ set(
 	libftl/include/libftl/xml/blueprints/list.hpp
 	libftl/include/libftl/xml/blueprints/load.hpp
 	libftl/include/libftl/xml/blueprints/result.hpp
+	libftl/include/libftl/xml/blueprints/result_output.hpp
 	libftl/include/libftl/xml/blueprints/ship.hpp
 	libftl/include/libftl/xml/blueprints/ship_system_list.hpp
 	libftl/include/libftl/xml/blueprints/sound_list.hpp
@@ -478,6 +481,7 @@ set(
 	libftl/src/xml/animations/load.cpp
 	libftl/src/xml/blueprints/direction_to_string.cpp
 	libftl/src/xml/blueprints/load.cpp
+	libftl/src/xml/blueprints/result.cpp
 	libftl/src/xml/events/event.cpp
 	libftl/src/xml/events/load.cpp
 	libftl/src/xml/sectors/load.cpp

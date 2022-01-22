@@ -20,7 +20,7 @@ libftl::blueprints::find_ship(
           libftl::xml::blueprints::result const &)>{
           [](libftl::xml::blueprints::result const &_blueprints)
               -> std::vector<libftl::xml::blueprints::ship> const & {
-            return fcppt::tuple::get<5U>(_blueprints);
+            return _blueprints.ships;
           }},
       fcppt::function<bool(libftl::xml::blueprints::ship const &)>{
           [&_name](libftl::xml::blueprints::ship const &_blueprint)

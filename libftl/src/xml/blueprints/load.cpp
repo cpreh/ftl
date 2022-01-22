@@ -9,6 +9,7 @@
 #include <libftl/impl/xml/blueprints/system_parser.hpp>
 #include <libftl/impl/xml/blueprints/weapon_parser.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
+#include <libftl/impl/xml/typed/make_as_struct.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
 #include <libftl/xml/blueprints/load.hpp>
@@ -25,15 +26,16 @@ libftl::xml::blueprints::load(std::istream &_input)
   namespace blueprints = libftl::impl::xml::blueprints;
   namespace typed = libftl::impl::xml::typed;
 
-  auto const parser{typed::partition{typed::node_list{typed::alternative{
-      blueprints::aug_parser(),
-      blueprints::crew_parser(),
-      blueprints::drone_parser(),
-      blueprints::item_parser(),
-      blueprints::list_parser(),
-      blueprints::ship_parser(),
-      blueprints::system_parser(),
-      blueprints::weapon_parser()}}}};
+  auto const parser{typed::make_as_struct<libftl::xml::blueprints::result>(
+      typed::partition{typed::node_list{typed::alternative{
+          blueprints::aug_parser(),
+          blueprints::crew_parser(),
+          blueprints::drone_parser(),
+          blueprints::item_parser(),
+          blueprints::list_parser(),
+          blueprints::ship_parser(),
+          blueprints::system_parser(),
+          blueprints::weapon_parser()}}})};
 
   return libftl::impl::xml::load(_input, parser);
 }

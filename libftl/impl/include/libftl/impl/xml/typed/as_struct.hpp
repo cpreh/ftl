@@ -1,5 +1,5 @@
-#ifndef LIBFTL_IMPL_XML_TYPED_CONSTRUCT_HPP_INCLUDED
-#define LIBFTL_IMPL_XML_TYPED_CONSTRUCT_HPP_INCLUDED
+#ifndef LIBFTL_IMPL_XML_TYPED_AS_STRUCT_HPP_INCLUDED
+#define LIBFTL_IMPL_XML_TYPED_AS_STRUCT_HPP_INCLUDED
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/typed/arg_type.hpp>
@@ -7,23 +7,22 @@
 #include <fcppt/deref.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
+#include <fcppt/tuple/as_struct.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <type_traits>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed
 {
 template<typename Result, typename Parser>
-// TODO(philipp): This leads to a terrible error message.
-//requires (std::is_constructible_v<Result,libftl::impl::xml::typed::result_type<Parser>>)
-class construct
+// TODO(philipp): Concepts
+class as_struct
 {
 public:
   using result_type = Result;
   using arg_type = libftl::impl::xml::typed::arg_type<Parser>;
 
-  explicit construct(Parser &&_parser) : parser_{std::move(_parser)} {}
+  explicit as_struct(Parser &&_parser) : parser_{std::move(_parser)} {}
 
   [[nodiscard]] fcppt::either::object<libftl::error, result_type>
   parse(arg_type const &_arg) const
@@ -31,7 +30,7 @@ public:
     return fcppt::either::map(
         fcppt::deref(this->parser_).parse(_arg),
         [](libftl::impl::xml::typed::result_type<Parser> &&_result)
-        { return Result{std::move(_result)}; });
+        { return fcppt::tuple::as_struct<Result>(std::move(_result)); });
   }
 private:
   Parser parser_;
