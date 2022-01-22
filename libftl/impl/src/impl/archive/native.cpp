@@ -109,6 +109,7 @@ private:
         }());
   }
 
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
   [[nodiscard]] pos_type seekpos(pos_type const _pos, std::ios_base::openmode const _mode) override
   {
     check_mode(_mode);
