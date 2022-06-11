@@ -25,6 +25,16 @@ set(
 	"-misc-non-private-member-variables-in-classes"
 )
 
+set(
+	FCPPT_UTILS_CLANG_TIDY_WHITELIST
+	"fcppt"
+	"awl"
+	"mizuiro"
+	"sge"
+	"alda"
+	"ftl"
+)
+
 include(
 	FcpptCMakeUtils
 )
