@@ -64,7 +64,7 @@ libftl::sprite::images::images(
           {
             using store = sge::image2d::store::la8;
 
-            store data{
+            store const data{
                 fcppt::math::dim::fill<sge::image2d::dim>(
                     32), // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
                 store::init_function{
