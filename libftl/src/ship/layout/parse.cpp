@@ -11,6 +11,7 @@
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
+#include <fcppt/output_to_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
@@ -24,10 +25,11 @@
 #include <fcppt/optional/value_type.hpp>
 #include <fcppt/parse/as_struct.hpp>
 #include <fcppt/parse/char_set.hpp>
-#include <fcppt/parse/error.hpp>
 #include <fcppt/parse/grammar.hpp>
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/int.hpp>
+#include <fcppt/parse/parse_stream_error.hpp>
+#include <fcppt/parse/parse_stream_error_output.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/uint.hpp>
 #include <fcppt/parse/operators/optional.hpp>
@@ -38,7 +40,6 @@
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <type_traits>
-#include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -223,8 +224,8 @@ try
 
   return fcppt::either::map_failure(
       fcppt::either::map(fcppt::parse::grammar_parse_stream(_stream, grammar{}), translate_result),
-      [](fcppt::parse::error<char> &&_error)
-      { return libftl::error{fcppt::from_std_string(std::move(_error.get()))}; });
+      [](fcppt::parse::parse_stream_error<char> &&_error)
+      { return libftl::error{fcppt::from_std_string(fcppt::output_to_std_string(_error))}; });
 }
 catch (fcppt::exception const &_error)
 {

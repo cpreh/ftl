@@ -10,6 +10,7 @@
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
+#include <fcppt/output_to_std_string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/either/map_failure.hpp>
@@ -17,7 +18,6 @@
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/parse/as_struct.hpp>
 #include <fcppt/parse/char_set.hpp>
-#include <fcppt/parse/error.hpp>
 #include <fcppt/parse/grammar.hpp>
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/literal.hpp>
@@ -26,6 +26,8 @@
 #include <fcppt/parse/make_lexeme.hpp>
 #include <fcppt/parse/make_recursive.hpp>
 #include <fcppt/parse/make_with_location.hpp>
+#include <fcppt/parse/parse_stream_error.hpp>
+#include <fcppt/parse/parse_stream_error_output.hpp>
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>
 #include <fcppt/parse/operators/complement.hpp>
@@ -143,9 +145,10 @@ libftl::impl::xml::parse(std::istream &_stream)
 {
   return fcppt::either::map_failure(
       fcppt::parse::grammar_parse_stream(_stream, grammar{}),
-      [](fcppt::parse::error<char> &&_error)
+      [](fcppt::parse::parse_stream_error<char> &&_error)
       {
         return libftl::error{
-            FCPPT_TEXT("Parsing failed: ") + fcppt::from_std_string(std::move(_error.get()))};
+            FCPPT_TEXT("Parsing failed: ") +
+            fcppt::from_std_string(fcppt::output_to_std_string(_error))};
       });
 }
