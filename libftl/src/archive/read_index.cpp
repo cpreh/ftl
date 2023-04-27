@@ -30,7 +30,7 @@
 #include <fcppt/record/make_label.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <bit>
-#include <cstddef>
+#include <cstdint>
 #include <ios>
 #include <istream>
 #include <string>
