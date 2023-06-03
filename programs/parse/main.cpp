@@ -25,6 +25,7 @@
 #include <fcppt/io/cout.hpp>
 #include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
+#include <fcppt/options/error_output.hpp>
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/make_commands.hpp>
 #include <fcppt/options/make_sub_command.hpp>
