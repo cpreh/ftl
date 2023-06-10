@@ -93,6 +93,8 @@
 #include <fcppt/options/parse_help.hpp>
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
+#include <fcppt/options/usage.hpp>
+#include <fcppt/options/usage_output.hpp>
 #include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
@@ -285,9 +287,9 @@ try
             [](fcppt::options::result_of<parser_type> const &_arguments)
             { return main_program(fcppt::record::permute<argument_record>(_arguments)); });
       },
-      [](fcppt::options::help_text const &_help_text)
+      [](fcppt::options::usage const &_usage)
       {
-        awl::show_message(fcppt::output_to_fcppt_string(_help_text));
+        awl::show_message(fcppt::output_to_fcppt_string(_usage));
 
         return awl::main::exit_success();
       });
