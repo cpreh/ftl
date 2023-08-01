@@ -25,6 +25,7 @@
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/ignore_unsafe_buffer_usage.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
 #include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -36,6 +37,9 @@
 #include <streambuf>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_PP_PUSH_WARNING
+FCPPT_PP_IGNORE_UNSAFE_BUFFER_USAGE
 
 namespace
 {
@@ -137,6 +141,8 @@ private:
 };
 
 }
+
+FCPPT_PP_POP_WARNING
 
 libftl::impl::archive::native::native(
     std::filesystem::path &&_file_path, libftl::archive::index &&_index)

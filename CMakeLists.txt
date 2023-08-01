@@ -23,6 +23,7 @@ set(
 	"-cppcoreguidelines-avoid-const-or-ref-data-members"
 	"-fuchsia-default-arguments-calls"
 	"-fuchsia-default-arguments-declarations"
+	"-misc-misplaced-const"
 	"-misc-non-private-member-variables-in-classes"
 )
 
