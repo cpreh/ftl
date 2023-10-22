@@ -1,5 +1,6 @@
 #include <libftl/impl/xml/blueprints/ship_parser.hpp>
 #include <libftl/impl/xml/blueprints/system_element_parser.hpp>
+#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/base.hpp>
@@ -14,7 +15,6 @@
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/optional_inner_node.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
-#include <libftl/xml/node.hpp>
 #include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/labels/amount.hpp>
 #include <libftl/xml/labels/battery.hpp>
@@ -48,7 +48,7 @@
 #include <libftl/xml/labels/weapon_list.hpp>
 #include <libftl/xml/labels/weapon_slots.hpp>
 #include <libftl/xml/labels/weapons.hpp>
-#include <fcppt/deref_unique_ptr.hpp>
+#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>

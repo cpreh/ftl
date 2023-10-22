@@ -2,14 +2,15 @@
 #include <libftl/archive/base_fwd.hpp>
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/blueprints/find_ship.hpp>
-#include <libftl/detail/symbol.hpp>
 #include <libftl/ship/load.hpp>
 #include <libftl/ship/resources.hpp>
 #include <libftl/ship/images/load.hpp>
 #include <libftl/ship/images/name.hpp>
+#include <libftl/ship/images/object.hpp>
 #include <libftl/ship/layout/load.hpp>
 #include <libftl/ship/layout/load_xml.hpp>
 #include <libftl/ship/layout/name.hpp>
+#include <libftl/ship/layout/object.hpp>
 #include <libftl/sprite/images_fwd.hpp>
 #include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/labels/img.hpp>

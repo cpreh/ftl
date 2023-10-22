@@ -4,7 +4,7 @@
 #include <libftl/archive/path.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/options/argument.hpp>
-#include <fcppt/options/base.hpp>
+#include <fcppt/options/base.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/options/base_unique_ptr.hpp>
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/long_name.hpp>

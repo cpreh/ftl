@@ -2,7 +2,6 @@
 #include <libftl/xml/blueprints/direction_to_string.hpp>
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/enum/to_string_case.hpp>
-#include <fcppt/enum/to_string_impl_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string_view>
 #include <fcppt/config/external_end.hpp>

@@ -4,6 +4,7 @@
 #include <libftl/ship/layout/tile_coordinate.hpp>
 #include <libftl/ship/layout/tile_pos.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
+#include <libftl/sprite/color_format.hpp>
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
 #include <libftl/sprite/images.hpp>

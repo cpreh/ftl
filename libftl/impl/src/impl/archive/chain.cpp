@@ -27,10 +27,12 @@ libftl::impl::archive::chain::open(libftl::archive::path const &_path) const
 {
   return fcppt::either::match(
       this->archive1_->open(_path),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_path, this](libftl::error &&_error1)
       {
         return fcppt::either::map_failure(
             this->archive2_->open(_path),
+            // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
             [&_error1](libftl::error &&_error2) {
               return libftl::error{
                   std::move(_error1.get()) + FCPPT_TEXT('\n') + std::move(_error2.get())};

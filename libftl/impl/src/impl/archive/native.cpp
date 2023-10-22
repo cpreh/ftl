@@ -33,7 +33,6 @@
 #include <fstream>
 #include <ios>
 #include <istream>
-#include <sstream>
 #include <streambuf>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
@@ -164,6 +163,7 @@ libftl::impl::archive::native::open(libftl::archive::path const &_path) const
                 FCPPT_TEXT("Unable to open ") +
                 fcppt::filesystem::path_to_string(this->file_path_)};
           }),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_path, this](std::ifstream &&_stream)
       {
         return fcppt::either::bind(

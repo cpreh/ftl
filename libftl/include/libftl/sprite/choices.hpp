@@ -1,7 +1,7 @@
 #ifndef LIBFTL_SPRITE_CHOICES_HPP_INCLUDED
 #define LIBFTL_SPRITE_CHOICES_HPP_INCLUDED
 
-#include <libftl/sprite/choices_fwd.hpp>
+#include <libftl/sprite/choices_fwd.hpp> // IWYU pragma: export
 #include <libftl/sprite/type_choices.hpp>
 #include <libftl/sprite/detail/depth_element.hpp>
 #include <sge/sprite/config/choices.hpp>

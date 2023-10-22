@@ -9,6 +9,7 @@
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string_view>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 fcppt::optional::reference<libftl::xml::blueprints::ship const>

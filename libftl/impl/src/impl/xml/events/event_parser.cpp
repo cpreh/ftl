@@ -6,7 +6,7 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/node.hpp>
 #include <libftl/xml/events/event.hpp>
-#include <fcppt/deref_unique_ptr.hpp>
+#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unique_ptr.hpp>
 
 fcppt::unique_ptr<

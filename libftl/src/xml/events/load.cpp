@@ -6,10 +6,9 @@
 #include <libftl/impl/xml/typed/named_alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
-#include <libftl/xml/events/event.hpp>
 #include <libftl/xml/events/load.hpp>
 #include <libftl/xml/events/result.hpp>
-#include <fcppt/deref_unique_ptr.hpp>
+#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>

@@ -18,5 +18,6 @@ libftl::ship::layout::load_xml(
 {
   return fcppt::either::bind(
       _archive.open(libftl::archive::path{"data"} / (_name.get() + ".xml")),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](fcppt::unique_ptr<std::istream> &&_stream) { return libftl::xml::ship::load(*_stream); });
 }

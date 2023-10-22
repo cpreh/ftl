@@ -17,6 +17,7 @@ fcppt::either::object<libftl::error, libftl::ship::layout::object> libftl::ship:
 {
   return fcppt::either::bind(
       _archive.open(libftl::archive::path{"data"} / (_name.get() + ".txt")),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](fcppt::unique_ptr<std::istream> &&_stream)
       { return libftl::ship::layout::parse(*_stream); });
 }

@@ -8,7 +8,10 @@
 #include <fcppt/io/ostream.hpp>
 #include <fcppt/math/box/output.hpp>
 #include <fcppt/math/vector/output.hpp>
-#include <fcppt/optional/output.hpp>
+#include <fcppt/optional/output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/config/external_begin.hpp>
+#include <ios>
+#include <fcppt/config/external_end.hpp>
 
 namespace libftl::ship::layout
 {

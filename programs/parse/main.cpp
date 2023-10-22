@@ -5,7 +5,7 @@
 #include <ftl/parse/xml/main.hpp>
 #include <ftl/parse/xml/options_parser.hpp>
 #include <libftl/error.hpp>
-#include <libftl/archive/base.hpp>
+#include <libftl/archive/base.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/options/create_resource_parser.hpp>
 #include <libftl/options/open_archive.hpp>
@@ -30,6 +30,7 @@
 #include <fcppt/options/make_commands.hpp>
 #include <fcppt/options/make_sub_command.hpp>
 #include <fcppt/options/optional_help_text.hpp>
+#include <fcppt/options/options_label.hpp>
 #include <fcppt/options/parse_help.hpp>
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
@@ -46,7 +47,7 @@
 #include <fcppt/record/permute.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/variant/object.hpp>
-#include <fcppt/variant/output.hpp>
+#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/config/external_begin.hpp>
 #include <cstdlib>
 #include <exception>
@@ -77,6 +78,7 @@ bool main_program(arguments const &_args)
       fcppt::either::bind(
           libftl::options::open_archive(fcppt::record::get<libftl::options::resource_label>(
               fcppt::record::get<fcppt::options::options_label>(_args))),
+          // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
           [&_args](libftl::archive::base_unique_ptr &&_archive)
           {
             return fcppt::variant::match(

@@ -5,7 +5,7 @@
 #include <fcppt/io/read_chars.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
-#include <istream>
+#include <istream> // NOLINT(misc-include-cleaner)
 #include <fcppt/config/external_end.hpp>
 
 fcppt::io::optional_buffer libftl::archive::extract(libftl::archive::file const &_file)

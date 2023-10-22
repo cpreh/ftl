@@ -1,5 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/base.hpp>
+#include <libftl/archive/base.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/blueprints/data.hpp>
 #include <libftl/blueprints/load.hpp>
@@ -32,8 +32,9 @@
 #include <sge/renderer/pixel_format/optional_multi_samples.hpp>
 #include <sge/renderer/pixel_format/srgb.hpp>
 #include <sge/renderer/target/base.hpp>
-#include <sge/renderer/target/onscreen.hpp>
+#include <sge/renderer/target/onscreen.hpp> // NOLINT(misc-include-cleaner)
 #include <sge/systems/cursor_option_field.hpp>
+#include <sge/systems/image2d.hpp>
 #include <sge/systems/input.hpp>
 #include <sge/systems/instance.hpp>
 #include <sge/systems/make_list.hpp>
@@ -70,23 +71,21 @@
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/reference_to_base.hpp>
 #include <fcppt/string.hpp>
-#include <fcppt/strong_typedef_output.hpp>
+#include <fcppt/strong_typedef_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/text.hpp>
 #include <fcppt/to_std_string.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
-#include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/cast/dynamic.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/match.hpp>
-#include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
-#include <fcppt/options/error_output.hpp>
+#include <fcppt/options/error_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/long_name.hpp>
 #include <fcppt/options/optional_help_text.hpp>
@@ -94,7 +93,7 @@
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
 #include <fcppt/options/usage.hpp>
-#include <fcppt/options/usage_output.hpp>
+#include <fcppt/options/usage_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
@@ -105,9 +104,10 @@
 #include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/output.hpp>
+#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/config/external_begin.hpp>
 #include <exception>
+#include <string>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
@@ -145,7 +145,7 @@ struct resources
 awl::main::exit_code main_loop(
     sge::renderer::device::ffp &_renderer_device, // NOLINT(google-runtime-references)
     sge::window::system &_window_system, // NOLINT(google-runtime-references)
-    resources &&_resources)
+    resources &&_resources) // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 {
   auto const draw(
       [&_renderer_device, &_resources]

@@ -5,7 +5,7 @@
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/parse/location_impl.hpp>
-#include <fcppt/parse/location_output.hpp>
+#include <fcppt/parse/location_output.hpp> // NOLINT(misc-include-cleaner)
 
 fcppt::string libftl::impl::xml::location_to_string(
     fcppt::optional::object<fcppt::parse::location> const &_location)

@@ -1,12 +1,13 @@
+#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/inner_node_content.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
-#include <fcppt/strong_typedef_comparison.hpp>
+#include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
-#include <fcppt/catch/either.hpp>
+#include <fcppt/catch/either.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/end.hpp>
-#include <fcppt/catch/strong_typedef.hpp>
+#include <fcppt/catch/strong_typedef.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/make.hpp>

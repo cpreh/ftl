@@ -1,6 +1,7 @@
 #include <libftl/impl/room/draw.hpp>
 #include <libftl/ship/draw.hpp>
 #include <libftl/ship/resources.hpp>
+#include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
 #include <libftl/sprite/images_fwd.hpp>

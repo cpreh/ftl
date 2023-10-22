@@ -48,6 +48,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace
@@ -57,10 +58,12 @@ find_image(libftl::sprite::images const &_images, std::string const &_file_name)
 {
   return fcppt::either::match(
       _images.load(libftl::archive::path{"ship"} / std::string{_file_name}),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_file_name, &_images](libftl::error &&_error1)
       {
         return fcppt::either::map_failure(
             _images.load(libftl::archive::path{"ships_noglow"} / std::string{_file_name}),
+            // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
             [&_error1](libftl::error &&_error2) {
               return libftl::error{
                   std::move(_error1.get()) + FCPPT_TEXT("\n") + std::move(_error2.get())};
@@ -165,7 +168,7 @@ fcppt::either::
         return fcppt::either::map(
             load_mandatory_gib(_images, _gib, _ship_name, _number),
             [](libftl::ship::images::object::gib_image &&_gib_image)
-            { return fcppt::optional::make(_gib_image); });
+            { return fcppt::optional::make(std::move(_gib_image)); });
       });
 }
 

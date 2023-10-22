@@ -6,13 +6,14 @@
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_coordinate.hpp>
+#include <libftl/ship/layout/tile_pos.hpp>
+#include <libftl/ship/layout/tile_rect.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/output_to_std_string.hpp>
-#include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/cast/to_unsigned.hpp>
@@ -20,16 +21,14 @@
 #include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/make_if.hpp>
-#include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/value_type.hpp>
 #include <fcppt/parse/as_struct.hpp>
-#include <fcppt/parse/char_set.hpp>
 #include <fcppt/parse/grammar.hpp>
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/int.hpp>
 #include <fcppt/parse/parse_stream_error.hpp>
-#include <fcppt/parse/parse_stream_error_output.hpp>
+#include <fcppt/parse/parse_stream_error_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/uint.hpp>
 #include <fcppt/parse/operators/optional.hpp>
@@ -39,6 +38,7 @@
 #include <fcppt/parse/skipper/operators/repetition.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
+#include <iosfwd>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -224,6 +224,7 @@ try
 
   return fcppt::either::map_failure(
       fcppt::either::map(fcppt::parse::grammar_parse_stream(_stream, grammar{}), translate_result),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](fcppt::parse::parse_stream_error<char> &&_error)
       { return libftl::error{fcppt::from_std_string(fcppt::output_to_std_string(_error))}; });
 }

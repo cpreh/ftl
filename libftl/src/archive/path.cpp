@@ -19,6 +19,7 @@ std::string const &libftl::archive::path::rep() const { return rep_; }
 
 void libftl::archive::path::add(std::string &&_name) { rep_ += "/" + std::move(_name); }
 
+// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 libftl::archive::path &libftl::archive::path::operator+=(path &&_other)
 {
   rep_ = std::move(rep_) + "/" + std::move(_other.rep_);
@@ -27,6 +28,7 @@ libftl::archive::path &libftl::archive::path::operator+=(path &&_other)
 }
 
 libftl::archive::path
+// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 libftl::archive::operator+(libftl::archive::path &&_path1, libftl::archive::path &&_path2)
 {
   return _path1 += std::move(_path2);

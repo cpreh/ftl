@@ -1,5 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/base.hpp>
+#include <libftl/archive/base.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/base_ref.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/sprite/images.hpp>
@@ -11,9 +11,9 @@
 #include <sge/image/color/init/luminance.hpp>
 #include <sge/image/view/wrap.hpp>
 #include <sge/image2d/dim.hpp>
-#include <sge/image2d/file.hpp>
+#include <sge/image2d/file.hpp> // NOLINT(misc-include-cleaner)
 #include <sge/image2d/file_unique_ptr.hpp>
-#include <sge/image2d/system.hpp>
+#include <sge/image2d/system.hpp> // NOLINT(misc-include-cleaner)
 #include <sge/image2d/system_ref.hpp>
 #include <sge/image2d/algorithm/fill.hpp>
 #include <sge/image2d/store/la8.hpp>
@@ -28,14 +28,13 @@
 #include <sge/renderer/texture/create_planar_from_file.hpp>
 #include <sge/renderer/texture/create_planar_from_view.hpp>
 #include <sge/renderer/texture/emulate_srgb.hpp>
-#include <sge/renderer/texture/planar.hpp>
+#include <sge/renderer/texture/planar.hpp> // NOLINT(misc-include-cleaner)
 #include <sge/renderer/texture/mipmap/off.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/part_raw_ptr.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/literal.hpp>
 #include <fcppt/make_shared_ptr.hpp>
-#include <fcppt/noncopyable.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
@@ -119,6 +118,7 @@ libftl::sprite::images::load(libftl::archive::path const &_path) const
                       sge::media::stream_unique_ptr{std::move(_stream)},
                       sge::media::optional_extension{sge::media::extension{FCPPT_TEXT("png")}},
                       sge::media::optional_name{}),
+                  // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
                   [&full_path](sge::media::stream_unique_ptr &&)
                   {
                     return fcppt::either::make_failure<sge::texture::const_part_shared_ptr>(
@@ -126,6 +126,7 @@ libftl::sprite::images::load(libftl::archive::path const &_path) const
                             FCPPT_TEXT("Unable to load ") +
                             fcppt::from_std_string(full_path.rep())});
                   },
+                  // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
                   [&full_path, this](sge::image2d::file_unique_ptr &&_file)
                   {
                     sge::texture::const_part_shared_ptr const result{

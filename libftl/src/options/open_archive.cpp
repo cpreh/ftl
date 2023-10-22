@@ -1,5 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/base.hpp>
+#include <libftl/archive/base.hpp> // IWYU pragma: export
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/archive/chain.hpp>
 #include <libftl/archive/filesystem.hpp>

@@ -5,31 +5,30 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
-#include <libftl/xml/node_output.hpp>
+#include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
 #include <libftl/xml/animations/load.hpp>
 #include <libftl/xml/animations/result.hpp>
-#include <libftl/xml/blueprints/direction_output.hpp>
+#include <libftl/xml/blueprints/direction_output.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <libftl/xml/blueprints/result_output.hpp>
-#include <libftl/xml/events/event.hpp>
-#include <libftl/xml/events/event_output.hpp>
+#include <libftl/xml/blueprints/result_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/events/event_output.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/xml/events/load.hpp>
 #include <libftl/xml/events/result.hpp>
 #include <libftl/xml/sectors/load.hpp>
 #include <libftl/xml/sectors/result.hpp>
 #include <libftl/xml/ship/load.hpp>
 #include <libftl/xml/ship/result.hpp>
-#include <libftl/xml/ship/slide_output.hpp>
+#include <libftl/xml/ship/slide_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/output.hpp>
-#include <fcppt/output_range.hpp>
-#include <fcppt/output_string.hpp>
-#include <fcppt/recursive_output.hpp>
+#include <fcppt/output_range.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/output_string.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/recursive_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
-#include <fcppt/unit_output.hpp>
+#include <fcppt/unit_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/error.hpp>
@@ -37,13 +36,13 @@
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/io/cout.hpp>
-#include <fcppt/optional/output.hpp>
+#include <fcppt/optional/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/record/get.hpp>
-#include <fcppt/record/output.hpp>
-#include <fcppt/tuple/output.hpp>
+#include <fcppt/record/output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/tuple/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object.hpp>
-#include <fcppt/variant/output.hpp>
+#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/config/external_begin.hpp>
 #include <istream>
 #include <utility>
@@ -62,6 +61,7 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
       libftl::xml::ship::result>;
 
   auto const load_xml(
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_args](fcppt::unique_ptr<std::istream> &&_stream)
           -> fcppt::either::object<libftl::error, result_type>
       {

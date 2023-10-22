@@ -28,8 +28,10 @@ libftl::blueprints::load(libftl::archive::base const &_archive)
         return fcppt::either::map_failure(
             fcppt::either::bind(
                 _archive.open(libftl::archive::path{"data"} / std::string{_file}),
+                // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
                 [](fcppt::unique_ptr<std::istream> &&_stream)
                 { return libftl::xml::blueprints::load(*_stream); }),
+            // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
             [&_file](libftl::error &&_error)
             {
               return libftl::error{

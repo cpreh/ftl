@@ -13,6 +13,7 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <libftl/xml/labels/angular.hpp>
+#include <libftl/xml/labels/cloak.hpp>
 #include <libftl/xml/labels/direction.hpp>
 #include <libftl/xml/labels/explosion.hpp>
 #include <libftl/xml/labels/floor.hpp>
@@ -41,8 +42,8 @@
 #include <libftl/xml/ship/load.hpp>
 #include <libftl/xml/ship/result.hpp>
 #include <libftl/xml/ship/slide.hpp>
-#include <libftl/xml/ship/slide_input.hpp>
-#include <fcppt/deref_reference.hpp>
+#include <libftl/xml/ship/slide_input.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/deref_reference.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/make_cref.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>

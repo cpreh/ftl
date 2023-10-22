@@ -119,7 +119,7 @@ private:
                       FCPPT_TEXT(" specified multiple times.")});
                 }
                 _inner_map.insert(std::make_pair(name, fcppt::make_cref(_arg)));
-                return fcppt::either::make_success<libftl::error>(_inner_map);
+                return fcppt::either::make_success<libftl::error>(std::move(_inner_map));
               });
         });
   }

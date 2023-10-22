@@ -56,7 +56,7 @@ public:
                             std::move(_attributes_result), std::move(_content_result)};
                       });
                 }),
-            [&_node](libftl::error &&_error)
+            [&_node](libftl::error &&_error) // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
             {
               return libftl::error{
                   libftl::impl::xml::location_to_string(_node.location_) + std::move(_error.get())};

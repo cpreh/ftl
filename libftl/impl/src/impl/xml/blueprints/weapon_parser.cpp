@@ -2,6 +2,7 @@
 #include <libftl/impl/xml/blueprints/weapon_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
+#include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_derived.hpp>

@@ -6,7 +6,7 @@
 #include <libftl/impl/xml/output.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/recursive.hpp>
-#include <fcppt/strong_typedef_impl.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/algorithm/loop.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/variant/match.hpp>

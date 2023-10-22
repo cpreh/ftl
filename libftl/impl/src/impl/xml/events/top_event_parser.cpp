@@ -2,16 +2,16 @@
 #include <libftl/impl/xml/events/top_event_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
-#include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/make_named_node_derived.hpp>
 #include <libftl/impl/xml/typed/named_node.hpp>
+#include <libftl/impl/xml/typed/named_node_base.hpp>
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
-#include <libftl/xml/events/event.hpp>
+#include <libftl/xml/events/event.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/xml/events/top_event.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <libftl/xml/labels/unique.hpp>
-#include <fcppt/deref_unique_ptr.hpp>
+#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>

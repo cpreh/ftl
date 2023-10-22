@@ -27,7 +27,7 @@
 #include <fcppt/parse/make_recursive.hpp>
 #include <fcppt/parse/make_with_location.hpp>
 #include <fcppt/parse/parse_stream_error.hpp>
-#include <fcppt/parse/parse_stream_error_output.hpp>
+#include <fcppt/parse/parse_stream_error_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/operators/alternative.hpp>
 #include <fcppt/parse/operators/complement.hpp>
@@ -42,6 +42,7 @@
 #include <fcppt/parse/skipper/operators/alternative.hpp>
 #include <fcppt/parse/skipper/operators/repetition.hpp>
 #include <fcppt/variant/match.hpp>
+#include <fcppt/variant/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <string>
@@ -145,6 +146,7 @@ libftl::impl::xml::parse(std::istream &_stream)
 {
   return fcppt::either::map_failure(
       fcppt::parse::grammar_parse_stream(_stream, grammar{}),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](fcppt::parse::parse_stream_error<char> &&_error)
       {
         return libftl::error{

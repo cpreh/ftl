@@ -1,5 +1,5 @@
 #include <libftl/error.hpp>
-#include <libftl/archive/entry_output.hpp>
+#include <libftl/archive/entry_output.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/extract.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/index.hpp>
@@ -9,13 +9,15 @@
 #include <fcppt/error_code_to_string.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/main.hpp>
-#include <fcppt/output_pair.hpp>
-#include <fcppt/output_string.hpp>
+#include <fcppt/make_ref.hpp>
+#include <fcppt/output_pair.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/output_string.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/output.hpp>
+#include <fcppt/either/bind.hpp>
 #include <fcppt/either/error.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/match.hpp>
@@ -29,6 +31,7 @@
 #include <fcppt/io/cout.hpp>
 #include <fcppt/io/write_chars.hpp>
 #include <fcppt/optional/maybe.hpp>
+#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
@@ -57,7 +60,7 @@
 #include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/output.hpp>
+#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/config/external_begin.hpp>
 #include <cstdlib>
 #include <exception>
@@ -85,6 +88,7 @@ either_error write_to_file(std::filesystem::path const &_path, fcppt::io::buffer
           fcppt::filesystem::open<std::ofstream>(_path, std::ios_base::binary),
           [&_path]
           { return FCPPT_TEXT("Failed to open ") + fcppt::filesystem::path_to_string(_path); }),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_path, &_buffer](std::ofstream &&_stream)
       {
         fcppt::io::cout() << FCPPT_TEXT("Extracting ") << fcppt::filesystem::path_to_string(_path)
@@ -115,6 +119,7 @@ either_error write_output(
               return either_error{
                   FCPPT_TEXT("Failed to extract ") + fcppt::output_to_fcppt_string(_entry)};
             },
+            // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
             [&_output_path, &_entry](fcppt::io::buffer &&_buffer)
             { return write_to_file(_output_path / _entry.first, _buffer); });
       },
@@ -159,6 +164,7 @@ int main_program(argument_record const &_arguments)
 
         return EXIT_FAILURE;
       },
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [&_arguments](std::ifstream &&_stream)
       {
         return fcppt::either::match(

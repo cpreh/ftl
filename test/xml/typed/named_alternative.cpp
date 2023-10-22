@@ -8,24 +8,26 @@
 #include <libftl/impl/xml/typed/named_node.hpp>
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/xml/node.hpp>
-#include <libftl/xml/node_output.hpp>
-#include <fcppt/strong_typedef_comparison.hpp>
-#include <fcppt/strong_typedef_output.hpp>
+#include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/declare_strong_typedef.hpp>
+#include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/strong_typedef_impl.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/strong_typedef_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unit.hpp>
-#include <fcppt/unit_comparison.hpp>
-#include <fcppt/unit_output.hpp>
+#include <fcppt/unit_comparison.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/unit_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
-#include <fcppt/catch/either.hpp>
+#include <fcppt/catch/either.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/end.hpp>
-#include <fcppt/catch/record.hpp>
-#include <fcppt/catch/strong_typedef.hpp>
-#include <fcppt/catch/variant.hpp>
+#include <fcppt/catch/record.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/catch/strong_typedef.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/catch/variant.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/either/comparison.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/optional/nothing.hpp>
-#include <fcppt/record/comparison.hpp>
 #include <fcppt/record/make.hpp>
-#include <fcppt/record/output.hpp>
+#include <fcppt/record/object.hpp>
+#include <fcppt/record/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch_test_macros.hpp>

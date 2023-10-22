@@ -1,16 +1,16 @@
 #include <libftl/impl/xml/blueprints/system_element_parser.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
-#include <libftl/impl/xml/typed/base.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
 #include <libftl/impl/xml/typed/inner_node.hpp>
 #include <libftl/impl/xml/typed/make_node_member.hpp>
 #include <libftl/impl/xml/typed/make_node_member_derived.hpp>
+#include <libftl/impl/xml/typed/node_member_base.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/optional_inner_node.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/direction.hpp>
-#include <libftl/xml/blueprints/direction_input.hpp>
+#include <libftl/xml/blueprints/direction_input.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/xml/blueprints/system_element.hpp>
 #include <libftl/xml/labels/direction.hpp>
 #include <libftl/xml/labels/img.hpp>

@@ -63,6 +63,7 @@ using record_binding = alda::bindings::record_variadic<
 using index_pair = std::pair<std::string, libftl::archive::entry>;
 
 index_pair
+// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 transform_entry(int_type const _offset, alda::raw::element_type<record_binding> &&_result)
 {
   return std::make_pair(
@@ -122,6 +123,7 @@ libftl::archive::read_index(std::istream &_stream)
           alda::raw::make_generic<alda::raw::stream::istream, offset_binding>(_stream),
           [&_stream](alda::raw::element_type<offset_binding> const &_offsets)
           { return make_index(_stream, _offsets); }),
+      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](alda::raw::stream::error &&_error)
       {
         return libftl::error{fcppt::string{

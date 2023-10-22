@@ -3,7 +3,6 @@
 #include <libftl/impl/xml/events/event_content_parser.hpp>
 #include <libftl/impl/xml/events/event_parser_impl.hpp>
 #include <libftl/impl/xml/events/text_parser_impl.hpp>
-#include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/base.hpp>
@@ -25,13 +24,12 @@
 #include <libftl/xml/labels/event.hpp>
 #include <libftl/xml/labels/hidden.hpp>
 #include <libftl/xml/labels/level.hpp>
-#include <libftl/xml/labels/load.hpp>
 #include <libftl/xml/labels/lvl.hpp>
 #include <libftl/xml/labels/req.hpp>
 #include <libftl/xml/labels/store.hpp>
 #include <libftl/xml/labels/text.hpp>
-#include <fcppt/deref_reference.hpp>
-#include <fcppt/deref_unique_ptr.hpp>
+#include <fcppt/deref_reference.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/make_cref.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/nonmovable.hpp>

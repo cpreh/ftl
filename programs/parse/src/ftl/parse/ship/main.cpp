@@ -24,6 +24,7 @@ fcppt::either::error<libftl::error> ftl::parse::ship::main(
   return fcppt::either::map(
       fcppt::either::bind(
           _archive.open(fcppt::record::get<ftl::parse::path_label>(_arguments)),
+          // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
           [](fcppt::unique_ptr<std::istream> &&_stream)
           { return libftl::ship::layout::parse(*_stream); }),
       [](libftl::ship::layout::object const &_layout)

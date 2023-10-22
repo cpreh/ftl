@@ -17,6 +17,7 @@
 #include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/multi_difficulty.hpp>
 #include <libftl/xml/labels/name.hpp>
+#include <libftl/xml/labels/ship.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>

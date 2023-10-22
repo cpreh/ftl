@@ -12,13 +12,13 @@
 #include <fcppt/io/istream.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
-#include <fcppt/options/base.hpp>
+#include <fcppt/options/base.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/options/base_unique_ptr.hpp>
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/long_name.hpp>
 #include <fcppt/options/make_base.hpp>
 #include <fcppt/options/optional_help_text.hpp>
-#include <fcppt/options/pretty_type_enum.hpp>
+#include <fcppt/options/pretty_type_enum.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>

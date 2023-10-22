@@ -15,12 +15,16 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/blueprints/color_channel.hpp>
 #include <libftl/xml/blueprints/crew.hpp>
+#include <libftl/xml/labels/a.hpp>
+#include <libftl/xml/labels/b.hpp>
 #include <libftl/xml/labels/bp.hpp>
 #include <libftl/xml/labels/color_list.hpp>
 #include <libftl/xml/labels/cost.hpp>
 #include <libftl/xml/labels/desc.hpp>
+#include <libftl/xml/labels/g.hpp>
 #include <libftl/xml/labels/name.hpp>
 #include <libftl/xml/labels/power_list.hpp>
+#include <libftl/xml/labels/r.hpp>
 #include <libftl/xml/labels/rarity.hpp>
 #include <libftl/xml/labels/short.hpp>
 #include <libftl/xml/labels/title.hpp>

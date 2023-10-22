@@ -4,7 +4,7 @@
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
-#include <fcppt/recursive_output.hpp>
+#include <fcppt/recursive_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/container/output.hpp>
 #include <fcppt/optional/output.hpp>
 #include <fcppt/variant/match.hpp>
