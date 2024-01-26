@@ -4,7 +4,7 @@
 #include <libftl/detail/symbol.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/events/event_content.hpp>
-#include <libftl/xml/events/event_fwd.hpp>
+#include <libftl/xml/events/event_fwd.hpp> // IWYU pragma: keep
 #include <libftl/xml/labels/load.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/record/element.hpp>

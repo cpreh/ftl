@@ -2,9 +2,9 @@
 #define FTL_PARSE_XML_ARGUMENTS_HPP_INCLUDED
 
 #include <ftl/parse/xml/arguments_fwd.hpp> // IWYU pragma: export
-#include <ftl/parse/xml/type.hpp>
-#include <libftl/archive/path.hpp>
-#include <fcppt/record/element.hpp>
-#include <fcppt/record/object.hpp>
+#include <ftl/parse/xml/type.hpp> // IWYU pragma: keep
+#include <libftl/archive/path.hpp> // IWYU pragma: keep
+#include <fcppt/record/element.hpp> // IWYU pragma: keep
+#include <fcppt/record/object.hpp> // IWYU pragma: keep
 
 #endif

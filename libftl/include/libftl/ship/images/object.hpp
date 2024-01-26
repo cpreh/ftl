@@ -1,12 +1,12 @@
 #ifndef LIBFTL_SHIP_IMAGES_OBJECT_HPP_INCLUDED
 #define LIBFTL_SHIP_IMAGES_OBJECT_HPP_INCLUDED
 
-#include <libftl/ship/images/object_fwd.hpp>
+#include <libftl/ship/images/object_fwd.hpp> // IWYU pragma: keep
 #include <libftl/xml/ship/gib.hpp>
 #include <libftl/xml/ship/offset.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
-#include <fcppt/strong_typedef_impl.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>

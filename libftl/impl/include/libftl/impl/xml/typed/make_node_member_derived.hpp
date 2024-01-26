@@ -6,6 +6,7 @@
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref_type.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>

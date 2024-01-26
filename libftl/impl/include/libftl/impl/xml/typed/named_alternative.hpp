@@ -3,7 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
-#include <libftl/impl/xml/node_fwd.hpp>
+#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/is_named_node.hpp>
 #include <libftl/impl/xml/typed/is_named_node_base.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
@@ -13,8 +13,7 @@
 #include <fcppt/string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/fold.hpp>
-#include <fcppt/algorithm/loop_break_tuple.hpp>
-#include <fcppt/either/first_success.hpp>
+#include <fcppt/algorithm/loop_break_tuple.hpp> // IWYU pragma: keep
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/mpl/bind.hpp>

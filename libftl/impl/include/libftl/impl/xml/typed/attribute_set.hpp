@@ -16,8 +16,8 @@
 #include <fcppt/text.hpp>
 #include <fcppt/use.hpp>
 #include <fcppt/algorithm/fold.hpp>
-#include <fcppt/algorithm/loop_break_record.hpp>
-#include <fcppt/algorithm/map_record.hpp>
+#include <fcppt/algorithm/loop_break_record.hpp> // IWYU pragma: keep
+#include <fcppt/algorithm/map_record.hpp> // IWYU pragma: keep
 #include <fcppt/container/find_opt_mapped.hpp>
 #include <fcppt/container/key_set.hpp>
 #include <fcppt/container/output.hpp>
@@ -27,7 +27,7 @@
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/object.hpp>
-#include <fcppt/either/object_concept.hpp>
+#include <fcppt/either/object_concept.hpp> // IWYU pragma: keep
 #include <fcppt/either/sequence.hpp>
 #include <fcppt/mpl/bind.hpp>
 #include <fcppt/mpl/constant.hpp>
@@ -37,6 +37,7 @@
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
+#include <fcppt/record/element.hpp>
 #include <fcppt/record/element_to_type.hpp>
 #include <fcppt/record/element_vector.hpp>
 #include <fcppt/record/get.hpp>

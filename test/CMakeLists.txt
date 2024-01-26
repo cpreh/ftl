@@ -37,6 +37,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/content
 	LINK_LIBS
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface
@@ -45,6 +46,7 @@ add_ftl_test(
 add_ftl_test(
 	xml/typed/empty
 	LINK_LIBS
+		${libftl_TARGET}
 		libftl_impl_interface
 		fcppt_catch_interface
 		fcppt_core_interface

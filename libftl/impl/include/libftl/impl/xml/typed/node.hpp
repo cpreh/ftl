@@ -4,7 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/from_std_string.hpp>

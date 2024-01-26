@@ -1,7 +1,7 @@
 #ifndef LIBFTL_ARCHIVE_ENTRY_HPP_INCLUDED
 #define LIBFTL_ARCHIVE_ENTRY_HPP_INCLUDED
 
-#include <libftl/archive/entry_fwd.hpp>
+#include <libftl/archive/entry_fwd.hpp> // IWYU pragma: keep
 #include <libftl/archive/length.hpp>
 #include <libftl/archive/offset.hpp>
 

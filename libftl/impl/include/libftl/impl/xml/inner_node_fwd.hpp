@@ -3,7 +3,7 @@
 
 namespace libftl::impl::xml
 {
-struct inner_node;
+struct inner_node; // IWYU pragma: export
 }
 
 #endif

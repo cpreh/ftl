@@ -2,7 +2,7 @@
 #define LIBFTL_IMPL_XML_TYPED_NAMED_NODE_FWD_HPP_INCLUDED
 
 #include <libftl/impl/xml/node_fwd.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 
 namespace libftl::impl::xml::typed
 {

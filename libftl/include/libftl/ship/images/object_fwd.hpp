@@ -3,7 +3,7 @@
 
 namespace libftl::ship::images
 {
-struct object;
+struct object; // IWYU pragma: export
 
 }
 

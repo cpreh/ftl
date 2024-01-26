@@ -3,7 +3,7 @@
 
 namespace libftl::room
 {
-struct system;
+struct system; // IWYU pragma: export
 
 }
 

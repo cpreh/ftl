@@ -2,7 +2,7 @@
 #define LIBFTL_SHIP_LAYOUT_ROOM_ID_HPP_INCLUDED
 
 #include <fcppt/declare_strong_typedef.hpp>
-#include <fcppt/strong_typedef.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
 
 namespace libftl::ship::layout
 {

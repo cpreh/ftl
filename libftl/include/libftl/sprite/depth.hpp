@@ -1,7 +1,7 @@
 #ifndef LIBFTL_SPRITE_DEPTH_HPP_INCLUDED
 #define LIBFTL_SPRITE_DEPTH_HPP_INCLUDED
 
-#include <libftl/sprite/depth_fwd.hpp>
+#include <libftl/sprite/depth_fwd.hpp> // IWYU pragma: keep
 
 namespace libftl::sprite
 {

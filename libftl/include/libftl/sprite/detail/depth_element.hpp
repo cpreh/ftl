@@ -3,7 +3,7 @@
 
 #include <libftl/sprite/depth.hpp>
 #include <libftl/sprite/depth_role.hpp>
-#include <libftl/sprite/detail/depth_element_fwd.hpp>
+#include <libftl/sprite/detail/depth_element_fwd.hpp> // IWYU pragma: keep
 #include <fcppt/mpl/list/object.hpp>
 #include <fcppt/record/element.hpp>
 

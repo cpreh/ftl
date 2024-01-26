@@ -4,7 +4,7 @@
 namespace libftl::impl::xml::typed
 {
 template<typename Result>
-class named_node_base;
+class named_node_base; // IWYU pragma: export
 }
 
 #endif

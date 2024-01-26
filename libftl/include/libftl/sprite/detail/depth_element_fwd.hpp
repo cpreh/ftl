@@ -3,7 +3,7 @@
 
 namespace libftl::sprite::detail
 {
-struct depth_element;
+struct depth_element; // IWYU pragma: export
 
 }
 

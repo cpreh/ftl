@@ -1,7 +1,7 @@
 #ifndef FTL_PARSE_XML_TYPE_HPP_INCLUDED
 #define FTL_PARSE_XML_TYPE_HPP_INCLUDED
 
-#include <ftl/parse/xml/type_fwd.hpp>
+#include <ftl/parse/xml/type_fwd.hpp> // IWYU pragma: keep
 
 namespace ftl::parse::xml
 {

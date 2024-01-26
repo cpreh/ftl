@@ -1,7 +1,7 @@
 #ifndef LIBFTL_SHIP_LAYOUT_ROOM_HPP_INCLUDED
 #define LIBFTL_SHIP_LAYOUT_ROOM_HPP_INCLUDED
 
-#include <libftl/ship/layout/room_fwd.hpp>
+#include <libftl/ship/layout/room_fwd.hpp> // IWYU pragma: keep
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
 

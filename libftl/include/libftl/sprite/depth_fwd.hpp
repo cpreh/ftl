@@ -3,7 +3,7 @@
 
 namespace libftl::sprite
 {
-enum class depth;
+enum class depth; // IWYU pragma: export
 
 }
 

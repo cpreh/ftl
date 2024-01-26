@@ -5,6 +5,7 @@
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node_fwd.hpp>
 #include <fcppt/optional/object.hpp>
+#include <fcppt/parse/location.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>

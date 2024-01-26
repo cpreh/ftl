@@ -2,7 +2,7 @@
 #define LIBFTL_XML_BLUEPRINTS_DIRECTION_OUTPUT_HPP_INCLUDED
 
 #include <libftl/xml/blueprints/direction.hpp>
-#include <libftl/xml/blueprints/direction_to_string.hpp>
+#include <libftl/xml/blueprints/direction_to_string.hpp> // IWYU pragma: keep
 #include <fcppt/enum/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>

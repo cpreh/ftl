@@ -3,7 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/either/map.hpp>

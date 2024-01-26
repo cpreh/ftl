@@ -1,7 +1,7 @@
 #ifndef LIBFTL_ROOM_TYPE_HPP_INCLUDED
 #define LIBFTL_ROOM_TYPE_HPP_INCLUDED
 
-#include <libftl/room/type_fwd.hpp>
+#include <libftl/room/type_fwd.hpp> // IWYU pragma: keep
 
 namespace libftl::room
 {

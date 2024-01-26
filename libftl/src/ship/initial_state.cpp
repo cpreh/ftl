@@ -35,6 +35,7 @@
 #include <libftl/xml/labels/weapons.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/const.hpp>
+#include <fcppt/strong_typedef_comparison.hpp> // IWYU pragma: keep
 #include <fcppt/algorithm/find_if_opt.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/either/make_success.hpp>

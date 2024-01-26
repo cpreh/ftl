@@ -1,11 +1,11 @@
 #ifndef LIBFTL_XML_EVENTS_EVENT_OUTPUT_HPP_INCLUDED
 #define LIBFTL_XML_EVENTS_EVENT_OUTPUT_HPP_INCLUDED
 
-#include <libftl/xml/node_output.hpp>
+#include <libftl/xml/node_output.hpp> // IWYU pragma: keep
 #include <libftl/xml/events/event.hpp>
-#include <fcppt/output_range.hpp>
-#include <fcppt/optional/output.hpp>
-#include <fcppt/record/output.hpp>
+#include <fcppt/output_range.hpp> // IWYU pragma: keep
+#include <fcppt/optional/output.hpp> // IWYU pragma: keep
+#include <fcppt/record/output.hpp> // IWYU pragma: keep
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>

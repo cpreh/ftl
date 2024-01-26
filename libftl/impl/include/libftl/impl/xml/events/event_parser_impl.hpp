@@ -1,6 +1,7 @@
 #ifndef LIBFTL_IMPL_XML_EVENTS_EVENT_PARSER_IMPL_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_EVENTS_EVENT_PARSER_IMPL_HPP_INCLUDED
 
+#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
@@ -10,12 +11,12 @@
 #include <libftl/impl/xml/typed/make_derived.hpp>
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
-#include <libftl/xml/node.hpp>
 #include <libftl/xml/events/event.hpp>
 #include <libftl/xml/labels/load.hpp>
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/record/make.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <string>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 

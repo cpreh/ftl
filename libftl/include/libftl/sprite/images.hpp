@@ -5,7 +5,7 @@
 #include <libftl/archive/base_ref.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
-#include <libftl/sprite/images_fwd.hpp>
+#include <libftl/sprite/images_fwd.hpp> // IWYU pragma: keep
 #include <sge/image2d/system_ref.hpp>
 #include <sge/renderer/device/core_ref.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>

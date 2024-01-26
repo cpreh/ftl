@@ -3,7 +3,7 @@
 
 #include <libftl/detail/symbol.hpp>
 #include <libftl/room/state.hpp>
-#include <libftl/ship/state_fwd.hpp>
+#include <libftl/ship/state_fwd.hpp> // IWYU pragma: keep
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

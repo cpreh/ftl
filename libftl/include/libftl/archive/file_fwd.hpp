@@ -3,7 +3,7 @@
 
 namespace libftl::archive
 {
-struct file;
+struct file; // IWYU pragma: export
 
 }
 

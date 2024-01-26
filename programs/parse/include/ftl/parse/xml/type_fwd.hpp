@@ -3,7 +3,7 @@
 
 namespace ftl::parse::xml
 {
-enum class type;
+enum class type; // IWYU pragma: export
 
 }
 

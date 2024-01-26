@@ -4,10 +4,10 @@
 #include <libftl/detail/symbol.hpp>
 #include <libftl/ship/layout/door.hpp>
 #include <libftl/ship/layout/ellipse.hpp>
-#include <libftl/ship/layout/object_fwd.hpp>
+#include <libftl/ship/layout/object_fwd.hpp> // IWYU pragma: keep
 #include <libftl/ship/layout/room.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
-#include <fcppt/strong_typedef.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
 #include <fcppt/math/vector/static.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>

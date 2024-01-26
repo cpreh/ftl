@@ -3,12 +3,12 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node_fwd.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/function.hpp>
 #include <fcppt/output_to_fcppt_string.hpp>
-#include <fcppt/strong_typedef_output.hpp>
+#include <fcppt/strong_typedef_output.hpp> // IWYU pragma: keep
 #include <fcppt/array/init.hpp>
 #include <fcppt/array/object.hpp>
 #include <fcppt/container/output.hpp>

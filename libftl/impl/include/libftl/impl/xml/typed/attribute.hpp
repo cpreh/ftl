@@ -4,7 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/location_to_string.hpp>
-#include <libftl/impl/xml/typed/attribute_fwd.hpp>
+#include <libftl/impl/xml/typed/attribute_fwd.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
 #include <fcppt/extract_from_string_fmt.hpp>
 #include <fcppt/from_std_string.hpp>
@@ -16,7 +16,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <string>
-#include <typeinfo>
+#include <typeinfo> // IWYU pragma: keep
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 

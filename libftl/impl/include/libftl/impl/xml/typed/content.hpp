@@ -3,7 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
-#include <libftl/impl/xml/node.hpp>
+#include <libftl/impl/xml/node.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/node_vector.hpp>
 #include <fcppt/extract_from_string.hpp>
 #include <fcppt/from_std_string.hpp>
@@ -20,7 +20,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <type_traits>
-#include <typeinfo>
+#include <typeinfo> // IWYU pragma: keep
 #include <fcppt/config/external_end.hpp>
 
 namespace libftl::impl::xml::typed

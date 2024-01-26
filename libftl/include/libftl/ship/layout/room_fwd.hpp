@@ -3,7 +3,7 @@
 
 namespace libftl::ship::layout
 {
-struct room;
+struct room; // IWYU pragma: export
 
 }
 

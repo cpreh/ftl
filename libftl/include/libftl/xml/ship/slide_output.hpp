@@ -2,7 +2,7 @@
 #define LIBFTL_XML_SHIP_SLIDE_OUTPUT_HPP_INCLUDED
 
 #include <libftl/xml/ship/slide.hpp>
-#include <libftl/xml/ship/slide_to_string.hpp>
+#include <libftl/xml/ship/slide_to_string.hpp> // IWYU pragma: keep
 #include <fcppt/enum/output.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>

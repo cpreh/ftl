@@ -4,7 +4,6 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_base.hpp>
-#include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/deref_type.hpp>

@@ -2,7 +2,6 @@
 #define LIBFTL_IMPL_BLUEPRINTS_FIND_HPP_INCLUDED
 
 #include <libftl/blueprints/data.hpp>
-#include <libftl/detail/symbol.hpp>
 #include <libftl/xml/blueprints/result.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/make_cref.hpp>

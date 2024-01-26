@@ -3,7 +3,7 @@
 
 namespace libftl::room
 {
-enum class type;
+enum class type; // IWYU pragma: export
 
 }
 

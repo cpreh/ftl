@@ -3,7 +3,7 @@
 
 namespace libftl::ship
 {
-struct state;
+struct state; // IWYU pragma: export
 
 }
 

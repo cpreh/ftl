@@ -6,7 +6,7 @@
 namespace libftl::impl::xml::typed
 {
 template<libftl::impl::xml::typed::required Required, typename Result>
-class node_member_base;
+class node_member_base; // IWYU pragma: export
 }
 
 #endif

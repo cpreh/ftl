@@ -3,7 +3,7 @@
 
 namespace libftl::xml::events
 {
-struct event;
+struct event; // IWYU pragma: export
 }
 
 #endif

@@ -147,6 +147,7 @@ set(
 	libftl/impl/src/impl/xml/events/text_parser.cpp
 	libftl/impl/src/impl/xml/events/text_parser_impl.cpp
 	libftl/impl/src/impl/xml/events/top_event_parser.cpp
+	libftl/impl/src/impl/xml/inner_node.cpp
 	libftl/impl/src/impl/xml/location_to_string.cpp
 	libftl/impl/src/impl/xml/output.cpp
 	libftl/impl/src/impl/xml/parse.cpp

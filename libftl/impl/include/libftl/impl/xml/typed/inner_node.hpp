@@ -4,7 +4,7 @@
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>

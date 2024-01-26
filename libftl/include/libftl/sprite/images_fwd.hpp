@@ -3,7 +3,7 @@
 
 namespace libftl::sprite
 {
-class images;
+class images; // IWYU pragma: keep
 
 }
 

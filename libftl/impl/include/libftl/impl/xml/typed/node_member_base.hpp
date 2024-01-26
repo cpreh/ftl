@@ -3,7 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/typed/node_member_base_fwd.hpp>
+#include <libftl/impl/xml/typed/node_member_base_fwd.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/reference.hpp>

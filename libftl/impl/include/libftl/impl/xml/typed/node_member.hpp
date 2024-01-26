@@ -3,8 +3,8 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
-#include <libftl/impl/xml/typed/node_member_fwd.hpp>
-#include <libftl/impl/xml/typed/parses.hpp>
+#include <libftl/impl/xml/typed/node_member_fwd.hpp> // IWYU pragma: keep
+#include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
 #include <fcppt/deref.hpp>
@@ -18,7 +18,6 @@
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/iterator/range.hpp>
-#include <fcppt/optional/object.hpp>
 #include <fcppt/range/empty.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/object.hpp>

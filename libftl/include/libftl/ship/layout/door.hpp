@@ -1,11 +1,11 @@
 #ifndef LIBFTL_SHIP_LAYOUT_DOOR_HPP_INCLUDED
 #define LIBFTL_SHIP_LAYOUT_DOOR_HPP_INCLUDED
 
-#include <libftl/ship/layout/door_fwd.hpp>
+#include <libftl/ship/layout/door_fwd.hpp> // IWYU pragma: keep
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/ship/layout/tile_pos.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
-#include <fcppt/strong_typedef.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
 #include <fcppt/optional/object_impl.hpp>
 
 namespace libftl::ship::layout

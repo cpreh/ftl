@@ -5,8 +5,8 @@
 #include <libftl/detail/symbol.hpp>
 #include <libftl/xml/blueprints/result.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
-#include <fcppt/strong_typedef_impl.hpp>
-#include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/noncopyable.hpp>
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

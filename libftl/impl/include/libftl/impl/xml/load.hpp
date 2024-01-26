@@ -3,6 +3,7 @@
 
 #include <libftl/error.hpp>
 #include <libftl/impl/xml/document.hpp>
+#include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/parse.hpp>
 #include <libftl/impl/xml/typed/arg_type.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>

@@ -2,7 +2,7 @@
 #define LIBFTL_ARCHIVE_FILE_HPP_INCLUDED
 
 #include <libftl/archive/entry.hpp>
-#include <libftl/archive/file_fwd.hpp>
+#include <libftl/archive/file_fwd.hpp> // IWYU pragma: keep
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
