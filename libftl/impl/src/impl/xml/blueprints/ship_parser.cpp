@@ -1,6 +1,6 @@
+#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/blueprints/ship_parser.hpp>
 #include <libftl/impl/xml/blueprints/system_element_parser.hpp>
-#include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/base.hpp>
