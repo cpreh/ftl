@@ -5,8 +5,8 @@
 #include <ftl/parse/xml/type_label.hpp>
 #include <libftl/archive/path.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/assert/unreachable.hpp>
 #include <fcppt/enum/input.hpp>
+#include <fcppt/enum/make_invalid.hpp>
 #include <fcppt/enum/to_string_case.hpp>
 #include <fcppt/enum/to_string_impl_fwd.hpp>
 #include <fcppt/io/istream.hpp>
@@ -35,6 +35,8 @@ struct to_string_impl<ftl::parse::xml::type>
   static std::string_view get(ftl::parse::xml::type const _type)
   {
 #define TO_STRING_CASE(name) FCPPT_ENUM_TO_STRING_CASE(ftl::parse::xml::type, name)
+    FCPPT_PP_PUSH_WARNING
+    FCPPT_PP_DISABLE_GCC_WARNING(-Wswitch-default)
     switch (_type)
     {
       TO_STRING_CASE(achievements);
@@ -44,8 +46,9 @@ struct to_string_impl<ftl::parse::xml::type>
       TO_STRING_CASE(sectors);
       TO_STRING_CASE(ship);
     }
+    FCPPT_PP_POP_WARNING
+    throw fcppt::enum_::make_invalid(_type);
 #undef TO_STRING_CASE
-    FCPPT_ASSERT_UNREACHABLE;
   }
 };
 

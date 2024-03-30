@@ -85,7 +85,7 @@ public:
                         fcppt::mpl::lambda<fcppt::deref_type>>>>::value);
 
   template <typename Parser>
-  static inline constexpr bool make_is_optional =
+  static constexpr bool make_is_optional =
       std::remove_cvref_t<fcppt::deref_type<Parser>>::is_optional;
 
   template <typename Parser>

@@ -21,6 +21,7 @@
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/enum/make_invalid.hpp>
 #include <fcppt/filesystem/open.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/buffer.hpp>
@@ -97,6 +98,7 @@ private:
         {
           FCPPT_PP_PUSH_WARNING
           FCPPT_PP_DISABLE_GCC_WARNING(-Wswitch)
+          FCPPT_PP_DISABLE_GCC_WARNING(-Wswitch-default)
           switch (_dir)
           {
           case std::ios_base::beg:
@@ -108,7 +110,7 @@ private:
           }
           FCPPT_PP_POP_WARNING
 
-          throw fcppt::exception{FCPPT_TEXT("Invalid ios_base::seekdir")};
+          throw fcppt::enum_::make_invalid(_dir);
         }());
   }
 

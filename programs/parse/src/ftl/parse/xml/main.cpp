@@ -29,14 +29,17 @@
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/unit_output.hpp> // NOLINT(misc-include-cleaner)
-#include <fcppt/assert/unreachable.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/error.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/no_error.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/enum/make_invalid.hpp>
 #include <fcppt/io/cout.hpp>
 #include <fcppt/optional/output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/preprocessor/disable_gcc_warning.hpp>
+#include <fcppt/preprocessor/pop_warning.hpp>
+#include <fcppt/preprocessor/push_warning.hpp>
 #include <fcppt/record/get.hpp>
 #include <fcppt/record/output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/tuple/output.hpp> // NOLINT(misc-include-cleaner)
@@ -68,7 +71,11 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         auto const wrap_result([](auto &&_result)
                                { return result_type{std::forward<decltype(_result)>(_result)}; });
 
-        switch (fcppt::record::get<ftl::parse::xml::type_label>(_args))
+        ftl::parse::xml::type const type{fcppt::record::get<ftl::parse::xml::type_label>(_args)};
+
+        FCPPT_PP_PUSH_WARNING
+        FCPPT_PP_DISABLE_GCC_WARNING(-Wswitch-default)
+        switch (type)
         {
         case ftl::parse::xml::type::achievements:
           return fcppt::either::map(libftl::xml::achievements::load(*_stream), wrap_result);
@@ -83,8 +90,8 @@ fcppt::either::error<libftl::error> ftl::parse::xml::main( // NOLINT(bugprone-ex
         case ftl::parse::xml::type::ship:
           return fcppt::either::map(libftl::xml::ship::load(*_stream), wrap_result);
         }
-
-        FCPPT_ASSERT_UNREACHABLE;
+        FCPPT_PP_POP_WARNING
+        throw fcppt::enum_::make_invalid(type);
       });
 
   return fcppt::either::map(
