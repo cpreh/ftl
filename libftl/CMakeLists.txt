@@ -59,6 +59,7 @@ set(
 	libftl/impl/include/libftl/impl/xml/events/event_list_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/event_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/event_parser_impl.hpp
+	libftl/impl/include/libftl/impl/xml/events/load_record.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_list_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_parser.hpp
 	libftl/impl/include/libftl/impl/xml/events/text_parser_impl.hpp
