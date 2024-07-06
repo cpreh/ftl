@@ -1,0 +1,16 @@
+programs/parse/include/ftl/parse/path_label.hpp
+programs/parse/include/ftl/parse/ship/arguments_fwd.hpp
+programs/parse/include/ftl/parse/ship/arguments.hpp
+programs/parse/include/ftl/parse/ship/main.hpp
+programs/parse/include/ftl/parse/ship/options_parser.hpp
+programs/parse/include/ftl/parse/xml/arguments_fwd.hpp
+programs/parse/include/ftl/parse/xml/arguments.hpp
+programs/parse/include/ftl/parse/xml/main.hpp
+programs/parse/include/ftl/parse/xml/options_parser.hpp
+programs/parse/include/ftl/parse/xml/type_fwd.hpp
+programs/parse/include/ftl/parse/xml/type.hpp
+programs/parse/include/ftl/parse/xml/type_label.hpp
+programs/parse/src/ftl/parse/ship/main.cpp
+programs/parse/src/ftl/parse/ship/options_parser.cpp
+programs/parse/src/ftl/parse/xml/main.cpp
+programs/parse/src/ftl/parse/xml/options_parser.cpp

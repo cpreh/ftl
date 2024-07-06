@@ -1,33 +1,14 @@
-find_package(
-	fcppt
-	REQUIRED
-)
+find_package(fcppt REQUIRED)
 
-add_executable(
-	ftlarchive
-	main.cpp
-)
+add_executable(ftlarchive main.cpp)
 
-include(
-	FcpptCMakeUtils
-)
+include(FcpptCMakeUtils)
 
-fcppt_utils_set_target_compiler_flags(
-	ftlarchive
-)
+fcppt_utils_set_target_compiler_flags(ftlarchive)
 
 target_link_libraries(
-	ftlarchive
-	PRIVATE
-	${libftl_TARGET}
-	${fcppt_core_TARGET}
-	${fcppt_filesystem_TARGET}
-	${fcppt_options_TARGET}
-	${FCPPT_UTILS_MAIN_LINK_LIBS}
-)
+  ftlarchive
+  PRIVATE ${libftl_TARGET} ${fcppt_core_TARGET} ${fcppt_filesystem_TARGET}
+          ${fcppt_options_TARGET} ${FCPPT_UTILS_MAIN_LINK_LIBS})
 
-target_compile_options(
-	ftlarchive
-	PRIVATE
-	${FCPPT_UTILS_MAIN_COMPILE_OPTIONS}
-)
+target_compile_options(ftlarchive PRIVATE ${FCPPT_UTILS_MAIN_COMPILE_OPTIONS})

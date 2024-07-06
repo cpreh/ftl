@@ -1,664 +1,106 @@
-find_package(
-	awl
-	REQUIRED
-)
+find_package(awl REQUIRED)
 
-find_package(
-	mizuiro
-	REQUIRED
-)
+find_package(mizuiro REQUIRED)
 
-find_package(
-	fcppt
-	REQUIRED
-)
+find_package(fcppt REQUIRED)
 
-find_package(
-	alda
-	REQUIRED
-)
+find_package(alda REQUIRED)
 
-find_package(
-	sge
-	REQUIRED
-	COMPONENTS
-	image2d
-	imagecolor
-	media
-	renderer
-	sprite
-	texture
-)
+find_package(sge REQUIRED COMPONENTS image2d imagecolor media renderer sprite
+                                     texture)
 
-set(
-	LIBFTL_FILES
-	libftl/impl/include/libftl/impl/archive/chain.hpp
-	libftl/impl/include/libftl/impl/archive/filesystem.hpp
-	libftl/impl/include/libftl/impl/archive/native.hpp
-	libftl/impl/include/libftl/impl/blueprints/find.hpp
-	libftl/impl/include/libftl/impl/room/draw.hpp
-	libftl/impl/include/libftl/impl/xml/animations/anim_parser.hpp
-	libftl/impl/include/libftl/impl/xml/animations/anim_sheet_parser.hpp
-	libftl/impl/include/libftl/impl/xml/animations/weapon_anim_parser.hpp
-	libftl/impl/include/libftl/impl/xml/attribute.hpp
-	libftl/impl/include/libftl/impl/xml/attribute_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/aug_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/crew_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/drone_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/item_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/list_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/ship_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/system_element_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/system_parser.hpp
-	libftl/impl/include/libftl/impl/xml/blueprints/weapon_parser.hpp
-	libftl/impl/include/libftl/impl/xml/bom.hpp
-	libftl/impl/include/libftl/impl/xml/document.hpp
-	libftl/impl/include/libftl/impl/xml/document_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/document_output.hpp
-	libftl/impl/include/libftl/impl/xml/events/event_content_parser.hpp
-	libftl/impl/include/libftl/impl/xml/events/event_list_parser.hpp
-	libftl/impl/include/libftl/impl/xml/events/event_parser.hpp
-	libftl/impl/include/libftl/impl/xml/events/event_parser_impl.hpp
-	libftl/impl/include/libftl/impl/xml/events/load_record.hpp
-	libftl/impl/include/libftl/impl/xml/events/text_list_parser.hpp
-	libftl/impl/include/libftl/impl/xml/events/text_parser.hpp
-	libftl/impl/include/libftl/impl/xml/events/text_parser_impl.hpp
-	libftl/impl/include/libftl/impl/xml/events/top_event_parser.hpp
-	libftl/impl/include/libftl/impl/xml/inner_node.hpp
-	libftl/impl/include/libftl/impl/xml/inner_node_content.hpp
-	libftl/impl/include/libftl/impl/xml/inner_node_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/load.hpp
-	libftl/impl/include/libftl/impl/xml/location_to_string.hpp
-	libftl/impl/include/libftl/impl/xml/node.hpp
-	libftl/impl/include/libftl/impl/xml/node_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/node_vector.hpp
-	libftl/impl/include/libftl/impl/xml/output.hpp
-	libftl/impl/include/libftl/impl/xml/parse.hpp
-	libftl/impl/include/libftl/impl/xml/sectors/sector_description_parser.hpp
-	libftl/impl/include/libftl/impl/xml/sectors/sector_type_parser.hpp
-	libftl/impl/include/libftl/impl/xml/typed/alternative.hpp
-	libftl/impl/include/libftl/impl/xml/typed/arg_type.hpp
-	libftl/impl/include/libftl/impl/xml/typed/as_struct.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/attribute_set.hpp
-	libftl/impl/include/libftl/impl/xml/typed/base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/construct.hpp
-	libftl/impl/include/libftl/impl/xml/typed/content.hpp
-	libftl/impl/include/libftl/impl/xml/typed/derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/empty.hpp
-	libftl/impl/include/libftl/impl/xml/typed/inner_node.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_attribute.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_named_node.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_named_node_base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_node_member.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_node_member_base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/is_node_member_list.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_as_struct.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_construct.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_named_node_derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_node_member.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_node_member_derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/make_node_member_impl.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_alternative.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_node.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_node_base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_node_base_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_node_derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/named_node_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_content.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_list.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_base.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_base_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_derived.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_list.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_member_list_fwd.hpp
-	libftl/impl/include/libftl/impl/xml/typed/node_set.hpp
-	libftl/impl/include/libftl/impl/xml/typed/optional_inner_node.hpp
-	libftl/impl/include/libftl/impl/xml/typed/parses.hpp
-	libftl/impl/include/libftl/impl/xml/typed/partition.hpp
-	libftl/impl/include/libftl/impl/xml/typed/required.hpp
-	libftl/impl/include/libftl/impl/xml/typed/result_type.hpp
-	libftl/impl/src/impl/archive/chain.cpp
-	libftl/impl/src/impl/archive/filesystem.cpp
-	libftl/impl/src/impl/archive/native.cpp
-	libftl/impl/src/impl/room/draw.cpp
-	libftl/impl/src/impl/xml/animations/anim_parser.cpp
-	libftl/impl/src/impl/xml/animations/anim_sheet_parser.cpp
-	libftl/impl/src/impl/xml/animations/weapon_anim_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/aug_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/crew_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/drone_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/item_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/list_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/ship_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/system_element_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/system_parser.cpp
-	libftl/impl/src/impl/xml/blueprints/weapon_parser.cpp
-	libftl/impl/src/impl/xml/bom.cpp
-	libftl/impl/src/impl/xml/document_output.cpp
-	libftl/impl/src/impl/xml/events/event_content_parser.cpp
-	libftl/impl/src/impl/xml/events/event_list_parser.cpp
-	libftl/impl/src/impl/xml/events/event_parser.cpp
-	libftl/impl/src/impl/xml/events/text_list_parser.cpp
-	libftl/impl/src/impl/xml/events/text_parser.cpp
-	libftl/impl/src/impl/xml/events/text_parser_impl.cpp
-	libftl/impl/src/impl/xml/events/top_event_parser.cpp
-	libftl/impl/src/impl/xml/inner_node.cpp
-	libftl/impl/src/impl/xml/location_to_string.cpp
-	libftl/impl/src/impl/xml/output.cpp
-	libftl/impl/src/impl/xml/parse.cpp
-	libftl/impl/src/impl/xml/sectors/sector_description_parser.cpp
-	libftl/impl/src/impl/xml/sectors/sector_type_parser.cpp
-	libftl/include/libftl/archive/base.hpp
-	libftl/include/libftl/archive/base_fwd.hpp
-	libftl/include/libftl/archive/base_ref.hpp
-	libftl/include/libftl/archive/base_unique_ptr.hpp
-	libftl/include/libftl/archive/chain.hpp
-	libftl/include/libftl/archive/entry.hpp
-	libftl/include/libftl/archive/entry_fwd.hpp
-	libftl/include/libftl/archive/entry_output.hpp
-	libftl/include/libftl/archive/extract.hpp
-	libftl/include/libftl/archive/file.hpp
-	libftl/include/libftl/archive/file_fwd.hpp
-	libftl/include/libftl/archive/filesystem.hpp
-	libftl/include/libftl/archive/index.hpp
-	libftl/include/libftl/archive/length.hpp
-	libftl/include/libftl/archive/offset.hpp
-	libftl/include/libftl/archive/open.hpp
-	libftl/include/libftl/archive/path.hpp
-	libftl/include/libftl/archive/path_fwd.hpp
-	libftl/include/libftl/archive/read_index.hpp
-	libftl/include/libftl/blueprints/data.hpp
-	libftl/include/libftl/blueprints/data_fwd.hpp
-	libftl/include/libftl/blueprints/find_ship.hpp
-	libftl/include/libftl/blueprints/load.hpp
-	libftl/include/libftl/error.hpp
-	libftl/include/libftl/error_fwd.hpp
-	libftl/include/libftl/options/create_resource_parser.hpp
-	libftl/include/libftl/options/data_file_label.hpp
-	libftl/include/libftl/options/native_resource_record.hpp
-	libftl/include/libftl/options/native_resource_record_fwd.hpp
-	libftl/include/libftl/options/open_archive.hpp
-	libftl/include/libftl/options/resource_file_label.hpp
-	libftl/include/libftl/options/resource_label.hpp
-	libftl/include/libftl/options/resource_parser.hpp
-	libftl/include/libftl/options/resource_parser_fwd.hpp
-	libftl/include/libftl/options/resource_path_label.hpp
-	libftl/include/libftl/options/resource_record.hpp
-	libftl/include/libftl/options/resource_record_fwd.hpp
-	libftl/include/libftl/options/resource_variant.hpp
-	libftl/include/libftl/options/resource_variant_fwd.hpp
-	libftl/include/libftl/options/unpacked_resource_record.hpp
-	libftl/include/libftl/options/unpacked_resource_record_fwd.hpp
-	libftl/include/libftl/room/state.hpp
-	libftl/include/libftl/room/state_fwd.hpp
-	libftl/include/libftl/room/system.hpp
-	libftl/include/libftl/room/system_fwd.hpp
-	libftl/include/libftl/room/type.hpp
-	libftl/include/libftl/room/type_fwd.hpp
-	libftl/include/libftl/ship/draw.hpp
-	libftl/include/libftl/ship/images/load.hpp
-	libftl/include/libftl/ship/images/name.hpp
-	libftl/include/libftl/ship/images/name_fwd.hpp
-	libftl/include/libftl/ship/images/object.hpp
-	libftl/include/libftl/ship/images/object_fwd.hpp
-	libftl/include/libftl/ship/initial_state.hpp
-	libftl/include/libftl/ship/layout/door.hpp
-	libftl/include/libftl/ship/layout/door_fwd.hpp
-	libftl/include/libftl/ship/layout/ellipse.hpp
-	libftl/include/libftl/ship/layout/ellipse_fwd.hpp
-	libftl/include/libftl/ship/layout/load.hpp
-	libftl/include/libftl/ship/layout/load_xml.hpp
-	libftl/include/libftl/ship/layout/name.hpp
-	libftl/include/libftl/ship/layout/name_fwd.hpp
-	libftl/include/libftl/ship/layout/object.hpp
-	libftl/include/libftl/ship/layout/object_fwd.hpp
-	libftl/include/libftl/ship/layout/output.hpp
-	libftl/include/libftl/ship/layout/parse.hpp
-	libftl/include/libftl/ship/layout/room.hpp
-	libftl/include/libftl/ship/layout/room_fwd.hpp
-	libftl/include/libftl/ship/layout/room_id.hpp
-	libftl/include/libftl/ship/layout/tile_coordinate.hpp
-	libftl/include/libftl/ship/layout/tile_pos.hpp
-	libftl/include/libftl/ship/layout/tile_pos_fwd.hpp
-	libftl/include/libftl/ship/layout/tile_rect.hpp
-	libftl/include/libftl/ship/layout/tile_rect_fwd.hpp
-	libftl/include/libftl/ship/load.hpp
-	libftl/include/libftl/ship/resources.hpp
-	libftl/include/libftl/ship/resources_fwd.hpp
-	libftl/include/libftl/ship/state.hpp
-	libftl/include/libftl/ship/state_fwd.hpp
-	libftl/include/libftl/sprite/choices.hpp
-	libftl/include/libftl/sprite/choices_fwd.hpp
-	libftl/include/libftl/sprite/color.hpp
-	libftl/include/libftl/sprite/color_format.hpp
-	libftl/include/libftl/sprite/color_fwd.hpp
-	libftl/include/libftl/sprite/depth.hpp
-	libftl/include/libftl/sprite/depth_fwd.hpp
-	libftl/include/libftl/sprite/depth_role.hpp
-	libftl/include/libftl/sprite/detail/depth_element.hpp
-	libftl/include/libftl/sprite/detail/depth_element_fwd.hpp
-	libftl/include/libftl/sprite/draw.hpp
-	libftl/include/libftl/sprite/images.hpp
-	libftl/include/libftl/sprite/images_fwd.hpp
-	libftl/include/libftl/sprite/object.hpp
-	libftl/include/libftl/sprite/object_fwd.hpp
-	libftl/include/libftl/sprite/rect.hpp
-	libftl/include/libftl/sprite/rect_fwd.hpp
-	libftl/include/libftl/sprite/resolution.hpp
-	libftl/include/libftl/sprite/size_or_texture_size.hpp
-	libftl/include/libftl/sprite/size_or_texture_size_fwd.hpp
-	libftl/include/libftl/sprite/type_choices.hpp
-	libftl/include/libftl/sprite/type_choices_fwd.hpp
-	libftl/include/libftl/sprite/white.hpp
-	libftl/include/libftl/xml/achievements/load.hpp
-	libftl/include/libftl/xml/achievements/result.hpp
-	libftl/include/libftl/xml/animations/anim.hpp
-	libftl/include/libftl/xml/animations/anim_sheet.hpp
-	libftl/include/libftl/xml/animations/load.hpp
-	libftl/include/libftl/xml/animations/result.hpp
-	libftl/include/libftl/xml/animations/weapon_anim.hpp
-	libftl/include/libftl/xml/blueprints/aug.hpp
-	libftl/include/libftl/xml/blueprints/color.hpp
-	libftl/include/libftl/xml/blueprints/color_channel.hpp
-	libftl/include/libftl/xml/blueprints/crew.hpp
-	libftl/include/libftl/xml/blueprints/direction.hpp
-	libftl/include/libftl/xml/blueprints/direction_input.hpp
-	libftl/include/libftl/xml/blueprints/direction_output.hpp
-	libftl/include/libftl/xml/blueprints/direction_to_string.hpp
-	libftl/include/libftl/xml/blueprints/drone.hpp
-	libftl/include/libftl/xml/blueprints/item.hpp
-	libftl/include/libftl/xml/blueprints/list.hpp
-	libftl/include/libftl/xml/blueprints/load.hpp
-	libftl/include/libftl/xml/blueprints/result.hpp
-	libftl/include/libftl/xml/blueprints/result_output.hpp
-	libftl/include/libftl/xml/blueprints/ship.hpp
-	libftl/include/libftl/xml/blueprints/ship_system_list.hpp
-	libftl/include/libftl/xml/blueprints/sound_list.hpp
-	libftl/include/libftl/xml/blueprints/system.hpp
-	libftl/include/libftl/xml/blueprints/system_element.hpp
-	libftl/include/libftl/xml/blueprints/weapon.hpp
-	libftl/include/libftl/xml/events/auto_reward.hpp
-	libftl/include/libftl/xml/events/boarders.hpp
-	libftl/include/libftl/xml/events/choice.hpp
-	libftl/include/libftl/xml/events/event.hpp
-	libftl/include/libftl/xml/events/event_content.hpp
-	libftl/include/libftl/xml/events/event_fwd.hpp
-	libftl/include/libftl/xml/events/event_list.hpp
-	libftl/include/libftl/xml/events/event_output.hpp
-	libftl/include/libftl/xml/events/load.hpp
-	libftl/include/libftl/xml/events/remove_crew.hpp
-	libftl/include/libftl/xml/events/result.hpp
-	libftl/include/libftl/xml/events/text.hpp
-	libftl/include/libftl/xml/events/text_list.hpp
-	libftl/include/libftl/xml/events/top_event.hpp
-	libftl/include/libftl/xml/labels/a.hpp
-	libftl/include/libftl/xml/labels/amount.hpp
-	libftl/include/libftl/xml/labels/angular.hpp
-	libftl/include/libftl/xml/labels/auto_reward.hpp
-	libftl/include/libftl/xml/labels/b.hpp
-	libftl/include/libftl/xml/labels/battery.hpp
-	libftl/include/libftl/xml/labels/boarders.hpp
-	libftl/include/libftl/xml/labels/boarding_ai.hpp
-	libftl/include/libftl/xml/labels/bp.hpp
-	libftl/include/libftl/xml/labels/breach_chance.hpp
-	libftl/include/libftl/xml/labels/charge_image.hpp
-	libftl/include/libftl/xml/labels/charged_frame.hpp
-	libftl/include/libftl/xml/labels/choice_list.hpp
-	libftl/include/libftl/xml/labels/class.hpp
-	libftl/include/libftl/xml/labels/cloak.hpp
-	libftl/include/libftl/xml/labels/cloak_image.hpp
-	libftl/include/libftl/xml/labels/cloaking.hpp
-	libftl/include/libftl/xml/labels/clone.hpp
-	libftl/include/libftl/xml/labels/clonebay.hpp
-	libftl/include/libftl/xml/labels/color_list.hpp
-	libftl/include/libftl/xml/labels/cooldown.hpp
-	libftl/include/libftl/xml/labels/cost.hpp
-	libftl/include/libftl/xml/labels/count.hpp
-	libftl/include/libftl/xml/labels/damage.hpp
-	libftl/include/libftl/xml/labels/desc.hpp
-	libftl/include/libftl/xml/labels/direction.hpp
-	libftl/include/libftl/xml/labels/dodge.hpp
-	libftl/include/libftl/xml/labels/doors.hpp
-	libftl/include/libftl/xml/labels/drone_image.hpp
-	libftl/include/libftl/xml/labels/drone_list.hpp
-	libftl/include/libftl/xml/labels/drone_slots.hpp
-	libftl/include/libftl/xml/labels/drones.hpp
-	libftl/include/libftl/xml/labels/engines.hpp
-	libftl/include/libftl/xml/labels/event.hpp
-	libftl/include/libftl/xml/labels/event_list.hpp
-	libftl/include/libftl/xml/labels/explosion.hpp
-	libftl/include/libftl/xml/labels/fh.hpp
-	libftl/include/libftl/xml/labels/fire_chance.hpp
-	libftl/include/libftl/xml/labels/fire_frame.hpp
-	libftl/include/libftl/xml/labels/fire_point.hpp
-	libftl/include/libftl/xml/labels/floor.hpp
-	libftl/include/libftl/xml/labels/fw.hpp
-	libftl/include/libftl/xml/labels/g.hpp
-	libftl/include/libftl/xml/labels/gib.hpp
-	libftl/include/libftl/xml/labels/gib1.hpp
-	libftl/include/libftl/xml/labels/gib2.hpp
-	libftl/include/libftl/xml/labels/gib3.hpp
-	libftl/include/libftl/xml/labels/gib4.hpp
-	libftl/include/libftl/xml/labels/gib5.hpp
-	libftl/include/libftl/xml/labels/gib6.hpp
-	libftl/include/libftl/xml/labels/glow_offset.hpp
-	libftl/include/libftl/xml/labels/h.hpp
-	libftl/include/libftl/xml/labels/hacking.hpp
-	libftl/include/libftl/xml/labels/health.hpp
-	libftl/include/libftl/xml/labels/hidden.hpp
-	libftl/include/libftl/xml/labels/hit_shield_sounds.hpp
-	libftl/include/libftl/xml/labels/hit_ship_sounds.hpp
-	libftl/include/libftl/xml/labels/icon_image.hpp
-	libftl/include/libftl/xml/labels/id.hpp
-	libftl/include/libftl/xml/labels/image.hpp
-	libftl/include/libftl/xml/labels/img.hpp
-	libftl/include/libftl/xml/labels/ion.hpp
-	libftl/include/libftl/xml/labels/launch_sounds.hpp
-	libftl/include/libftl/xml/labels/layout.hpp
-	libftl/include/libftl/xml/labels/length.hpp
-	libftl/include/libftl/xml/labels/level.hpp
-	libftl/include/libftl/xml/labels/load.hpp
-	libftl/include/libftl/xml/labels/locked.hpp
-	libftl/include/libftl/xml/labels/lvl.hpp
-	libftl/include/libftl/xml/labels/max.hpp
-	libftl/include/libftl/xml/labels/max_power.hpp
-	libftl/include/libftl/xml/labels/medbay.hpp
-	libftl/include/libftl/xml/labels/min.hpp
-	libftl/include/libftl/xml/labels/min_sector.hpp
-	libftl/include/libftl/xml/labels/mind.hpp
-	libftl/include/libftl/xml/labels/mirror.hpp
-	libftl/include/libftl/xml/labels/miss_sounds.hpp
-	libftl/include/libftl/xml/labels/missiles.hpp
-	libftl/include/libftl/xml/labels/mount_point.hpp
-	libftl/include/libftl/xml/labels/multi_difficulty.hpp
-	libftl/include/libftl/xml/labels/name.hpp
-	libftl/include/libftl/xml/labels/name_list.hpp
-	libftl/include/libftl/xml/labels/number.hpp
-	libftl/include/libftl/xml/labels/offsets.hpp
-	libftl/include/libftl/xml/labels/oxygen.hpp
-	libftl/include/libftl/xml/labels/pilot.hpp
-	libftl/include/libftl/xml/labels/power.hpp
-	libftl/include/libftl/xml/labels/power_list.hpp
-	libftl/include/libftl/xml/labels/r.hpp
-	libftl/include/libftl/xml/labels/rarity.hpp
-	libftl/include/libftl/xml/labels/rarity_list.hpp
-	libftl/include/libftl/xml/labels/remove_crew.hpp
-	libftl/include/libftl/xml/labels/req.hpp
-	libftl/include/libftl/xml/labels/room.hpp
-	libftl/include/libftl/xml/labels/rotate.hpp
-	libftl/include/libftl/xml/labels/sensors.hpp
-	libftl/include/libftl/xml/labels/sheet.hpp
-	libftl/include/libftl/xml/labels/shield_image.hpp
-	libftl/include/libftl/xml/labels/shields.hpp
-	libftl/include/libftl/xml/labels/ship.hpp
-	libftl/include/libftl/xml/labels/short.hpp
-	libftl/include/libftl/xml/labels/shots.hpp
-	libftl/include/libftl/xml/labels/slide.hpp
-	libftl/include/libftl/xml/labels/slot.hpp
-	libftl/include/libftl/xml/labels/sp.hpp
-	libftl/include/libftl/xml/labels/speed.hpp
-	libftl/include/libftl/xml/labels/stackable.hpp
-	libftl/include/libftl/xml/labels/start.hpp
-	libftl/include/libftl/xml/labels/start_event.hpp
-	libftl/include/libftl/xml/labels/start_power.hpp
-	libftl/include/libftl/xml/labels/store.hpp
-	libftl/include/libftl/xml/labels/stun_chance.hpp
-	libftl/include/libftl/xml/labels/system_list.hpp
-	libftl/include/libftl/xml/labels/teleporter.hpp
-	libftl/include/libftl/xml/labels/text.hpp
-	libftl/include/libftl/xml/labels/time.hpp
-	libftl/include/libftl/xml/labels/tip.hpp
-	libftl/include/libftl/xml/labels/title.hpp
-	libftl/include/libftl/xml/labels/tooltip.hpp
-	libftl/include/libftl/xml/labels/track_list.hpp
-	libftl/include/libftl/xml/labels/type.hpp
-	libftl/include/libftl/xml/labels/unique.hpp
-	libftl/include/libftl/xml/labels/upgrade_cost.hpp
-	libftl/include/libftl/xml/labels/value.hpp
-	libftl/include/libftl/xml/labels/velocity.hpp
-	libftl/include/libftl/xml/labels/w.hpp
-	libftl/include/libftl/xml/labels/weapon_art.hpp
-	libftl/include/libftl/xml/labels/weapon_blueprint.hpp
-	libftl/include/libftl/xml/labels/weapon_list.hpp
-	libftl/include/libftl/xml/labels/weapon_mounts.hpp
-	libftl/include/libftl/xml/labels/weapon_slots.hpp
-	libftl/include/libftl/xml/labels/weapons.hpp
-	libftl/include/libftl/xml/labels/x.hpp
-	libftl/include/libftl/xml/labels/y.hpp
-	libftl/include/libftl/xml/node.hpp
-	libftl/include/libftl/xml/node_output.hpp
-	libftl/include/libftl/xml/sectors/load.hpp
-	libftl/include/libftl/xml/sectors/result.hpp
-	libftl/include/libftl/xml/sectors/sector_description.hpp
-	libftl/include/libftl/xml/sectors/sector_type.hpp
-	libftl/include/libftl/xml/ship/explosion.hpp
-	libftl/include/libftl/xml/ship/gib.hpp
-	libftl/include/libftl/xml/ship/img.hpp
-	libftl/include/libftl/xml/ship/load.hpp
-	libftl/include/libftl/xml/ship/offset.hpp
-	libftl/include/libftl/xml/ship/offsets.hpp
-	libftl/include/libftl/xml/ship/result.hpp
-	libftl/include/libftl/xml/ship/slide.hpp
-	libftl/include/libftl/xml/ship/slide_input.hpp
-	libftl/include/libftl/xml/ship/slide_output.hpp
-	libftl/include/libftl/xml/ship/slide_to_string.hpp
-	libftl/src/archive/base.cpp
-	libftl/src/archive/chain.cpp
-	libftl/src/archive/entry_output.cpp
-	libftl/src/archive/extract.cpp
-	libftl/src/archive/filesystem.cpp
-	libftl/src/archive/open.cpp
-	libftl/src/archive/path.cpp
-	libftl/src/archive/read_index.cpp
-	libftl/src/blueprints/data.cpp
-	libftl/src/blueprints/find_ship.cpp
-	libftl/src/blueprints/load.cpp
-	libftl/src/options/create_resource_parser.cpp
-	libftl/src/options/open_archive.cpp
-	libftl/src/room/state.cpp
-	libftl/src/room/system.cpp
-	libftl/src/ship/draw.cpp
-	libftl/src/ship/images/load.cpp
-	libftl/src/ship/images/object.cpp
-	libftl/src/ship/initial_state.cpp
-	libftl/src/ship/layout/load.cpp
-	libftl/src/ship/layout/load_xml.cpp
-	libftl/src/ship/layout/object.cpp
-	libftl/src/ship/layout/output.cpp
-	libftl/src/ship/layout/parse.cpp
-	libftl/src/ship/load.cpp
-	libftl/src/ship/resources.cpp
-	libftl/src/ship/state.cpp
-	libftl/src/sprite/draw.cpp
-	libftl/src/sprite/images.cpp
-	libftl/src/sprite/resolution.cpp
-	libftl/src/sprite/white.cpp
-	libftl/src/xml/achievements/load.cpp
-	libftl/src/xml/animations/load.cpp
-	libftl/src/xml/blueprints/direction_to_string.cpp
-	libftl/src/xml/blueprints/load.cpp
-	libftl/src/xml/blueprints/result.cpp
-	libftl/src/xml/events/event.cpp
-	libftl/src/xml/events/load.cpp
-	libftl/src/xml/sectors/load.cpp
-	libftl/src/xml/ship/load.cpp
-	libftl/src/xml/ship/slide_to_string.cpp
-)
+fcppt_utils_load_source_files(libftl/files.txt LIBFTL_FILES)
 
-set(
-	LIBFTL_STATIC_LINK_FLAG
-	LIBFTL_STATIC_LINK
-)
+set(LIBFTL_STATIC_LINK_FLAG LIBFTL_STATIC_LINK)
 
-include(
-	FcpptSymbol
-)
+include(FcpptSymbol)
 
-fcppt_generate_symbol_header(
-	STATIC_LINK_FLAG
-		"${LIBFTL_STATIC_LINK_FLAG}"
-	EXPORTS_NAME
-		"libftl"
-	SYMBOL_NAME
-		"LIBFTL_DETAIL"
-)
+fcppt_generate_symbol_header(STATIC_LINK_FLAG "${LIBFTL_STATIC_LINK_FLAG}"
+                             EXPORTS_NAME "libftl" SYMBOL_NAME "LIBFTL_DETAIL")
 
-function(
-	add_libftl_library
-	VARIANT
-)
-	if(${VARIANT} STREQUAL "STATIC")
-		fcppt_utils_static_link_name(
-			libftl
-			LIBFTL_LIB_NAME
-		)
-	elseif(${VARIANT} STREQUAL "INTERFACE")
-		fcppt_utils_interface_link_name(
-			libftl
-			LIBFTL_LIB_NAME
-		)
-	else()
-		set(
-			LIBFTL_LIB_NAME
-			libftl
-		)
-	endif()
+function(add_libftl_library VARIANT)
+  if(${VARIANT} STREQUAL "STATIC")
+    fcppt_utils_static_link_name(libftl LIBFTL_LIB_NAME)
+  elseif(${VARIANT} STREQUAL "INTERFACE")
+    fcppt_utils_interface_link_name(libftl LIBFTL_LIB_NAME)
+  else()
+    set(LIBFTL_LIB_NAME libftl)
+  endif()
 
-	fcppt_utils_append_source_dir_and_make_groups(
-		"${LIBFTL_FILES}"
-		LIBFTL_FILES_ABS
-	)
+  fcppt_utils_append_source_dir_and_make_groups("${LIBFTL_FILES}"
+                                                LIBFTL_FILES_ABS)
 
-#	fcppt_utils_add_headers(
-#		${LIBFTL_PARSER_FILES}
-#	)
+  if(${VARIANT} STREQUAL "INTERFACE")
+    add_library(${LIBFTL_LIB_NAME} ${VARIANT})
+  else()
+    add_library(${LIBFTL_LIB_NAME} ${VARIANT} ${LIBFTL_PARSER_FILES}
+                                   ${LIBFTL_FILES_ABS})
+  endif()
 
-	if(${VARIANT} STREQUAL "INTERFACE")
-		add_library(
-			${LIBFTL_LIB_NAME}
-			${VARIANT}
-		)
-	else()
-		add_library(
-			${LIBFTL_LIB_NAME}
-			${VARIANT}
-			${LIBFTL_PARSER_FILES}
-			${LIBFTL_FILES_ABS}
-		)
-	endif()
+  if(NOT ${VARIANT} STREQUAL "INTERFACE")
+    fcppt_utils_set_target_compiler_flags(${LIBFTL_LIB_NAME})
+  endif()
 
-	if(NOT ${VARIANT} STREQUAL "INTERFACE")
-		fcppt_utils_set_target_compiler_flags(
-			${LIBFTL_LIB_NAME}
-		)
-	endif()
+  target_include_directories(${LIBFTL_LIB_NAME}
+                             INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-	target_include_directories(
-		${LIBFTL_LIB_NAME}
-		INTERFACE
-		${CMAKE_CURRENT_SOURCE_DIR}/include
-	)
+  if(NOT ${VARIANT} STREQUAL "INTERFACE")
+    target_include_directories(
+      ${LIBFTL_LIB_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                 ${CMAKE_CURRENT_SOURCE_DIR}/impl/include)
+  endif()
 
-	if(NOT ${VARIANT} STREQUAL "INTERFACE")
-		target_include_directories(
-			${LIBFTL_LIB_NAME}
-			PRIVATE
-			${CMAKE_CURRENT_SOURCE_DIR}/include
-			${CMAKE_CURRENT_SOURCE_DIR}/impl/include
-		)
-	endif()
+  target_include_directories(
+    ${LIBFTL_LIB_NAME} SYSTEM
+    INTERFACE ${FCPPT_UTILS_PROJECT_BINARY_DIR}/include)
 
-	target_include_directories(
-		${LIBFTL_LIB_NAME}
-		SYSTEM
-		INTERFACE
-		${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
-	)
+  if(NOT ${VARIANT} STREQUAL "INTERFACE")
+    target_include_directories(
+      ${LIBFTL_LIB_NAME} SYSTEM
+      PRIVATE ${FCPPT_UTILS_PROJECT_BINARY_DIR}/include)
+  endif()
 
-	if(NOT ${VARIANT} STREQUAL "INTERFACE")
-		target_include_directories(
-			${LIBFTL_LIB_NAME}
-			SYSTEM
-			PRIVATE
-			${FCPPT_UTILS_PROJECT_BINARY_DIR}/include
-		)
-	endif()
+  fcppt_utils_interface_static_link(${LIBFTL_LIB_NAME} ${VARIANT}
+                                    "${LIBFTL_STATIC_LINK_FLAG}")
 
-	fcppt_utils_interface_static_link(
-		${LIBFTL_LIB_NAME}
-		${VARIANT}
-		"${LIBFTL_STATIC_LINK_FLAG}"
-	)
+  target_link_libraries(
+    ${LIBFTL_LIB_NAME}
+    INTERFACE sgeimagecolor_interface sgerenderer_interface sgesprite_interface
+              fcppt_core_interface fcppt_options_interface
+              fcppt_parse_interface)
 
-	target_link_libraries(
-		${LIBFTL_LIB_NAME}
-		INTERFACE
-		sgeimagecolor_interface
-		sgerenderer_interface
-		sgesprite_interface
-		fcppt_core_interface
-		fcppt_options_interface
-		fcppt_parse_interface
-	)
+  if(NOT ${VARIANT} STREQUAL "INTERFACE")
+    target_link_libraries(
+      ${LIBFTL_LIB_NAME}
+      PRIVATE ${sgeimagecolor_TARGET}
+              ${sgeimage2d_TARGET}
+              ${sgemedia_TARGET}
+              ${sgeparse_TARGET}
+              ${sgerenderer_TARGET}
+              ${sgesprite_TARGET}
+              ${sgetexture_TARGET}
+              ${alda_TARGET}
+              ${fcppt_core_TARGET}
+              ${fcppt_options_TARGET}
+              fcppt_parse_interface)
+  endif()
 
-	if(NOT ${VARIANT} STREQUAL "INTERFACE")
-		target_link_libraries(
-			${LIBFTL_LIB_NAME}
-			PRIVATE
-			${sgeimagecolor_TARGET}
-			${sgeimage2d_TARGET}
-			${sgemedia_TARGET}
-			${sgeparse_TARGET}
-			${sgerenderer_TARGET}
-			${sgesprite_TARGET}
-			${sgetexture_TARGET}
-			${alda_TARGET}
-			${fcppt_core_TARGET}
-			${fcppt_options_TARGET}
-			fcppt_parse_interface
-		)
-	endif()
-
-	fcppt_utils_export_install_target(
-		${LIBFTL_LIB_NAME}
-	)
+  fcppt_utils_export_install_target(${LIBFTL_LIB_NAME})
 endfunction()
 
 if(ENABLE_SHARED)
-	add_libftl_library(
-		"SHARED"
-	)
+  add_libftl_library("SHARED")
 endif()
 
 if(ENABLE_STATIC)
-	add_libftl_library(
-		"STATIC"
-	)
+  add_libftl_library("STATIC")
 endif()
 
-add_libftl_library(
-	"INTERFACE"
-)
+add_libftl_library("INTERFACE")
 
-add_library(
-	libftl_impl_interface
-	INTERFACE
-)
+add_library(libftl_impl_interface INTERFACE)
 
-target_include_directories(
-	libftl_impl_interface
-	INTERFACE
-	${CMAKE_CURRENT_SOURCE_DIR}/impl/include
-)
+target_include_directories(libftl_impl_interface
+                           INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/impl/include)
 
-target_link_libraries(
-	libftl_impl_interface
-	INTERFACE
-	libftl_interface
-)
+target_link_libraries(libftl_impl_interface INTERFACE libftl_interface)
