@@ -1,6 +1,7 @@
 #ifndef LIBFTL_XML_SHIP_SLIDE_HPP_INCLUDED
 #define LIBFTL_XML_SHIP_SLIDE_HPP_INCLUDED
 
+#include <fcppt/enum/define_max_value.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstdint>
 #include <fcppt/config/external_end.hpp>
@@ -13,9 +14,9 @@ enum class slide : std::uint8_t
   right,
   up,
   down,
-  no,
-  fcppt_maximum = no
+  no
 };
 }
+FCPPT_ENUM_DEFINE_MAX_VALUE(libftl::xml::ship::slide::no);
 
 #endif

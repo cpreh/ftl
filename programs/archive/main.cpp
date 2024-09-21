@@ -69,7 +69,6 @@
 #include <ios>
 #include <iostream>
 #include <istream>
-#include <ostream>
 #include <system_error>
 #include <fcppt/config/external_end.hpp>
 

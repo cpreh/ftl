@@ -60,7 +60,7 @@ FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
-fcppt::io::istream &operator>>(fcppt::io::istream &_stream, ftl::parse::xml::type &_name)
+fcppt::io::istream &operator>>(fcppt::io::istream &_stream, ftl::parse::xml::type &_name) // NOLINT(misc-use-internal-linkage)
 {
   return fcppt::enum_::input(_stream, _name);
 }

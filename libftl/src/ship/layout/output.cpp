@@ -15,17 +15,17 @@
 
 namespace libftl::ship::layout
 {
-fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::room const &);
+fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::room const &); // NOLINT(misc-use-internal-linkage)
 
-fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::room const &_room)
+fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::room const &_room) // NOLINT(misc-use-internal-linkage)
 {
   return _stream << FCPPT_TEXT("{id: ") << _room.id_ << FCPPT_TEXT(", tile_rect: ") << _room.rect_
                  << FCPPT_TEXT("}");
 }
 
-fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::door const &);
+fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::ship::layout::door const &); // NOLINT(misc-use-internal-linkage)
 
-fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::door const &_door)
+fcppt::io::ostream &operator<<(fcppt::io::ostream &_stream, libftl::ship::layout::door const &_door) // NOLINT(misc-use-internal-linkage)
 {
   return _stream << FCPPT_TEXT("{pos: ") << _door.pos_ << FCPPT_TEXT(", left_top_room: ")
                  << _door.left_top_room_ << FCPPT_TEXT(", bottom_right_room: ")

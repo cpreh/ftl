@@ -16,14 +16,14 @@
 namespace libftl::impl::xml
 {
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::node const &_node)
+operator<<(std::ostream &_stream, libftl::impl::xml::node const &_node) // NOLINT(misc-use-internal-linkage)
 {
   return _stream << "<('" << _node.opening_tag_ << "' "
                  << fcppt::container::output(_node.attributes_) << _node.content_ << ")>";
 }
 
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::inner_node const &_node)
+operator<<(std::ostream &_stream, libftl::impl::xml::inner_node const &_node) // NOLINT(misc-use-internal-linkage)
 {
   fcppt::variant::match(
       _node.content_,
@@ -35,11 +35,10 @@ operator<<(std::ostream &_stream, libftl::impl::xml::inner_node const &_node)
 }
 
 inline std::ostream &
-operator<<(std::ostream &_stream, libftl::impl::xml::attribute const &_attribute)
+operator<<(std::ostream &_stream, libftl::impl::xml::attribute const &_attribute) // NOLINT(misc-use-internal-linkage)
 {
   return _stream << _attribute.name_ << "=\"" << _attribute.value_ << '"';
 }
-
 }
 
 std::ostream &
