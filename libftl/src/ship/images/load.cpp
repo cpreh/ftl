@@ -1,9 +1,10 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/path.hpp>
+#include <libftl/ship/images/error.hpp>
 #include <libftl/ship/images/load.hpp>
 #include <libftl/ship/images/name.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/sprite/images.hpp>
+#include <libftl/sprite/load_error.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/labels/cloak.hpp>
@@ -28,7 +29,6 @@
 #include <fcppt/make_cref.hpp>
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/reference_impl.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/container/join.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -53,27 +53,26 @@
 
 namespace
 {
-fcppt::either::object<libftl::error, sge::texture::const_part_shared_ptr>
+fcppt::either::object<libftl::ship::images::error, sge::texture::const_part_shared_ptr>
 find_image(libftl::sprite::images const &_images, std::string const &_file_name)
 {
   return fcppt::either::match(
       _images.load(libftl::archive::path{"ship"} / std::string{_file_name}),
-      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-      [&_file_name, &_images](libftl::error &&_error1)
+      [&_file_name, &_images](libftl::sprite::load_error &&_error1)
       {
         return fcppt::either::map_failure(
             _images.load(libftl::archive::path{"ships_noglow"} / std::string{_file_name}),
-            // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-            [&_error1](libftl::error &&_error2) {
-              return libftl::error{
-                  std::move(_error1.get()) + FCPPT_TEXT("\n") + std::move(_error2.get())};
+            [&_error1](libftl::sprite::load_error &&_error2)
+            {
+              return libftl::ship::images::error{
+                  .error1_ = std::move(_error1), .error2_ = std::move(_error2)};
             });
       },
       [](sge::texture::const_part_shared_ptr &&_texture)
-      { return fcppt::either::make_success<libftl::error>(std::move(_texture)); });
+      { return fcppt::either::make_success<libftl::ship::images::error>(std::move(_texture)); });
 }
 
-fcppt::either::object<libftl::error, libftl::ship::images::object::base>
+fcppt::either::object<libftl::ship::images::error, libftl::ship::images::object::base>
 load_base(libftl::sprite::images const &_images, libftl::ship::images::name const &_ship_name)
 {
   return fcppt::either::map(
@@ -82,14 +81,16 @@ load_base(libftl::sprite::images const &_images, libftl::ship::images::name cons
       { return libftl::ship::images::object::base{std::move(_texture)}; });
 }
 
-fcppt::either::object<libftl::error, fcppt::optional::object<libftl::ship::images::object::shield>>
+fcppt::either::object<
+    libftl::ship::images::error,
+    fcppt::optional::object<libftl::ship::images::object::shield>>
 load_shield(libftl::sprite::images const &_images, libftl::xml::blueprints::ship const &_blueprint)
 {
   return fcppt::optional::maybe(
       _blueprint.content_.get<libftl::xml::labels::shield_image>(),
       []
       {
-        return fcppt::either::make_success<libftl::error>(
+        return fcppt::either::make_success<libftl::ship::images::error>(
             fcppt::optional::object<libftl::ship::images::object::shield>{});
       },
       [&_images](libftl::xml::node<fcppt::record::object<>, std::string> const &_shield)
@@ -108,13 +109,13 @@ using get_offset_function =
         libftl::xml::ship::offsets const &)>;
 
 template <typename Type>
-fcppt::either::object<libftl::error, fcppt::optional::object<Type>> load_offset_image(
+fcppt::either::object<libftl::ship::images::error, fcppt::optional::object<Type>> load_offset_image(
     libftl::sprite::images const &_images,
     fcppt::reference<libftl::xml::ship::result const> const _ship,
     get_offset_function const &_get_offset,
     std::string const &_name)
 {
-  auto const image_from_offset(
+  auto const image_from_offset{
       [&_images, &_name](libftl::xml::ship::offset const &_offset)
       {
         return fcppt::either::map(
@@ -124,18 +125,23 @@ fcppt::either::object<libftl::error, fcppt::optional::object<Type>> load_offset_
               return fcppt::optional::make(Type{
                   libftl::ship::images::object::offset_image{_offset, std::move(_texture)}});
             });
-      });
+      }};
 
   return fcppt::optional::maybe(
       fcppt::optional::bind(
           fcppt::record::get<libftl::xml::labels::offsets>(_ship.get()),
           [&_get_offset](libftl::xml::ship::offsets const &_offsets)
           { return _get_offset(_offsets); }),
-      [] { return fcppt::either::make_success<libftl::error>(fcppt::optional::object<Type>{}); },
+      []
+      {
+        return fcppt::either::make_success<libftl::ship::images::error>(
+            fcppt::optional::object<Type>{});
+      },
       image_from_offset);
 }
 
-fcppt::either::object<libftl::error, libftl::ship::images::object::gib_image> load_mandatory_gib(
+fcppt::either::object<libftl::ship::images::error, libftl::ship::images::object::gib_image>
+load_mandatory_gib(
     libftl::sprite::images const &_images,
     libftl::xml::ship::gib const &_gib,
     libftl::ship::images::name const &_ship_name,
@@ -148,19 +154,20 @@ fcppt::either::object<libftl::error, libftl::ship::images::object::gib_image> lo
       { return libftl::ship::images::object::gib_image{_gib, std::move(_texture)}; });
 }
 
-fcppt::either::
-    object<libftl::error, fcppt::optional::object<libftl::ship::images::object::gib_image>>
-    load_optional_gib(
-        libftl::sprite::images const &_images,
-        fcppt::optional::object<libftl::xml::ship::gib> const &_opt_gib,
-        libftl::ship::images::name const &_ship_name,
-        unsigned const _number)
+fcppt::either::object<
+    libftl::ship::images::error,
+    fcppt::optional::object<libftl::ship::images::object::gib_image>>
+load_optional_gib(
+    libftl::sprite::images const &_images,
+    fcppt::optional::object<libftl::xml::ship::gib> const &_opt_gib,
+    libftl::ship::images::name const &_ship_name,
+    unsigned const _number)
 {
   return fcppt::optional::maybe(
       _opt_gib,
       []
       {
-        return fcppt::either::make_success<libftl::error>(
+        return fcppt::either::make_success<libftl::ship::images::error>(
             fcppt::optional::object<libftl::ship::images::object::gib_image>{});
       },
       [&_images, &_ship_name, &_number](libftl::xml::ship::gib const &_gib)
@@ -172,20 +179,21 @@ fcppt::either::
       });
 }
 
-fcppt::either::object<libftl::error, std::vector<libftl::ship::images::object::gib_image>>
-load_gibs(
-    libftl::sprite::images const &_images,
-    fcppt::reference<libftl::xml::ship::explosion const> const _explosion,
-    libftl::ship::images::name const &_ship_name)
+fcppt::either::
+    object<libftl::ship::images::error, std::vector<libftl::ship::images::object::gib_image>>
+    load_gibs(
+        libftl::sprite::images const &_images,
+        fcppt::reference<libftl::xml::ship::explosion const> const _explosion,
+        libftl::ship::images::name const &_ship_name)
 {
-  auto const load_mandatory_impl(
+  auto const load_mandatory_impl{
       [&_ship_name, &_images](libftl::xml::ship::gib const &_gib, unsigned const _number)
-      { return load_mandatory_gib(_images, _gib, _ship_name, _number); });
+      { return load_mandatory_gib(_images, _gib, _ship_name, _number); }};
 
-  auto const load_optional_impl(
+  auto const load_optional_impl{
       [&_ship_name, &_images](
           fcppt::optional::object<libftl::xml::ship::gib> const &_gib, unsigned const _number)
-      { return load_optional_gib(_images, _gib, _ship_name, _number); });
+      { return load_optional_gib(_images, _gib, _ship_name, _number); }};
 
   return fcppt::either::apply(
       [](libftl::ship::images::object::gib_image &&_gib1,
@@ -215,10 +223,10 @@ load_gibs(
           6U) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
   );
 }
-
 }
 
-fcppt::either::object<libftl::error, libftl::ship::images::object> libftl::ship::images::load(
+fcppt::either::object<libftl::ship::images::error, libftl::ship::images::object>
+libftl::ship::images::load(
     libftl::sprite::images const &_images,
     libftl::xml::blueprints::ship const &_blueprint,
     fcppt::reference<libftl::xml::ship::result const> const _ship,
@@ -245,26 +253,21 @@ fcppt::either::object<libftl::error, libftl::ship::images::object> libftl::ship:
           _ship,
           get_offset_function{
               [](libftl::xml::ship::offsets const &_offsets)
-                  -> fcppt::optional::object<libftl::xml::ship::offset> const & {
-                return fcppt::record::get<libftl::xml::labels::floor>(_offsets.content_);
-              }},
+                  -> fcppt::optional::object<libftl::xml::ship::offset> const &
+              { return fcppt::record::get<libftl::xml::labels::floor>(_offsets.content_); }},
           _ship_name.get() + "_floor.png"),
       load_offset_image<libftl::ship::images::object::cloak>(
           _images,
           _ship,
           get_offset_function{
               [](libftl::xml::ship::offsets const &_offsets)
-                  -> fcppt::optional::object<libftl::xml::ship::offset> const & {
-                return fcppt::record::get<libftl::xml::labels::cloak>(_offsets.content_);
-              }},
+                  -> fcppt::optional::object<libftl::xml::ship::offset> const &
+              { return fcppt::record::get<libftl::xml::labels::cloak>(_offsets.content_); }},
           fcppt::optional::from(
               fcppt::optional::map(
-                _blueprint.content_.get<libftl::xml::labels::cloak_image>(),
-                [](libftl::xml::node<fcppt::record::object<>,std::string> const &_cloak)
-                {
-                  return _cloak.content_;
-                }
-              ),
+                  _blueprint.content_.get<libftl::xml::labels::cloak_image>(),
+                  [](libftl::xml::node<fcppt::record::object<>, std::string> const &_cloak)
+                  { return _cloak.content_; }),
               [&_ship_name] { return _ship_name.get(); }) +
               "_cloak.png"),
       load_gibs(

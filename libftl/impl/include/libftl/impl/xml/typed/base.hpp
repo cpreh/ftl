@@ -1,9 +1,9 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_BASE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_BASE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/either/object.hpp>
+#include <libftl/xml/type_error.hpp>
 
 namespace libftl::impl::xml::typed
 {
@@ -18,7 +18,7 @@ public:
   using result_type = Result;
   using arg_type = Arg;
 
-  [[nodiscard]] virtual fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] virtual fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &) const = 0;
 };
 }

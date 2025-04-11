@@ -1,8 +1,8 @@
 #ifndef LIBFTL_ARCHIVE_BASE_HPP_INCLUDED
 #define LIBFTL_ARCHIVE_BASE_HPP_INCLUDED
 
-#include <libftl/error_fwd.hpp>
 #include <libftl/archive/base_fwd.hpp>
+#include <libftl/archive/open_path_error_fwd.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/nonmovable.hpp>
@@ -25,8 +25,9 @@ public:
   LIBFTL_DETAIL_SYMBOL
   virtual ~base();
 
-  [[nodiscard]] virtual fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-  open(libftl::archive::path const &) const = 0;
+  [[nodiscard]] virtual fcppt::either::
+      object<libftl::archive::open_path_error, fcppt::unique_ptr<std::istream>>
+      open(libftl::archive::path const &) const = 0;
 };
 
 }

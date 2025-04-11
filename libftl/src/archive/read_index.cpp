@@ -1,8 +1,6 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/index.hpp>
-#include <libftl/archive/length.hpp>
-#include <libftl/archive/offset.hpp>
+#include <libftl/archive/index_error.hpp>
 #include <libftl/archive/read_index.hpp>
 #include <alda/bindings/dynamic_len.hpp>
 #include <alda/bindings/fundamental.hpp>
@@ -69,10 +67,9 @@ transform_entry(int_type const _offset, alda::raw::element_type<record_binding> 
   return std::make_pair(
       std::move(fcppt::record::get<path_label>(_result)),
       libftl::archive::entry{
-          libftl::archive::offset{
-              fcppt::cast::to_signed(_offset + alda::raw::needed_size<record_binding>(_result))},
-          libftl::archive::length{
-              fcppt::cast::to_signed(fcppt::record::get<size_label>(_result))}});
+          .offset_ =
+              fcppt::cast::to_signed(_offset + alda::raw::needed_size<record_binding>(_result)),
+          .length_ = fcppt::cast::to_signed(fcppt::record::get<size_label>(_result))});
 }
 
 fcppt::either::object<alda::raw::stream::error, index_pair>
@@ -115,7 +112,7 @@ make_index(std::istream &_stream, alda::raw::element_type<offset_binding> const 
 
 }
 
-fcppt::either::object<libftl::error, libftl::archive::index>
+fcppt::either::object<libftl::archive::index_error, libftl::archive::index>
 libftl::archive::read_index(std::istream &_stream)
 {
   return fcppt::either::map_failure(
@@ -126,7 +123,7 @@ libftl::archive::read_index(std::istream &_stream)
       // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
       [](alda::raw::stream::error &&_error)
       {
-        return libftl::error{fcppt::string{
+        return libftl::archive::index_error{fcppt::string{
             FCPPT_TEXT("Error reading index of .dat file: ") + std::move(_error.get())}};
       });
 }

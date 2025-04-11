@@ -1,9 +1,9 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_AS_STRUCT_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_AS_STRUCT_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/typed/arg_type.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
@@ -24,7 +24,7 @@ public:
 
   explicit as_struct(Parser &&_parser) : parser_{std::move(_parser)} {}
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &_arg) const
   {
     return fcppt::either::map(

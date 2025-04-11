@@ -1,8 +1,8 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/either.hpp> // NOLINT(misc-include-cleaner)
@@ -49,7 +49,7 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
   CHECK(
       attributes.parse(std::vector<libftl::impl::xml::attribute>{
           libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "10"}}) ==
-      fcppt::either::make_success<libftl::error>(fcppt::record::make(attrib1{} = 10)));
+      fcppt::either::make_success<libftl::xml::type_error>(fcppt::record::make(attrib1{} = 10)));
 
   CHECK(attributes
             .parse(std::vector<libftl::impl::xml::attribute>{
@@ -71,7 +71,7 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
       attributes2.parse(std::vector<libftl::impl::xml::attribute>{
           libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib1", "10"},
           libftl::impl::xml::attribute{fcppt::optional::nothing{}, "attrib2", "20"}}) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           fcppt::record::make(attrib1{} = 10, attrib2{} = 20U)));
 
   libftl::impl::xml::typed::attribute_set const attributes3{fcppt::record::make(
@@ -80,7 +80,7 @@ TEST_CASE("xml::typed::attribute_set", "[xml]")
 
   CHECK(
       attributes3.parse(std::vector<libftl::impl::xml::attribute>{}) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           fcppt::record::make(attrib1{} = fcppt::optional::object<int>{})));
 }
 

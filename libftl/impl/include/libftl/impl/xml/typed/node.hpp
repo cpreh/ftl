@@ -1,15 +1,12 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
-#include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
+#include <libftl/xml/errors/mismatched_tags.hpp>
 #include <fcppt/deref.hpp>
-#include <fcppt/from_std_string.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -33,16 +30,16 @@ public:
   {
   }
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(libftl::impl::xml::node const &_node) const
   {
     if (_node.opening_tag_ != this->name_)
     {
-      return fcppt::either::make_failure<result_type>(libftl::error{
-          libftl::impl::xml::location_to_string(_node.location_) +
-          fcppt::string{FCPPT_TEXT("Mismatched tags, expected ")} +
-          fcppt::from_std_string(this->name_) + FCPPT_TEXT(", got ") +
-          fcppt::from_std_string(_node.opening_tag_) + FCPPT_TEXT(".")});
+      return fcppt::either::make_failure<result_type>(libftl::xml::type_error{
+          libftl::xml::type_error::variant{libftl::xml::errors::mismatched_tags{
+              .location_ = _node.location_,
+              .expected_tag_ = this->name_,
+              .read_tag_ = _node.opening_tag_}}});
     }
 
     return fcppt::deref(this->parser_).parse(_node);

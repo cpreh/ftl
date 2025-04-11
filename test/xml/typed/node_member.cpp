@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
@@ -7,6 +6,7 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
@@ -53,7 +53,7 @@ TEST_CASE("xml::typed::node_member", "[xml]")
 
   CHECK(
       parser.parse(arg_type{fcppt::make_cref(node)}) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           libftl::xml::node{fcppt::record::make(), fcppt::unit{}}));
 }
 

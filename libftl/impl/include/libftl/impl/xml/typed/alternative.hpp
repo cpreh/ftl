@@ -1,17 +1,18 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_ALTERNATIVE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_ALTERNATIVE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node_fwd.hpp>
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
+#include <libftl/xml/errors/alternative.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/function.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
-#include <fcppt/strong_typedef_output.hpp> // IWYU pragma: keep
+#include <fcppt/make_recursive.hpp>
+#include <fcppt/recursive_impl.hpp>
+#include <fcppt/algorithm/map.hpp>
 #include <fcppt/array/init.hpp>
 #include <fcppt/array/object.hpp>
-#include <fcppt/container/output.hpp>
 #include <fcppt/either/first_success.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/map_failure.hpp>
@@ -39,10 +40,11 @@ public:
 
   explicit alternative(Parsers &&..._parsers) : parsers_{std::move(_parsers)...} {}
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(libftl::impl::xml::node const &_node) const
   {
-    using inner_function = fcppt::function<fcppt::either::object<libftl::error, result_type>()>;
+    using inner_function =
+        fcppt::function<fcppt::either::object<libftl::xml::type_error, result_type>()>;
 
     return fcppt::either::map_failure(
         fcppt::either::first_success(
@@ -59,8 +61,14 @@ public:
                             { return result_type{std::move(_inner)}; });
                       }};
                 })),
-        [](std::vector<libftl::error> const &_errors) -> libftl::error {
-          return libftl::error{fcppt::output_to_fcppt_string(fcppt::container::output(_errors))};
+        [](std::vector<libftl::xml::type_error> &&_errors) -> libftl::xml::type_error
+        {
+          return libftl::xml::type_error{
+              libftl::xml::type_error::variant{libftl::xml::errors::alternative{
+                  fcppt::algorithm::map<std::vector<fcppt::recursive<libftl::xml::type_error>>>(
+                      std::move(_errors),
+                      [](libftl::xml::type_error &&_error)
+                      { return fcppt::make_recursive(std::move(_error)); })}}};
         });
   }
 private:

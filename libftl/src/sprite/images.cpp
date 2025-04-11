@@ -1,8 +1,9 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/base.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/base_ref.hpp>
+#include <libftl/archive/open_path_error.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/sprite/images.hpp>
+#include <libftl/sprite/load_error.hpp>
 #include <sge/image/channel8.hpp>
 #include <sge/image/algorithm/uninitialized.hpp>
 #include <sge/image/color/la8.hpp>
@@ -32,7 +33,6 @@
 #include <sge/renderer/texture/mipmap/off.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/part_raw_ptr.hpp>
-#include <fcppt/from_std_string.hpp>
 #include <fcppt/literal.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/reference_impl.hpp>
@@ -42,6 +42,7 @@
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/math/dim/fill.hpp>
 #include <fcppt/optional/maybe.hpp>
@@ -99,22 +100,28 @@ libftl::sprite::images::~images() = default;
 
 sge::texture::const_part_shared_ptr libftl::sprite::images::opaque() const { return opaque_; }
 
-fcppt::either::object<libftl::error, sge::texture::const_part_shared_ptr>
+fcppt::either::object<libftl::sprite::load_error, sge::texture::const_part_shared_ptr>
 libftl::sprite::images::load(libftl::archive::path const &_path) const
 {
   libftl::archive::path const full_path{
       (libftl::archive::path{"img"}) + libftl::archive::path{_path}};
 
   return fcppt::optional::maybe(
-      fcppt::container::find_opt_mapped(impl_, full_path.rep()),
+      fcppt::container::find_opt_mapped(this->impl_, full_path.rep()),
       [&full_path, this]
       {
         return fcppt::either::bind(
-            archive_.get().open(full_path),
+            fcppt::either::map_failure(
+                this->archive_.get().open(full_path),
+                [](libftl::archive::open_path_error &&_error)
+                {
+                  return libftl::sprite::load_error{
+                      libftl::sprite::load_error::variant{std::move(_error)}};
+                }),
             [&full_path, this](fcppt::unique_ptr<std::istream> &&_stream)
             {
               return fcppt::variant::match(
-                  image_system_.get().load_stream(
+                  this->image_system_.get().load_stream(
                       sge::media::stream_unique_ptr{std::move(_stream)},
                       sge::media::optional_extension{sge::media::extension{FCPPT_TEXT("png")}},
                       sge::media::optional_name{}),
@@ -122,9 +129,8 @@ libftl::sprite::images::load(libftl::archive::path const &_path) const
                   [&full_path](sge::media::stream_unique_ptr &&)
                   {
                     return fcppt::either::make_failure<sge::texture::const_part_shared_ptr>(
-                        libftl::error{
-                            FCPPT_TEXT("Unable to load ") +
-                            fcppt::from_std_string(full_path.rep())});
+                        libftl::sprite::load_error{libftl::sprite::load_error::variant{
+                            libftl::sprite::load_error::decode_error{full_path}}});
                   },
                   // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
                   [&full_path, this](sge::image2d::file_unique_ptr &&_file)
@@ -140,10 +146,10 @@ libftl::sprite::images::load(libftl::archive::path const &_path) const
 
                     this->impl_.insert(std::make_pair(full_path.rep(), result));
 
-                    return fcppt::either::make_success<libftl::error>(result);
+                    return fcppt::either::make_success<libftl::sprite::load_error>(result);
                   });
             });
       },
       [](fcppt::reference<sge::texture::const_part_shared_ptr> const _ptr)
-      { return fcppt::either::make_success<libftl::error>(_ptr.get()); });
+      { return fcppt::either::make_success<libftl::sprite::load_error>(_ptr.get()); });
 }

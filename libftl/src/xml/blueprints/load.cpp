@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/blueprints/aug_parser.hpp>
 #include <libftl/impl/xml/blueprints/crew_parser.hpp>
@@ -12,15 +11,16 @@
 #include <libftl/impl/xml/typed/make_as_struct.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/blueprints/load.hpp>
 #include <libftl/xml/blueprints/result.hpp>
-#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/deref_unique_ptr.hpp> // IWYU pragma: keep
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::xml::blueprints::result>
+fcppt::either::object<libftl::xml::error, libftl::xml::blueprints::result>
 libftl::xml::blueprints::load(std::istream &_input)
 {
   namespace blueprints = libftl::impl::xml::blueprints;

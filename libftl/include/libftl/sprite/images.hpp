@@ -1,10 +1,10 @@
 #ifndef LIBFTL_SPRITE_IMAGES_HPP_INCLUDED
 #define LIBFTL_SPRITE_IMAGES_HPP_INCLUDED
 
-#include <libftl/error_fwd.hpp>
 #include <libftl/archive/base_ref.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <libftl/detail/symbol.hpp>
+#include <libftl/sprite/load_error_fwd.hpp>
 #include <libftl/sprite/images_fwd.hpp> // IWYU pragma: keep
 #include <sge/image2d/system_ref.hpp>
 #include <sge/renderer/device/core_ref.hpp>
@@ -39,7 +39,7 @@ public:
   sge::texture::const_part_shared_ptr opaque() const;
 
   LIBFTL_DETAIL_SYMBOL
-  fcppt::either::object<libftl::error, sge::texture::const_part_shared_ptr>
+  fcppt::either::object<libftl::sprite::load_error, sge::texture::const_part_shared_ptr>
   load(libftl::archive::path const &) const;
 
 private:

@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
@@ -9,6 +8,7 @@
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/make_recursive.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unit.hpp>
@@ -47,7 +47,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
 
   CHECK(
       parser.parse(libftl::impl::xml::node_vector{}) ==
-      fcppt::either::make_success<libftl::error>(result_vector{}));
+      fcppt::either::make_success<libftl::xml::type_error>(result_vector{}));
 
   CHECK(
       parser.parse(fcppt::container::make<libftl::impl::xml::node_vector>(
@@ -56,7 +56,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           result_vector{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}));
 
   CHECK(parser
@@ -80,7 +80,7 @@ TEST_CASE("xml::typed::node_list", "[xml]")
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
-      fcppt::either::make_success<libftl::error>(result_vector{
+      fcppt::either::make_success<libftl::xml::type_error>(result_vector{
           libftl::xml::node{fcppt::record::make(), fcppt::unit{}},
           libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}));
 }

@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/alternative.hpp>
@@ -9,6 +8,7 @@
 #include <libftl/impl/xml/typed/node_content.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/strong_typedef_impl.hpp> // NOLINT(misc-include-cleaner)
@@ -71,7 +71,7 @@ TEST_CASE("xml::typed::alternative", "[xml]")
           std::string{"test1"},
           std::vector<libftl::impl::xml::attribute>{},
           fcppt::optional::nothing{}}) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           result_type{left{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}}));
 }
 

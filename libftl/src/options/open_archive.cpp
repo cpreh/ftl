@@ -1,9 +1,9 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/base.hpp> // IWYU pragma: export
 #include <libftl/archive/base_unique_ptr.hpp>
 #include <libftl/archive/chain.hpp>
 #include <libftl/archive/filesystem.hpp>
 #include <libftl/archive/open.hpp>
+#include <libftl/archive/open_error.hpp>
 #include <libftl/options/data_file_label.hpp>
 #include <libftl/options/native_resource_record.hpp>
 #include <libftl/options/open_archive.hpp>
@@ -23,7 +23,7 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::archive::base_unique_ptr>
+fcppt::either::object<libftl::archive::open_error, libftl::archive::base_unique_ptr>
 libftl::options::open_archive(libftl::options::resource_variant const &_args)
 {
   return fcppt::variant::match(
@@ -41,7 +41,7 @@ libftl::options::open_archive(libftl::options::resource_variant const &_args)
       },
       [](fcppt::options::right<libftl::options::unpacked_resource_record> const &_unpacked)
       {
-        return fcppt::either::make_success<libftl::error>(
+        return fcppt::either::make_success<libftl::archive::open_error>(
             libftl::archive::filesystem(std::filesystem::path{
                 fcppt::record::get<libftl::options::resource_path_label>(_unpacked.get())}));
       });

@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/animations/anim_parser.hpp>
 #include <libftl/impl/xml/animations/anim_sheet_parser.hpp>
@@ -6,6 +5,7 @@
 #include <libftl/impl/xml/typed/alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/animations/load.hpp>
 #include <libftl/xml/animations/result.hpp>
 #include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
@@ -14,7 +14,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::xml::animations::result>
+fcppt::either::object<libftl::xml::error, libftl::xml::animations::result>
 libftl::xml::animations::load(std::istream &_input)
 {
   namespace animations = libftl::impl::xml::animations;

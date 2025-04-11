@@ -5,6 +5,7 @@
 #include <libftl/detail/symbol.hpp>
 #include <fcppt/no_init_fwd.hpp>
 #include <fcppt/io/istream_fwd.hpp>
+#include <fcppt/io/ostream_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <fcppt/config/external_end.hpp>
@@ -40,6 +41,9 @@ libftl::archive::path operator/(libftl::archive::path &&, std::string &&);
 
 LIBFTL_DETAIL_SYMBOL
 fcppt::io::istream &operator>>(fcppt::io::istream &, libftl::archive::path &);
+
+LIBFTL_DETAIL_SYMBOL
+fcppt::io::ostream &operator<<(fcppt::io::ostream &, libftl::archive::path const &);
 
 }
 

@@ -1,16 +1,12 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_ATTRIBUTE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
-#include <libftl/impl/xml/location_to_string.hpp>
 #include <libftl/impl/xml/typed/attribute_fwd.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/type_error.hpp>
+#include <libftl/xml/errors/attribute_conversion.hpp>
 #include <fcppt/extract_from_string_fmt.hpp>
-#include <fcppt/from_std_string.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
-#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -36,19 +32,19 @@ public:
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
 
-  [[nodiscard]] fcppt::either::object<libftl::error, Type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, Type>
   parse(libftl::impl::xml::attribute const &_attribute) const
   {
     return fcppt::either::from_optional(
         fcppt::extract_from_string_fmt<Type>(_attribute.value_, std::ios_base::boolalpha),
         [&_attribute]
         {
-          return libftl::error{
-              libftl::impl::xml::location_to_string(_attribute.location_) +
-              fcppt::string{FCPPT_TEXT("Failed to convert attribute ")} +
-              fcppt::from_std_string(_attribute.name()) + FCPPT_TEXT(" with value ") +
-              fcppt::from_std_string(_attribute.value_) + FCPPT_TEXT(" to type ") +
-              fcppt::from_std_string(fcppt::type_name_from_info(typeid(Type))) + FCPPT_TEXT(".")};
+          return libftl::xml::type_error{
+              libftl::xml::type_error::variant{libftl::xml::errors::attribute_conversion{
+                  .location_ = _attribute.location_,
+                  .type_ = typeid(Type),
+                  .name_ = _attribute.name(),
+                  .value_ = _attribute.value_}}};
         });
   }
 private:

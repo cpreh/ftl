@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/events/event_list_parser.hpp>
 #include <libftl/impl/xml/events/text_list_parser.hpp>
@@ -6,6 +5,7 @@
 #include <libftl/impl/xml/typed/named_alternative.hpp>
 #include <libftl/impl/xml/typed/node_list.hpp>
 #include <libftl/impl/xml/typed/partition.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/events/load.hpp>
 #include <libftl/xml/events/result.hpp>
 #include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
@@ -14,7 +14,7 @@
 #include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::xml::events::result>
+fcppt::either::object<libftl::xml::error, libftl::xml::events::result>
 libftl::xml::events::load(std::istream &_input)
 {
   namespace events = libftl::impl::xml::events;

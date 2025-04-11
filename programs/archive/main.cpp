@@ -1,8 +1,8 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/entry_output.hpp> // NOLINT(misc-include-cleaner)
 #include <libftl/archive/extract.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/index.hpp>
+#include <libftl/archive/index_error.hpp>
 #include <libftl/archive/read_index.hpp>
 #include <fcppt/args_char.hpp>
 #include <fcppt/args_from_second.hpp>
@@ -168,7 +168,7 @@ int main_program(argument_record const &_arguments)
       {
         return fcppt::either::match(
             libftl::archive::read_index(_stream),
-            [](libftl::error const &_error)
+            [](libftl::archive::index_error const &_error)
             {
               fcppt::io::cerr() << _error << FCPPT_TEXT('\n');
 

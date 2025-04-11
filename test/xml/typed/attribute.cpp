@@ -1,7 +1,7 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/either.hpp> // NOLINT(misc-include-cleaner)
@@ -28,7 +28,7 @@ TEST_CASE("xml::typed::attribute", "[xml]")
 
   CHECK(
       attribute.parse(libftl::impl::xml::attribute{fcppt::optional::nothing{}, "test", "10"}) ==
-      fcppt::either::make_success<libftl::error>(10));
+      fcppt::either::make_success<libftl::xml::type_error>(10));
 }
 
 // NOLINTEND(misc-const-correctness,cert-err58-cpp,fuchsia-statically-constructed-objects,misc-use-anonymous-namespace,cppcoreguidelines-avoid-do-while)

@@ -1,10 +1,10 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_DERIVED_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_DERIVED_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_base.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/deref_type.hpp>
 #include <fcppt/nonmovable.hpp>
@@ -35,7 +35,7 @@ public:
   using result_type = libftl::impl::xml::typed::result_type<Parser>;
   using arg_type = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &_arg) const override
   {
     return fcppt::deref(this->parser_).parse(_arg);

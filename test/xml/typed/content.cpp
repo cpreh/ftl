@@ -1,8 +1,8 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/inner_node_content.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/content.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/either.hpp> // NOLINT(misc-include-cleaner)
@@ -40,7 +40,7 @@ TEST_CASE("xml::typed::content", "[xml]")
   CHECK(
       parser.parse(fcppt::optional::make(libftl::impl::xml::inner_node{
           libftl::impl::xml::inner_node_content{std::string{"123"}}, std::string{}})) ==
-      fcppt::either::make_success<libftl::error>(123));
+      fcppt::either::make_success<libftl::xml::type_error>(123));
 }
 
 // NOLINTEND(misc-const-correctness,cert-err58-cpp,fuchsia-statically-constructed-objects,misc-use-anonymous-namespace,cppcoreguidelines-avoid-do-while)

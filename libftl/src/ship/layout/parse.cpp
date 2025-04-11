@@ -1,25 +1,27 @@
-#include <libftl/error.hpp>
 #include <libftl/ship/layout/door.hpp>
 #include <libftl/ship/layout/ellipse.hpp>
 #include <libftl/ship/layout/object.hpp>
 #include <libftl/ship/layout/parse.hpp>
+#include <libftl/ship/layout/parse_error.hpp>
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/ship/layout/room_id.hpp>
+#include <libftl/ship/layout/room_id_signed.hpp>
 #include <libftl/ship/layout/tile_coordinate.hpp>
 #include <libftl/ship/layout/tile_pos.hpp>
 #include <libftl/ship/layout/tile_rect.hpp>
-#include <fcppt/exception.hpp>
-#include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
-#include <fcppt/output_to_fcppt_string.hpp>
-#include <fcppt/output_to_std_string.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/cast/to_unsigned.hpp>
+#include <fcppt/either/apply.hpp>
+#include <fcppt/either/bind.hpp>
+#include <fcppt/either/construct.hpp>
+#include <fcppt/either/make_failure.hpp>
+#include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
+#include <fcppt/either/sequence.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/value_type.hpp>
@@ -28,7 +30,6 @@
 #include <fcppt/parse/grammar_parse_stream.hpp>
 #include <fcppt/parse/int.hpp>
 #include <fcppt/parse/parse_stream_error.hpp>
-#include <fcppt/parse/parse_stream_error_output.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/parse/string.hpp>
 #include <fcppt/parse/uint.hpp>
 #include <fcppt/parse/operators/optional.hpp>
@@ -39,14 +40,12 @@
 #include <fcppt/config/external_begin.hpp>
 #include <ios>
 #include <iosfwd>
-#include <type_traits>
+#include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace
 {
-using room_id_signed = std::make_signed_t<libftl::ship::layout::room_id::value_type>;
-
 struct room
 {
   libftl::ship::layout::room_id::value_type id_;
@@ -66,9 +65,9 @@ struct door
 
   libftl::ship::layout::tile_coordinate y_;
 
-  room_id_signed left_top_;
+  libftl::ship::layout::room_id_signed left_top_;
 
-  room_id_signed bottom_right_;
+  libftl::ship::layout::room_id_signed bottom_right_;
 
   int vertical_;
 };
@@ -109,7 +108,7 @@ using ellipse_int = fcppt::parse::int_<libftl::ship::layout::ellipse::value_type
 
 using room_id_int = fcppt::parse::uint<libftl::ship::layout::room_id::value_type>;
 
-using room_id_signed_int = fcppt::parse::int_<room_id_signed>;
+using room_id_signed_int = fcppt::parse::int_<libftl::ship::layout::room_id_signed>;
 
 using tile_coordinate_int = fcppt::parse::uint<libftl::ship::layout::tile_coordinate>;
 
@@ -119,7 +118,7 @@ class grammar : public fcppt::parse::grammar<::layout, char, decltype(eol())>
 
 public:
   grammar()
-      : grammar::grammar_base(fcppt::make_cref(this->layout_), eol()),
+      : grammar::grammar_base{fcppt::make_cref(this->layout_), eol()},
         room_{grammar_base::make_base(fcppt::parse::as_struct<::room>(
             fcppt::parse::string{"ROOM"} >> room_id_int{} >> tile_coordinate_int{} >>
             tile_coordinate_int{} >> tile_coordinate_int{} >> tile_coordinate_int{}))},
@@ -146,89 +145,129 @@ private:
   base_type<::layout> layout_;
 };
 
-bool translate_bool(int const _value)
+fcppt::either::object<libftl::ship::layout::parse_error::invalid_bool, bool>
+translate_bool(int const _value)
 {
   switch (_value)
   {
   case 0:
-    return false;
+    return fcppt::either::make_success<libftl::ship::layout::parse_error::invalid_bool>(false);
   case 1:
-    return true;
+    return fcppt::either::make_success<libftl::ship::layout::parse_error::invalid_bool>(true);
   default:
     break;
   }
 
-  throw fcppt::exception{
-      FCPPT_TEXT("Invalid boolean value ") + fcppt::output_to_fcppt_string(_value)};
+  return fcppt::either::make_failure<bool>(libftl::ship::layout::parse_error::invalid_bool{_value});
 }
 
-libftl::ship::layout::door::optional_room_id translate_optional_door_room(room_id_signed const _id)
+fcppt::either::object<
+    libftl::ship::layout::parse_error::invalid_room_id,
+    libftl::ship::layout::door::optional_room_id>
+translate_optional_door_room(libftl::ship::layout::room_id_signed const _id)
 {
-  if (_id < -1)
-  {
-    throw fcppt::exception{FCPPT_TEXT("Invalid door room ") + fcppt::output_to_fcppt_string(_id)};
-  }
-
-  return fcppt::optional::make_if(
-      _id >= 0, [_id] { return libftl::ship::layout::room_id{fcppt::cast::to_unsigned(_id)}; });
+  return fcppt::either::construct(
+      _id >= -1,
+      [_id]
+      {
+        return fcppt::optional::make_if(
+            _id >= 0,
+            [_id] { return libftl::ship::layout::room_id{fcppt::cast::to_unsigned(_id)}; });
+      },
+      [_id] { return libftl::ship::layout::parse_error::invalid_room_id{_id}; });
 }
 
-libftl::ship::layout::object translate_result(layout const &_layout)
+fcppt::either::object<libftl::ship::layout::parse_error, libftl::ship::layout::object>
+translate_result(layout const &_layout)
 {
-  return libftl::ship::layout::object{
-      libftl::ship::layout::object::offset_vector{_layout.offset_x_, _layout.offset_y_},
-      libftl::ship::layout::object::vertical{_layout.vertical_},
-      libftl::ship::layout::object::horizontal{_layout.horizontal_},
-      libftl::ship::layout::ellipse{libftl::ship::layout::ellipse::value_type{
-          libftl::ship::layout::ellipse::value_type::vector{_layout.ellipse_x_, _layout.ellipse_y_},
-          libftl::ship::layout::ellipse::value_type::dim{_layout.ellipse_w_, _layout.ellipse_h_}}},
-      fcppt::algorithm::map<libftl::ship::layout::object::room_list>(
-          _layout.rooms_,
-          [](room const &_room)
-          {
-            return libftl::ship::layout::room{
-                libftl::ship::layout::room_id{_room.id_},
-                libftl::ship::layout::tile_rect{
-                    libftl::ship::layout::tile_rect::vector{
-                        libftl::ship::layout::tile_coordinate{_room.x_},
-                        libftl::ship::layout::tile_coordinate{_room.y_}},
-                    libftl::ship::layout::tile_rect::dim{
-                        libftl::ship::layout::tile_coordinate{_room.w_},
-                        libftl::ship::layout::tile_coordinate{_room.h_}}}};
-          }),
-      fcppt::algorithm::map<libftl::ship::layout::object::door_list>(
-          _layout.doors_,
-          [](door const &_door)
-          {
-            return libftl::ship::layout::door{
-                libftl::ship::layout::tile_pos{
-                    libftl::ship::layout::tile_coordinate{_door.x_},
-                    libftl::ship::layout::tile_coordinate{_door.y_}},
-                libftl::ship::layout::door::left_top_room{
-                    translate_optional_door_room(_door.left_top_)},
-                libftl::ship::layout::door::bottom_right_room{
-                    translate_optional_door_room(_door.bottom_right_)},
-                libftl::ship::layout::door::vertical(translate_bool(_door.vertical_))};
-          })};
+  return fcppt::either::map(
+      // TODO(philipp): Accumulate all errors?
+      fcppt::either::sequence<fcppt::either::object<
+          libftl::ship::layout::parse_error,
+          libftl::ship::layout::object::door_list>>(
+          fcppt::algorithm::map<std::vector<fcppt::either::object<
+              libftl::ship::layout::parse_error,
+              libftl::ship::layout::door>>>(
+              _layout.doors_,
+              [](door const &_door)
+              {
+                auto const convert_room_error{
+                    [](libftl::ship::layout::parse_error::invalid_room_id const _error)
+                    {
+                      return libftl::ship::layout::parse_error{
+                          libftl::ship::layout::parse_error::variant{_error}};
+                    }};
+
+                auto const convert_bool_error{
+                    [](libftl::ship::layout::parse_error::invalid_bool const _error)
+                    {
+                      return libftl::ship::layout::parse_error{
+                          libftl::ship::layout::parse_error::variant{_error}};
+                    }};
+
+                return fcppt::either::apply(
+                    [&_door](
+                        libftl::ship::layout::door::optional_room_id const _left_top,
+                        libftl::ship::layout::door::optional_room_id const _bottom_right,
+                        bool const _vertical)
+                    {
+                      return libftl::ship::layout::door{
+                          libftl::ship::layout::tile_pos{
+                              libftl::ship::layout::tile_coordinate{_door.x_},
+                              libftl::ship::layout::tile_coordinate{_door.y_}},
+                          libftl::ship::layout::door::left_top_room{_left_top},
+                          libftl::ship::layout::door::bottom_right_room{_bottom_right},
+                          libftl::ship::layout::door::vertical{_vertical}};
+                    },
+                    fcppt::either::map_failure(
+                        translate_optional_door_room(_door.left_top_), convert_room_error),
+                    fcppt::either::map_failure(
+                        translate_optional_door_room(_door.bottom_right_), convert_room_error),
+                    fcppt::either::map_failure(
+                        translate_bool(_door.vertical_), convert_bool_error));
+              })),
+      [&_layout](libftl::ship::layout::object::door_list &&_doors)
+      {
+        return libftl::ship::layout::object{
+            libftl::ship::layout::object::offset_vector{_layout.offset_x_, _layout.offset_y_},
+            libftl::ship::layout::object::vertical{_layout.vertical_},
+            libftl::ship::layout::object::horizontal{_layout.horizontal_},
+            libftl::ship::layout::ellipse{libftl::ship::layout::ellipse::value_type{
+                libftl::ship::layout::ellipse::value_type::vector{
+                    _layout.ellipse_x_, _layout.ellipse_y_},
+                libftl::ship::layout::ellipse::value_type::dim{
+                    _layout.ellipse_w_, _layout.ellipse_h_}}},
+            fcppt::algorithm::map<libftl::ship::layout::object::room_list>(
+                _layout.rooms_,
+                [](room const &_room)
+                {
+                  return libftl::ship::layout::room{
+                      libftl::ship::layout::room_id{_room.id_},
+                      libftl::ship::layout::tile_rect{
+                          libftl::ship::layout::tile_rect::vector{
+                              libftl::ship::layout::tile_coordinate{_room.x_},
+                              libftl::ship::layout::tile_coordinate{_room.y_}},
+                          libftl::ship::layout::tile_rect::dim{
+                              libftl::ship::layout::tile_coordinate{_room.w_},
+                              libftl::ship::layout::tile_coordinate{_room.h_}}}};
+                }),
+            std::move(_doors)};
+      });
+}
 }
 
-using result_type = fcppt::either::object<libftl::error, libftl::ship::layout::object>;
-
-}
-
-fcppt::either::object<libftl::error, libftl::ship::layout::object>
+fcppt::either::object<libftl::ship::layout::parse_error, libftl::ship::layout::object>
 libftl::ship::layout::parse(std::istream &_stream)
-try
 {
   _stream.unsetf(std::ios_base::skipws);
 
-  return fcppt::either::map_failure(
-      fcppt::either::map(fcppt::parse::grammar_parse_stream(_stream, grammar{}), translate_result),
-      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-      [](fcppt::parse::parse_stream_error<char> &&_error)
-      { return libftl::error{fcppt::from_std_string(fcppt::output_to_std_string(_error))}; });
-}
-catch (fcppt::exception const &_error)
-{
-  return result_type{libftl::error{_error.string()}};
+  return fcppt::either::bind(
+      fcppt::either::map_failure(
+          fcppt::parse::grammar_parse_stream(_stream, grammar{}),
+          [](fcppt::parse::parse_stream_error<char> &&_error)
+          {
+            return libftl::ship::layout::parse_error{
+                libftl::ship::layout::parse_error::variant{std::move(_error)}};
+          }),
+      translate_result);
 }

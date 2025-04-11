@@ -1,14 +1,17 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/base_fwd.hpp>
 #include <libftl/blueprints/data_fwd.hpp>
 #include <libftl/blueprints/find_ship.hpp>
 #include <libftl/ship/load.hpp>
+#include <libftl/ship/load_error.hpp>
 #include <libftl/ship/resources.hpp>
+#include <libftl/ship/images/error.hpp>
 #include <libftl/ship/images/load.hpp>
 #include <libftl/ship/images/name.hpp>
 #include <libftl/ship/images/object.hpp>
 #include <libftl/ship/layout/load.hpp>
+#include <libftl/ship/layout/load_error.hpp>
 #include <libftl/ship/layout/load_xml.hpp>
+#include <libftl/ship/layout/load_xml_error.hpp>
 #include <libftl/ship/layout/name.hpp>
 #include <libftl/ship/layout/object.hpp>
 #include <libftl/sprite/images_fwd.hpp>
@@ -16,20 +19,19 @@
 #include <libftl/xml/labels/img.hpp>
 #include <libftl/xml/labels/layout.hpp>
 #include <libftl/xml/ship/result.hpp>
-#include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/reference_impl.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/either/apply.hpp>
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <string>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load(
+fcppt::either::object<libftl::ship::load_error, libftl::ship::resources> libftl::ship::load(
     libftl::archive::base const &_archive,
     fcppt::reference<libftl::blueprints::data const> const _blueprints,
     libftl::sprite::images const &_images,
@@ -40,18 +42,27 @@ fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load
           libftl::blueprints::find_ship(_blueprints, _name),
           [&_name]
           {
-            return libftl::error{
-                FCPPT_TEXT("Ship \"") + fcppt::from_std_string(_name) +
-                FCPPT_TEXT("\" not found in any blueprint file.")};
+            return libftl::ship::load_error{
+                .name_ = _name,
+                .value_ = libftl::ship::load_error::variant{libftl::ship::load_error::not_found{}}};
           }),
-      [&_archive, &_images](fcppt::reference<libftl::xml::blueprints::ship const> const _blueprint)
+      [&_archive, &_images, &_name](
+          fcppt::reference<libftl::xml::blueprints::ship const> const _blueprint)
       {
         libftl::ship::layout::name const layout_name{
             _blueprint->attributes_.get<libftl::xml::labels::layout>()};
 
         return fcppt::either::bind(
-            libftl::ship::layout::load_xml(_archive, layout_name),
-            [&_archive, &_blueprint, &_images, &layout_name](libftl::xml::ship::result &&_ship)
+            fcppt::either::map_failure(
+                libftl::ship::layout::load_xml(_archive, layout_name),
+                [&_name](libftl::ship::layout::load_xml_error &&_error)
+                {
+                  return libftl::ship::load_error{
+                      .name_ = _name,
+                      .value_ = libftl::ship::load_error::variant{std::move(_error)}};
+                }),
+            [&_archive, &_blueprint, &_images, &layout_name, &_name](
+                libftl::xml::ship::result &&_ship)
             {
               libftl::ship::images::name const image_name{
                   _blueprint->attributes_.get<libftl::xml::labels::img>()};
@@ -64,9 +75,23 @@ fcppt::either::object<libftl::error, libftl::ship::resources> libftl::ship::load
                     return libftl::ship::resources{
                         std::move(_ship), std::move(_ship_images), std::move(_layout)};
                   },
-                  libftl::ship::images::load(
-                      _images, _blueprint.get(), fcppt::make_cref(_ship), image_name),
-                  libftl::ship::layout::load(_archive, layout_name));
+                  fcppt::either::map_failure(
+                      libftl::ship::images::load(
+                          _images, _blueprint.get(), fcppt::make_cref(_ship), image_name),
+                      [&_name](libftl::ship::images::error &&_error)
+                      {
+                        return libftl::ship::load_error{
+                            .name_ = _name,
+                            .value_ = libftl::ship::load_error::variant{std::move(_error)}};
+                      }),
+                  fcppt::either::map_failure(
+                      libftl::ship::layout::load(_archive, layout_name),
+                      [&_name](libftl::ship::layout::load_error &&_error)
+                      {
+                        return libftl::ship::load_error{
+                            .name_ = _name,
+                            .value_ = libftl::ship::load_error::variant{std::move(_error)}};
+                      }));
             });
       });
 }

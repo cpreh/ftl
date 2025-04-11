@@ -1,16 +1,14 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/base.hpp>
+#include <libftl/archive/open_path_error.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/impl/archive/filesystem.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/filesystem/open.hpp>
-#include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <filesystem>
 #include <fstream>
@@ -27,7 +25,7 @@ libftl::impl::archive::filesystem::filesystem(std::filesystem::path &&_path)
 
 libftl::impl::archive::filesystem::~filesystem() = default;
 
-fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
+fcppt::either::object<libftl::archive::open_path_error, fcppt::unique_ptr<std::istream>>
 libftl::impl::archive::filesystem::open(libftl::archive::path const &_path) const
 {
   std::filesystem::path const full_path{
@@ -40,8 +38,8 @@ libftl::impl::archive::filesystem::open(libftl::archive::path const &_path) cons
           fcppt::filesystem::open<std::ifstream>(full_path, std::ios_base::binary),
           [&full_path]
           {
-            return libftl::error{
-                FCPPT_TEXT("Unable to open ") + fcppt::filesystem::path_to_string(full_path)};
+            return libftl::archive::open_path_error{libftl::archive::open_path_error::variant{
+                libftl::archive::open_path_error::failed_to_open{full_path}}};
           }),
       [](std::ifstream &&_stream)
       {

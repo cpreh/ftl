@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/events/event_content_parser.hpp>
 #include <libftl/impl/xml/events/event_parser_impl.hpp>
@@ -17,6 +16,7 @@
 #include <libftl/impl/xml/typed/node_member_list.hpp>
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <libftl/xml/events/event.hpp>
 #include <libftl/xml/events/event_content.hpp>
 #include <libftl/xml/labels/auto_reward.hpp>
@@ -28,8 +28,8 @@
 #include <libftl/xml/labels/req.hpp>
 #include <libftl/xml/labels/store.hpp>
 #include <libftl/xml/labels/text.hpp>
-#include <fcppt/deref_reference.hpp> // NOLINT(misc-include-cleaner)
-#include <fcppt/deref_unique_ptr.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/deref_reference.hpp> // IWYU pragma: keep
+#include <fcppt/deref_unique_ptr.hpp> // IWYU pragma: keep
 #include <fcppt/make_cref.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/nonmovable.hpp>
@@ -95,7 +95,7 @@ public:
 
   ~event_content_impl() override = default;
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &_node) const override
   {
     return this->impl_->parse(_node);

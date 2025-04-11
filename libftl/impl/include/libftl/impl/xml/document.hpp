@@ -6,6 +6,7 @@
 #include <libftl/impl/xml/node_vector.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iosfwd>
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
@@ -25,6 +26,7 @@ struct document
   libftl::impl::xml::node_vector nodes_;
 };
 
+std::ostream &operator<<(std::ostream &, libftl::impl::xml::document const &);
 }
 
 #endif

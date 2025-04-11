@@ -1,7 +1,8 @@
-#include <libftl/error.hpp>
-#include <libftl/archive/base.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/archive/base.hpp> // IWYU pragma: keep
 #include <libftl/archive/base_unique_ptr.hpp>
+#include <libftl/archive/open_error.hpp>
 #include <libftl/blueprints/data.hpp>
+#include <libftl/blueprints/error.hpp>
 #include <libftl/blueprints/load.hpp>
 #include <libftl/options/create_resource_parser.hpp>
 #include <libftl/options/open_archive.hpp>
@@ -9,6 +10,7 @@
 #include <libftl/options/resource_variant.hpp>
 #include <libftl/ship/draw.hpp>
 #include <libftl/ship/load.hpp>
+#include <libftl/ship/load_error.hpp>
 #include <libftl/ship/resources.hpp>
 #include <libftl/sprite/draw.hpp>
 #include <libftl/sprite/images.hpp>
@@ -32,7 +34,7 @@
 #include <sge/renderer/pixel_format/optional_multi_samples.hpp>
 #include <sge/renderer/pixel_format/srgb.hpp>
 #include <sge/renderer/target/base.hpp>
-#include <sge/renderer/target/onscreen.hpp> // NOLINT(misc-include-cleaner)
+#include <sge/renderer/target/onscreen.hpp> // IWYU pragma: keep
 #include <sge/systems/cursor_option_field.hpp>
 #include <sge/systems/image2d.hpp>
 #include <sge/systems/input.hpp>
@@ -64,6 +66,7 @@
 #include <awl/main/exit_success.hpp>
 #include <awl/main/function_context.hpp>
 #include <fcppt/args_from_second.hpp>
+#include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/exception.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/make_ref.hpp>
@@ -71,7 +74,8 @@
 #include <fcppt/reference_impl.hpp>
 #include <fcppt/reference_to_base.hpp>
 #include <fcppt/string.hpp>
-#include <fcppt/strong_typedef_output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/strong_typedef_impl.hpp> // IWYU pragma: keep
+#include <fcppt/strong_typedef_output.hpp> // IWYU pragma: keep
 #include <fcppt/text.hpp>
 #include <fcppt/to_std_string.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
@@ -79,13 +83,14 @@
 #include <fcppt/either/bind.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/map.hpp>
+#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/match.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/options/apply.hpp>
 #include <fcppt/options/argument.hpp>
 #include <fcppt/options/default_help_switch.hpp>
 #include <fcppt/options/error.hpp>
-#include <fcppt/options/error_output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/options/error_output.hpp> // IWYU pragma: keep
 #include <fcppt/options/help_text.hpp>
 #include <fcppt/options/long_name.hpp>
 #include <fcppt/options/optional_help_text.hpp>
@@ -93,7 +98,7 @@
 #include <fcppt/options/result.hpp>
 #include <fcppt/options/result_of.hpp>
 #include <fcppt/options/usage.hpp>
-#include <fcppt/options/usage_output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/options/usage_output.hpp> // IWYU pragma: keep
 #include <fcppt/preprocessor/disable_clang_warning.hpp>
 #include <fcppt/preprocessor/disable_gcc_warning.hpp>
 #include <fcppt/preprocessor/pop_warning.hpp>
@@ -104,7 +109,7 @@
 #include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/variant/output.hpp> // IWYU pragma: keep
 #include <fcppt/config/external_begin.hpp>
 #include <exception>
 #include <string>
@@ -147,7 +152,7 @@ awl::main::exit_code main_loop(
     sge::window::system &_window_system, // NOLINT(google-runtime-references)
     resources &&_resources) // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 {
-  auto const draw(
+  auto const draw{
       [&_renderer_device, &_resources]
       {
         sge::renderer::context::scoped_ffp const scoped_block(
@@ -162,7 +167,7 @@ awl::main::exit_code main_loop(
             _renderer_device,
             scoped_block.get(),
             libftl::ship::draw(_resources.images_, _resources.ship_));
-      });
+      }};
 
   return sge::window::loop(
       _window_system,
@@ -174,6 +179,8 @@ awl::main::exit_code main_loop(
                 [&draw](fcppt::reference<sge::renderer::event::render const>) { draw(); });
           }});
 }
+
+FCPPT_DECLARE_STRONG_TYPEDEF(fcppt::string, error);
 
 awl::main::exit_code main_program(argument_record const &_arguments)
 {
@@ -199,8 +206,11 @@ awl::main::exit_code main_program(argument_record const &_arguments)
 
   return fcppt::either::match(
       fcppt::either::bind(
-          libftl::options::open_archive(
-              fcppt::record::get<libftl::options::resource_label>(_arguments)),
+          fcppt::either::map_failure(
+              libftl::options::open_archive(
+                  fcppt::record::get<libftl::options::resource_label>(_arguments)),
+              [](libftl::archive::open_error const &_error)
+              { return error{fcppt::output_to_fcppt_string(_error)}; }),
           [&sys, &_arguments](libftl::archive::base_unique_ptr &&_archive)
           {
             libftl::sprite::images images{
@@ -209,7 +219,12 @@ awl::main::exit_code main_program(argument_record const &_arguments)
                 fcppt::make_ref(*_archive)};
 
             return fcppt::either::bind(
-                libftl::blueprints::load(*_archive),
+                fcppt::either::map_failure(
+                  libftl::blueprints::load(*_archive),
+                  [](libftl::blueprints::error const &_error)
+                  {
+                    return error{fcppt::output_to_fcppt_string(_error)};
+                  }),
                 [&_archive, &_arguments, &images](libftl::blueprints::data &&_blueprints)
                 {
                   fcppt::string const &ship_name{fcppt::record::get<ship_name_label>(_arguments)};
@@ -217,15 +232,22 @@ awl::main::exit_code main_program(argument_record const &_arguments)
                   return fcppt::either::bind(
                       fcppt::either::from_optional(
                           fcppt::to_std_string(ship_name),
-                          [&ship_name] {
-                            return libftl::error{
-                                FCPPT_TEXT("Failed to convert ship name") + ship_name};
+                          [&ship_name]
+                          {
+                            return error{
+                                FCPPT_TEXT("Failed to convert ship name ") + ship_name +
+                                FCPPT_TEXT(".")};
                           }),
                       [&_archive, &images, &_blueprints](std::string const &_name)
                       {
                         return fcppt::either::map(
+                            fcppt::either::map_failure(
                             libftl::ship::load(
                                 *_archive, fcppt::make_cref(_blueprints), images, _name),
+                                [](libftl::ship::load_error const &_error)
+                                {
+                                  return error{fcppt::output_to_fcppt_string(_error)};
+                                }),
                             [&_blueprints, &images, &_archive](libftl::ship::resources &&_ship)
                             {
                               return resources{
@@ -237,7 +259,7 @@ awl::main::exit_code main_program(argument_record const &_arguments)
                       });
                 });
           }),
-      [](libftl::error const &_error)
+      [](error const &_error)
       {
         awl::show_error(fcppt::output_to_fcppt_string(_error));
 
@@ -257,6 +279,8 @@ FCPPT_PP_PUSH_WARNING
 FCPPT_PP_DISABLE_CLANG_WARNING(-Wmissing-prototypes)
 FCPPT_PP_DISABLE_GCC_WARNING(-Wmissing-declarations)
 
+// TODO(philipp): Fix this in awl?
+// NOLINTNEXTLINE(misc-use-internal-linkage)
 awl::main::exit_code draw_main(awl::main::function_context const &_context)
 try
 {

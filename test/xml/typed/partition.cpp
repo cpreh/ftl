@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
@@ -12,6 +11,7 @@
 #include <libftl/impl/xml/typed/partition.hpp>
 #include <libftl/xml/node.hpp>
 #include <libftl/xml/node_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/make_recursive.hpp>
 #include <fcppt/declare_strong_typedef.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
@@ -84,7 +84,7 @@ TEST_CASE("xml::typed::partition", "[xml]")
               std::string{"test2"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
-      fcppt::either::make_success<libftl::error>(fcppt::tuple::make(
+      fcppt::either::make_success<libftl::xml::type_error>(fcppt::tuple::make(
           std::vector<left>{left{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}},
           std::vector<right>{right{libftl::xml::node{fcppt::record::make(), fcppt::unit{}}}})));
 }

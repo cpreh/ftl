@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/bom.hpp>
 #include <libftl/impl/xml/document.hpp>
@@ -7,13 +6,9 @@
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/parse.hpp>
-#include <fcppt/from_std_string.hpp>
 #include <fcppt/make_cref.hpp>
 #include <fcppt/nonmovable.hpp>
-#include <fcppt/output_to_std_string.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/unit.hpp>
-#include <fcppt/either/map_failure.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/parse/as_struct.hpp>
@@ -141,16 +136,8 @@ private:
 
 }
 
-fcppt::either::object<libftl::error, libftl::impl::xml::document>
+fcppt::either::object<fcppt::parse::parse_stream_error<char>, libftl::impl::xml::document>
 libftl::impl::xml::parse(std::istream &_stream)
 {
-  return fcppt::either::map_failure(
-      fcppt::parse::grammar_parse_stream(_stream, grammar{}),
-      // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-      [](fcppt::parse::parse_stream_error<char> &&_error)
-      {
-        return libftl::error{
-            FCPPT_TEXT("Parsing failed: ") +
-            fcppt::from_std_string(fcppt::output_to_std_string(_error))};
-      });
+  return fcppt::parse::grammar_parse_stream(_stream, grammar{});
 }

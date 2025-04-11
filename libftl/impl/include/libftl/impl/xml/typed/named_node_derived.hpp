@@ -1,10 +1,10 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NAMED_NODE_DERIVED_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NAMED_NODE_DERIVED_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/named_node_base.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/either/object.hpp>
@@ -27,7 +27,7 @@ public:
   using result_type = libftl::impl::xml::typed::result_type<Parser>;
   using arg_type = libftl::impl::xml::node;
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &_arg) const override
   {
     return fcppt::deref(this->parser_).parse(_arg);

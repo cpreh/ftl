@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/attribute.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
@@ -8,6 +7,7 @@
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/node.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/make_recursive.hpp>
 #include <fcppt/strong_typedef_comparison.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/unit.hpp>
@@ -55,7 +55,7 @@ TEST_CASE("xml::typed::node_set", "[xml]")
               std::string{"node1"},
               std::vector<libftl::impl::xml::attribute>{},
               fcppt::optional::nothing{}}))) ==
-      fcppt::either::make_success<libftl::error>(
+      fcppt::either::make_success<libftl::xml::type_error>(
           fcppt::record::make(node1{} = libftl::xml::node{fcppt::record::make(), fcppt::unit()})));
 
   libftl::impl::xml::typed::node_set const parser2{fcppt::record::make(
@@ -66,7 +66,7 @@ TEST_CASE("xml::typed::node_set", "[xml]")
 
   CHECK(
       parser2.parse(libftl::impl::xml::node_vector{}) ==
-      fcppt::either::make_success<libftl::error>(fcppt::record::make(
+      fcppt::either::make_success<libftl::xml::type_error>(fcppt::record::make(
           node1{} = fcppt::optional::object<
               libftl::xml::node<fcppt::record::object<>, fcppt::unit>>{})));
 }

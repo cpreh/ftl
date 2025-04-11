@@ -1,10 +1,10 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_BASE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_BASE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_base_fwd.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/reference.hpp>
 #include <fcppt/either/object.hpp>
@@ -28,7 +28,7 @@ public:
   using result_type = Result;
   using arg_type = std::vector<fcppt::reference<libftl::impl::xml::node const>>;
 
-  [[nodiscard]] virtual fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] virtual fcppt::either::object<libftl::xml::type_error, result_type>
   parse(arg_type const &) const = 0;
 
   [[nodiscard]] virtual std::string const &name() const = 0;

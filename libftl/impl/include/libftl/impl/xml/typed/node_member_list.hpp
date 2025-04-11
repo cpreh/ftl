@@ -1,12 +1,12 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_LIST_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NODE_MEMBER_LIST_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/node_member_list_fwd.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/reference.hpp>
 #include <fcppt/algorithm/map.hpp>
@@ -42,15 +42,17 @@ public:
 
   [[nodiscard]] std::string const &name() const { return this->name_; }
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(std::vector<fcppt::reference<libftl::impl::xml::node const>> const &_nodes) const
   {
-    return fcppt::either::sequence<fcppt::either::object<libftl::error, result_type>>(
-        fcppt::algorithm::map<std::vector<fcppt::either::object<libftl::error, inner_result>>>(
+    return fcppt::either::sequence<fcppt::either::object<libftl::xml::type_error, result_type>>(
+        fcppt::algorithm::map<
+            std::vector<fcppt::either::object<libftl::xml::type_error, inner_result>>>(
             _nodes,
             [this](fcppt::reference<libftl::impl::xml::node const> const _node)
             { return fcppt::deref(this->parser_).parse(_node.get()); }));
   }
+
 private:
   std::string name_;
   Parser parser_;

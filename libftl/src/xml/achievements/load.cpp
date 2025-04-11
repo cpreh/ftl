@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
@@ -12,6 +11,7 @@
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/xml/achievements/load.hpp>
 #include <libftl/xml/achievements/result.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/labels/desc.hpp>
 #include <libftl/xml/labels/id.hpp>
 #include <libftl/xml/labels/img.hpp>
@@ -25,7 +25,7 @@
 #include <string>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::xml::achievements::result>
+fcppt::either::object<libftl::xml::error, libftl::xml::achievements::result>
 libftl::xml::achievements::load(std::istream &_input)
 {
   namespace typed = libftl::impl::xml::typed;

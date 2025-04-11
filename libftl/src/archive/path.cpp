@@ -1,9 +1,11 @@
 #include <libftl/archive/path.hpp>
 #include <fcppt/no_init_fwd.hpp>
+#include <fcppt/from_std_string.hpp>
 #include <fcppt/string.hpp>
 #include <fcppt/to_std_string.hpp>
 #include <fcppt/io/extract.hpp>
 #include <fcppt/io/istream.hpp>
+#include <fcppt/io/ostream.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -55,4 +57,10 @@ libftl::archive::operator>>(fcppt::io::istream &_stream, libftl::archive::path &
       });
 
   return _stream;
+}
+
+fcppt::io::ostream &
+libftl::archive::operator<<(fcppt::io::ostream &_stream, libftl::archive::path const &_path)
+{
+  return _stream << fcppt::from_std_string(_path.rep());
 }

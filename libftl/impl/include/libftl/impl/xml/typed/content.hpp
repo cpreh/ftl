@@ -1,15 +1,14 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_CONTENT_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_CONTENT_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/node_vector.hpp>
+#include <libftl/xml/type_error.hpp>
+#include <libftl/xml/errors/content_conversion.hpp>
+#include <libftl/xml/errors/content_empty.hpp>
+#include <libftl/xml/errors/content_inner.hpp>
 #include <fcppt/extract_from_string.hpp>
-#include <fcppt/from_std_string.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
-#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/either/from_optional.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
@@ -30,17 +29,16 @@ struct content
 {
   using result_type = Result;
 
-  [[nodiscard]] fcppt::either::object<libftl::error, Result>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, Result>
   parse(fcppt::optional::object<libftl::impl::xml::inner_node> const &_node) const
   {
     return fcppt::optional::maybe(
         _node,
         []
         {
-          return fcppt::either::make_failure<Result>(libftl::error{
-              fcppt::string{FCPPT_TEXT("Expected node type ")} +
-              fcppt::from_std_string(fcppt::type_name_from_info(typeid(Result))) +
-              FCPPT_TEXT(" but node is empty.")});
+          return fcppt::either::make_failure<Result>(
+              libftl::xml::type_error{libftl::xml::type_error::variant{
+                  libftl::xml::errors::content_empty{typeid(Result)}}});
         },
         [](libftl::impl::xml::inner_node const &_inner)
         {
@@ -48,16 +46,15 @@ struct content
               _inner.content_,
               [](libftl::impl::xml::node_vector const &)
               {
-                return fcppt::either::make_failure<Result>(libftl::error{
-                    fcppt::string{FCPPT_TEXT("Expected node type ")} +
-                    fcppt::from_std_string(fcppt::type_name_from_info(typeid(Result))) +
-                    FCPPT_TEXT(" but node is an inner node.")});
+                return fcppt::either::make_failure<Result>(
+                    libftl::xml::type_error{libftl::xml::type_error::variant{
+                        libftl::xml::errors::content_inner{typeid(Result)}}});
               },
               [](std::string const &_content)
               {
                 if constexpr (std::is_same_v<Result, std::string>)
                 {
-                  return fcppt::either::make_success<libftl::error>(_content);
+                  return fcppt::either::make_success<libftl::xml::type_error>(_content);
                 }
                 else
                 {
@@ -65,11 +62,9 @@ struct content
                       fcppt::extract_from_string<Result>(_content),
                       [&_content]
                       {
-                        return libftl::error{
-                            fcppt::string{FCPPT_TEXT("Failed to convert \"")} +
-                            fcppt::from_std_string(_content) + FCPPT_TEXT(" to type ") +
-                            fcppt::from_std_string(fcppt::type_name_from_info(typeid(Result))) +
-                            FCPPT_TEXT(".")};
+                        return libftl::xml::type_error{libftl::xml::type_error::variant{
+                            libftl::xml::errors::content_conversion{
+                                .type_ = typeid(Result), .content_ = _content}}};
                       });
                 }
               });

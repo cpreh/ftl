@@ -1,3 +1,4 @@
+programs/parse/include/ftl/parse/error.hpp
 programs/parse/include/ftl/parse/path_label.hpp
 programs/parse/include/ftl/parse/ship/arguments_fwd.hpp
 programs/parse/include/ftl/parse/ship/arguments.hpp

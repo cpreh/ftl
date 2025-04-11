@@ -1,6 +1,5 @@
 #include <libftl/archive/entry.hpp>
 #include <libftl/archive/entry_output.hpp>
-#include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/io/ostream.hpp>
 

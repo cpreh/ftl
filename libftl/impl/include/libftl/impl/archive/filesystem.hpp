@@ -1,8 +1,8 @@
 #ifndef LIBFTL_IMPL_ARCHIVE_FILESYSTEM_HPP_INCLUDED
 #define LIBFTL_IMPL_ARCHIVE_FILESYSTEM_HPP_INCLUDED
 
-#include <libftl/error_fwd.hpp>
 #include <libftl/archive/base.hpp>
+#include <libftl/archive/open_path_error_fwd.hpp>
 #include <libftl/archive/path_fwd.hpp>
 #include <fcppt/nonmovable.hpp>
 #include <fcppt/unique_ptr_fwd.hpp>
@@ -23,9 +23,9 @@ public:
 
   ~filesystem() override;
 
-  [[nodiscard]] fcppt::either::object<libftl::error, fcppt::unique_ptr<std::istream>>
-  open(libftl::archive::path const &) const override;
-
+  [[nodiscard]] fcppt::either::
+      object<libftl::archive::open_path_error, fcppt::unique_ptr<std::istream>>
+      open(libftl::archive::path const &) const override;
 private:
   std::filesystem::path const directory_;
 };

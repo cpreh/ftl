@@ -2,21 +2,17 @@
 #define LIBFTL_ARCHIVE_ENTRY_HPP_INCLUDED
 
 #include <libftl/archive/entry_fwd.hpp> // IWYU pragma: keep
-#include <libftl/archive/length.hpp>
-#include <libftl/archive/offset.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <ios>
+#include <fcppt/config/external_end.hpp>
 
 namespace libftl::archive
 {
 struct entry
 {
-  entry(libftl::archive::offset const _offset, libftl::archive::length const _length)
-      : offset_{_offset}, length_{_length}
-  {
-  }
+  std::streamsize offset_;
 
-  libftl::archive::offset offset_;
-
-  libftl::archive::length length_;
+  std::streamsize length_;
 };
 
 }

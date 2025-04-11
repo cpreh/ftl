@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/archive/path.hpp>
 #include <libftl/room/state.hpp>
 #include <libftl/room/system.hpp>
@@ -9,6 +8,7 @@
 #include <libftl/ship/layout/room.hpp>
 #include <libftl/ship/layout/room_id.hpp>
 #include <libftl/sprite/images.hpp>
+#include <libftl/sprite/load_error.hpp>
 #include <libftl/xml/blueprints/ship.hpp>
 #include <libftl/xml/blueprints/ship_system_list.hpp>
 #include <libftl/xml/blueprints/system_element.hpp>
@@ -55,7 +55,8 @@
 
 namespace
 {
-fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::system>> load_system(
+fcppt::either::object<libftl::sprite::load_error, fcppt::optional::object<libftl::room::system>>
+load_system(
     libftl::sprite::images const &_images,
     fcppt::optional::object<libftl::xml::blueprints::system_element> const &_room,
     libftl::room::type const _room_type)
@@ -64,7 +65,7 @@ fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::syste
       _room,
       []
       {
-        return fcppt::either::make_success<libftl::error>(
+        return fcppt::either::make_success<libftl::sprite::load_error>(
             fcppt::optional::object<libftl::room::system>{});
       },
       [&_images,
@@ -75,7 +76,7 @@ fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::syste
                 _system.attributes_.get<libftl::xml::labels::img>(),
                 []
                 {
-                  return fcppt::either::make_success<libftl::error>(
+                  return fcppt::either::make_success<libftl::sprite::load_error>(
                       fcppt::optional::object<sge::texture::const_part_shared_ptr>{});
                 },
                 [&_images](std::string const &_name)
@@ -106,19 +107,21 @@ fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::syste
       });
 }
 
-fcppt::either::object<libftl::error, std::vector<libftl::room::system>> load_all_systems(
+fcppt::either::object<libftl::sprite::load_error, std::vector<libftl::room::system>>
+load_all_systems(
     libftl::xml::blueprints::ship_system_list const &_systems,
     libftl::sprite::images const &_images)
 {
- // TODO(philipp) turn this macro into a function
+  // TODO(philipp) turn this macro into a function
 #define LOAD_IMPL(name) load_system(_images, _systems.content_.get<libftl::xml::labels::name>(), libftl::room::type::name)
 
   return fcppt::either::map(
       fcppt::either::sequence<fcppt::either::object<
-          libftl::error,
+          libftl::sprite::load_error,
           std::vector<fcppt::optional::object<libftl::room::system>>>>(
-          std::vector<
-              fcppt::either::object<libftl::error, fcppt::optional::object<libftl::room::system>>>{
+          std::vector<fcppt::either::object<
+              libftl::sprite::load_error,
+              fcppt::optional::object<libftl::room::system>>>{
               LOAD_IMPL(pilot),
               LOAD_IMPL(sensors),
               LOAD_IMPL(doors),
@@ -161,7 +164,7 @@ libftl::room::state make_room_state(
 }
 }
 
-fcppt::either::object<libftl::error, libftl::ship::state> libftl::ship::initial_state(
+fcppt::either::object<libftl::sprite::load_error, libftl::ship::state> libftl::ship::initial_state(
     libftl::xml::blueprints::ship const &_blueprint,
     libftl::ship::layout::object const &_layout,
     libftl::sprite::images const &_images)

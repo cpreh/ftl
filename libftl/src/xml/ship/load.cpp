@@ -1,4 +1,3 @@
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/load.hpp>
 #include <libftl/impl/xml/typed/attribute.hpp>
 #include <libftl/impl/xml/typed/attribute_set.hpp>
@@ -12,6 +11,7 @@
 #include <libftl/impl/xml/typed/node_set.hpp>
 #include <libftl/impl/xml/typed/required.hpp>
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/error.hpp>
 #include <libftl/xml/labels/angular.hpp>
 #include <libftl/xml/labels/cloak.hpp>
 #include <libftl/xml/labels/direction.hpp>
@@ -42,8 +42,8 @@
 #include <libftl/xml/ship/load.hpp>
 #include <libftl/xml/ship/result.hpp>
 #include <libftl/xml/ship/slide.hpp>
-#include <libftl/xml/ship/slide_input.hpp> // NOLINT(misc-include-cleaner)
-#include <fcppt/deref_reference.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/xml/ship/slide_input.hpp> // IWYU pragma: keep
+#include <fcppt/deref_reference.hpp> // IWYU pragma: keep
 #include <fcppt/make_cref.hpp>
 #include <fcppt/either/object_impl.hpp>
 #include <fcppt/record/make.hpp>
@@ -52,7 +52,7 @@
 #include <type_traits>
 #include <fcppt/config/external_end.hpp>
 
-fcppt::either::object<libftl::error, libftl::xml::ship::result>
+fcppt::either::object<libftl::xml::error, libftl::xml::ship::result>
 libftl::xml::ship::load(std::istream &_input)
 {
   namespace typed = libftl::impl::xml::typed;

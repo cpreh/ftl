@@ -1,11 +1,11 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_NAMED_NODE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_NAMED_NODE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node.hpp>
 #include <libftl/impl/xml/typed/named_node_fwd.hpp>
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/either/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -29,7 +29,7 @@ public:
   {
   }
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(libftl::impl::xml::node const &_node) const
   {
     return fcppt::deref(this->parser_).parse(_node);

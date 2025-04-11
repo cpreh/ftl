@@ -1,10 +1,10 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_PARTITION_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_PARTITION_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
+#include <libftl/xml/type_error.hpp>
 #include <fcppt/deref.hpp>
 #include <fcppt/either/map.hpp>
 #include <fcppt/either/object.hpp>
@@ -27,7 +27,7 @@ public:
 
   explicit partition(Parser &&_parser) : parser_{std::move(_parser)} {}
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(libftl::impl::xml::node_vector const &_nodes) const
   {
     return fcppt::either::map(

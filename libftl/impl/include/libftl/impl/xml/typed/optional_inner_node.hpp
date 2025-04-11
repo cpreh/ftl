@@ -1,14 +1,12 @@
 #ifndef LIBFTL_IMPL_XML_TYPED_OPTIONAL_INNER_NODE_HPP_INCLUDED
 #define LIBFTL_IMPL_XML_TYPED_OPTIONAL_INNER_NODE_HPP_INCLUDED
 
-#include <libftl/error.hpp>
 #include <libftl/impl/xml/inner_node.hpp>
 #include <libftl/impl/xml/node_vector.hpp>
 #include <libftl/impl/xml/typed/parses.hpp> // IWYU pragma: keep
 #include <libftl/impl/xml/typed/result_type.hpp>
-#include <fcppt/from_std_string.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
+#include <libftl/xml/type_error.hpp>
+#include <libftl/xml/errors/expected_node.hpp>
 #include <fcppt/either/make_failure.hpp>
 #include <fcppt/either/make_success.hpp>
 #include <fcppt/either/map.hpp>
@@ -33,12 +31,12 @@ public:
 
   explicit optional_inner_node(Parser &&_parser) : parser_{std::move(_parser)} {}
 
-  [[nodiscard]] fcppt::either::object<libftl::error, result_type>
+  [[nodiscard]] fcppt::either::object<libftl::xml::type_error, result_type>
   parse(fcppt::optional::object<libftl::impl::xml::inner_node> const &_node) const
   {
     return fcppt::optional::maybe(
         _node,
-        [] { return fcppt::either::make_success<libftl::error>(result_type{}); },
+        [] { return fcppt::either::make_success<libftl::xml::type_error>(result_type{}); },
         [this](libftl::impl::xml::inner_node const &_inner_node)
         {
           return fcppt::variant::match(
@@ -52,9 +50,8 @@ public:
               },
               [](std::string const &_value)
               {
-                return fcppt::either::make_failure<result_type>(libftl::error{fcppt::string{
-                    FCPPT_TEXT("Expected inner node but content is ") +
-                    fcppt::from_std_string(_value) + FCPPT_TEXT(".")}});
+                return fcppt::either::make_failure<result_type>(libftl::xml::type_error{
+                    libftl::xml::type_error::variant{libftl::xml::errors::expected_node{_value}}});
               });
         });
   }
