@@ -1,4 +1,4 @@
-#include <libftl/archive/entry_output.hpp> // NOLINT(misc-include-cleaner)
+#include <libftl/archive/entry_output.hpp> // IWYU pragma: keep
 #include <libftl/archive/extract.hpp>
 #include <libftl/archive/file.hpp>
 #include <libftl/archive/index.hpp>
@@ -10,11 +10,10 @@
 #include <fcppt/exception.hpp>
 #include <fcppt/main.hpp>
 #include <fcppt/make_ref.hpp>
-#include <fcppt/output_pair.hpp> // NOLINT(misc-include-cleaner)
-#include <fcppt/output_string.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/output_pair.hpp> // IWYU pragma: keep
+#include <fcppt/output_string.hpp> // IWYU pragma: keep
 #include <fcppt/output_to_fcppt_string.hpp>
 #include <fcppt/string.hpp>
-#include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/output.hpp>
 #include <fcppt/either/bind.hpp>
@@ -60,7 +59,7 @@
 #include <fcppt/record/object.hpp>
 #include <fcppt/record/permute.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/variant/output.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/variant/output.hpp> // IWYU pragma: keep
 #include <fcppt/config/external_begin.hpp>
 #include <cstdlib>
 #include <exception>

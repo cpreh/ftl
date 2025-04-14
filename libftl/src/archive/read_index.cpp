@@ -12,8 +12,6 @@
 #include <alda/raw/stream/error.hpp>
 #include <alda/raw/stream/istream.hpp>
 #include <fcppt/literal.hpp>
-#include <fcppt/string.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/algorithm/map_optional.hpp>
 #include <fcppt/cast/to_signed.hpp>
@@ -121,9 +119,8 @@ libftl::archive::read_index(std::istream &_stream)
           [&_stream](alda::raw::element_type<offset_binding> const &_offsets)
           { return make_index(_stream, _offsets); }),
       // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-      [](alda::raw::stream::error &&_error)
+      [](alda::raw::stream::error const _error)
       {
-        return libftl::archive::index_error{fcppt::string{
-            FCPPT_TEXT("Error reading index of .dat file: ") + std::move(_error.get())}};
+        return libftl::archive::index_error{_error};
       });
 }

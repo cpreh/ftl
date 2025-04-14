@@ -455,6 +455,7 @@ libftl/src/archive/chain.cpp
 libftl/src/archive/entry_output.cpp
 libftl/src/archive/extract.cpp
 libftl/src/archive/filesystem.cpp
+libftl/src/archive/index_error.cpp
 libftl/src/archive/open.cpp
 libftl/src/archive/open_error.cpp
 libftl/src/archive/open_path_error.cpp

@@ -1,6 +1,6 @@
 #include <libftl/archive/index_error.hpp>
 #include <libftl/archive/open_error.hpp>
-#include <fcppt/strong_typedef_output.hpp>
+#include <alda/raw/stream/error_output.hpp> // IWYU pragma: keep
 #include <fcppt/text.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/io/ostream.hpp>

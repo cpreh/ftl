@@ -66,7 +66,7 @@ function(add_libftl_library VARIANT)
   target_link_libraries(
     ${LIBFTL_LIB_NAME}
     INTERFACE sgeimagecolor_interface sgerenderer_interface sgesprite_interface
-              fcppt_core_interface fcppt_options_interface
+              alda_interface fcppt_core_interface fcppt_options_interface
               fcppt_parse_interface)
 
   if(NOT ${VARIANT} STREQUAL "INTERFACE")

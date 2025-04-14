@@ -41,11 +41,11 @@ libftl::archive::open(std::filesystem::path &&_path)
         return fcppt::either::map(
             fcppt::either::map_failure(
                 libftl::archive::read_index(_stream),
-                [&_path](libftl::archive::index_error &&_error)
+                [&_path](libftl::archive::index_error const _error)
                 {
                   return libftl::archive::open_error{
                       .path_ = fcppt::copy(_path),
-                      .value_ = libftl::archive::open_error::variant{std::move(_error)}};
+                      .value_ = libftl::archive::open_error::variant{_error}};
                 }),
             [&_path](libftl::archive::index &&_index) -> libftl::archive::base_unique_ptr
             {
