@@ -9,6 +9,7 @@
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <ios>
 #include <string>
 #include <utility>
 #include <fcppt/config/external_end.hpp>
@@ -52,7 +53,7 @@ libftl::archive::operator>>(fcppt::io::istream &_stream, libftl::archive::path &
       {
         fcppt::optional::maybe(
             fcppt::to_std_string(std::move(_value)),
-            [&_stream] { _stream.fail(); },
+            [&_stream] { _stream.setstate(std::ios_base::failbit); },
             [&_path](std::string &&_string) { _path = libftl::archive::path{std::move(_string)}; });
       });
 
